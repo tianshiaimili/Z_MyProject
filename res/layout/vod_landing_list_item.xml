@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <include
+        android:id="@+id/landingListItem1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/vod_landing_listView_cell_margin_left"
+        android:layout_marginRight="@dimen/vod_landing_listView_cell_margin_left"
+        android:layout_weight="1"
+        layout="@layout/vod_item" />
+
+    <include
+        android:id="@+id/landingListItem2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/vod_landing_listView_cell_margin_left"
+        android:layout_weight="1"
+        layout="@layout/vod_item" />
+
+    <include
+        android:id="@+id/landingListItem3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/vod_landing_listView_cell_margin_left"
+        android:layout_weight="1"
+        layout="@layout/vod_item" />
+
+    <include
+        android:id="@+id/landingListItem4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/vod_landing_listView_cell_margin_left"
+        android:layout_weight="1"
+        layout="@layout/vod_item" />
+
+    <include
+        android:id="@+id/landingListItem5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/vod_landing_listView_cell_margin_left"
+        android:layout_weight="1"
+        layout="@layout/vod_item" />
+
+</LinearLayout>

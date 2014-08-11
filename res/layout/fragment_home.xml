@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical" 
+    >
+    
+    <!-- title bar -->
+<!--     <include 
+        layout="@layout/title_bar"/> -->
+    
+<!--     <com.hua.wiget.TopIndicator
+        android:id="@+id/top_indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#CCCCCC"
+        android:layout_marginTop="@dimen/top_margin"
+        >
+    </com.hua.wiget.TopIndicator> -->
+    
+    
+        <com.hua.wiget.TopIndicator2
+        android:id="@+id/top_indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#CCCCCC"
+        android:layout_marginTop="@dimen/top_margin"
+        >
+    </com.hua.wiget.TopIndicator2>
+    
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1.0" 
+        android:background="#FFFCCC"
+        />
+
+</LinearLayout>

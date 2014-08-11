@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    
+    android:orientation="vertical"
+    android:splitMotionEvents="true" 
+    android:background="#CCCCCc"
+    >
+<!-- android:background="@color/vod_landing_bg_color" -->
+    <LinearLayout
+        android:id="@+id/viewpagerLinearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/page_padding_top"
+        android:background="#FF0000"
+         >
+
+        <!--
+             <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:persistentDrawingCache="animation" />
+         -->
+
+        <com.hua.wiget.CoverFlow
+            android:id="@+id/coverFlow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" 
+            android:spacing="@dimen/vod_landing_coverFlow_spacing"
+            android:background="#FFCCCC"
+		/>
+       
+        
+        <com.hua.wiget.PageIndexer
+            android:id="@+id/page_indexer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@color/vod_landing_indicator_bar_bg_color"
+            android:orientation="horizontal" 
+            />
+    </LinearLayout>
+<!-- android:background="@android:color/transparent" -->
+    <com.hua.wiget.ObservableListView
+        android:id="@+id/vodListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:fadingEdge="none"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none" />
+
+</FrameLayout>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark" 
+    android:splitMotionEvents="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:orientation="vertical"
+    	android:layout_gravity="top">
+        
+        <View
+        	android:layout_width="match_parent"
+    		android:layout_height="@dimen/phone_main_navigation_bar"
+    		android:background="@android:color/transparent"
+    		android:visibility="gone" />
+        
+	    <FrameLayout
+	        android:id="@+id/main_activity_fragment_container"
+	        android:layout_width="match_parent"
+	        android:layout_height="0dp"
+	        android:background="@color/vod_landing_bg_color"
+	        android:layout_weight="1" />
+        
+        <View
+        	android:layout_width="match_parent"
+    		android:layout_height="@dimen/main_bottom_tab_bar_height"
+    		android:background="@android:color/transparent"
+    		android:visibility="gone" />
+	    
+    </LinearLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/main_activity_navigation_bar"
+        android:layout_width="match_parent"
+        android:background="@drawable/action_bar_bg"
+        android:layout_height="@dimen/phone_main_navigation_bar"
+        android:layout_gravity="top" >
+        
+	    <RelativeLayout
+	        android:id="@+id/main_activity_navigation_bar_back_layout"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:layout_marginLeft="5dp" >
+	        
+	        <ImageView
+	            android:id="@+id/main_activity_navigation_bar_back_img"
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	            android:src="@drawable/action_bar_btn_back"
+	            android:visibility="invisible"
+	            android:layout_centerVertical="true" />
+	        
+	        <ImageView
+	            android:id="@+id/main_activity_navigation_bar_back_logo"
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	            android:src="@drawable/action_bar_logo_mtnplayer"
+	            android:layout_toRightOf="@id/main_activity_navigation_bar_back_img"
+	            android:layout_alignTop="@id/main_activity_navigation_bar_back_img"
+	            android:layout_marginLeft="3dp" />
+	        
+	    </RelativeLayout>
+	    
+	    <!-- no need this part currently. set it gone. -->
+	    <FrameLayout
+	        android:id="@+id/main_activity_navigation_bar_title_layout"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:visibility="gone" >
+	        
+	        <ImageView
+	            android:id="@+id/main_activity_navigation_bar_title_img"
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	            android:src="@drawable/action_bar_logo_mtnplayer" />
+	        
+	        <TextView
+	            android:id="@+id/main_activity_navigation_bar_title_text"
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	        	android:visibility="gone" />
+	        
+	    </FrameLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/main_activity_navigation_bar_right_layout"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:orientation="horizontal"
+	        android:layout_marginRight="@dimen/phone_main_navigation_bar_right_layout_margin_right" >
+	        
+	        <ImageView
+	            android:id="@+id/main_activity_navigation_bar_right_filter"
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	            android:src="@drawable/action_bar_btn_filter"
+	            android:layout_marginRight="@dimen/phone_main_navigation_bar_right_filter_margin_right" />
+	        
+	        <ImageView
+	            android:id="@+id/main_activity_navigation_bar_right_search"
+	            android:layout_width="wrap_content"
+	        	android:layout_height="wrap_content"
+	            android:src="@drawable/action_bar_btn_search"/>
+	        
+	    </LinearLayout>
+        
+    </RelativeLayout>
+    
+	<LinearLayout
+	    android:id="@+id/tab_bar_container"
+	    android:layout_width="match_parent"
+	    android:layout_height="@dimen/main_bottom_tab_bar_height"
+	    android:background="@drawable/tab_bg"
+	    android:orientation="vertical"
+	    android:layout_gravity="bottom" />
+    
+</FrameLayout>
