@@ -66,6 +66,11 @@
     <string name="history_list_empty_message">Your history will be displayed here</string>
     <string name="history_list_remove_message">Remove from history list?</string>
     
+    <!-- the tuan gou string -->
+    <string name="border_top">Border Top</string>
+    <string name="border_bottom">Border Bottom</string>
+    <string name="image_url">Image Url</string>
+    
     <!--  error messge
     <string name="ok">OK</string>
     <string name="tbc">TBC</string>

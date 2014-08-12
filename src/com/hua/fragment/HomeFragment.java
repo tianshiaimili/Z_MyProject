@@ -1,6 +1,8 @@
 package com.hua.fragment;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.hua.activity.R;
 import com.hua.app.BaseFragment;
 import com.hua.util.LogUtils2;
+import com.hua.view.MyScrollView;
 import com.hua.wiget.TopIndicator;
 import com.hua.wiget.TopIndicator.OnTopIndicatorListener;
 import com.hua.wiget.TopIndicator2;
@@ -73,7 +76,8 @@ public class HomeFragment extends BaseFragment implements /*OnTopIndicatorListen
 	
 	private void initViews(View view) {
 		// TODO Auto-generated method stub
-	
+		
+		LogUtils2.i("initViews......");
 		mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
 		mPagerAdapter = new TabPagerAdapter(getFragmentManager());
 		
@@ -109,6 +113,18 @@ public class HomeFragment extends BaseFragment implements /*OnTopIndicatorListen
 		
 	}
 
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		SharedPreferences preferences = getActivity().getSharedPreferences("mUnderLineFromX", getActivity().MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putInt("mUnderLineFromX", 0);
+		editor.commit();
+		
+		super.onDestroy();
+	}
+	
+	
 	/**
 	 * 
 	 */
@@ -138,6 +154,15 @@ public class HomeFragment extends BaseFragment implements /*OnTopIndicatorListen
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
 			// TODO Auto-generated method stub
+			LogUtils2.i("instantiateItem..........position="+position);
+			if(position == 3){
+				LogUtils2.i("tuangou ---------------------------");
+				MyScrollView myScrollView = (MyScrollView) LayoutInflater.from(getActivity()).
+						inflate(R.layout.fragment_tuangou, null);
+				LogUtils2.i("myScrollView===="+myScrollView);
+				container.addView(myScrollView);
+				return myScrollView;
+			}
 			ImageView imageView = new ImageView(getActivity());
 			imageView.setImageResource(images[position]);
 			container.addView(imageView);
@@ -173,7 +198,7 @@ public class HomeFragment extends BaseFragment implements /*OnTopIndicatorListen
 		@Override
 		public void onPageSelected(int arg0) {
 //			mTopIndicator.setTabsDisplay(getActivity(), arg0);
-			LogUtils2.d("这里装么********");
+			LogUtils2.d("change indicator by pageChange********");
 			mTopIndicator2.setTabsDisplay(getActivity(), arg0);
 			LogUtils2.d("arg0==="+arg0);
 			

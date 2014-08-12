@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -54,6 +56,8 @@ public class TopIndicator2 extends LinearLayout {
 	 */
 	private OnClickTopIndicatorListener onClickTopIndicatorListener;	
 	
+	///
+	private SharedPreferences preferences;
 	
 
 	public TopIndicator2(Context context, AttributeSet attrs, int defStyle) {
@@ -110,7 +114,6 @@ public class TopIndicator2 extends LinearLayout {
 			final int index = i;
 			
 			final View view = inflater.inflate(R.layout.top_indicator_item, null);
-			LogUtils2.d("这里**********");
 			///
 			final CheckedTextView checkedTextView = (CheckedTextView) view.findViewById(R.id.item_name);
 			///
@@ -120,12 +123,9 @@ public class TopIndicator2 extends LinearLayout {
 			checkedTextView.setCompoundDrawablePadding(DensityUtil.dip2px(context, 10));
 			checkedTextView.setText(mtitles[i]);
 			///
-			LogUtils2.d("这里可以不********");
 			topLayout.addView(view,topsubParams);
-			LogUtils2.d("这里可以不+++++++++++++");
 			checkedTextView.setTag(index);
 			
-			LogUtils2.d("++++++++++++++++++");
 			
 			mCheckedTextViewList.add(checkedTextView);//
 			mViewList.add(view);//添加每一个标题的view
@@ -153,9 +153,11 @@ public class TopIndicator2 extends LinearLayout {
 				checkedTextView.setTextColor(context.getResources().getColor(R.color.homefragment_top_title_select_cancel));
 			}
 		}//over for
-		LogUtils2.d("55555555");
 		this.addView(topLayout,topParams);
 		this.addView(mUnderLine,underlineParams);
+		
+		/////
+		preferences = context.getSharedPreferences("mUnderLineFromX", Context.MODE_PRIVATE);
 		
 	}
 	
@@ -185,6 +187,8 @@ public class TopIndicator2 extends LinearLayout {
 	private void doUnderLineAnimation(int index) {
 		// TODO Auto-generated method stub
 		LogUtils2.d("=================index="+index);
+		LogUtils2.i("mUnderLineFromX==="+mUnderLineFromX);
+		mUnderLineFromX = preferences.getInt("mUnderLineFromX", 0);
 		TranslateAnimation animation = new TranslateAnimation
 				(mUnderLineFromX, index * mUnderLineWidth, 0, 0);
 		
@@ -196,6 +200,10 @@ public class TopIndicator2 extends LinearLayout {
 //		mUnderLine.setAnimation(animation);
 		mUnderLine.startAnimation(animation);
 		mUnderLineFromX = index * mUnderLineWidth;
+		
+		Editor editor = preferences.edit();
+		editor.putInt("mUnderLineFromX", mUnderLineFromX);
+		editor.commit();
 		LogUtils2.d("77777777777777");
 	}
 
