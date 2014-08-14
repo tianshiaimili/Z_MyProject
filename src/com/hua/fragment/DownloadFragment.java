@@ -26,6 +26,8 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AbsListView;
+import android.widget.AbsoluteLayout;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -159,6 +161,23 @@ public class DownloadFragment extends Fragment implements OnClickListener{
 		 SimpleAdapter adapter =  new SimpleAdapter(getActivity(), list, 
 				 R.layout.edit_listview_item, new String[]{"edit_imageview_item","edit_text_item"}, new int[]{R.id.edit_imageview_item,R.id.edit_text_item});
 		 editListView = (ListView) view.findViewById(R.id.edit_listview);
+		 /**
+		  * 添加ListView的头和尾的话 要在setAdapter之前
+		  */
+		 View headerView = new View(getActivity());
+		 headerView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+		 AbsListView.LayoutParams params = 
+				 new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, 
+						 DisplayUtils.dip2px(getActivity(), 30));
+		 headerView.setLayoutParams(params);
+		 editListView.addHeaderView(headerView);
+		 
+		 ///////
+		 View foodView = new View(getActivity());
+		 foodView.setBackgroundColor(Color.parseColor("#CCCCCC"));
+		 foodView.setLayoutParams(params);
+		 editListView.addFooterView(foodView);
+		 
 		 LogUtils2.i("adapter=="+adapter);
 		 editListView.setAdapter(adapter);
 		 editListView.setEmptyView(view.findViewById(R.id.edit_imageview));
