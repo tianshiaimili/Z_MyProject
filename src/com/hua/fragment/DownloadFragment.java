@@ -171,7 +171,6 @@ public class DownloadFragment extends Fragment implements OnClickListener{
 						 DisplayUtils.dip2px(getActivity(), 30));
 		 headerView.setLayoutParams(params);
 		 editListView.addHeaderView(headerView);
-		 
 		 ///////
 		 View foodView = new View(getActivity());
 		 foodView.setBackgroundColor(Color.parseColor("#CCCCCC"));
