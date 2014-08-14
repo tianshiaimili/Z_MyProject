@@ -45,5 +45,75 @@
         android:visibility="gone"
         ></GridView>
     
+    <RelativeLayout 
+        android:id="@+id/edit_layout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
+        >
+       <RelativeLayout 
+           android:id="@+id/xxxxx"
+            android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_marginBottom="20dp"
+        	android:background="#CCCCCC"
+           >
+        <TextView 
+            android:id="@+id/edit_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You May Also Like"
+            android:textColor="#FFF"
+            android:textSize="24sp"
+            android:layout_alignParentLeft="true"
+			android:gravity="center_vertical"
+			android:layout_centerVertical="true"
+            />
+        
+        <Button 
+            android:id="@+id/edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="Edit"
+             android:textSize="24sp"
+            android:background="@drawable/edit_button_selector"
+            />
+        </RelativeLayout> 
+        
+       <LinearLayout 
+           android:id="@+id/edit_sublayout"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           android:layout_marginTop="20dp"
+           android:layout_below="@id/xxxxx"
+           >
+           
+           <ListView 
+               android:id="@+id/edit_listview"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:divider="@drawable/diver"
+               android:cacheColorHint="#00000000"
+               android:listSelector="#00000000"
+               >
+               
+           </ListView>
+           
+      
+        <ImageView 
+            android:id="@+id/edit_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/xianjian1"
+             android:visibility="gone"
+            />
+        
+         </LinearLayout>
+    </RelativeLayout>
+    
+    
 
 </LinearLayout>
