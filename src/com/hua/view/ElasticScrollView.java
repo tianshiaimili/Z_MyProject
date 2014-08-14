@@ -20,6 +20,12 @@ import android.widget.TextView;
 import com.hua.activity.R;
 import com.hua.util.LogUtils2;
 
+
+/**
+ * 实现回弹的scrollview
+ * @author Hua
+ *
+ */
 public class ElasticScrollView extends ScrollView {
 	private static final String TAG = "ElasticScrollView";
 	private final static int RELEASE_To_REFRESH = 0;

@@ -196,7 +196,7 @@ public class TopIndicator2 extends LinearLayout {
 		
 		animation.setInterpolator(new AccelerateDecelerateInterpolator());
 		animation.setFillAfter(true);
-		animation.setDuration(150);
+		animation.setDuration(100);
 //		mUnderLine.setAnimation(animation);
 		mUnderLine.startAnimation(animation);
 		mUnderLineFromX = index * mUnderLineWidth;

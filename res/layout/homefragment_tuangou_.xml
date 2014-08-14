@@ -2,21 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
      >
 
-    <com.hua.view.ElasticScrollView
-                android:id="@+id/scrollview1"
+    <com.hua.view.ElasticScrollViewTuanGou
+                android:id="@+id/homefragment_scrollviewtuangou"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginTop="@dimen/page_padding_top"
-                 android:background="#CCCCCC"
+                android:background="#CCCCCC"
                  >
-
+ 
                 
-            </com.hua.view.ElasticScrollView>
+            </com.hua.view.ElasticScrollViewTuanGou>
 
 </LinearLayout>

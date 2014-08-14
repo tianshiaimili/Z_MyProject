@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hua.activity.R;
 import com.hua.app.BaseFragment;
 import com.hua.util.LogUtils2;
+import com.hua.view.ElasticScrollView;
 import com.hua.view.MyScrollView;
 import com.hua.wiget.TopIndicator;
 import com.hua.wiget.TopIndicator.OnTopIndicatorListener;
@@ -157,9 +159,19 @@ public class HomeFragment extends BaseFragment implements /*OnTopIndicatorListen
 			LogUtils2.i("instantiateItem..........position="+position);
 			if(position == 3){
 				LogUtils2.i("tuangou ---------------------------");
-				MyScrollView myScrollView = (MyScrollView) LayoutInflater.from(getActivity()).
+				
+//				LinearLayout tuangouLayout = (LinearLayout) LayoutInflater.from(getActivity()).
+//						inflate(R.layout.homefragment_tuangou_, null);
+//				ElasticScrollView tempScrollview = (ElasticScrollView) tuangouLayout.findViewById(R.id.homefragment_scrollview4);
+				 TuanGouFragment tuanGouFragment = new TuanGouFragment();
+				 View historyView = LayoutInflater.from(getActivity()).inflate(R.layout.homefragment_tuangou_, null);
+				 MyScrollView myScrollView = (MyScrollView) LayoutInflater.from(getActivity()).
 						inflate(R.layout.fragment_tuangou, null);
-				LogUtils2.i("myScrollView===="+myScrollView);
+				LogUtils2.e("myScrollView===="+myScrollView);
+				LogUtils2.e("tuanGouFragment===="+tuanGouFragment.getView());
+				
+//				tempScrollview.addChild(myScrollView, 1);
+				
 				container.addView(myScrollView);
 				return myScrollView;
 			}
