@@ -70,4 +70,7 @@
     <!-- HomeFragment Color -->
     <color name="homefragment_top_title_color">#F7587B</color>
     <color name="homefragment_top_title_select_cancel">#130C0E</color>
+    
+      <color name="background_tab_pressed">#6633B5E5</color>
+    
 </resources>

@@ -3,5 +3,6 @@
 
     <item android:drawable="@drawable/setting_selected" android:state_checked="true"/>
     <item android:drawable="@drawable/setting_normal"/>
+    <item android:drawable="@drawable/setting_selected" android:state_selected="true"/>
 
 </selector>

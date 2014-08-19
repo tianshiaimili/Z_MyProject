@@ -3,35 +3,29 @@ package com.hua.fragment;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hua.activity.R;
 import com.hua.app.BaseFragment;
-import com.hua.homefragment.subfragment.ChatFragment;
-import com.hua.homefragment.subfragment.ContactsFragment;
-import com.hua.homefragment.subfragment.FoundFragment;
-import com.hua.homefragment.subfragment.FourFragment;
 import com.hua.util.LogUtils2;
+import com.hua.view.ElasticScrollView;
 import com.hua.view.MyScrollView;
-import com.hua.wiget.PagerSlidingTabStrip;
+import com.hua.wiget.TopIndicator;
+import com.hua.wiget.TopIndicator.OnTopIndicatorListener;
 import com.hua.wiget.TopIndicator2;
 import com.hua.wiget.TopIndicator2.OnClickTopIndicatorListener;
 
-public class HomeFragment extends BaseFragment implements /*OnTopIndicatorListener,*/OnClickTopIndicatorListener{
+public class HomeFragment2 extends BaseFragment implements /*OnTopIndicatorListener,*/OnClickTopIndicatorListener{
 
 	public static final String TAG = "HomeFragment";
 	private static final int PagerCount = 4;
@@ -41,44 +35,9 @@ public class HomeFragment extends BaseFragment implements /*OnTopIndicatorListen
 	private TabPagerAdapter mPagerAdapter;
 //	private TopIndicator mTopIndicator;
 	private TopIndicator2 mTopIndicator2;
-	private PagerSlidingTabStrip tabs;
 	private int [] images ={R.drawable.xianjian1,R.drawable.xianjian2,R.drawable.xianjian1,R.drawable.xianjian2};
-	
-	/**
-	 * 获取当前屏幕的密度
-	 */
-	private DisplayMetrics dm;
-	
-	/**
-	 * 聊天界面的Fragment
-	 */
-	private ChatFragment chatFragment;
-
-	/**
-	 * 发现界面的Fragment
-	 */
-	private FoundFragment foundFragment;
-
-	/**
-	 * 通讯录界面的Fragment
-	 */
-	private ContactsFragment contactsFragment;
-	
-	/**
-	 * 第四个fragment
-	 */
-	private FourFragment fourFragment;
-
-	/**
-	 * 标题组
-	 */
-	private final String[] titles = { "精选", "发现", "榜单",
-			"团购"};
-	
-	private MyPagerAdapter myPagerAdapter;
-	
-	private static HomeFragment newInstance(){
-		HomeFragment homeFragment = new HomeFragment();
+	private static HomeFragment2 newInstance(){
+		HomeFragment2 homeFragment = new HomeFragment2();
 		return homeFragment;
 	}
 	
@@ -94,7 +53,6 @@ public class HomeFragment extends BaseFragment implements /*OnTopIndicatorListen
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		dm = getResources().getDisplayMetrics();
 	}
 	
 	/**
@@ -125,58 +83,16 @@ public class HomeFragment extends BaseFragment implements /*OnTopIndicatorListen
 		mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
 		mPagerAdapter = new TabPagerAdapter(getFragmentManager());
 		
-		myPagerAdapter = new MyPagerAdapter(getFragmentManager());
-		mViewPager.setAdapter(myPagerAdapter);
-		
 //		mTopIndicator = (TopIndicator) view.findViewById(R.id.top_indicator);
-//		mTopIndicator2 = (TopIndicator2) view.findViewById(R.id.top_indicator);
-		tabs = (PagerSlidingTabStrip) view.findViewById(R.id.top_indicator);
-		tabs.setViewPager(mViewPager);
-		setTabsValue();
-		
-		
+		mTopIndicator2 = (TopIndicator2) view.findViewById(R.id.top_indicator);
 		
 		/**
 		 * 注册点击标题变化的监听器
 		 */
 //		mTopIndicator.setOnTopIndicatorListener(this);
-		
-//		mTopIndicator2.setOnClickTopIndicatorListener(this);
+		mTopIndicator2.setOnClickTopIndicatorListener(this);
 	}
 
-	/**
-	 * 对PagerSlidingTabStrip的各项属性进行赋值。
-	 */
-	private void setTabsValue() {
-		// 设置Tab是自动填充满屏幕的
-		tabs.setShouldExpand(true);
-		// 设置Tab的分割线是透明的
-//		tabs.setDividerColor(Color.TRANSPARENT);
-		tabs.setDividerColor(Color.WHITE);
-		/**
-		 *  设置Tab底部线的高度
-		 *  这个方法是转变为标准尺寸的一个函数，例如
-　　			int size = (int)TypedValue.applyDimension(TypedValue.
-　　				COMPLEX_UNIT_SP, 20, 
-　　				context.getResources().getDisplayMetrics());
-　				　这里COMPLEX_UNIT_SP是单位，20是数值，也就是20sp。
-		 */
-		tabs.setUnderlineHeight((int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 2, dm));
-		// 设置Tab Indicator的高度
-		tabs.setIndicatorHeight((int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_DIP, 4, dm));
-		// 设置Tab标题文字的大小
-		tabs.setTextSize((int) TypedValue.applyDimension(
-				TypedValue.COMPLEX_UNIT_SP, 16, dm));
-		// 设置Tab Indicator的颜色
-		tabs.setIndicatorColor(Color.parseColor("#45c01a"));
-		// 设置选中Tab文字的颜色 (这是我自定义的一个方法)
-		tabs.setSelectedTextColor(Color.parseColor("#45c01a"));
-		// 取消点击Tab时的背景色
-		tabs.setTabBackground(0);
-	}
-	
 	/**
 	 * 
 	 */
@@ -186,7 +102,7 @@ public class HomeFragment extends BaseFragment implements /*OnTopIndicatorListen
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		
-//		initDisplay();
+		initDisplay();
 	
 	}
 	
@@ -302,61 +218,11 @@ public class HomeFragment extends BaseFragment implements /*OnTopIndicatorListen
 		
 	}
 
-	
-	class MyPagerAdapter extends FragmentPagerAdapter{
-
-		public MyPagerAdapter(FragmentManager fm) {
-			super(fm);
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			// TODO Auto-generated method stub
-			switch (position) {
-			case 0:
-				if (chatFragment == null) {
-					chatFragment = new ChatFragment();
-				}
-				return chatFragment;
-			case 1:
-				if (foundFragment == null) {
-					foundFragment = new FoundFragment();
-				}
-				return foundFragment;
-			case 2:
-				if (contactsFragment == null) {
-					contactsFragment = new ContactsFragment();
-				}
-				return contactsFragment;
-				
-			case 3:
-				if (fourFragment == null) {
-					fourFragment = new FourFragment();
-				}
-				return fourFragment;
-				
-			default:
-				return null;
-			}
-			
-		}
-
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return titles.length;
-		}
+/*	@Override
+	public void onIndicatorSelected(int index) {
+		mViewPager.setCurrentItem(index);
 		
-		//
-		@Override
-		public CharSequence getPageTitle(int position) {
-			// TODO Auto-generated method stub
-			return titles[position];
-		}
-		
-	}
-	
+	}*/
 
 	@Override
 	public void onClickIndicatorSelected(int index) {

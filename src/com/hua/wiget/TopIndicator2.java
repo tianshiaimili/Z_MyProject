@@ -25,7 +25,6 @@ import com.hua.util.LogUtils2;
 /**
  * ¶¥²¿indicator
  * 
- * @author dewyze
  * 
  */
 @SuppressLint("NewApi")

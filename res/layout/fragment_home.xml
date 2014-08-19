@@ -20,14 +20,24 @@
     </com.hua.wiget.TopIndicator> -->
     
     
-        <com.hua.wiget.TopIndicator2
+       <!--  <com.hua.wiget.TopIndicator2
         android:id="@+id/top_indicator"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#CCCCCC"
         android:layout_marginTop="@dimen/top_margin"
         >
-    </com.hua.wiget.TopIndicator2>
+    </com.hua.wiget.TopIndicator2> -->
+    
+    <com.hua.wiget.PagerSlidingTabStrip 
+        android:id="@+id/top_indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/top_margin"
+        android:background="#FFFFFF"
+        >
+        
+    </com.hua.wiget.PagerSlidingTabStrip>
     
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
