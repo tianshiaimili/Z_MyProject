@@ -1,5 +1,7 @@
 package com.hua.homefragment.subfragment;
 
+import com.hua.activity.R;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,7 +25,7 @@ public class ChatFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		/*LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		FrameLayout fl = new FrameLayout(getActivity());
 		fl.setLayoutParams(params);
 		DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -37,6 +39,9 @@ public class ChatFragment extends Fragment {
 		v.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, dm));
 		fl.setBackgroundColor(Color.parseColor("#FFCCCC"));
 		fl.addView(v);
-		return fl;
+		return fl;*/
+		View view = inflater.inflate(R.layout.home_subfragment, null);
+		
+		return view;
 	}
 }

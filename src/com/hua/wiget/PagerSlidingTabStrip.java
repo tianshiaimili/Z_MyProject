@@ -17,6 +17,7 @@
 package com.hua.wiget;
 
 import java.util.Locale;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -27,6 +28,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
@@ -39,6 +41,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.hua.activity.R;
 import com.hua.util.LogUtils2;
 
@@ -123,6 +126,11 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private int[] mDrawableIdsSleect = new int[] {R.drawable.home_selected,
 			R.drawable.category_selected, R.drawable.collect_selected,
 			R.drawable.setting_selected };
+	
+	/**
+	 * 标题组
+	 */
+	private final String[] titles = { "精选", "发现", "榜单", "团购" };
 	
 	/**
 	 * 定义一个全局的上下文
@@ -239,7 +247,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 			if (pager.getAdapter() instanceof IconTabProvider) {
 				addIconTab(i, ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
 			} else {
-				addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
+				addTextTab(i, titles[i]);
 			}
 
 		}
@@ -451,6 +459,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 			if (delegatePageListener != null) {
 				delegatePageListener.onPageSelected(position);
 			}
+			
 		}
 
 	}

@@ -350,6 +350,11 @@ public class MainActivityPhone extends BaseFragmentActivity {
 	public void setBackButtonVisible(boolean visible) {
 		backButton.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
 	}
+
+	public void setFilterButtonVisibility(int visibility) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

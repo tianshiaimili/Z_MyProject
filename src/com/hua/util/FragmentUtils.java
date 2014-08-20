@@ -293,6 +293,8 @@ public class FragmentUtils
          */
         public void switchTab(String rootFragmentTag, boolean skipSameTab)
         {
+        	LogUtils2.v("********switchTab*********");
+        	
         	if(getCurrentTabStack() != null){
         		
         		LogUtils2.e("switchTab=="+getCurrentTabStack().size());
@@ -319,14 +321,19 @@ public class FragmentUtils
             }
             Log.d(FragmentUtils.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" switch tab : ").append(rootFragmentTag).toString());
            
-            if(getCurrentTabStack().size() == 0)
+            if(getCurrentTabStack().size() == 0){
+            	LogUtils2.i("getCurrentTabStack().size() == 0");
                 pushFragment(true, new Fragment[] {
                     mSwitcherFeed.newRootFragment(rootFragmentTag)
                 });
-            else
+            } 
+            else {
+            	
+            	LogUtils2.i("getCurrentTabStack().size() £¡+++===0");
                 pushFragment(false, new Fragment[] {
                     peekTopmostFragment()
                 });
+            }
             if(mSwitcherListener != null)
             {
                 int tabIndex = getCurrentTabIndex();
@@ -412,6 +419,7 @@ public class FragmentUtils
                 }
                 if(add)
                 {
+                	LogUtils2.i("add********=="+add);
                 	//ÀýÈç "TV - 3"
                     String fragmentTag = (new StringBuilder(String.valueOf(mCurrentRootFragmentTag))).append("-").append(getCurrentTabStack().size()).toString();
                     Log.d(FragmentUtils.TAG, (new StringBuilder("Add new fragment ")).append(fragmentTag).toString());
@@ -420,6 +428,7 @@ public class FragmentUtils
                 } else
                 {
                 	LogUtils2.e("pushFragment_____________");
+                	LogUtils2.i("add********=="+add);
                     Log.d(FragmentUtils.TAG, (new StringBuilder("Attach fragment ")).append(fragment.getTag()).toString());
                     ft.attach(fragment);
                 }

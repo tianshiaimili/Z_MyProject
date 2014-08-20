@@ -27,6 +27,9 @@ public class FourFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		
+		LogUtils2.i("*********onCreateView*************");
+		
 		 TuanGouFragment tuanGouFragment = new TuanGouFragment();
 		 View historyView = LayoutInflater.from(getActivity()).inflate(R.layout.homefragment_tuangou_, null);
 		 MyScrollView myScrollView = (MyScrollView) LayoutInflater.from(getActivity()).
