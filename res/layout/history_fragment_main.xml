@@ -5,18 +5,16 @@
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="16dp"
-     >
+    android:paddingTop="16dp" 
+    >
 
     <com.hua.view.ElasticScrollView
-                android:id="@+id/scrollview1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="@dimen/page_padding_top"
-                 android:background="#CCCCCC"
-                 >
+        android:id="@+id/scrollview1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="@dimen/page_padding_top"
+        android:background="#CCCCCC" >
 
-                
-            </com.hua.view.ElasticScrollView>
+    </com.hua.view.ElasticScrollView>
 
 </LinearLayout>

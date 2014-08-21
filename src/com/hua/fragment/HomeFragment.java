@@ -23,7 +23,7 @@ import android.widget.TextView;
 import com.hua.activity.MTNApplication;
 import com.hua.activity.R;
 import com.hua.app.BaseFragment;
-import com.hua.homefragment.subfragment.ChatFragment;
+import com.hua.homefragment.subfragment.Fragment01;
 import com.hua.homefragment.subfragment.ContactsFragment;
 import com.hua.homefragment.subfragment.FoundFragment;
 import com.hua.homefragment.subfragment.FourFragment;
@@ -66,7 +66,7 @@ public class HomeFragment extends BaseFragment implements
 	/**
 	 * 聊天界面的Fragment
 	 */
-	private ChatFragment chatFragment;
+	private Fragment01 chatFragment;
 
 	/**
 	 * 发现界面的Fragment
@@ -153,10 +153,10 @@ public class HomeFragment extends BaseFragment implements
 		mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
 		 mPagerAdapter = new TabPagerAdapter(getFragmentManager());
 
-		myPagerAdapter = new MyPagerAdapter(getFragmentManager());
+		myPagerAdapter = new MyPagerAdapter(getChildFragmentManager());
 		mViewPager.setAdapter(myPagerAdapter);
 
-		mViewPager.setCurrentItem(3);
+//		mViewPager.setCurrentItem(3);
 		// mTopIndicator = (TopIndicator) view.findViewById(R.id.top_indicator);
 		// mTopIndicator2 = (TopIndicator2)
 		// view.findViewById(R.id.top_indicator);
@@ -354,7 +354,7 @@ public class HomeFragment extends BaseFragment implements
 				LogUtils2.i("******chatFragment******");
 				if (chatFragment == null) {
 					LogUtils2.i("******chatFragment******");
-					chatFragment = new ChatFragment();
+					chatFragment = new Fragment01();
 					// MTNApplication.startFragment(getCurFragment(),
 					// chatFragment);
 				}

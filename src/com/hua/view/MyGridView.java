@@ -5,13 +5,15 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ScrollView;
 
 import com.hua.util.LogUtils2;
 
-public class InnerScrollView extends ScrollView{
+public class MyGridView extends GridView{
 
-	  Handler handler;
+
+	 Handler handler;
 
 	    /**
 	     */
@@ -23,16 +25,13 @@ public class InnerScrollView extends ScrollView{
 	     */
 	    int currentY;
 	
-	
-	    public InnerScrollView(Context context, AttributeSet attrs) {
-	        super(context, attrs);
-	        System.out.println("InnerScrollView(Context context, AttributeSet attrs)");
-	        handler = new Handler();
+	public MyGridView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		 handler = new Handler();
+	}
 
-	    }
-	    
-	    
-	    @Override
+
+	   @Override
 	    public boolean onInterceptTouchEvent(MotionEvent ev) {
 	    	// TODO Auto-generated method stub
 	    	
@@ -59,12 +58,32 @@ public class InnerScrollView extends ScrollView{
 			}
 	    	return super.onInterceptTouchEvent(ev);
 	    }
-	    
-	    @Override
+	   
+	   /**
+	    * 
+	    */
+	   @Override
 	    public boolean onTouchEvent(MotionEvent ev) {
 	    	// TODO Auto-generated method stub
 	    	int code = ev.getAction();
-	    	
+	    	View itemView = getChildAt(0);
+			 int itemHeight = itemView.getMeasuredHeight();
+			 int currentGridViewHeight = getMeasuredHeight();
+			 int itemCount = getCount();
+			 int totalRowCount = ((itemCount%2) == 0 ? (itemCount/2) : ((itemCount /2)+1));
+			 int verticalSpacing = getVerticalSpacing();
+			 int totalVSpacing = (totalRowCount -1 ) * verticalSpacing;
+			 int totalHeight = (totalRowCount * itemHeight) + (totalVSpacing); 
+			 
+			 LogUtils2.e("itemView=="+itemView);
+				LogUtils2.e("itemHeight=="+itemHeight);
+				LogUtils2.e("currentGridViewHeight=="+currentGridViewHeight);
+				LogUtils2.e("itemCount=="+itemCount);
+				LogUtils2.e("totalRowCount=="+totalRowCount);
+				LogUtils2.e("verticalSpacing=="+verticalSpacing);
+				LogUtils2.e("totalVSpacing=="+totalVSpacing);
+				LogUtils2.e("totalHeight=="+totalHeight);
+				
 	    	switch (code) {
 			case MotionEvent.ACTION_DOWN:
 				currentY = (int) ev.getY();
@@ -72,27 +91,28 @@ public class InnerScrollView extends ScrollView{
 				break;
 				
 			case MotionEvent.ACTION_MOVE:
-				
+				LogUtils2.e("************************************");
 				View child = getChildAt(0);
 				
 				/**
 				 * 得到neibuScrollView的第一个子View LinerLayout的高度
 				 * 用来计算 滑动了多少距离，然后判断是否子ScrollView滑动到底部
 				 */
-				int childHeight = child.getMeasuredHeight();
+//				int childHeight = child.getMeasuredHeight();
+				int childHeight = totalHeight;//child.getMeasuredHeight();
 				 /**
-                 * getMeasuredHeight() 得到的应该是当前InnerScrollView的高度 
-                 * 所以获取得子View LinerLayout的高度减去当前scrollView的高度 就代表滑到底部了
-                 */
-				int currentScrollViewHeiht = getMeasuredHeight();
+                * getMeasuredHeight() 得到的应该是当前InnerScrollView的高度 
+                * 所以获取得子View LinerLayout的高度减去当前scrollView的高度 就代表滑到底部了
+                */
+				int currentScrollViewHeiht = currentGridViewHeight;//getMeasuredHeight();
 				int currentShowHeight = childHeight - currentScrollViewHeiht;
 				
 				LogUtils2.i("childHeight——="+childHeight +"   currentScrollViewHeiht="+currentScrollViewHeiht);
 				LogUtils2.i("currentShowHeight——="+currentShowHeight);
 				
 				 int y = (int) ev.getY();
-				 int scrollY = getScrollY();
-//				 gets
+				 int scrollY = itemView.getScrollY();
+				 
 				 LogUtils2.i("y——="+y +"    scrollY=="+scrollY+"   currentY=="+currentY);
 				 
 				 if(currentY > y){
@@ -133,35 +153,13 @@ public class InnerScrollView extends ScrollView{
 	    	
 	    	return super.onTouchEvent(ev);
 	    }
-
-	    private int lastDelta;
-	    private int marginTop = 5;
-	    private int tempTop ;
-		public void scrollTo(final View childView) {
-			// TODO Auto-generated method stub
-			handler.postDelayed(new Runnable() {
-				
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					
-					int oldScrollY = getScrollY();
-					int top = childView.getTop() - marginTop;
-					
-					lastDelta = top - oldScrollY;
-					smoothScrollTo(0, lastDelta);
-					
-				}
-			}, 50);
-		}
-
-
-		public void resume() {
-			// TODO Auto-generated method stub
-			 overScrollBy(0, -lastDelta, 0, getScrollY(), 0, getScrollRange(), 0, 0, true);
-			 lastDelta = 0;
-		}
-		
+	   
+	   
+	   
+	   /**
+	    * 
+	    * @return
+	    */
 	    private int getScrollRange() {
 	        int scrollRange = 0;
 	        if (getChildCount() > 0) {
@@ -173,6 +171,5 @@ public class InnerScrollView extends ScrollView{
 	        }
 	        return scrollRange;
 	    }
-	    
 
 }

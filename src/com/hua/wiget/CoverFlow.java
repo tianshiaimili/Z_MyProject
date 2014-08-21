@@ -286,7 +286,7 @@ public class CoverFlow extends Gallery {
 	//override the method to control gallery speed not too fast
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-	/*	if(velocityX > 2500 ){
+		if(velocityX > 2500 ){
 			velocityX = 2500;
 		}else if(velocityX > 0){
 			velocityX = 1500;
@@ -295,9 +295,9 @@ public class CoverFlow extends Gallery {
 		}else if(velocityX < 0){
 			velocityX = -1500;
 		}
-		return super.onFling(e1, e2, velocityX, velocityY);*/
+		return super.onFling(e1, e2, velocityX, velocityY);
 		
-		return false;
+//		return false;
 	}
 
 }

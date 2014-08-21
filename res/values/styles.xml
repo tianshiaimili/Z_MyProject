@@ -38,5 +38,35 @@
         <item name="android:paddingBottom">12dip</item>
     </style>
     
+            <style name="style_double_wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="style_double_match">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="style_match_wrap">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="style_wrap_match">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    
+       <!-- 导航栏文字 -->
+    <style name="style_tv_small_14" parent="style_match_wrap">
+        <item name="android:textSize">@dimen/tv_size_14</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:textColor">@color/cs_47</item>
+        <item name="android:singleLine">true</item>
+    </style>
+          
+          
          
 </resources>
