@@ -3,6 +3,8 @@ package com.hua.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hua.util.LogUtils2;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 /**
@@ -46,7 +49,8 @@ public class HomeSubViewPagerAdater extends PagerAdapter implements OnClickListe
 	@Override
 	public int getCount() {
 		
-		return mDatas == null ? 0 : mDatas.size();
+//		return mDatas == null ? 0 : mDatas.size();
+		return Integer.MAX_VALUE;
 	}
 
 	@Override
@@ -56,11 +60,12 @@ public class HomeSubViewPagerAdater extends PagerAdapter implements OnClickListe
 	}
 	
 	@Override
-	public Object instantiateItem(View container, int position) {
+	public Object instantiateItem(ViewGroup container, int position) {
 		
-		int pos = mDatas.get(position);
+		LogUtils2.e("position % (mViews.size())=="+position % (mViews.size())+ "   position=="+position);
+		int pos = mDatas.get(position % (mViews.size()));
 
-		mImageView = mViews.get(position);
+		mImageView = mViews.get(position % (mViews.size()));
 		
 		mImageView.setAdjustViewBounds(true);
 		mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -68,16 +73,16 @@ public class HomeSubViewPagerAdater extends PagerAdapter implements OnClickListe
 		mImageView.setOnClickListener(this);
 		
 		mImageView.setImageResource(pos);
-		((ViewPager)container).addView(mImageView,0);
+		(container).addView(mImageView);
 		
 		return mImageView;
 	}
 	
 	@Override
-	public void destroyItem(View container, int position, Object object) {
-		
-		mImageView = mViews.get(position);
-		((ViewPager)container).removeView(mImageView);
+	public void destroyItem(ViewGroup container, int position, Object object) {
+		LogUtils2.e("position % (mViews.size())=="+position % (mViews.size())+ "   position=="+position);
+//		mImageView = mViews.get(position % (mViews.size()));
+		(container).removeView((View)object);
 	}
 
 	@Override

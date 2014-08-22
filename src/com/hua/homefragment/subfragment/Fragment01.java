@@ -3,6 +3,8 @@ package com.hua.homefragment.subfragment;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,11 +18,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView.ScaleType;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,13 +34,13 @@ import com.hua.activity.R;
 import com.hua.adapter.HF01_RecommendAdapter;
 import com.hua.adapter.HomeSubFragment1_GridViewAdater;
 import com.hua.adapter.HomeSubViewPagerAdater;
+import com.hua.androidos.HandlerTimer;
 import com.hua.model.CategoryInfo;
 import com.hua.model.ShopAppApplication;
-import com.hua.util.LayoutUtils;
 import com.hua.util.LogUtils2;
 import com.hua.view.ElasticScrollView;
-import com.hua.view.MyGridView;
 import com.hua.view.ElasticScrollView.OnRefreshListener;
+import com.hua.view.MyGridView;
 
 /**
  * 
@@ -65,9 +70,11 @@ public class Fragment01 extends Fragment {
 	private MyGridView gv_recommend;
 	int[] recommend_icon = new int[] { R.drawable.huoying_bg,
 			R.drawable.haizie_bg, R.drawable.heizi, R.drawable.sishen_bg,
+			R.drawable.huoying,R.drawable.caomao,R.drawable.diguang,R.drawable.huoying,
 			R.drawable.huoying,R.drawable.caomao,R.drawable.diguang,R.drawable.huoying};
 	String[] recommend_msg = new String[] { "火影忍者", "海贼王", "黑子的篮球", "死神",
-			"火影忍者", "海贼王", "黑子的篮球", "死神"};
+			"火影忍者", "海贼王", "黑子的篮球", "死神","死神","德玛西亚","黑子的篮球", "死神"
+			};
 	String[] ad_text = new String[] { "火影忍者", "海贼王", "黑子的篮球", "死神","德玛西亚" };
 	
 	/**
@@ -75,6 +82,16 @@ public class Fragment01 extends Fragment {
 	 */
 	int count;
 	private boolean ischange;
+	
+	/**
+	 * 设计广告副 走动
+	 */
+	private int currentItem=0;
+	private Timer timer;
+	private TimerTask task;
+	private boolean isCanel;
+	
+	private HandlerTimer handlerTimer;
 	
 	Handler handler = new Handler(){
 		public void handleMessage(Message message) {
@@ -93,33 +110,28 @@ public class Fragment01 extends Fragment {
 				int num2 = ischange == true ? 1: 2;
 				int id = 0;
 				try {
-					LogUtils2.i("num2==="+num2);
-					//R.drawable.class.getField("xianjian"+num2+1);
 					Field field = R.drawable.class.getDeclaredField("xianjian"+(num2));
-//					id = Integer.parseInt((R.drawable.class.getDeclaredField("xianjian"+(num2))).get(null).toString());
-				LogUtils2.i("ppppppppppppppppppp");
-//				id = Integer.parseInt(field.get(null).toString());
 				id = Integer.valueOf(field.getInt(null));
-//				 id = Integer.valueOf(field.get(null).toString());
-				LogUtils2.d("id==="+id);
 				OnReceiveData(null,id);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					System.out.println(e);
 					OnReceiveData(null,0);
 				}
-				
-				
 				break;
+				case 6:
+					if(viewPager !=null){
+						
+						viewPager.setCurrentItem(currentItem);
+						
+					}
+					
 			default:
 				break;
 			}
 			
 		};
 	};
-	
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -134,11 +146,6 @@ public class Fragment01 extends Fragment {
 		
 		elasticScrollView.addChild(subView, 1);
 		///
-//		for(int i=1;i<=5;i++){
-//			TextView tempTextView = new TextView(getActivity());
-//			tempTextView.setText("Text:" + i);
-//			elasticScrollView.addChild(tempTextView,1);
-//		}
 		///////////////
 		   elasticScrollView.setonRefreshListener(new OnRefreshListener() {
 				
@@ -165,7 +172,34 @@ public class Fragment01 extends Fragment {
 				}
 			});
 		
-		
+		   /**
+		    * 设置广告横幅走动
+		    */
+			//自动跳转广告
+			task = new TimerTask() {
+
+				@Override
+				public void run() {
+
+					synchronized (viewPager) {
+						if(viewPager != null){
+//							currentItem = (currentItem + 1) % ad_text.length;
+							currentItem = viewPager.getCurrentItem() + 1;
+						}
+						
+						Message message = handler.obtainMessage(6);
+//						handler.obtainMessage().sendToTarget(); // 通过Handler切换图片
+						handler.sendMessage(message);
+					}
+
+				}
+			};
+			// /
+			timer = new Timer();
+			timer.schedule(task, 2000, 3000);
+//			startViewPagerTimer();
+			isCanel = false;
+		   
 		
 		return view;
 	}
@@ -184,6 +218,68 @@ public class Fragment01 extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 	}
 	
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		timer.cancel();
+		isCanel = true;
+	}
+	
+	@Override
+	public void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		timer.cancel();
+		isCanel = true;
+		
+	}
+	
+	@Override
+	public void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+//		if(timer.){
+//			
+//		}
+//		timer.schedule(task, 2000, 3000);
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if(isCanel){
+			   /**
+			    * 设置广告横幅走动
+			    */
+				//自动跳转广告
+				task = new TimerTask() {
+
+					@Override
+					public void run() {
+
+						LogUtils2.i("timer.schedule(task, 2000, 3000);--------------------------------");
+						synchronized (viewPager) {
+							if(viewPager != null){
+//								currentItem = (currentItem + 1) % ad_text.length;
+								currentItem = viewPager.getCurrentItem() + 1;
+							}
+							
+							Message message = handler.obtainMessage(6);
+//							handler.obtainMessage().sendToTarget(); // 通过Handler切换图片
+							handler.sendMessage(message);
+						}
+
+					}
+				};
+				// /
+				timer = new Timer();
+				timer.schedule(task, 2000, 3000);
+		}
+		
+	}
+	
 	/**
 	 * 初始化 子view中的content
 	 * @param context
@@ -194,6 +290,80 @@ public class Fragment01 extends Fragment {
 		tv_title = (TextView) view.findViewById(R.id.tv_title);
 		gv_category = (GridView) view.findViewById(R.id.gv_category);
 		gv_recommend = (MyGridView) view.findViewById(R.id.gv_recommend);
+		gv_recommend.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+				LogUtils2.e("77779999977777777777");
+				switch (scrollState) {
+				// 当不滚动时
+
+//				case OnScrollListener.SCROLL_STATE_IDLE:
+//					// 判断滚动到底部
+//					if (gv_recommend.getLastVisiblePosition() == (gv_recommend.getCount() - 1)) {
+//						
+////						gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
+//						Toast.makeText(getActivity(), "到di", 300).show();
+//						gv_recommend.setfouce();
+//					} else {
+////						gv_recommend.getParent().requestDisallowInterceptTouchEvent(true);
+//					}
+//					// 判断滚动到顶部
+//
+//					if (gv_recommend.getFirstVisiblePosition() == 0) {
+////						gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
+//						Toast.makeText(getActivity(), "到头", 300).show();
+//						gv_recommend.setfouce();
+//					} else {
+//
+////						gv_recommend.getParent().requestDisallowInterceptTouchEvent(true);
+//					}
+//
+//					break;
+				case OnScrollListener.SCROLL_STATE_IDLE:
+					
+					// 判断滚动到底部
+					if (gv_recommend.getLastVisiblePosition() == (gv_recommend.getCount() - 1)) {
+						
+//						gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
+//						Toast.makeText(getActivity(), "道di", 300).show();
+						gv_recommend.setfouce();
+					} else {
+//						gv_recommend.getParent().requestDisallowInterceptTouchEvent(true);
+					}
+					// 判断滚动到顶部
+
+					if (gv_recommend.getFirstVisiblePosition() == 0) {
+//						gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
+//						Toast.makeText(getActivity(), "道头", 300).show();
+						gv_recommend.setfouce();
+					} else {
+
+//						gv_recommend.getParent().requestDisallowInterceptTouchEvent(true);
+					}
+					
+					break;
+				}
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				// TODO Auto-generated method stub
+				
+//				  if(firstVisibleItem==0){  
+//					  //顶部
+//					  LogUtils2.i("66666666666666666");
+//					  gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
+//		          }       
+//		          if(visibleItemCount+firstVisibleItem==totalItemCount){  
+//		            //底部
+//		        	  gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
+//		          }
+				
+			}
+		});
 		//
 		createPoint(view);
 	}
@@ -237,7 +407,7 @@ public class Fragment01 extends Fragment {
 			@Override
 			public void onPageSelected(int position) {
 				super.onPageSelected(position);
-				setCurPoint(position);
+				setCurPoint(position % 5);
 			}
 		});
 
@@ -364,5 +534,40 @@ public class Fragment01 extends Fragment {
 		}
 		
 	}
+	
+	/**
+	 * start viewPager's timer
+	 */
+	public void startViewPagerTimer() {
+		if (handlerTimer == null) {
+			handlerTimer = new HandlerTimer(true);
+			handlerTimer.scheduleRepeatExecution(new Runnable() {
+				@Override
+				public void run() {
+//					coverFlow.setSelection((currentItem + 1) % bannerDataList.size() + 20 * bannerDataList.size());
+					synchronized (viewPager) {
+						if(viewPager != null){
+//							currentItem = (currentItem + 1) % ad_text.length;
+							currentItem = viewPager.getCurrentItem() + 1;
+						}
+					}
+				
+				}
+			}, 3000, 3000);
+		}
+	}
+
+	/**
+	 * stop viewPager's timer
+	 */
+	public void stopViewPagerTimer() {
+		if (handlerTimer != null) {
+			handlerTimer.cancelRepeatExecution();
+			handlerTimer.quit();
+			handlerTimer = null;
+		}
+
+	}
+	
 	
 }

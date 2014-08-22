@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="horizontal"
+     >
+
+    <!-- 左边的layout -->
+    <LinearLayout
+        android:id="@+id/hot_layout1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="#cd2345"
+        android:orientation="vertical" 
+        android:gravity="center"
+        >
+
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:background="#666666"
+            >
+        <ImageView
+            android:id="@+id/imageview_hot"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/xianjian1"
+            android:layout_gravity="center"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:layout_below="@id/imageview_hot"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="德玛西亚..."
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:background="#CCCCCC" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 右边的Layout -->
+    <LinearLayout
+        android:id="@+id/hot_layout2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:background="#00000000"
+        android:orientation="vertical" >
+	<!-- 右边的上面的Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#CCC000"
+            android:orientation="horizontal"
+            android:gravity="center"
+             >
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/xianjian1"
+             />
+            
+        </LinearLayout>
+
+        <!-- 右边的下面的Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#FFCCCC"
+            android:orientation="horizontal" >
+            
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

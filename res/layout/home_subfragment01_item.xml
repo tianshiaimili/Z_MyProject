@@ -1,39 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
-    <LinearLayout 
-        android:id="@+id/home_sub_vpager_layout"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:orientation="vertical"
-        >
-          <android.support.v4.view.ViewPager
-            android:id="@+id/home_fragment01_viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:persistentDrawingCache="animation" />
-        
-        
-    </LinearLayout>
-    
-    
-    <TextView 
-        android:id="@+id/textview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:hint="内容即将呈现...."
-        android:textSize="24sp"
-        />
-
-</LinearLayout>
--->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -43,14 +8,12 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="4dp" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_ad"
             android:layout_width="match_parent"
-            android:layout_height="180dp" />
+            android:layout_height="150dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,20 +109,41 @@
         android:text="最新热门"
         android:textColor="@color/home_group_item_txt_67"
         android:textSize="14sp" />
-    
-    <LinearLayout 
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        >
-        <ImageView 
-            android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:src="@drawable/xianjian1"
-            />
-        
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#FFCCCC"
+        android:orientation="vertical" >
+
+        <include layout="@layout/home_subfragment01_item_hot" />
     </LinearLayout>
-    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"
+        android:background="#FFCCCC"
+        android:orientation="vertical" >
+
+        <include layout="@layout/home_subfragment01_item_hot" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="3dp"
+        android:background="#00000000"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+
 </LinearLayout>
