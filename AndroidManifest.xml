@@ -26,8 +26,8 @@
         
         <activity android:name="com.hua.activity.MainActivityPhone"></activity>
         <activity android:name="com.hua.activity.FilterPhoneActivity"></activity>
-        <activity android:name="com.hua.activity.ImageDetailsActivity" >
-        </activity>
+        <activity android:name="com.hua.activity.ImageDetailsActivity" ></activity>
+        <activity android:name="com.hua.activity.WelcomeActivity" ></activity>
     </application>
 
 </manifest>

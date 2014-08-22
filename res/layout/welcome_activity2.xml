@@ -1,0 +1,107 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/welcome_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFCCCC"
+    android:gravity="center"
+    >
+    
+    <LinearLayout 
+        android:id="@+id/welcome_sub_laytou"
+        android:layout_width="match_parent"
+    	android:layout_height="50dp"
+    	android:layout_marginLeft="50dp"
+    	android:layout_marginRight="50dp"
+    	android:orientation="vertical"
+    	android:background="#666666"
+    	android:visibility="gone"
+    	
+        >
+    </LinearLayout>
+    
+      <LinearLayout
+          android:id="@+id/layout2" 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginLeft="50dp"
+    	android:layout_marginRight="50dp"
+    	android:orientation="horizontal"
+    	android:gravity="center"
+        >  
+        <TextView 
+            android:id="@+id/text1"
+              android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:text="玩"
+    			android:textColor="#FFFFFF"
+    			android:textSize="18sp"
+    			android:gravity="center"
+    			android:layout_centerHorizontal="true"
+            />
+          <TextView 
+            android:id="@+id/text2"
+              android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:text="命"
+    			android:textColor="#FFFFFF"
+    			android:textSize="18sp"
+    			android:gravity="center"
+    			android:layout_centerHorizontal="true"
+    			
+    			android:layout_toRightOf="@id/text1"
+            />
+            <TextView 
+            android:id="@+id/text3"
+              android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:text="加"
+    			android:textColor="#FFFFFF"
+    			android:textSize="18sp"
+    			android:gravity="center"
+    			android:layout_centerHorizontal="true"
+    			android:layout_toRightOf="@id/text2"
+            />
+              <TextView 
+            android:id="@+id/text4"
+              android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:text="载"
+    			android:textColor="#FFFFFF"
+    			android:textSize="18sp"
+    			android:gravity="center"
+    			android:layout_centerHorizontal="true"
+    			android:layout_toRightOf="@id/text3"
+            />
+                <TextView 
+            android:id="@+id/text5"
+              android:layout_width="wrap_content"
+    			android:layout_height="wrap_content"
+    			android:text="中"
+    			android:textColor="#FFFFFF"
+    			android:textSize="18sp"
+    			android:gravity="center"
+    			android:layout_centerHorizontal="true"
+    			android:layout_toRightOf="@id/text4"
+            />
+              
+         </LinearLayout>       
+    
+    <TextView
+        android:layout_marginTop="3dp"
+        android:id="@+id/welcome_textview" 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:gravity="center"
+		android:hint="内容即将呈现....."    
+		android:textColor="#FFFFFF"
+		android:textSize="24sp"
+		android:background="#666666"
+		android:layout_centerVertical="true"
+		android:layout_below="@id/layout2"
+        />
+    
+    
+</RelativeLayout>
+

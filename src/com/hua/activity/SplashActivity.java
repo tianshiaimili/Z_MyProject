@@ -54,6 +54,7 @@ public class SplashActivity extends BaseActivity {
 			
 			LogUtils2.d("+++++++++++++");
 			Intent intent = new Intent(getBaseContext(), MainActivityPhone.class);
+//			Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
 			startActivity(intent);
 			finish();
 			
