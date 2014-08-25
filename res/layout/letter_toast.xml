@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <TextView 
-        android:id="@+id/textview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
+    <TextView
+        android:id="@+id/tvToast"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/shape_toast"
         android:gravity="center"
-        android:hint="内容即将呈现...."
-        android:textSize="24sp"
-        />
+        android:textSize="22sp"
+        android:text="A" />
 
 </LinearLayout>
