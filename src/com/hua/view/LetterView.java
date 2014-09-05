@@ -8,29 +8,29 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 /**
- * ÕâÊÇÓÒ±ßµÄ×ÖÄ¸view
+ * è¿™æ˜¯å³è¾¹çš„å­—æ¯view
  * @author Hua
  *
  */
 public class LetterView extends View{
-	/**´¥Ãşµ½viewµÄÊ±ºòµÄ±³¾°ÑÕÉ«**/
+	/**è§¦æ‘¸åˆ°viewçš„æ—¶å€™çš„èƒŒæ™¯é¢œè‰²**/
 	public static final String COLOR_BG = "#9999CC66";
-	/**Ã»´¥ÃşviewµÄÊ±ºòµÄ±³¾°ÑÕÉ«**/
+	/**æ²¡è§¦æ‘¸viewçš„æ—¶å€™çš„èƒŒæ™¯é¢œè‰²**/
 	public static final int COLOR_NO_BG = 0x00000000;
-	/**Ñ¡ÖĞµÄ×ÖÄ¸µÄ×ÖÌåÑÕÉ«**/
+	/**é€‰ä¸­çš„å­—æ¯çš„å­—ä½“é¢œè‰²**/
 	public static final int COLOR_TEXT_SELECTED = 0xff386AB7;
-	/**Ã»Ñ¡ÖĞµÄ×ÖÄ¸µÄ×ÖÌåÑÕÉ«**/
+	/**æ²¡é€‰ä¸­çš„å­—æ¯çš„å­—ä½“é¢œè‰²**/
 	public static final int COLOR_TEXT_NORMAL = 0xff000000;
-	/**×ÖÄ¸µÄ×ÖÌå´óĞ¡**/
+	/**å­—æ¯çš„å­—ä½“å¤§å°**/
 	public static final int SIZE_TEXT = 22;
-	/**×ÖÄ¸±í**/
+	/**å­—æ¯è¡¨**/
 	private static final String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private Paint paint;
-	/**¸ÃViewµÄ¿í**/
+	/**è¯¥Viewçš„å®½**/
 	private int width;
-	/**¸ÃViewµÄ¸ß**/
+	/**è¯¥Viewçš„é«˜**/
 	private int height;
-	/**µ¥¸ö×ÖÄ¸µÄ¸ß**/
+	/**å•ä¸ªå­—æ¯çš„é«˜**/
 	private int singleHight;
 	public LetterView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -39,9 +39,9 @@ public class LetterView extends View{
 
 	private void init() {
 		paint = new Paint();
-		paint.setAntiAlias(true); //¿¹¾â³İ
-		paint.setTextSize(SIZE_TEXT); //ÉèÖÃ×ÖÌå´óĞ¡
-		paint.setFakeBoldText(true); //ÉèÖÃÎÄ×ÖÎª´ÖÌå
+		paint.setAntiAlias(true); //æŠ—é”¯é½¿
+		paint.setTextSize(SIZE_TEXT); //è®¾ç½®å­—ä½“å¤§å°
+		paint.setFakeBoldText(true); //è®¾ç½®æ–‡å­—ä¸ºç²—ä½“
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class LetterView extends View{
 			}else{
 				paint.setColor(COLOR_TEXT_NORMAL);
 			}
-			//paint.measureText(str)  ²âÁ¿strµÄ¿í
+			//paint.measureText(str)  æµ‹é‡strçš„å®½
 			float xPos = (width-paint.measureText(letters.charAt(i)+""))/2;
 			float yPos = singleHight*i+singleHight;
 			canvas.drawText(letters.charAt(i)+"", xPos, yPos, paint);
@@ -77,7 +77,7 @@ public class LetterView extends View{
 			currentSelectedIndex = letters.length() - 1;
 		}
 		if(letterChangeListener != null){
-			//»Øµ÷
+			//å›è°ƒ
 			letterChangeListener.onLetterChange(currentSelectedIndex);
 		}
 		invalidate();

@@ -61,12 +61,12 @@ public class LettersAdapter extends BaseAdapter{
 		cursor.moveToPosition(position);
 		holder.tvCompanyName.setText(cursor.getString(cursor.getColumnIndex(ExpressDbHelper.TABLE_COMPANY_COMPANY_NAME)));
 		/**
-		 * »ñÈ¡¸Ãitem¶ÔÓ¦µÄ×ÖÄ¸ÔÚ×ÖÄ¸±íÖĞµÄÎ»ÖÃ
-		 * ÒòÎªÒ»¸ö×ÖÄ¸×é¿ÉÄÜ¶ÔÓ¦¶à¸öitemµÄ ¡£ÀıÈçA×ÖÄ¸×é£¬¾Í¶ÔÓ¦ÁË5¼Ò¹«Ë¾
+		 * è·å–è¯¥itemå¯¹åº”çš„å­—æ¯åœ¨å­—æ¯è¡¨ä¸­çš„ä½ç½®
+		 * å› ä¸ºä¸€ä¸ªå­—æ¯ç»„å¯èƒ½å¯¹åº”å¤šä¸ªitemçš„ ã€‚ä¾‹å¦‚Aå­—æ¯ç»„ï¼Œå°±å¯¹åº”äº†5å®¶å…¬å¸
 		 */
 		int section = indexer.getSectionForPosition(position);
 		/**
-		 * »ñÈ¡¸Ã×ÖÄ¸·Ö×éÖĞµÚÒ»ÌõÊı¾İµÄÎ»ÖÃ£¬ÀıÈç »ñÈ¡B×ÖÄ¸×éÖĞB¹«Ë¾¿ªÍ·µÄµÚÒ»¸ö¹«Ë¾µÄÎ»ÖÃ
+		 * è·å–è¯¥å­—æ¯åˆ†ç»„ä¸­ç¬¬ä¸€æ¡æ•°æ®çš„ä½ç½®ï¼Œä¾‹å¦‚ è·å–Bå­—æ¯ç»„ä¸­Bå…¬å¸å¼€å¤´çš„ç¬¬ä¸€ä¸ªå…¬å¸çš„ä½ç½®
 		 */
 		int pos = indexer.getPositionForSection(section);
 		if(pos == position){
@@ -80,7 +80,7 @@ public class LettersAdapter extends BaseAdapter{
 
 	class ViewHolder{
 		/**
-		 * ListviewÖĞ ·Ö¸ôµÄ×ÖÄ¸À¸
+		 * Listviewä¸­ åˆ†éš”çš„å­—æ¯æ 
 		 */
 		TextView tvLetter;
 		TextView tvCompanyName;

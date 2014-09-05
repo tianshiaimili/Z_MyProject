@@ -30,7 +30,7 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 	    private Button mItemButton3;
 	    private Button mItemButton4;
 	    private Button mItemButton5;
-	    private boolean mIsMenuOpen = false;//ÅĞ¶ÏÊÇ·ñÒ»´ò¿ª
+	    private boolean mIsMenuOpen = false;//åˆ¤æ–­æ˜¯å¦ä¸€æ‰“å¼€
 	    
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
@@ -143,11 +143,11 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 	}
 	
 	 /**
-     * ´ò¿ª²Ëµ¥µÄ¶¯»­
-     * @param view Ö´ĞĞ¶¯»­µÄview
-     * @param index viewÔÚ¶¯»­ĞòÁĞÖĞµÄË³Ğò
-     * @param total ¶¯»­ĞòÁĞµÄ¸öÊı
-     * @param radius ¶¯»­°ë¾¶
+     * æ‰“å¼€èœå•çš„åŠ¨ç”»
+     * @param view æ‰§è¡ŒåŠ¨ç”»çš„view
+     * @param index viewåœ¨åŠ¨ç”»åºåˆ—ä¸­çš„é¡ºåº
+     * @param total åŠ¨ç”»åºåˆ—çš„ä¸ªæ•°
+     * @param radius åŠ¨ç”»åŠå¾„
      */
     private void doAnimateOpen(View view, int index, int total, int radius) {
         if (view.getVisibility() != View.VISIBLE) {
@@ -159,14 +159,14 @@ public class SettingsFragment extends Fragment implements OnClickListener{
         LogUtils2.d("SettingFragmnet", String.format("degree=%f, translationX=%d, translationY=%d",
                 degree, translationX, translationY));
         AnimatorSet set = new AnimatorSet();
-        //°üº¬Æ½ÒÆ¡¢Ëõ·ÅºÍÍ¸Ã÷¶È¶¯»­
+        //åŒ…å«å¹³ç§»ã€ç¼©æ”¾å’Œé€æ˜åº¦åŠ¨ç”»
         set.playTogether(
                 ObjectAnimator.ofFloat(view, "translationX", 0, translationX),
                 ObjectAnimator.ofFloat(view, "translationY", 0, translationY),
                 ObjectAnimator.ofFloat(view, "scaleX", 0f, 1f),
                 ObjectAnimator.ofFloat(view, "scaleY", 0f, 1f),
                 ObjectAnimator.ofFloat(view, "alpha", 0f, 1));
-        //¶¯»­ÖÜÆÚÎª500ms
+        //åŠ¨ç”»å‘¨æœŸä¸º500ms
         try {
 			set.setInterpolator(OvershootInterpolator.class.newInstance());
 		} catch (Exception e) {
@@ -178,11 +178,11 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 	
     
     /**
-     * ¹Ø±Õ²Ëµ¥µÄ¶¯»­
-     * @param view Ö´ĞĞ¶¯»­µÄview
-     * @param index viewÔÚ¶¯»­ĞòÁĞÖĞµÄË³Ğò
-     * @param total ¶¯»­ĞòÁĞµÄ¸öÊı
-     * @param radius ¶¯»­°ë¾¶
+     * å…³é—­èœå•çš„åŠ¨ç”»
+     * @param view æ‰§è¡ŒåŠ¨ç”»çš„view
+     * @param index viewåœ¨åŠ¨ç”»åºåˆ—ä¸­çš„é¡ºåº
+     * @param total åŠ¨ç”»åºåˆ—çš„ä¸ªæ•°
+     * @param radius åŠ¨ç”»åŠå¾„
      */
     private void doAnimateClose(final View view, int index, int total,
             int radius) {
@@ -227,23 +227,23 @@ public class SettingsFragment extends Fragment implements OnClickListener{
         	
         });
         /**
-         *  AccelerateDecelerateInterpolator ÔÚ¶¯»­¿ªÊ¼Óë½áÊøµÄµØ·½ËÙÂÊ¸Ä±ä±È½ÏÂı£¬ÔÚÖĞ¼äµÄÊ±ºò¼ÓËÙ
+         *  AccelerateDecelerateInterpolator åœ¨åŠ¨ç”»å¼€å§‹ä¸ç»“æŸçš„åœ°æ–¹é€Ÿç‡æ”¹å˜æ¯”è¾ƒæ…¢ï¼Œåœ¨ä¸­é—´çš„æ—¶å€™åŠ é€Ÿ
 
-     AccelerateInterpolator  ÔÚ¶¯»­¿ªÊ¼µÄµØ·½ËÙÂÊ¸Ä±ä±È½ÏÂı£¬È»ºó¿ªÊ¼¼ÓËÙ
+     AccelerateInterpolator  åœ¨åŠ¨ç”»å¼€å§‹çš„åœ°æ–¹é€Ÿç‡æ”¹å˜æ¯”è¾ƒæ…¢ï¼Œç„¶åå¼€å§‹åŠ é€Ÿ
 
-   AnticipateInterpolator ¿ªÊ¼µÄÊ±ºòÏòºóÈ»ºóÏòÇ°Ë¦
+   AnticipateInterpolator å¼€å§‹çš„æ—¶å€™å‘åç„¶åå‘å‰ç”©
 
-   AnticipateOvershootInterpolator ¿ªÊ¼µÄÊ±ºòÏòºóÈ»ºóÏòÇ°Ë¦Ò»¶¨Öµºó·µ»Ø×îºóµÄÖµ
+   AnticipateOvershootInterpolator å¼€å§‹çš„æ—¶å€™å‘åç„¶åå‘å‰ç”©ä¸€å®šå€¼åè¿”å›æœ€åçš„å€¼
 
-   BounceInterpolator   ¶¯»­½áÊøµÄÊ±ºòµ¯Æğ
+   BounceInterpolator   åŠ¨ç”»ç»“æŸçš„æ—¶å€™å¼¹èµ·
 
-   CycleInterpolator ¶¯»­Ñ­»·²¥·ÅÌØ¶¨µÄ´ÎÊı£¬ËÙÂÊ¸Ä±äÑØ×ÅÕıÏÒÇúÏß
+   CycleInterpolator åŠ¨ç”»å¾ªç¯æ’­æ”¾ç‰¹å®šçš„æ¬¡æ•°ï¼Œé€Ÿç‡æ”¹å˜æ²¿ç€æ­£å¼¦æ›²çº¿
 
-   DecelerateInterpolator ÔÚ¶¯»­¿ªÊ¼µÄµØ·½¿ìÈ»ºóÂı
+   DecelerateInterpolator åœ¨åŠ¨ç”»å¼€å§‹çš„åœ°æ–¹å¿«ç„¶åæ…¢
 
-     LinearInterpolator   ÒÔ³£Á¿ËÙÂÊ¸Ä±ä
+     LinearInterpolator   ä»¥å¸¸é‡é€Ÿç‡æ”¹å˜
 
-     OvershootInterpolator    ÏòÇ°Ë¦Ò»¶¨ÖµºóÔÙ»Øµ½Ô­À´Î»ÖÃ
+     OvershootInterpolator    å‘å‰ç”©ä¸€å®šå€¼åå†å›åˆ°åŸæ¥ä½ç½®
          */
         try {
 			viewPropertyAnimator.setInterpolator(AnticipateInterpolator.class.newInstance());
@@ -256,14 +256,14 @@ public class SettingsFragment extends Fragment implements OnClickListener{
         
 //        
 //        AnimatorSet set = new AnimatorSet();
-//      //°üº¬Æ½ÒÆ¡¢Ëõ·ÅºÍÍ¸Ã÷¶È¶¯»­
+//      //åŒ…å«å¹³ç§»ã€ç¼©æ”¾å’Œé€æ˜åº¦åŠ¨ç”»
 //        set.playTogether(
 //                ObjectAnimator.ofFloat(view, "translationX", translationX, 0),
 //                ObjectAnimator.ofFloat(view, "translationY", translationY, 0),
 //                ObjectAnimator.ofFloat(view, "scaleX", 1f, 0f),
 //                ObjectAnimator.ofFloat(view, "scaleY", 1f, 0f),
 //                ObjectAnimator.ofFloat(view, "alpha", 1f, 0f));
-//        //Îª¶¯»­¼ÓÉÏÊÂ¼ş¼àÌı£¬µ±¶¯»­½áÊøµÄÊ±ºò£¬ÎÒÃÇ°Ñµ±Ç°viewÒş²Ø
+//        //ä¸ºåŠ¨ç”»åŠ ä¸Šäº‹ä»¶ç›‘å¬ï¼Œå½“åŠ¨ç”»ç»“æŸçš„æ—¶å€™ï¼Œæˆ‘ä»¬æŠŠå½“å‰viewéšè—
 //        set.addListener(new AnimatorListener() {
 //            @Override
 //            public void onAnimationStart(Animator animator) {

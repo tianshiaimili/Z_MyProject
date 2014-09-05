@@ -9,13 +9,13 @@ public class ExpressDbHelper extends SQLiteOpenHelper{
 	public static final int VERSION = 1;
 	public static final String TABLE_COMPANY_NAME = "company";
 	public static final String TABLE_COMPANY_ID = "_id";
-	/**¿ìµİ¹«Ë¾Ãû×Ö**/
+	/**å¿«é€’å…¬å¸åå­—**/
 	public static final String TABLE_COMPANY_COMPANY_NAME = "company_name";
-	/**¿ìµİ¹«Ë¾¶ÔÓ¦code**/
+	/**å¿«é€’å…¬å¸å¯¹åº”code**/
 	public static final String TABLE_COMPANY_COMPANY_CODE = "company_code";
-	/**¹«Ë¾Ãû×Ö¶ÔÓ¦µÄÊ××ÖÄ¸**/
+	/**å…¬å¸åå­—å¯¹åº”çš„é¦–å­—æ¯**/
 	public static final String TABLE_COMPANY_COMPANY_INITIAL = "initial";
-	/**³£ÓÃ**/
+	/**å¸¸ç”¨**/
 	public static final String TABLE_COMPANY_COMMON = "common";
 	public ExpressDbHelper(Context context) {
 		super(context, DB_NAME, null, VERSION);

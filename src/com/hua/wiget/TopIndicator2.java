@@ -23,7 +23,7 @@ import com.hua.util.DensityUtil;
 import com.hua.util.LogUtils2;
 
 /**
- * ¶¥²¿indicator
+ * é¡¶éƒ¨indicator
  * 
  * 
  */
@@ -38,20 +38,20 @@ public class TopIndicator2 extends LinearLayout {
 	private List<CheckedTextView> mCheckedTextViewList = new ArrayList<CheckedTextView>();
 	private List<View> mViewList = new ArrayList<View>();
 	/**
-	 * ±êÌâ
+	 * æ ‡é¢˜
 	 */
-	private CharSequence[] mtitles = new CharSequence[]{"¾«Ñ¡", "·¢ÏÖ", "°ñµ¥",
-			"ÍÅ¹º"};
+	private CharSequence[] mtitles = new CharSequence[]{"ç²¾é€‰", "å‘ç°", "æ¦œå•",
+			"å›¢è´­"};
 	
 	//
 	private int mScreenWidth;
-	private int mUnderLineWidth;//»¬¶¯ÏßµÄ¿í
+	private int mUnderLineWidth;//æ»‘åŠ¨çº¿çš„å®½
 	private View mUnderLine;
-	// µ×²¿ÏßÌõÒÆ¶¯³õÊ¼Î»ÖÃ
+	// åº•éƒ¨çº¿æ¡ç§»åŠ¨åˆå§‹ä½ç½®
 	private int mUnderLineFromX = 0;
 	
 	/**
-	 * Ò»¸ö»Øµ÷½Ó¿Ú 
+	 * ä¸€ä¸ªå›è°ƒæ¥å£ 
 	 */
 	private OnClickTopIndicatorListener onClickTopIndicatorListener;	
 	
@@ -80,7 +80,7 @@ public class TopIndicator2 extends LinearLayout {
 		setOrientation(LinearLayout.VERTICAL);
 		this.setBackgroundColor(Color.rgb(250, 250, 250));
 		/**
-		 * ÉèÖÃÒÆ¶¯Ìõ
+		 * è®¾ç½®ç§»åŠ¨æ¡
 		 */
 		mScreenWidth = context.getResources().getDisplayMetrics().widthPixels;
 		mUnderLineWidth = mScreenWidth / mtitles.length;
@@ -93,7 +93,7 @@ public class TopIndicator2 extends LinearLayout {
 		
 		
 		
-		//¶¥²¿µÄlayout
+		//é¡¶éƒ¨çš„layout
 		LinearLayout topLayout = new LinearLayout(context);
 		
 		LinearLayout.LayoutParams topParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -127,9 +127,9 @@ public class TopIndicator2 extends LinearLayout {
 			
 			
 			mCheckedTextViewList.add(checkedTextView);//
-			mViewList.add(view);//Ìí¼ÓÃ¿Ò»¸ö±êÌâµÄview
+			mViewList.add(view);//æ·»åŠ æ¯ä¸€ä¸ªæ ‡é¢˜çš„view
 			/**
-			 * ÉèÖÃ¼àÌı
+			 * è®¾ç½®ç›‘å¬
 			 */
 			view.setOnClickListener(new OnClickListener() {
 				
@@ -140,7 +140,7 @@ public class TopIndicator2 extends LinearLayout {
 			});
 			
 			
-			// ³õÊ¼»¯ µ×²¿²Ëµ¥Ñ¡ÖĞ×´Ì¬,Ä¬ÈÏµÚÒ»¸öÑ¡ÖĞ
+			// åˆå§‹åŒ– åº•éƒ¨èœå•é€‰ä¸­çŠ¶æ€,é»˜è®¤ç¬¬ä¸€ä¸ªé€‰ä¸­
 			if(index == 0){
 				
 				checkedTextView.setChecked(true);
@@ -162,7 +162,7 @@ public class TopIndicator2 extends LinearLayout {
 	
 
 	/**
-	 * ÉèÖÃµ×²¿µ¼º½ÖĞÍ¼Æ¬ÏÔÊ¾×´Ì¬ºÍ×ÖÌåÑÕÉ«
+	 * è®¾ç½®åº•éƒ¨å¯¼èˆªä¸­å›¾ç‰‡æ˜¾ç¤ºçŠ¶æ€å’Œå­—ä½“é¢œè‰²
 	 */
 	public void setTabsDisplay(Context context, int index) {
 		int size = mCheckedTextViewList.size();
@@ -177,8 +177,8 @@ public class TopIndicator2 extends LinearLayout {
 				checkedTextView.setTextColor(context.getResources().getColor(R.color.homefragment_top_title_select_cancel));
 			}
 		}
-		// ÏÂ»®Ïß¶¯»­
-		LogUtils2.d("¿ªÊ¼ÏÂÏß¶¯»­");
+		// ä¸‹åˆ’çº¿åŠ¨ç”»
+		LogUtils2.d("å¼€å§‹ä¸‹çº¿åŠ¨ç”»");
 		doUnderLineAnimation(index);
 	}
 	
@@ -208,7 +208,7 @@ public class TopIndicator2 extends LinearLayout {
 
 	
 	/**
-	 *»Øµ÷½è¿Ú£¬×÷ÓÃÊÇµ±µã»÷Í¶Æ±±êÌâÊ± ×ö³öÏàÓ¦µÄ¸Ä±ä
+	 *å›è°ƒå€Ÿå£ï¼Œä½œç”¨æ˜¯å½“ç‚¹å‡»æŠ•ç¥¨æ ‡é¢˜æ—¶ åšå‡ºç›¸åº”çš„æ”¹å˜
 	 */
 	public interface OnClickTopIndicatorListener{
 		

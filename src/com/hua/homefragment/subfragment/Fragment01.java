@@ -50,12 +50,12 @@ import com.hua.view.MyGridView;
 public class Fragment01 extends Fragment {
 	
 	/**
-	 * µ¯ĞÔscrollview
+	 * å¼¹æ€§scrollview
 	 */
 	private ElasticScrollView elasticScrollView;
 	
 	/**
-	 * ºá·ùµÄviewpgaer 
+	 * æ¨ªå¹…çš„viewpgaer 
 	 */
 	private ViewPager viewPager;
 	
@@ -64,7 +64,7 @@ public class Fragment01 extends Fragment {
 	private int currentPosition = 0;
 	private TextView tv_title;
 	/**
-	 * ·ÖÀàÂş»­ ºÍÍÆ¼öÂş»­µÄ gridView
+	 * åˆ†ç±»æ¼«ç”» å’Œæ¨èæ¼«ç”»çš„ gridView
 	 */
 	private GridView gv_category;
 	private MyGridView gv_recommend;
@@ -72,19 +72,19 @@ public class Fragment01 extends Fragment {
 			R.drawable.haizie_bg, R.drawable.heizi, R.drawable.sishen_bg,
 			R.drawable.huoying,R.drawable.caomao,R.drawable.diguang,R.drawable.huoying,
 			R.drawable.huoying,R.drawable.caomao,R.drawable.diguang,R.drawable.huoying};
-	String[] recommend_msg = new String[] { "»ğÓ°ÈÌÕß", "º£ÔôÍõ", "ºÚ×ÓµÄÀºÇò", "ËÀÉñ",
-			"»ğÓ°ÈÌÕß", "º£ÔôÍõ", "ºÚ×ÓµÄÀºÇò", "ËÀÉñ","ËÀÉñ","µÂÂêÎ÷ÑÇ","ºÚ×ÓµÄÀºÇò", "ËÀÉñ"
+	String[] recommend_msg = new String[] { "ç«å½±å¿è€…", "æµ·è´¼ç‹", "é»‘å­çš„ç¯®çƒ", "æ­»ç¥",
+			"ç«å½±å¿è€…", "æµ·è´¼ç‹", "é»‘å­çš„ç¯®çƒ", "æ­»ç¥","æ­»ç¥","å¾·ç›è¥¿äºš","é»‘å­çš„ç¯®çƒ", "æ­»ç¥"
 			};
-	String[] ad_text = new String[] { "»ğÓ°ÈÌÕß", "º£ÔôÍõ", "ºÚ×ÓµÄÀºÇò", "ËÀÉñ","µÂÂêÎ÷ÑÇ" };
+	String[] ad_text = new String[] { "ç«å½±å¿è€…", "æµ·è´¼ç‹", "é»‘å­çš„ç¯®çƒ", "æ­»ç¥","å¾·ç›è¥¿äºš" };
 	
 	/**
-	 * ÓÃÀ´¼ÆËã·ÖgeÍ¼Æ¬
+	 * ç”¨æ¥è®¡ç®—åˆ†geå›¾ç‰‡
 	 */
 	int count;
 	private boolean ischange;
 	
 	/**
-	 * Éè¼Æ¹ã¸æ¸± ×ß¶¯
+	 * è®¾è®¡å¹¿å‘Šå‰¯ èµ°åŠ¨
 	 */
 	private int currentItem=0;
 	private Timer timer;
@@ -173,9 +173,9 @@ public class Fragment01 extends Fragment {
 			});
 		
 		   /**
-		    * ÉèÖÃ¹ã¸æºá·ù×ß¶¯
+		    * è®¾ç½®å¹¿å‘Šæ¨ªå¹…èµ°åŠ¨
 		    */
-			//×Ô¶¯Ìø×ª¹ã¸æ
+			//è‡ªåŠ¨è·³è½¬å¹¿å‘Š
 			task = new TimerTask() {
 
 				@Override
@@ -188,7 +188,7 @@ public class Fragment01 extends Fragment {
 						}
 						
 						Message message = handler.obtainMessage(6);
-//						handler.obtainMessage().sendToTarget(); // Í¨¹ıHandlerÇĞ»»Í¼Æ¬
+//						handler.obtainMessage().sendToTarget(); // é€šè¿‡Handleråˆ‡æ¢å›¾ç‰‡
 						handler.sendMessage(message);
 					}
 
@@ -208,7 +208,7 @@ public class Fragment01 extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		// »ñµÃ·şÎñ¶Ë¹ã¸æÍ¼Æ¬£¬ÕâÀïÎÒÃÇ¾Í¼òµ¥µÄÖ±½ÓÈ¡±¾µØÊı¾İ
+		// è·å¾—æœåŠ¡ç«¯å¹¿å‘Šå›¾ç‰‡ï¼Œè¿™é‡Œæˆ‘ä»¬å°±ç®€å•çš„ç›´æ¥å–æœ¬åœ°æ•°æ®
 		getAdData();
 		///
 		getCategoryData();
@@ -251,9 +251,9 @@ public class Fragment01 extends Fragment {
 		super.onResume();
 		if(isCanel){
 			   /**
-			    * ÉèÖÃ¹ã¸æºá·ù×ß¶¯
+			    * è®¾ç½®å¹¿å‘Šæ¨ªå¹…èµ°åŠ¨
 			    */
-				//×Ô¶¯Ìø×ª¹ã¸æ
+				//è‡ªåŠ¨è·³è½¬å¹¿å‘Š
 				task = new TimerTask() {
 
 					@Override
@@ -267,7 +267,7 @@ public class Fragment01 extends Fragment {
 							}
 							
 							Message message = handler.obtainMessage(6);
-//							handler.obtainMessage().sendToTarget(); // Í¨¹ıHandlerÇĞ»»Í¼Æ¬
+//							handler.obtainMessage().sendToTarget(); // é€šè¿‡Handleråˆ‡æ¢å›¾ç‰‡
 							handler.sendMessage(message);
 						}
 
@@ -281,7 +281,7 @@ public class Fragment01 extends Fragment {
 	}
 	
 	/**
-	 * ³õÊ¼»¯ ×ÓviewÖĞµÄcontent
+	 * åˆå§‹åŒ– å­viewä¸­çš„content
 	 * @param context
 	 */
 	private void initSubView(Context context,View view) {
@@ -297,23 +297,23 @@ public class Fragment01 extends Fragment {
 				// TODO Auto-generated method stub
 				LogUtils2.e("77779999977777777777");
 				switch (scrollState) {
-				// µ±²»¹ö¶¯Ê±
+				// å½“ä¸æ»šåŠ¨æ—¶
 
 //				case OnScrollListener.SCROLL_STATE_IDLE:
-//					// ÅĞ¶Ï¹ö¶¯µ½µ×²¿
+//					// åˆ¤æ–­æ»šåŠ¨åˆ°åº•éƒ¨
 //					if (gv_recommend.getLastVisiblePosition() == (gv_recommend.getCount() - 1)) {
 //						
 ////						gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
-//						Toast.makeText(getActivity(), "µ½di", 300).show();
+//						Toast.makeText(getActivity(), "åˆ°di", 300).show();
 //						gv_recommend.setfouce();
 //					} else {
 ////						gv_recommend.getParent().requestDisallowInterceptTouchEvent(true);
 //					}
-//					// ÅĞ¶Ï¹ö¶¯µ½¶¥²¿
+//					// åˆ¤æ–­æ»šåŠ¨åˆ°é¡¶éƒ¨
 //
 //					if (gv_recommend.getFirstVisiblePosition() == 0) {
 ////						gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
-//						Toast.makeText(getActivity(), "µ½Í·", 300).show();
+//						Toast.makeText(getActivity(), "åˆ°å¤´", 300).show();
 //						gv_recommend.setfouce();
 //					} else {
 //
@@ -323,20 +323,20 @@ public class Fragment01 extends Fragment {
 //					break;
 				case OnScrollListener.SCROLL_STATE_IDLE:
 					
-					// ÅĞ¶Ï¹ö¶¯µ½µ×²¿
+					// åˆ¤æ–­æ»šåŠ¨åˆ°åº•éƒ¨
 					if (gv_recommend.getLastVisiblePosition() == (gv_recommend.getCount() - 1)) {
 						
 //						gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
-//						Toast.makeText(getActivity(), "µÀdi", 300).show();
+//						Toast.makeText(getActivity(), "é“di", 300).show();
 						gv_recommend.setfouce();
 					} else {
 //						gv_recommend.getParent().requestDisallowInterceptTouchEvent(true);
 					}
-					// ÅĞ¶Ï¹ö¶¯µ½¶¥²¿
+					// åˆ¤æ–­æ»šåŠ¨åˆ°é¡¶éƒ¨
 
 					if (gv_recommend.getFirstVisiblePosition() == 0) {
 //						gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
-//						Toast.makeText(getActivity(), "µÀÍ·", 300).show();
+//						Toast.makeText(getActivity(), "é“å¤´", 300).show();
 						gv_recommend.setfouce();
 					} else {
 
@@ -353,12 +353,12 @@ public class Fragment01 extends Fragment {
 				// TODO Auto-generated method stub
 				
 //				  if(firstVisibleItem==0){  
-//					  //¶¥²¿
+//					  //é¡¶éƒ¨
 //					  LogUtils2.i("66666666666666666");
 //					  gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
 //		          }       
 //		          if(visibleItemCount+firstVisibleItem==totalItemCount){  
-//		            //µ×²¿
+//		            //åº•éƒ¨
 //		        	  gv_recommend.getParent().requestDisallowInterceptTouchEvent(false);
 //		          }
 				
@@ -369,7 +369,7 @@ public class Fragment01 extends Fragment {
 	}
 	
 	/**
-	 * ´´½¨Ö¸Ê¾µã
+	 * åˆ›å»ºæŒ‡ç¤ºç‚¹
 	 * @param view
 	 */
 	private void createPoint(View view) {
@@ -391,7 +391,7 @@ public class Fragment01 extends Fragment {
 	}
 	
 	/**
-	 * »ñµÃ¹ã¸æÊı¾İ
+	 * è·å¾—å¹¿å‘Šæ•°æ®
 	 */
 	private void getAdData() {
 		List<Integer> list = new ArrayList<Integer>();
@@ -415,7 +415,7 @@ public class Fragment01 extends Fragment {
 	
 
 	/**
-	 * ¸Ä±äÏÔÊ¾µÄÎÄ×Ö
+	 * æ”¹å˜æ˜¾ç¤ºçš„æ–‡å­—
 	 * @param position
 	 */
 	private void setCurPoint(int position) {
@@ -450,7 +450,7 @@ public class Fragment01 extends Fragment {
 	}
 	
 	/**
-	 * »ñµÃ·ÖÀà gridView·ÖÀàÊı¾İ
+	 * è·å¾—åˆ†ç±» gridViewåˆ†ç±»æ•°æ®
 	 */
 	private void getCategoryData() {
 		
@@ -462,7 +462,7 @@ public class Fragment01 extends Fragment {
 	}
 	
 	/**
-	 * »ñÈ¡gridViewÍÆ¼öÂş»­µÄÊı¾İ
+	 * è·å–gridViewæ¨èæ¼«ç”»çš„æ•°æ®
 	 */
 	private void getRecommendData() {
 		final List<CategoryInfo> list2 = new ArrayList<CategoryInfo>();
@@ -480,13 +480,13 @@ public class Fragment01 extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Toast.makeText(getActivity(), "ÄúÑ¡ÖĞ£º"+list2.get(position).getMsg(), 300).show();
+				Toast.makeText(getActivity(), "æ‚¨é€‰ä¸­ï¼š"+list2.get(position).getMsg(), 300).show();
 			}
 		});
 	}
 	
 	/**
-	 * Ä£ÄâË¢ĞÂÌí¼ÓÍ¼Æ¬
+	 * æ¨¡æ‹Ÿåˆ·æ–°æ·»åŠ å›¾ç‰‡
 	 */
 	protected void OnReceiveData(String str,int num) {
 		if(str != null){

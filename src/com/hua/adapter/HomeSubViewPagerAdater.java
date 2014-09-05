@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 /**
- * Ê×Ò³ÉÌ¼Ò¹ã¸æÊÊÅäÆ÷
+ * é¦–é¡µå•†å®¶å¹¿å‘Šé€‚é…å™¨
  *
  */
 public class HomeSubViewPagerAdater extends PagerAdapter implements OnClickListener{

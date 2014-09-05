@@ -162,7 +162,7 @@ public class DownloadFragment extends Fragment implements OnClickListener{
 				 R.layout.edit_listview_item, new String[]{"edit_imageview_item","edit_text_item"}, new int[]{R.id.edit_imageview_item,R.id.edit_text_item});
 		 editListView = (ListView) view.findViewById(R.id.edit_listview);
 		 /**
-		  * 添加ListView的头和尾的话 要在setAdapter之前
+		  * 娣诲姞ListView鐨勫ご鍜屽熬鐨勮瘽 瑕佸湪setAdapter涔嬪墠
 		  */
 		 View headerView = new View(getActivity());
 		 headerView.setBackgroundColor(Color.parseColor("#FFFFFF"));

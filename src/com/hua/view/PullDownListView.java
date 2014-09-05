@@ -18,7 +18,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 
 /**
- * ÉÏÏÂÀ­Ê±¾ßÓĞµ¯ĞÔµÄListView£¬ÂıÂıµÄ·µ»Ø
+ * ä¸Šä¸‹æ‹‰æ—¶å…·æœ‰å¼¹æ€§çš„ListViewï¼Œæ…¢æ…¢çš„è¿”å›
  * 
  * @version 1.0
  * @time 2013-12-24 10:17:29
@@ -28,23 +28,23 @@ public class PullDownListView extends ListView implements OnScrollListener {
 	private static final int PULL_DOWN_BACK_ACTION = 0x01;
 	private static final int PULL_UP_BACK_ACTION = 0x02;
 
-	private static final float PULL_FACTOR = 0.5F;// ÏÂÀ­Òò×Ó,ÊµÏÖÏÂÀ­Ê±µÄÑÓ³ÙĞ§¹û
-	private static final int PULL_BACK_REDUCE_STEP = 1;// »Øµ¯Ê±Ã¿´Î¼õÉÙµÄ¸ß¶È
-	private static final int PULL_BACK_TASK_PERIOD = 500000;// »Øµ¯Ê±µİ¼õHeadView¸ß¶ÈµÄÆµÂÊ, ×¢ÒâÒÔÄÉÃëÎªµ¥Î»
+	private static final float PULL_FACTOR = 0.5F;// ä¸‹æ‹‰å› å­,å®ç°ä¸‹æ‹‰æ—¶çš„å»¶è¿Ÿæ•ˆæœ
+	private static final int PULL_BACK_REDUCE_STEP = 1;// å›å¼¹æ—¶æ¯æ¬¡å‡å°‘çš„é«˜åº¦
+	private static final int PULL_BACK_TASK_PERIOD = 500000;// å›å¼¹æ—¶é€’å‡HeadViewé«˜åº¦çš„é¢‘ç‡, æ³¨æ„ä»¥çº³ç§’ä¸ºå•ä½
 	private boolean isRecordPullDown;
 	private boolean isRecordPullUp;
-	private int startPullDownY;// ¼ÇÂ¼¸Õ¿ªÊ¼ÏÂÀ­Ê±µÄ´¥ÃşÎ»ÖÃµÄY×ø±ê
-	private int startPullUpY;// ¼ÇÂ¼¸Õ¿ªÊ¼ÉÏÀ­Ê±µÄ´¥ÃşÎ»ÖÃµÄY×ø±ê
-	private int firstItemIndex;// µÚÒ»¸ö¿É¼ûÌõÄ¿µÄË÷Òı
-	private int lastItemIndex;// ×îºóÒ»¸ö¿É¼ûÌõÄ¿µÄË÷Òı
-	private View mHeadView;// ÓÃÓÚÊµÏÖÏÂÀ­µ¯ĞÔĞ§¹ûµÄHeadView
-	private View mTailView;// ÓÃÓÚÊµÏÖÉÏÀ­µ¯ĞÔĞ§¹ûµÄTailView
+	private int startPullDownY;// è®°å½•åˆšå¼€å§‹ä¸‹æ‹‰æ—¶çš„è§¦æ‘¸ä½ç½®çš„Yåæ ‡
+	private int startPullUpY;// è®°å½•åˆšå¼€å§‹ä¸Šæ‹‰æ—¶çš„è§¦æ‘¸ä½ç½®çš„Yåæ ‡
+	private int firstItemIndex;// ç¬¬ä¸€ä¸ªå¯è§æ¡ç›®çš„ç´¢å¼•
+	private int lastItemIndex;// æœ€åä¸€ä¸ªå¯è§æ¡ç›®çš„ç´¢å¼•
+	private View mHeadView;// ç”¨äºå®ç°ä¸‹æ‹‰å¼¹æ€§æ•ˆæœçš„HeadView
+	private View mTailView;// ç”¨äºå®ç°ä¸Šæ‹‰å¼¹æ€§æ•ˆæœçš„TailView
 	private int currentScrollState;
-	private ScheduledExecutorService schedulor;// ÊµÏÖ»Øµ¯Ğ§¹ûµÄµ÷¶ÈÆ÷
-//	private ScheduledExecutorService schedulor_pull_up;// ÊµÏÖÍùÏÂ»Øµ¯Ğ§¹ûµÄµ÷¶ÈÆ÷
+	private ScheduledExecutorService schedulor;// å®ç°å›å¼¹æ•ˆæœçš„è°ƒåº¦å™¨
+//	private ScheduledExecutorService schedulor_pull_up;// å®ç°å¾€ä¸‹å›å¼¹æ•ˆæœçš„è°ƒåº¦å™¨
 
 	/**
-	 * ÊµÏÖ»Øµ¯Ğ§¹ûµÄhandler,ÓÃÓÚµİ¼õHeadViewµÄ¸ß¶È²¢ÇëÇóÖØ»æ
+	 * å®ç°å›å¼¹æ•ˆæœçš„handler,ç”¨äºé€’å‡HeadViewçš„é«˜åº¦å¹¶è¯·æ±‚é‡ç»˜
 	 */
 	@SuppressLint("HandlerLeak")
 	private Handler mHandler = new Handler() {
@@ -55,12 +55,12 @@ public class PullDownListView extends ListView implements OnScrollListener {
 			case PULL_DOWN_BACK_ACTION:
 				AbsListView.LayoutParams headerParams = (LayoutParams) mHeadView
 						.getLayoutParams();
-				// µİ¼õ¸ß¶È
+				// é€’å‡é«˜åº¦
 				headerParams.height -= PULL_BACK_REDUCE_STEP;
 				mHeadView.setLayoutParams(headerParams);
-				// ÖØ»æ
+				// é‡ç»˜
 				mHeadView.invalidate();
-				// Í£Ö¹»Øµ¯Ê±µİ¼õheadView¸ß¶ÈµÄÈÎÎñ
+				// åœæ­¢å›å¼¹æ—¶é€’å‡headViewé«˜åº¦çš„ä»»åŠ¡
 				if (headerParams.height <= 0) {
 					schedulor.shutdownNow();
 				}
@@ -69,12 +69,12 @@ public class PullDownListView extends ListView implements OnScrollListener {
 			case PULL_UP_BACK_ACTION:
 				AbsListView.LayoutParams footerParams = (LayoutParams) mTailView
 				.getLayoutParams();
-				// µİ¼õ¸ß¶È
+				// é€’å‡é«˜åº¦
 				footerParams.height -= PULL_BACK_REDUCE_STEP;
 				mTailView.setLayoutParams(footerParams);
-				// ÖØ»æ
+				// é‡ç»˜
 				mTailView.invalidate();
-				// Í£Ö¹»Øµ¯Ê±µİ¼õheadView¸ß¶ÈµÄÈÎÎñ
+				// åœæ­¢å›å¼¹æ—¶é€’å‡headViewé«˜åº¦çš„ä»»åŠ¡
 				if (footerParams.height <= 0) {
 					schedulor.shutdownNow();
 				}
@@ -85,7 +85,7 @@ public class PullDownListView extends ListView implements OnScrollListener {
 	};
 
 	/**
-	 * ¹¹Ôìº¯Êı
+	 * æ„é€ å‡½æ•°
 	 * 
 	 * @param context
 	 */
@@ -95,7 +95,7 @@ public class PullDownListView extends ListView implements OnScrollListener {
 	}
 
 	/**
-	 * ¹¹Ôìº¯Êı
+	 * æ„é€ å‡½æ•°
 	 * 
 	 * @param context
 	 * @param attr
@@ -106,33 +106,33 @@ public class PullDownListView extends ListView implements OnScrollListener {
 	}
 
 	/**
-	 * ³õÊ¼»¯
+	 * åˆå§‹åŒ–
 	 */
 	@SuppressWarnings("deprecation")
 	private void init(boolean isHeadViewNeed, boolean isTailViewNeed) {
 		Log.d(TAG, "isHeadViewNeed=" + isHeadViewNeed);
 		Log.d(TAG, "isTailViewNeed=" + isTailViewNeed);
 		if(isHeadViewNeed) {
-			// ¼àÌı¹ö¶¯×´Ì¬
+			// ç›‘å¬æ»šåŠ¨çŠ¶æ€
 			setOnScrollListener(this);
-			// ´´½¨PullListViewµÄHeadView
+			// åˆ›å»ºPullListViewçš„HeadView
 			mHeadView = new View(this.getContext());
-			// Ä¬ÈÏ°×É«±³¾°,¿ÉÒÔ¸Ä±äÑÕÉ«, Ò²¿ÉÒÔÉèÖÃ±³¾°Í¼Æ¬
+			// é»˜è®¤ç™½è‰²èƒŒæ™¯,å¯ä»¥æ”¹å˜é¢œè‰², ä¹Ÿå¯ä»¥è®¾ç½®èƒŒæ™¯å›¾ç‰‡
 			mHeadView.setBackgroundColor(Color.parseColor("#4F9D9D"));
-			// Ä¬ÈÏ¸ß¶ÈÎª0
+			// é»˜è®¤é«˜åº¦ä¸º0
 			mHeadView.setLayoutParams(new AbsListView.LayoutParams(
 					LayoutParams.MATCH_PARENT, 0));
 			this.addHeaderView(mHeadView);
 		} 
 		
 		if(isTailViewNeed) {
-			// ¼àÌı¹ö¶¯×´Ì¬
+			// ç›‘å¬æ»šåŠ¨çŠ¶æ€
 			setOnScrollListener(this);
-			// ´´½¨PullListViewµÄHeadView
+			// åˆ›å»ºPullListViewçš„HeadView
 			mTailView = new View(this.getContext());
-			// Ä¬ÈÏ°×É«±³¾°,¿ÉÒÔ¸Ä±äÑÕÉ«, Ò²¿ÉÒÔÉèÖÃ±³¾°Í¼Æ¬
+			// é»˜è®¤ç™½è‰²èƒŒæ™¯,å¯ä»¥æ”¹å˜é¢œè‰², ä¹Ÿå¯ä»¥è®¾ç½®èƒŒæ™¯å›¾ç‰‡
 			mTailView.setBackgroundColor(Color.parseColor("#4F9D9D"));
-			// Ä¬ÈÏ¸ß¶ÈÎª0
+			// é»˜è®¤é«˜åº¦ä¸º0
 			mTailView.setLayoutParams(new AbsListView.LayoutParams(
 					LayoutParams.MATCH_PARENT, 0));
 			this.addFooterView(mTailView);
@@ -140,7 +140,7 @@ public class PullDownListView extends ListView implements OnScrollListener {
 	}
 
 	/**
-	 * ¸²¸ÇonTouchEvent·½·¨,ÊµÏÖÏÂÀ­»Øµ¯Ğ§¹û
+	 * è¦†ç›–onTouchEventæ–¹æ³•,å®ç°ä¸‹æ‹‰å›å¼¹æ•ˆæœ
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -158,7 +158,7 @@ public class PullDownListView extends ListView implements OnScrollListener {
 			}
 			if(isPullDownState()) {
 				Log.d(TAG, "isRecordPullDown=" + isRecordPullDown);
-				// ÒÔÒ»¶¨µÄÆµÂÊµİ¼õHeadViewµÄ¸ß¶È,ÊµÏÖÆ½»¬»Øµ¯
+				// ä»¥ä¸€å®šçš„é¢‘ç‡é€’å‡HeadViewçš„é«˜åº¦,å®ç°å¹³æ»‘å›å¼¹
 				schedulor = Executors.newScheduledThreadPool(1);
 				schedulor.scheduleAtFixedRate(new Runnable() {
 	
@@ -172,7 +172,7 @@ public class PullDownListView extends ListView implements OnScrollListener {
 				setPullDownState(!isRecordPullDown);
 			} else if(isPullUpState()) {
 				Log.d(TAG, "isRecordPullUp=" + isRecordPullUp);
-				// ÒÔÒ»¶¨µÄÆµÂÊµİ¼õHeadViewµÄ¸ß¶È,ÊµÏÖÆ½»¬»Øµ¯
+				// ä»¥ä¸€å®šçš„é¢‘ç‡é€’å‡HeadViewçš„é«˜åº¦,å®ç°å¹³æ»‘å›å¼¹
 				schedulor = Executors.newScheduledThreadPool(1);
 				schedulor.scheduleAtFixedRate(new Runnable() {
 	

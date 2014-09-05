@@ -70,12 +70,12 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private int tabCount;
 
 	/**
-	 * µ±Ç°µÄpositionÎ»ÖÃ
+	 * å½“å‰çš„positionä½ç½®
 	 */
 	private int currentPosition = 0;
 	private int selectedPosition = 0;
 	/**
-	 * µ±Ç°µÄÎ»ÖÃÆ«ÒÆÁ¿
+	 * å½“å‰çš„ä½ç½®åç§»é‡
 	 */
 	private float currentPositionOffset = 0f;
 
@@ -84,7 +84,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	private int indicatorColor = 0xFF666666;
 	/**
-	 * tabµ×²¿·Ö¸îÏßµÄÑÕÉ«
+	 * tabåº•éƒ¨åˆ†å‰²çº¿çš„é¢œè‰²
 	 */
 	private int underlineColor = 0x1A000000;
 	
@@ -114,26 +114,26 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private Locale locale;
 
 	/**
-	 * ±êÌâÉÏµÄÍ¼Æ¬×é Î´Ñ¡ÖĞÊ±
+	 * æ ‡é¢˜ä¸Šçš„å›¾ç‰‡ç»„ æœªé€‰ä¸­æ—¶
 	 */
 	private int[] mDrawableIds = new int[] {R.drawable.bg_home,
 			R.drawable.bg_category, R.drawable.bg_collect,
 			R.drawable.bg_setting };
 	
 	/**
-	 * ±êÌâÉÏµÄÍ¼Æ¬×é Î´Ñ¡ÖĞºó
+	 * æ ‡é¢˜ä¸Šçš„å›¾ç‰‡ç»„ æœªé€‰ä¸­å
 	 */
 	private int[] mDrawableIdsSleect = new int[] {R.drawable.home_selected,
 			R.drawable.category_selected, R.drawable.collect_selected,
 			R.drawable.setting_selected };
 	
 	/**
-	 * ±êÌâ×é
+	 * æ ‡é¢˜ç»„
 	 */
-	private final String[] titles = { "¾«Ñ¡", "·¢ÏÖ", "°ñµ¥", "ÍÅ¹º" };
+	private final String[] titles = { "ç²¾é€‰", "å‘ç°", "æ¦œå•", "å›¢è´­" };
 	
 	/**
-	 * ¶¨ÒåÒ»¸öÈ«¾ÖµÄÉÏÏÂÎÄ
+	 * å®šä¹‰ä¸€ä¸ªå…¨å±€çš„ä¸Šä¸‹æ–‡
 	 */
 	private Context context ;
 	
@@ -160,7 +160,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 //		DisplayMetrics metrics = getResources().getDisplayMetrics();
 	
 		/**
-		 * Õâ¶ÎËÆºõÃ»¶à´óÓÃ´¦
+		 * è¿™æ®µä¼¼ä¹æ²¡å¤šå¤§ç”¨å¤„
 		 */
 		scrollOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, scrollOffset, dm);
 		indicatorHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, indicatorHeight, dm);
@@ -170,7 +170,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		dividerPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerPadding, dm);
 		tabPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, tabPadding, dm);
 		dividerWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerWidth, dm);
-		//tabÉÏ×ÖµÄ´óĞ¡
+		//tabä¸Šå­—çš„å¤§å°
 		tabTextSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, tabTextSize, dm);
 ////////////////////
 		// get system attrs (android:textSize and android:textColor)
@@ -234,7 +234,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	}
 
 	/**
-	 * Êı¾İ¸Ä±ä Í¨ÖªË¢ĞÂ 
+	 * æ•°æ®æ”¹å˜ é€šçŸ¥åˆ·æ–° 
 	 */
 	public void notifyDataSetChanged() {
 
@@ -382,7 +382,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		final int height = getHeight();
 		LogUtils2.w("getHeight();=="+getHeight());
 		
-		// draw underline Tab ºÍviewpager¼äµÄ·Ö¸îÏß
+		// draw underline Tab å’Œviewpageré—´çš„åˆ†å‰²çº¿
 		rectPaint.setColor(underlineColor);
 		canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
 

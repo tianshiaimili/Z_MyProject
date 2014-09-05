@@ -25,12 +25,12 @@ public class MyGridView extends GridView implements OnScrollListener{
 	    private int lastScrollDelta = 0;
 	    int mTop = 10;
 	    /**
-	     * ±íÊ¾ÉÏÒ»¸ö´¥ÃşµÄµã (¸Õµã»÷½øÈ¥Ê±µÄ×ø±êµã)¶ø²»ÊÇËµÊÖÖ¸Àë¿ªÊ±µÄ×ø±êµã
+	     * è¡¨ç¤ºä¸Šä¸€ä¸ªè§¦æ‘¸çš„ç‚¹ (åˆšç‚¹å‡»è¿›å»æ—¶çš„åæ ‡ç‚¹)è€Œä¸æ˜¯è¯´æ‰‹æŒ‡ç¦»å¼€æ—¶çš„åæ ‡ç‚¹
 	     */
 	    int currentY;
 	    
 	    /**
-	     * ÒÑ¾­»¬¶¯ÁËµÄ¾àÀë
+	     * å·²ç»æ»‘åŠ¨äº†çš„è·ç¦»
 	     */
 	    int havaScrollY;
 	
@@ -50,7 +50,7 @@ public class MyGridView extends GridView implements OnScrollListener{
 				getParent().requestDisallowInterceptTouchEvent(true);
 //				isfocuse = true;
 				/**
-				 * ev.getY() ÊÇÕë¶ÔÆÁÄ»×óÉÏ½Ç£¨0£¬0£©¶ø¼ÆËãµÃ
+				 * ev.getY() æ˜¯é’ˆå¯¹å±å¹•å·¦ä¸Šè§’ï¼ˆ0ï¼Œ0ï¼‰è€Œè®¡ç®—å¾—
 				 */
 				currentY = (int) ev.getY();
 				LogUtils2.i("onInterceptTouchEvent---currentY=="+currentY);
@@ -86,7 +86,7 @@ public class MyGridView extends GridView implements OnScrollListener{
 //			 int paddingTop = getPaddingTop();
 //			 int totalHeight = (totalRowCount * itemHeight) + (totalVSpacing) + paddingTop; 
 //			 /**
-//			  * ÄÜ¹»»¬¶¯µÄ¾àÀë
+//			  * èƒ½å¤Ÿæ»‘åŠ¨çš„è·ç¦»
 //			  */
 //			 int canScrollY = totalHeight - currentGridViewHeight;
 //			 
@@ -104,7 +104,7 @@ public class MyGridView extends GridView implements OnScrollListener{
 //	    	switch (code) {
 //			case MotionEvent.ACTION_DOWN:
 //				currentY = (int) ev.getY();
-//				LogUtils2.i("onTouchEvent¡ª¡ªACTION_DOWN---currentY=="+currentY);
+//				LogUtils2.i("onTouchEventâ€”â€”ACTION_DOWN---currentY=="+currentY);
 //				break;
 //				
 //			case MotionEvent.ACTION_MOVE:
@@ -112,28 +112,28 @@ public class MyGridView extends GridView implements OnScrollListener{
 //				View child = getChildAt(0);
 //				
 //				/**
-//				 * µÃµ½neibuScrollViewµÄµÚÒ»¸ö×ÓView LinerLayoutµÄ¸ß¶È
-//				 * ÓÃÀ´¼ÆËã »¬¶¯ÁË¶àÉÙ¾àÀë£¬È»ºóÅĞ¶ÏÊÇ·ñ×ÓScrollView»¬¶¯µ½µ×²¿
+//				 * å¾—åˆ°neibuScrollViewçš„ç¬¬ä¸€ä¸ªå­View LinerLayoutçš„é«˜åº¦
+//				 * ç”¨æ¥è®¡ç®— æ»‘åŠ¨äº†å¤šå°‘è·ç¦»ï¼Œç„¶ååˆ¤æ–­æ˜¯å¦å­ScrollViewæ»‘åŠ¨åˆ°åº•éƒ¨
 //				 */
 ////				int childHeight = child.getMeasuredHeight();
 //				int childHeight = totalHeight;//child.getMeasuredHeight();
 //				 /**
-//                * getMeasuredHeight() µÃµ½µÄÓ¦¸ÃÊÇµ±Ç°InnerScrollViewµÄ¸ß¶È 
-//                * ËùÒÔ»ñÈ¡µÃ×ÓView LinerLayoutµÄ¸ß¶È¼õÈ¥µ±Ç°scrollViewµÄ¸ß¶È ¾Í´ú±í»¬µ½µ×²¿ÁË
+//                * getMeasuredHeight() å¾—åˆ°çš„åº”è¯¥æ˜¯å½“å‰InnerScrollViewçš„é«˜åº¦ 
+//                * æ‰€ä»¥è·å–å¾—å­View LinerLayoutçš„é«˜åº¦å‡å»å½“å‰scrollViewçš„é«˜åº¦ å°±ä»£è¡¨æ»‘åˆ°åº•éƒ¨äº†
 //                */
 //				int currentScrollViewHeiht = currentGridViewHeight;//getMeasuredHeight();
 //				int currentShowHeight = childHeight - currentScrollViewHeiht;
 //				
-//				LogUtils2.i("childHeight¡ª¡ª="+childHeight +"   currentScrollViewHeiht="+currentScrollViewHeiht);
-//				LogUtils2.i("currentShowHeight¡ª¡ª="+currentShowHeight);
+//				LogUtils2.i("childHeightâ€”â€”="+childHeight +"   currentScrollViewHeiht="+currentScrollViewHeiht);
+//				LogUtils2.i("currentShowHeightâ€”â€”="+currentShowHeight);
 //				
 //				 int y = (int) ev.getY();
 //				 int scrollY = itemView.getScrollY();
 //				 
-//				 LogUtils2.i("y¡ª¡ª="+y +"    scrollY=="+scrollY+"   currentY=="+currentY);
+//				 LogUtils2.i("yâ€”â€”="+y +"    scrollY=="+scrollY+"   currentY=="+currentY);
 //				 
 //				 if(currentY > y){
-//					 LogUtils2.i("ÏòÉÏ........");
+//					 LogUtils2.i("å‘ä¸Š........");
 //					 havaScrollY += (currentY - y );
 //					 LogUtils2.i("currentY > y===="+(havaScrollY));
 //					 LogUtils2.i("havaScrollY >= currentShowHeight----=="+havaScrollY +" |  "+currentShowHeight);
@@ -150,7 +150,7 @@ public class MyGridView extends GridView implements OnScrollListener{
 //					}
 //					 
 //				 }else  if(currentY < y){
-//					 LogUtils2.i("ÏòÏÂ*****************");
+//					 LogUtils2.i("å‘ä¸‹*****************");
 //					 
 //					 havaScrollY += (currentY - y );
 //					 LogUtils2.i("havaScrollY >= 0----=="+havaScrollY +"  currentShowHeight=="+currentShowHeight);
@@ -166,7 +166,7 @@ public class MyGridView extends GridView implements OnScrollListener{
 //					 
 //				}
 //				 
-//				 LogUtils2.i("y¡ª¡ª="+y+"   currentY=="+currentY +"    scrollY=="+scrollY);
+//				 LogUtils2.i("yâ€”â€”="+y+"   currentY=="+currentY +"    scrollY=="+scrollY);
 //				 currentY = y;
 //				 
 //				break;
@@ -223,10 +223,10 @@ public class MyGridView extends GridView implements OnScrollListener{
 		// TODO Auto-generated method stub
 		LogUtils2.e("7777777777777777777777777777");
 		 switch (scrollState) {  
-		    // µ±²»¹ö¶¯Ê±  
+		    // å½“ä¸æ»šåŠ¨æ—¶  
 		 
 		    case OnScrollListener.SCROLL_STATE_IDLE:  
-		    // ÅĞ¶Ï¹ö¶¯µ½µ×²¿  
+		    // åˆ¤æ–­æ»šåŠ¨åˆ°åº•éƒ¨  
 		    if (this.getLastVisiblePosition() == (this.getCount() - 1)) {  
 		    	
 		    	getParent().requestDisallowInterceptTouchEvent(true);
@@ -234,7 +234,7 @@ public class MyGridView extends GridView implements OnScrollListener{
 		                 }else {
 		                	 getParent().requestDisallowInterceptTouchEvent(false);
 						}  
-		    // ÅĞ¶Ï¹ö¶¯µ½¶¥²¿  
+		    // åˆ¤æ–­æ»šåŠ¨åˆ°é¡¶éƒ¨  
 		  
 		    if(this.getFirstVisiblePosition() == 0){  
 		    	getParent().requestDisallowInterceptTouchEvent(true);
@@ -249,27 +249,27 @@ public class MyGridView extends GridView implements OnScrollListener{
 
 
 	/**
-	 *  Î¨Ò»Òª½²µÄ¾ÍÊÇÔÚ OnScrollÖĞfirstVisibleItem + visibleItemCount == totalItemCount
- 	firstVisibleItem :±íÊ¾ÔÚÆÁÄ»ÖĞµÚÒ»ÌõÏÔÊ¾µÄÊı¾İÔÚadapterÖĞµÄÎ»ÖÃ,visibleItemCount 
- 	ÔòÊÇÆÁÄ»ÖĞ×îºóÒ»ÌõÊı¾İÔÚadapterÖĞµÄÊı¾İ,totalItemCountÔòÊÇadapterÖĞµÄ×ÜÌõÊı!
+	 *  å”¯ä¸€è¦è®²çš„å°±æ˜¯åœ¨ OnScrollä¸­firstVisibleItem + visibleItemCount == totalItemCount
+ 	firstVisibleItem :è¡¨ç¤ºåœ¨å±å¹•ä¸­ç¬¬ä¸€æ¡æ˜¾ç¤ºçš„æ•°æ®åœ¨adapterä¸­çš„ä½ç½®,visibleItemCount 
+ 	åˆ™æ˜¯å±å¹•ä¸­æœ€åä¸€æ¡æ•°æ®åœ¨adapterä¸­çš„æ•°æ®,totalItemCountåˆ™æ˜¯adapterä¸­çš„æ€»æ¡æ•°!
 	 */
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		
 		  if(firstVisibleItem==0){  
-			  //¶¥²¿
+			  //é¡¶éƒ¨
 			  getParent().requestDisallowInterceptTouchEvent(false);
           }       
           if(visibleItemCount+firstVisibleItem==totalItemCount){  
-            //µ×²¿
+            //åº•éƒ¨
         	  getParent().requestDisallowInterceptTouchEvent(false);
           }
 		
 	}
 	
 	public void setfouce(){
-		LogUtils2.i("À²À²À²À²À²À²À²");
+		LogUtils2.i("å•¦å•¦å•¦å•¦å•¦å•¦å•¦");
 //		getParent().requestDisallowInterceptTouchEvent(false);
 		isfocuse = false;
 	}

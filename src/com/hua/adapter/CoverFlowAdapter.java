@@ -79,7 +79,7 @@ public class CoverFlowAdapter extends BaseAdapter {
 //						ImageUtil.getImageUrl(bannerDataList.get(imagePosition).getImage1(), imageWidth, VODFragment.BANNER_WIDTH_TABLET, VODFragment.BANNER_HEIGHT_TABLET),
 //						watermark_banner, viewPagerWidth);
 		 }
-	     // ÉèÖÃµÄ¿¹¾â³Ý
+	     // è®¾ç½®çš„æŠ—é”¯é½¿
 
 //	     BitmapDrawable drawable = (BitmapDrawable) bannerImage.getDrawable();
 //	     drawable.setAntiAlias(true);
@@ -114,7 +114,7 @@ public class CoverFlowAdapter extends BaseAdapter {
 	             (height), Config.ARGB_8888);
 
 	     Canvas canvas = new Canvas(bitmapWithReflection);
-	     // ¿¹¾â³ÝÐ§¹û
+	     // æŠ—é”¯é½¿æ•ˆæžœ
 	     canvas.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG));
 	     canvas.drawBitmap(originalImage, 0, 0, null);
 

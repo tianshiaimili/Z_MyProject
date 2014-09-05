@@ -31,7 +31,7 @@ import com.hua.util.LogUtils2;
 
 
 /**
- * ÊµÏÖÉÏÏÂÀ­ »Øµ¯µÄListView
+ * å®ç°ä¸Šä¸‹æ‹‰ å›å¼¹çš„ListView
  * @author Hua
  *
  */
@@ -39,20 +39,20 @@ public class ElasticListView extends ListView implements OnScrollListener{
 	
 	
 	private static final String TAG = "ElasticScrollView";
-		///////////////////Õâ²¿·Ö ÉèÖÃÎ²´¦µÄ
+		///////////////////è¿™éƒ¨åˆ† è®¾ç½®å°¾å¤„çš„
 	private static final int PULL_DOWN_BACK_ACTION = 0x01;
 	private static final int PULL_UP_BACK_ACTION = 0x02;
-	private static final float PULL_FACTOR = 0.5F;// ÏÂÀ­Òò×Ó,ÊµÏÖÏÂÀ­Ê±µÄÑÓ³ÙĞ§¹û
-	private static final int PULL_BACK_REDUCE_STEP = 1;// »Øµ¯Ê±Ã¿´Î¼õÉÙµÄ¸ß¶È
-	private static final int PULL_BACK_TASK_PERIOD = 500000;// »Øµ¯Ê±µİ¼õHeadView¸ß¶ÈµÄÆµÂÊ, ×¢ÒâÒÔÄÉÃëÎªµ¥Î»
+	private static final float PULL_FACTOR = 0.5F;// ä¸‹æ‹‰å› å­,å®ç°ä¸‹æ‹‰æ—¶çš„å»¶è¿Ÿæ•ˆæœ
+	private static final int PULL_BACK_REDUCE_STEP = 1;// å›å¼¹æ—¶æ¯æ¬¡å‡å°‘çš„é«˜åº¦
+	private static final int PULL_BACK_TASK_PERIOD = 500000;// å›å¼¹æ—¶é€’å‡HeadViewé«˜åº¦çš„é¢‘ç‡, æ³¨æ„ä»¥çº³ç§’ä¸ºå•ä½
 	private boolean isRecordPullDown;
 	private boolean isRecordPullUp;
-	private View mTailView;// ÓÃÓÚÊµÏÖÉÏÀ­µ¯ĞÔĞ§¹ûµÄTailView
+	private View mTailView;// ç”¨äºå®ç°ä¸Šæ‹‰å¼¹æ€§æ•ˆæœçš„TailView
 	private int currentScrollState;
-	private ScheduledExecutorService schedulor;// ÊµÏÖ»Øµ¯Ğ§¹ûµÄµ÷¶ÈÆ÷
-//	private int firstItemIndex;// µÚÒ»¸ö¿É¼ûÌõÄ¿µÄË÷Òı
-	private int startPullUpY;// ¼ÇÂ¼¸Õ¿ªÊ¼ÉÏÀ­Ê±µÄ´¥ÃşÎ»ÖÃµÄY×ø±ê
-	private int lastItemIndex;// ×îºóÒ»¸ö¿É¼ûÌõÄ¿µÄË÷Òı
+	private ScheduledExecutorService schedulor;// å®ç°å›å¼¹æ•ˆæœçš„è°ƒåº¦å™¨
+//	private int firstItemIndex;// ç¬¬ä¸€ä¸ªå¯è§æ¡ç›®çš„ç´¢å¼•
+	private int startPullUpY;// è®°å½•åˆšå¼€å§‹ä¸Šæ‹‰æ—¶çš„è§¦æ‘¸ä½ç½®çš„Yåæ ‡
+	private int lastItemIndex;// æœ€åä¸€ä¸ªå¯è§æ¡ç›®çš„ç´¢å¼•
 	///////////////////////
 	
 	private final static int RELEASE_To_REFRESH = 0;
@@ -60,51 +60,51 @@ public class ElasticListView extends ListView implements OnScrollListener{
 	private final static int REFRESHING = 2;
 	private final static int DONE = 3;
 	private final static int LOADING = 4;
-	// Êµ¼ÊµÄpaddingµÄ¾àÀëÓë½çÃæÉÏÆ«ÒÆ¾àÀëµÄ±ÈÀı
+	// å®é™…çš„paddingçš„è·ç¦»ä¸ç•Œé¢ä¸Šåç§»è·ç¦»çš„æ¯”ä¾‹
 	private final static int RATIO = 3;
 
 	private int headContentWidth;
 	private int headContentHeight;
 
 	/**
-	 * Õû¸öListviewÖĞµÄLinearLayout²¼¾Ö
+	 * æ•´ä¸ªListviewä¸­çš„LinearLayoutå¸ƒå±€
 	 */
 	private LinearLayout innerLayout;
 	/**
-	 * Ò»¿ªÊ¼±»Òş²ØµÄHeaderView
+	 * ä¸€å¼€å§‹è¢«éšè—çš„HeaderView
 	 */
 	private LinearLayout headView;
 	/**
-	 * ¼ıÍ·Í¼Æ¬
+	 * ç®­å¤´å›¾ç‰‡
 	 */
-	private ImageView arrowImageView;//¼ıÍ·Í¼Æ¬
+	private ImageView arrowImageView;//ç®­å¤´å›¾ç‰‡
 	/**
-	 * ½ø¶ÈÌõ
+	 * è¿›åº¦æ¡
 	 */
 	private ProgressBar progressBar;
 	/**
-	 * ÌáÊ¾ÏÂÀ­ ËÉ¿ª Ë¢ĞÂµÄÎÄ×Ö
+	 * æç¤ºä¸‹æ‹‰ æ¾å¼€ åˆ·æ–°çš„æ–‡å­—
 	 */
-	private TextView tipsTextview;// ÌáÊ¾ÏÂÀ­ ËÉ¿ª Ë¢ĞÂµÄÎÄ×Ö
+	private TextView tipsTextview;// æç¤ºä¸‹æ‹‰ æ¾å¼€ åˆ·æ–°çš„æ–‡å­—
 	/**
-	 * ÏÔÊ¾ÉÏ´Î¸üĞÂµÄÊ±¼ä
+	 * æ˜¾ç¤ºä¸Šæ¬¡æ›´æ–°çš„æ—¶é—´
 	 */
 	private TextView lastUpdatedTextView;
 	private OnRefreshListener refreshListener;
 	private boolean isRefreshable;
 	private int state;
 	/**
-	 * Õâ¸öÊÇÓÃÀ´×öµ±ÏÂÀ­ºó£¬ÓÖÉÏÀ²Ê± ¶ÔarrowImageViewÍ¼Æ¬×öµÄÅĞ¶ÏÀ´¸Ä±ä¶¯»­
+	 * è¿™ä¸ªæ˜¯ç”¨æ¥åšå½“ä¸‹æ‹‰åï¼Œåˆä¸Šå•¦æ—¶ å¯¹arrowImageViewå›¾ç‰‡åšçš„åˆ¤æ–­æ¥æ”¹å˜åŠ¨ç”»
 	 */
 	private boolean isBack;
 
-	private RotateAnimation animation; //¼ıÍ·µÄ¶¯»­
+	private RotateAnimation animation; //ç®­å¤´çš„åŠ¨ç”»
 	private RotateAnimation reverseAnimation;
 
-	private boolean canReturn; //ÓÃÀ´±íÊ¾ËÉ¿ªÊÖºó¾Í¿ÉÒÔ»Øµ¯ÁË
+	private boolean canReturn; //ç”¨æ¥è¡¨ç¤ºæ¾å¼€æ‰‹åå°±å¯ä»¥å›å¼¹äº†
 	private boolean isRecored;
 	/**
-	 * ÓÃÀ´±íÊ¾Ò»¿ªÊ¼ÊÖÖ¸°´ÏÂÊ±µÄ Y ×ø±êµã
+	 * ç”¨æ¥è¡¨ç¤ºä¸€å¼€å§‹æ‰‹æŒ‡æŒ‰ä¸‹æ—¶çš„ Y åæ ‡ç‚¹
 	 */
 	private int startY;
 	/**
@@ -115,7 +115,7 @@ public class ElasticListView extends ListView implements OnScrollListener{
 	
 	
 	/**
-	 * ÊµÏÖ»Øµ¯Ğ§¹ûµÄhandler,ÓÃÓÚµİ¼õHeadViewµÄ¸ß¶È²¢ÇëÇóÖØ»æ
+	 * å®ç°å›å¼¹æ•ˆæœçš„handler,ç”¨äºé€’å‡HeadViewçš„é«˜åº¦å¹¶è¯·æ±‚é‡ç»˜
 	 */
 	@SuppressLint("HandlerLeak")
 	private Handler mHandler = new Handler() {
@@ -126,12 +126,12 @@ public class ElasticListView extends ListView implements OnScrollListener{
 //			case PULL_DOWN_BACK_ACTION:
 //				AbsListView.LayoutParams headerParams = (LayoutParams) mHeadView
 //						.getLayoutParams();
-//				// µİ¼õ¸ß¶È
+//				// é€’å‡é«˜åº¦
 //				headerParams.height -= PULL_BACK_REDUCE_STEP;
 //				mHeadView.setLayoutParams(headerParams);
-//				// ÖØ»æ
+//				// é‡ç»˜
 //				mHeadView.invalidate();
-//				// Í£Ö¹»Øµ¯Ê±µİ¼õheadView¸ß¶ÈµÄÈÎÎñ
+//				// åœæ­¢å›å¼¹æ—¶é€’å‡headViewé«˜åº¦çš„ä»»åŠ¡
 //				if (headerParams.height <= 0) {
 //					schedulor.shutdownNow();
 //				}
@@ -140,12 +140,12 @@ public class ElasticListView extends ListView implements OnScrollListener{
 			case PULL_UP_BACK_ACTION:
 				AbsListView.LayoutParams footerParams = (LayoutParams) mTailView
 				.getLayoutParams();
-				// µİ¼õ¸ß¶È
+				// é€’å‡é«˜åº¦
 				footerParams.height -= PULL_BACK_REDUCE_STEP;
 				mTailView.setLayoutParams(footerParams);
-				// ÖØ»æ
+				// é‡ç»˜
 				mTailView.invalidate();
-				// Í£Ö¹»Øµ¯Ê±µİ¼õheadView¸ß¶ÈµÄÈÎÎñ
+				// åœæ­¢å›å¼¹æ—¶é€’å‡headViewé«˜åº¦çš„ä»»åŠ¡
 				if (footerParams.height <= 0) {
 					schedulor.shutdownNow();
 				}
@@ -174,7 +174,7 @@ public class ElasticListView extends ListView implements OnScrollListener{
 		innerLayout.setOrientation(LinearLayout.VERTICAL);
 		
 		/**
-		 * ÏÂÀ­Ê± ÏÔÊ¾µÄ²¿·Ö
+		 * ä¸‹æ‹‰æ—¶ æ˜¾ç¤ºçš„éƒ¨åˆ†
 		 */
 		headView = (LinearLayout) inflater.inflate(R.layout.myscrollview_head,
 				null);
@@ -194,8 +194,8 @@ public class ElasticListView extends ListView implements OnScrollListener{
 		measureView(headView);
 
 		/**
-		 * »ñÈ¡µÃÁËheaderviewµÄ´óĞ¡ºÍ¿í£¬È»ºóÉèÖÃpaddingÖµ£¬È»ËûÃÇÒ»¿ªÊ¼
-		 * ²»ÏÔÊ¾ÔÚscreen
+		 * è·å–å¾—äº†headerviewçš„å¤§å°å’Œå®½ï¼Œç„¶åè®¾ç½®paddingå€¼ï¼Œç„¶ä»–ä»¬ä¸€å¼€å§‹
+		 * ä¸æ˜¾ç¤ºåœ¨screen
 		 */
 		headContentHeight = headView.getMeasuredHeight();
 		headContentWidth = headView.getMeasuredWidth();
@@ -204,12 +204,12 @@ public class ElasticListView extends ListView implements OnScrollListener{
 
 		Log.i("size", "width:" + headContentWidth + " height:"
 				+ headContentHeight);
-		//°ÑheaderViewÌí¼Óµ½ÄÚ²¿µÄlinearlayoutÖĞ
+		//æŠŠheaderViewæ·»åŠ åˆ°å†…éƒ¨çš„linearlayoutä¸­
 //		innerLayout.addView(headView);
 		setOnScrollListener(this);
 		/**
-		 * °ÑLinearlayoutÌí¼Óµ½µ±Ç°µÄListview
-		 * ÖĞ
+		 * æŠŠLinearlayoutæ·»åŠ åˆ°å½“å‰çš„Listview
+		 * ä¸­
 		 */
 //		addView(innerLayout);
 		addHeaderView(headView);
@@ -218,7 +218,7 @@ public class ElasticListView extends ListView implements OnScrollListener{
 		animation = new RotateAnimation(0, -180,
 				RotateAnimation.RELATIVE_TO_SELF, 0.5f,
 				RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-		///ÉèÖÃ¼ÓËÙÆ÷
+		///è®¾ç½®åŠ é€Ÿå™¨
 		animation.setInterpolator(new LinearInterpolator());
 		animation.setDuration(250);
 		animation.setFillAfter(true);
@@ -239,17 +239,17 @@ public class ElasticListView extends ListView implements OnScrollListener{
 
 	
 	/**
-	 * ³õÊ¼»¯footview
+	 * åˆå§‹åŒ–footview
 	 */
 	private void initFootView() {
 
-		// ¼àÌı¹ö¶¯×´Ì¬
+		// ç›‘å¬æ»šåŠ¨çŠ¶æ€
 		setOnScrollListener(this);
-		// ´´½¨PullListViewµÄHeadView
+		// åˆ›å»ºPullListViewçš„HeadView
 		mTailView = new View(this.getContext());
-		// Ä¬ÈÏ°×É«±³¾°,¿ÉÒÔ¸Ä±äÑÕÉ«, Ò²¿ÉÒÔÉèÖÃ±³¾°Í¼Æ¬
+		// é»˜è®¤ç™½è‰²èƒŒæ™¯,å¯ä»¥æ”¹å˜é¢œè‰², ä¹Ÿå¯ä»¥è®¾ç½®èƒŒæ™¯å›¾ç‰‡
 		mTailView.setBackgroundColor(Color.parseColor("#FFFFFF"));
-		// Ä¬ÈÏ¸ß¶ÈÎª0
+		// é»˜è®¤é«˜åº¦ä¸º0
 		mTailView.setLayoutParams(new AbsListView.LayoutParams(
 				LayoutParams.MATCH_PARENT, 0));
 		this.addFooterView(mTailView);
@@ -282,7 +282,7 @@ public class ElasticListView extends ListView implements OnScrollListener{
 	}
 	
 	/**
-	 * ¼àÌı
+	 * ç›‘å¬
 	 */
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -296,7 +296,7 @@ public class ElasticListView extends ListView implements OnScrollListener{
 		// TODO Auto-generated method stub
 		firstItemIndex  = firstVisibleItem;
 		this.lastItemIndex = firstVisibleItem + visibleItemCount;
-		LogUtils2.w("À²À²À²µÂÂêÎ÷ÑÇ............");
+		LogUtils2.w("å•¦å•¦å•¦å¾·ç›è¥¿äºš............");
 	}
 	
 	
@@ -320,28 +320,28 @@ public class ElasticListView extends ListView implements OnScrollListener{
 			case MotionEvent.ACTION_UP:
 				if (state != REFRESHING && state != LOADING) {
 					if (state == DONE) {
-						// Ê²Ã´¶¼²»×ö
+						// ä»€ä¹ˆéƒ½ä¸åš
 					}
 					if (state == PULL_To_REFRESH) {
 						state = DONE;
 						changeHeaderViewByState();
-						Log.i(TAG, "ÓÉÏÂÀ­Ë¢ĞÂ×´Ì¬£¬µ½done×´Ì¬");
+						Log.i(TAG, "ç”±ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€ï¼Œåˆ°doneçŠ¶æ€");
 					}
 					if (state == RELEASE_To_REFRESH) {
 						state = REFRESHING;
 						changeHeaderViewByState();
-						LogUtils2.i("ÕâÀïµ÷ÓÃ..onRefresh");
+						LogUtils2.i("è¿™é‡Œè°ƒç”¨..onRefresh");
 						onRefresh();
-						Log.i(TAG, "ÓÉËÉ¿ªË¢ĞÂ×´Ì¬£¬µ½done×´Ì¬");
+						Log.i(TAG, "ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€ï¼Œåˆ°doneçŠ¶æ€");
 					}
 				}
 				
 				/**
-				 * Õë¶ÔÉÏÀ²µÄÇé¿ö
+				 * é’ˆå¯¹ä¸Šå•¦çš„æƒ…å†µ
 				 */
 				if(isPullUpState()) {
 					Log.d(TAG, "isRecordPullUp=" + isRecordPullUp);
-					// ÒÔÒ»¶¨µÄÆµÂÊµİ¼õHeadViewµÄ¸ß¶È,ÊµÏÖÆ½»¬»Øµ¯
+					// ä»¥ä¸€å®šçš„é¢‘ç‡é€’å‡HeadViewçš„é«˜åº¦,å®ç°å¹³æ»‘å›å¼¹
 					schedulor = Executors.newScheduledThreadPool(1);
 					schedulor.scheduleAtFixedRate(new Runnable() {
 		
@@ -362,12 +362,12 @@ public class ElasticListView extends ListView implements OnScrollListener{
 		            
 			case MotionEvent.ACTION_MOVE:
 				/**
-				 * ÁÙÊ±µÄ×ø±êµã ±íÊ¾Í£Ö¹»¬¶¯ºóµÄ×ø±êµã
+				 * ä¸´æ—¶çš„åæ ‡ç‚¹ è¡¨ç¤ºåœæ­¢æ»‘åŠ¨åçš„åæ ‡ç‚¹
 				 */
 				int tempY = (int) event.getY();
 				
 			    if (!isRecored && firstItemIndex == 0) {  
-	                Log.v(TAG, "¼ÇÂ¼ÍÏ×§Ê±µÄÎ»ÖÃ");  
+	                Log.v(TAG, "è®°å½•æ‹–æ‹½æ—¶çš„ä½ç½®");  
 	                isRecored = true;  
 	                startY = tempY;  
 	            }  
@@ -375,38 +375,38 @@ public class ElasticListView extends ListView implements OnScrollListener{
 				LogUtils2.d("tempY=="+tempY+"   startY=="+startY);
 				
 				/**
-				 * ÕâÀïÊÇÉèÖÃµ±ÊÖÖ¸ÍÏÀ­ÍÑÈ¥Ë¢ĞÂµÄÊ±ºò
+				 * è¿™é‡Œæ˜¯è®¾ç½®å½“æ‰‹æŒ‡æ‹–æ‹‰è„±å»åˆ·æ–°çš„æ—¶å€™
 				 */
 				if (state != REFRESHING && isRecored && state != LOADING) {
-					// ¿ÉÒÔËÉÊÖÈ¥Ë¢ĞÂÁË
+					// å¯ä»¥æ¾æ‰‹å»åˆ·æ–°äº†
 					if (state == RELEASE_To_REFRESH) {
 						LogUtils2.i("*******************");
 						canReturn = true;
-					     // ÍùÉÏÍÆ£¬ÍÆµ½ÆÁÄ»×ã¹»ÑÚ¸ÇheadµÄ³Ì¶È£¬µ«»¹Ã»ÓĞÈ«²¿ÑÚ¸Ç   
+					     // å¾€ä¸Šæ¨ï¼Œæ¨åˆ°å±å¹•è¶³å¤Ÿæ©ç›–headçš„ç¨‹åº¦ï¼Œä½†è¿˜æ²¡æœ‰å…¨éƒ¨æ©ç›–   
 						if (((tempY - startY) / RATIO < headContentHeight)
 								&& (tempY - startY) > 0) {
 							state = PULL_To_REFRESH;
 							changeHeaderViewByState();
-							LogUtils2.i("ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½ÏÂÀ­Ë¢ĞÂ×´Ì¬");
+							LogUtils2.i("ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€");
 						}
-						// Ò»ÏÂ×ÓÍÆµ½¶¥ÁË
+						// ä¸€ä¸‹å­æ¨åˆ°é¡¶äº†
 						else if (tempY - startY <= 0) {
 							state = DONE;
 							changeHeaderViewByState();
-							LogUtils2.i("ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");
+							LogUtils2.i("ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");
 						} else {
-							// ²»ÓÃ½øĞĞÌØ±ğµÄ²Ù×÷£¬Ö»ÓÃ¸üĞÂpaddingTopµÄÖµ¾ÍĞĞÁË
+							// ä¸ç”¨è¿›è¡Œç‰¹åˆ«çš„æ“ä½œï¼Œåªç”¨æ›´æ–°paddingTopçš„å€¼å°±è¡Œäº†
 						}
 					}
 
-					// ¸üĞÂheadViewµÄsize
+					// æ›´æ–°headViewçš„size
 					if (state == PULL_To_REFRESH) {
 						headView.setPadding(0, -1 * headContentHeight
 								+ (tempY - startY) / RATIO, 0, 0);
 						headView.invalidate();
 					}
 
-					// ¸üĞÂheadViewµÄpaddingTop
+					// æ›´æ–°headViewçš„paddingTop
 					
 					if (state == RELEASE_To_REFRESH) {
 						headView.setPadding(0, (tempY - startY) / RATIO
@@ -423,7 +423,7 @@ public class ElasticListView extends ListView implements OnScrollListener{
 				
 				
 				/**
-				 *  done×´Ì¬ÏÂ  Ò»¿ªÊ¼µÄ×´Ì¬
+				 *  doneçŠ¶æ€ä¸‹  ä¸€å¼€å§‹çš„çŠ¶æ€
 				 */
 				if (state == DONE) {
 					if (tempY - startY > 0) {
@@ -433,27 +433,27 @@ public class ElasticListView extends ListView implements OnScrollListener{
 				}
 
 				/**
-				 *  »¹Ã»ÓĞµ½´ïÏÔÊ¾ËÉ¿ªË¢ĞÂµÄÊ±ºò,DONE»òÕßÊÇPULL_To_REFRESH×´Ì¬
+				 *  è¿˜æ²¡æœ‰åˆ°è¾¾æ˜¾ç¤ºæ¾å¼€åˆ·æ–°çš„æ—¶å€™,DONEæˆ–è€…æ˜¯PULL_To_REFRESHçŠ¶æ€
 				 */
 				if (state == PULL_To_REFRESH) {
 					canReturn = true;
 
-					// ÏÂÀ­µ½¿ÉÒÔ½øÈëRELEASE_TO_REFRESHµÄ×´Ì¬
+					// ä¸‹æ‹‰åˆ°å¯ä»¥è¿›å…¥RELEASE_TO_REFRESHçš„çŠ¶æ€
 					if ((tempY - startY) / RATIO >= headContentHeight) {
 						state = RELEASE_To_REFRESH;
 						isBack = true;
 						changeHeaderViewByState();
-						LogUtils2.i("ÓÉdone»òÕßÏÂÀ­Ë¢ĞÂ×´Ì¬×ª±äµ½ËÉ¿ªË¢ĞÂ");
+						LogUtils2.i("ç”±doneæˆ–è€…ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°æ¾å¼€åˆ·æ–°");
 					}else if (tempY - startY <= 0) {
-						// ÉÏÍÆµ½¶¥ÁË
+						// ä¸Šæ¨åˆ°é¡¶äº†
 						state = DONE;
 						changeHeaderViewByState();
-						LogUtils2.i("ÓÉDOne»òÕßÏÂÀ­Ë¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");
+						LogUtils2.i("ç”±DOneæˆ–è€…ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");
 					}
 				}
 				
 				/**
-				 * ÏÂÃæÕâÀïÉèÖÃÎ²²¿»Øµ¯µÄ
+				 * ä¸‹é¢è¿™é‡Œè®¾ç½®å°¾éƒ¨å›å¼¹çš„
 				 */
 				if (!isRecordPullUp && lastItemIndex == getCount()) {
 					Log.d(TAG, "lastItemIndex == getCount()" + " set isRecordPullUp=true");
@@ -484,7 +484,7 @@ public class ElasticListView extends ListView implements OnScrollListener{
 		return super.onTouchEvent(event);
 	}
 
-	// µ±×´Ì¬¸Ä±äÊ±ºò£¬µ÷ÓÃ¸Ã·½·¨£¬ÒÔ¸üĞÂ½çÃæ
+	// å½“çŠ¶æ€æ”¹å˜æ—¶å€™ï¼Œè°ƒç”¨è¯¥æ–¹æ³•ï¼Œä»¥æ›´æ–°ç•Œé¢
 	private void changeHeaderViewByState() {
 		switch (state) {
 		case RELEASE_To_REFRESH:
@@ -496,9 +496,9 @@ public class ElasticListView extends ListView implements OnScrollListener{
 			arrowImageView.clearAnimation();
 			arrowImageView.startAnimation(animation);
 
-			tipsTextview.setText("ËÉ¿ªË¢ĞÂ");
+			tipsTextview.setText("æ¾å¼€åˆ·æ–°");
 
-			LogUtils2.i("µ±Ç°×´Ì¬£¬ËÉ¿ªË¢ĞÂ*******");
+			LogUtils2.i("å½“å‰çŠ¶æ€ï¼Œæ¾å¼€åˆ·æ–°*******");
 			break;
 		case PULL_To_REFRESH:
 			progressBar.setVisibility(View.GONE);
@@ -506,18 +506,18 @@ public class ElasticListView extends ListView implements OnScrollListener{
 			lastUpdatedTextView.setVisibility(View.VISIBLE);
 			arrowImageView.clearAnimation();
 			arrowImageView.setVisibility(View.VISIBLE);
-			// ÊÇÓÉRELEASE_To_REFRESH×´Ì¬×ª±äÀ´µÄ
+			// æ˜¯ç”±RELEASE_To_REFRESHçŠ¶æ€è½¬å˜æ¥çš„
 			if (isBack) {
 				isBack = false;
 				arrowImageView.clearAnimation();
 				arrowImageView.startAnimation(reverseAnimation);
 
-				tipsTextview.setText("ÏÂÀ­Ë¢ĞÂ");
+				tipsTextview.setText("ä¸‹æ‹‰åˆ·æ–°");
 			} else {
-				tipsTextview.setText("ÏÂÀ­Ë¢ĞÂ");
+				tipsTextview.setText("ä¸‹æ‹‰åˆ·æ–°");
 			}
-			Log.i(TAG, "µ±Ç°×´Ì¬£¬ÏÂÀ­Ë¢ĞÂ");
-			LogUtils2.d("µ±Ç°×´Ì¬£¬ÏÂÀ­Ë¢ĞÂ...");
+			Log.i(TAG, "å½“å‰çŠ¶æ€ï¼Œä¸‹æ‹‰åˆ·æ–°");
+			LogUtils2.d("å½“å‰çŠ¶æ€ï¼Œä¸‹æ‹‰åˆ·æ–°...");
 			break;
 
 		case REFRESHING:
@@ -527,11 +527,11 @@ public class ElasticListView extends ListView implements OnScrollListener{
 			progressBar.setVisibility(View.VISIBLE);
 			arrowImageView.clearAnimation();
 			arrowImageView.setVisibility(View.GONE);
-			tipsTextview.setText("ÕıÔÚË¢ĞÂ...");
+			tipsTextview.setText("æ­£åœ¨åˆ·æ–°...");
 			lastUpdatedTextView.setVisibility(View.VISIBLE);
 
-			Log.i(TAG, "µ±Ç°×´Ì¬,ÕıÔÚË¢ĞÂ...");
-			LogUtils2.d("µ±Ç°×´Ì¬,ÕıÔÚË¢ĞÂ...");
+			Log.i(TAG, "å½“å‰çŠ¶æ€,æ­£åœ¨åˆ·æ–°...");
+			LogUtils2.d("å½“å‰çŠ¶æ€,æ­£åœ¨åˆ·æ–°...");
 			break;
 		case DONE:
 			headView.setPadding(0, -1 * headContentHeight, 0, 0);
@@ -539,20 +539,20 @@ public class ElasticListView extends ListView implements OnScrollListener{
 			progressBar.setVisibility(View.GONE);
 			arrowImageView.clearAnimation();
 			arrowImageView.setImageResource(R.drawable.goicon);
-			tipsTextview.setText("ÏÂÀ­Ë¢ĞÂ");
+			tipsTextview.setText("ä¸‹æ‹‰åˆ·æ–°");
 			lastUpdatedTextView.setVisibility(View.VISIBLE);
 
-			LogUtils2.i("µ±Ç°×´Ì¬£¬done......");
+			LogUtils2.i("å½“å‰çŠ¶æ€ï¼Œdone......");
 			break;
 		}
 	}
 
 	/**
-	 * MeasureSpec·â×°´Óparent´«µİ¸øchildµÄlayoutÒªÇó¡£Ã¿¸öMeasureSpec±íÊ¾¶Ôwidth/heightµÄÒªÇó¡£
-	 * MeasureSpecÓÉsizeºÍmode×é³É¡£¿ÉÓÃµÄmodeÓĞ3ÖÖ£º
-	1. UNSPECIFIED±íÊ¾parentÃ»ÓĞÇ¿¼Ó¸øchildÈÎºÎconstraint¡£
-	2. EXACTLY±íÊ¾parentÒÑ¾­È·¶¨childµÄ¾«È·size¡£
-	3. AT_MOST±íÊ¾child¿ÉÒÔÉè¶¨Îªspecified sizeÖ®ÄÚµÄÈÎºÎÖµ¡£
+	 * MeasureSpecå°è£…ä»parentä¼ é€’ç»™childçš„layoutè¦æ±‚ã€‚æ¯ä¸ªMeasureSpecè¡¨ç¤ºå¯¹width/heightçš„è¦æ±‚ã€‚
+	 * MeasureSpecç”±sizeå’Œmodeç»„æˆã€‚å¯ç”¨çš„modeæœ‰3ç§ï¼š
+	1. UNSPECIFIEDè¡¨ç¤ºparentæ²¡æœ‰å¼ºåŠ ç»™childä»»ä½•constraintã€‚
+	2. EXACTLYè¡¨ç¤ºparentå·²ç»ç¡®å®šchildçš„ç²¾ç¡®sizeã€‚
+	3. AT_MOSTè¡¨ç¤ºchildå¯ä»¥è®¾å®šä¸ºspecified sizeä¹‹å†…çš„ä»»ä½•å€¼ã€‚
 	 * @param child
 	 */
 	private void measureView(View child) {
@@ -564,15 +564,15 @@ public class ElasticListView extends ListView implements OnScrollListener{
 		}
 		
 		/**
-		 * ÕâÀïÓ¦¸ÃÊÇ²âÁ¿»ñÈ¡×ÓViewµÄ´óĞ¡°Ñ£¬È»ºóÔÚ¸¸viewÖĞ¸ø³öºÏÊÊµÄ´óĞ¡ÏÔÊ¾
+		 * è¿™é‡Œåº”è¯¥æ˜¯æµ‹é‡è·å–å­Viewçš„å¤§å°æŠŠï¼Œç„¶ååœ¨çˆ¶viewä¸­ç»™å‡ºåˆé€‚çš„å¤§å°æ˜¾ç¤º
 		 */
 		LogUtils2.d("p.width=="+p.width+"   p.height=="+p.height);
 		int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0 + 0, p.width);
 		/**
-		 * ÕâÀï»ñÈ¡µÄlpHeight Ò»°ãÊÇ¸ù¾İlayout²¼¾ÖÎÄ¼şÀïÃæµÄLayout_heightµÄÖµ»ñÈ¡µÄ 
-		 * Èç¹ûÊÇWRAP_CONTENT ÔòÖµ ÊÇ-2 
-		 * MATCH_PARENT ÊÇ-1
-		 * Èç¹û´óÓÚ0  ËµÃ÷¿ÉÄÜÊÇ¸ø³öÃ÷È·µÄÈ¡ÖµÁË ÀıÈç300dp »òÕß100dp ÕâÑùµÄ´óĞ¡
+		 * è¿™é‡Œè·å–çš„lpHeight ä¸€èˆ¬æ˜¯æ ¹æ®layoutå¸ƒå±€æ–‡ä»¶é‡Œé¢çš„Layout_heightçš„å€¼è·å–çš„ 
+		 * å¦‚æœæ˜¯WRAP_CONTENT åˆ™å€¼ æ˜¯-2 
+		 * MATCH_PARENT æ˜¯-1
+		 * å¦‚æœå¤§äº0  è¯´æ˜å¯èƒ½æ˜¯ç»™å‡ºæ˜ç¡®çš„å–å€¼äº† ä¾‹å¦‚300dp æˆ–è€…100dp è¿™æ ·çš„å¤§å°
 		 */
 		int lpHeight = p.height;
 		int childHeightSpec;
@@ -580,7 +580,7 @@ public class ElasticListView extends ListView implements OnScrollListener{
 		 * 
 		 */
 		if (lpHeight > 0) {
-			//´óÓÚ0  ËµÃ÷ÉèÖÃÁËÈ·¶¨µÄÖµ£¬ÄÇÃ´Ä£Ê½¾ÍÊÇMeasureSpec.EXACTLY È·ÇĞµÄÀàĞÍ
+			//å¤§äº0  è¯´æ˜è®¾ç½®äº†ç¡®å®šçš„å€¼ï¼Œé‚£ä¹ˆæ¨¡å¼å°±æ˜¯MeasureSpec.EXACTLY ç¡®åˆ‡çš„ç±»å‹
 			childHeightSpec = MeasureSpec.makeMeasureSpec(lpHeight,
 					MeasureSpec.EXACTLY);
 		} else {
@@ -606,7 +606,7 @@ public class ElasticListView extends ListView implements OnScrollListener{
 
 	public void onRefreshComplete() {
 		state = DONE;
-		lastUpdatedTextView.setText("×î½ü¸üĞÂ:" + new Date().toLocaleString());
+		lastUpdatedTextView.setText("æœ€è¿‘æ›´æ–°:" + new Date().toLocaleString());
 		changeHeaderViewByState();
 		invalidate();
 		scrollTo(0, 0);
@@ -614,7 +614,7 @@ public class ElasticListView extends ListView implements OnScrollListener{
 
 	private void onRefresh() {
 		if (refreshListener != null) {
-			LogUtils2.i("¿ªÊ¼...........onRefresh");
+			LogUtils2.i("å¼€å§‹...........onRefresh");
 			refreshListener.onRefresh();
 		}
 	}

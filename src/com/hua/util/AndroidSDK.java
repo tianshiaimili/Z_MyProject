@@ -5,7 +5,7 @@ package com.hua.util;
 import android.util.Log;
 
 /**
- * ÕâÊÇ»ñÈ¡android°æ±¾ºÅ
+ * è¿™æ˜¯è·å–androidç‰ˆæœ¬å·
  * @author Hua
  *
  */
@@ -37,7 +37,7 @@ public final class AndroidSDK
             try
             {
             	/**
-            	 * Í¨¹ı·´Éä»ñÈ¡°æ±¾ºÅ
+            	 * é€šè¿‡åå°„è·å–ç‰ˆæœ¬å·
             	 */
                 apiLevel = ((Integer)ReflectionUtils.getStaticFieldValue(
                 		ReflectionUtils.getField(

@@ -40,23 +40,23 @@ public class ContactsFragment extends Fragment implements OnScrollListener,OnIte
 	private LettersAdapter adapter;
 	private ExpressDbHelper helper;
 	
-	/**·Ö×é¸¨ÖúÀà**/
+	/**åˆ†ç»„è¾…åŠ©ç±»**/
 	private AlphabetIndexer indexer;
-	/**×ÖÄ¸±í**/
+	/**å­—æ¯è¡¨**/
 	private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	/**×ÖÄ¸µ¼º½ÊÓÍ¼**/
+	/**å­—æ¯å¯¼èˆªè§†å›¾**/
 	private LetterView letterView;
-	/**×Ô¶¨ÒåToast**/
+	/**è‡ªå®šä¹‰Toast**/
 	private Toast toast;
-	/**ToastÊÓÍ¼ÖĞµÄTextView**/
+	/**Toastè§†å›¾ä¸­çš„TextView**/
 	private TextView tvToast;
 	
 	/**
-	 * ¸²¸ÇÔÚListViewÉÏÃæµÄÊÓÍ¼
+	 * è¦†ç›–åœ¨ListViewä¸Šé¢çš„è§†å›¾
 	 */
 	private View viewOverlay;
 	/**
-	 * ¸²¸ÇÔÚListViewÉÏÃæµÄÊÓÍ¼ textviewÏÔÊ¾µÄÄÚÈİ
+	 * è¦†ç›–åœ¨ListViewä¸Šé¢çš„è§†å›¾ textviewæ˜¾ç¤ºçš„å†…å®¹
 	 */
 	private TextView tvOverlay;
 	
@@ -68,7 +68,7 @@ public class ContactsFragment extends Fragment implements OnScrollListener,OnIte
 		
 		if(isFirstRun()){
 			/**
-			 * µÚÒ»´Î½øÀ´µÄ»° ÏÈ¸´ÖÆdb³ÌĞò
+			 * ç¬¬ä¸€æ¬¡è¿›æ¥çš„è¯ å…ˆå¤åˆ¶dbç¨‹åº
 			 */
 			copyDb();
 		}
@@ -83,7 +83,7 @@ public class ContactsFragment extends Fragment implements OnScrollListener,OnIte
 		
 	}
 
-	/**³õÊ¼»¯¿Ø¼ş*/
+	/**åˆå§‹åŒ–æ§ä»¶*/
 	private void initViews(View view ) {
 
 		viewOverlay = view.findViewById(R.id.letter_viewOverlay);
@@ -93,7 +93,7 @@ public class ContactsFragment extends Fragment implements OnScrollListener,OnIte
 		SQLiteDatabase db = helper.getReadableDatabase();
 		///
 		Cursor cursor = db.query(ExpressDbHelper.TABLE_COMPANY_NAME, null, null, null, null, null, ExpressDbHelper.TABLE_COMPANY_COMPANY_INITIAL);
-		//´´½¨AlphabetIndexer¶ÔÏóĞèÒªcursor¶ÔÏó£¬ÅÅĞòµÄ×Ö¶ÎËùÔÚµÄÎ»ÖÃ£¬×ÖÄ¸±í
+		//åˆ›å»ºAlphabetIndexerå¯¹è±¡éœ€è¦cursorå¯¹è±¡ï¼Œæ’åºçš„å­—æ®µæ‰€åœ¨çš„ä½ç½®ï¼Œå­—æ¯è¡¨
 		
 		indexer = new AlphabetIndexer(cursor, cursor.getColumnIndex(ExpressDbHelper.TABLE_COMPANY_COMPANY_INITIAL), alphabet);
 		
@@ -108,7 +108,7 @@ public class ContactsFragment extends Fragment implements OnScrollListener,OnIte
 	}
 
 	/**
-	 * ³õÊ¼»¯ÏÔÊ¾µÄToasT
+	 * åˆå§‹åŒ–æ˜¾ç¤ºçš„ToasT
 	 */
 	private void initToast() {
 		toast = new Toast(getActivity());
@@ -130,20 +130,20 @@ public class ContactsFragment extends Fragment implements OnScrollListener,OnIte
 	public void onScroll(AbsListView view, int firstVisibleItem,
 			int visibleItemCount, int totalItemCount) {
 		
-		//ÕâÁ½ĞĞ´ú±í×÷ÓÃÊÇ ÈÃListView¹ö¶¯µÄÊ±ºò¿ØÖÆLetterViewÀïÑ¡ÖĞ×ÖÄ¸Î»ÖÃ
+		//è¿™ä¸¤è¡Œä»£è¡¨ä½œç”¨æ˜¯ è®©ListViewæ»šåŠ¨çš„æ—¶å€™æ§åˆ¶LetterViewé‡Œé€‰ä¸­å­—æ¯ä½ç½®
 		/**
 		 * int section = indexer.getSectionForPosition(firstVisibleItem);
-		 * »ñÈ¡¸Ãitem¶ÔÓ¦µÄ×ÖÄ¸ÔÚ×ÖÄ¸±íÖĞµÄÎ»ÖÃ
-		 * ÒòÎªÒ»¸ö×ÖÄ¸×é¿ÉÄÜ¶ÔÓ¦¶à¸öitemµÄ ¡£ÀıÈçA×ÖÄ¸×é£¬¾Í¶ÔÓ¦ÁË5¼Ò¹«Ë¾
+		 * è·å–è¯¥itemå¯¹åº”çš„å­—æ¯åœ¨å­—æ¯è¡¨ä¸­çš„ä½ç½®
+		 * å› ä¸ºä¸€ä¸ªå­—æ¯ç»„å¯èƒ½å¯¹åº”å¤šä¸ªitemçš„ ã€‚ä¾‹å¦‚Aå­—æ¯ç»„ï¼Œå°±å¯¹åº”äº†5å®¶å…¬å¸
 		 */
 		int section = indexer.getSectionForPosition(firstVisibleItem);
 		letterView.setSelectedIndex(section);
 		
 		/**
 		 * 	int pos = indexer.getPositionForSection(nextSection);
-		 * »ñÈ¡¸Ã×ÖÄ¸·Ö×éÖĞµÚÒ»ÌõÊı¾İµÄÎ»ÖÃ£¬ÀıÈç »ñÈ¡B×ÖÄ¸×éÖĞB¹«Ë¾¿ªÍ·µÄµÚÒ»¸ö¹«Ë¾µÄÎ»ÖÃ
+		 * è·å–è¯¥å­—æ¯åˆ†ç»„ä¸­ç¬¬ä¸€æ¡æ•°æ®çš„ä½ç½®ï¼Œä¾‹å¦‚ è·å–Bå­—æ¯ç»„ä¸­Bå…¬å¸å¼€å¤´çš„ç¬¬ä¸€ä¸ªå…¬å¸çš„ä½ç½®
 		 */
-		//ÉèÖÃ¼·Ñ¹Ğ§¹û  
+		//è®¾ç½®æŒ¤å‹æ•ˆæœ  
 		int nextSection = section+1;
 		int pos = indexer.getPositionForSection(nextSection);
 		
@@ -167,7 +167,7 @@ public class ContactsFragment extends Fragment implements OnScrollListener,OnIte
 			
 		}else {
 			
-			//Õı³£ÏÔÊ¾
+			//æ­£å¸¸æ˜¾ç¤º
 			viewOverlay.setPadding(0, 0, 0, 0);
 			tvOverlay.setText(alphabet.charAt(section)+"");
 			
@@ -176,7 +176,7 @@ public class ContactsFragment extends Fragment implements OnScrollListener,OnIte
 		
 	}
 	
-    /**ÎªLetterViewÉèÖÃµÄ¼àÌıÆ÷**/
+    /**ä¸ºLetterViewè®¾ç½®çš„ç›‘å¬å™¨**/
     private OnLetterChangeListener letterChangeListener = new OnLetterChangeListener() {
 		
 		@Override
@@ -184,21 +184,21 @@ public class ContactsFragment extends Fragment implements OnScrollListener,OnIte
 			
 			/**
 			 * 	int pos = indexer.getPositionForSection(nextSection);
-			 * »ñÈ¡¸Ã×ÖÄ¸·Ö×éÖĞµÚÒ»ÌõÊı¾İµÄÎ»ÖÃ£¬ÀıÈç »ñÈ¡B×ÖÄ¸×éÖĞB¹«Ë¾¿ªÍ·µÄµÚÒ»¸ö¹«Ë¾µÄÎ»ÖÃ
+			 * è·å–è¯¥å­—æ¯åˆ†ç»„ä¸­ç¬¬ä¸€æ¡æ•°æ®çš„ä½ç½®ï¼Œä¾‹å¦‚ è·å–Bå­—æ¯ç»„ä¸­Bå…¬å¸å¼€å¤´çš„ç¬¬ä¸€ä¸ªå…¬å¸çš„ä½ç½®
 			 */
 			int position = indexer.getPositionForSection(selectedIndex);
 			listView.setSelection(position);
 			tvToast.setText(alphabet.charAt(selectedIndex)+"");
 			toast.show();
 			
-			//ÕâÖÖToastÏÔÊ¾·½Ê½ ²»ÊÊºÏÎÄ×Ö¿ìËÙ±ä»¯µÄÇé¿ö
+			//è¿™ç§Toastæ˜¾ç¤ºæ–¹å¼ ä¸é€‚åˆæ–‡å­—å¿«é€Ÿå˜åŒ–çš„æƒ…å†µ
 //			Toast.makeText(getApplicationContext(), alphabet.charAt(selectedIndex)+"", 0).show();
 		}
 	};
 	
 	
 	/**
-	 * ¸´ÖÆDBµ½APPÖĞ
+	 * å¤åˆ¶DBåˆ°APPä¸­
 	 */
 	private void copyDb() {
 		
@@ -231,9 +231,9 @@ public class ContactsFragment extends Fragment implements OnScrollListener,OnIte
 		
 		TextView textView = (TextView) view.findViewById(R.id.tvCompanyName_item);
 		
-		LogUtils2.e("itemÉÏµÄÖµiewÊÇ£º="+view+"   | ÖµÊÇ£º"+textView.getText());
-		LogUtils2.e("parentÉÏµÄÖµiewÊÇ£º="+parent+"   | ¿É¿´¼ûµÄitemµÄÖµÊÇ£º"+parent.getChildCount());
-		LogUtils2.i("×ÜµÄitemCount=="+parent.getCount());
+		LogUtils2.e("itemä¸Šçš„å€¼iewæ˜¯ï¼š="+view+"   | å€¼æ˜¯ï¼š"+textView.getText());
+		LogUtils2.e("parentä¸Šçš„å€¼iewæ˜¯ï¼š="+parent+"   | å¯çœ‹è§çš„itemçš„å€¼æ˜¯ï¼š"+parent.getChildCount());
+		LogUtils2.i("æ€»çš„itemCount=="+parent.getCount());
 //		LogUtils2.i(""+parent.);
 //		Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
 		

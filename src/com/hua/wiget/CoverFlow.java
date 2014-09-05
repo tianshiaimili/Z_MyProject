@@ -185,7 +185,7 @@ public class CoverFlow extends Gallery {
 
 	/**
 	 * 
-	 * Õâ¾ÍÊÇËùÎ½µÄÔÚ´óĞ¡µÄ²¼¾ÖÊ±,ÕâÒ»¹ÛµãÒÑ¾­·¢ÉúÁË¸Ä±ä¡£Èç¹û ÄãÖ»ÊÇÌí¼Óµ½ÊÓÍ¼²ã´Î,ÓĞÈË½ĞÄã¾ÉµÄ¹ÛÄî ¼ÛÖµ¹ÛÎª0¡£
+	 * è¿™å°±æ˜¯æ‰€è°“çš„åœ¨å¤§å°çš„å¸ƒå±€æ—¶,è¿™ä¸€è§‚ç‚¹å·²ç»å‘ç”Ÿäº†æ”¹å˜ã€‚å¦‚æœ ä½ åªæ˜¯æ·»åŠ åˆ°è§†å›¾å±‚æ¬¡,æœ‰äººå«ä½ æ—§çš„è§‚å¿µ ä»·å€¼è§‚ä¸º0ã€‚
 	 * 
 	 * 
 	 * 
@@ -237,7 +237,7 @@ public class CoverFlow extends Gallery {
 	
 	/**
 	 * 
-	 * °ÑÍ¼ÏñÎ»Í¼µÄ½Ç¶ÈÍ¨¹ı
+	 * æŠŠå›¾åƒä½å›¾çš„è§’åº¦é€šè¿‡
 	 * 
 	 * 
 	 * 
@@ -264,8 +264,8 @@ public class CoverFlow extends Gallery {
 		final int imageWidth = child.getLayoutParams().width;
 		final int rotation = Math.abs(rotationAngle);
 
-		// ÔÚZÖáÉÏÕıÏòÒÆ¶¯cameraµÄÊÓ½Ç£¬Êµ¼ÊĞ§¹ûÎª·Å´óÍ¼Æ¬¡£
-		// Èç¹ûÔÚYÖáÉÏÒÆ¶¯£¬ÔòÍ¼Æ¬ÉÏÏÂÒÆ¶¯£»XÖáÉÏ¶ÔÓ¦Í¼Æ¬×óÓÒÒÆ¶¯¡£
+		// åœ¨Zè½´ä¸Šæ­£å‘ç§»åŠ¨cameraçš„è§†è§’ï¼Œå®é™…æ•ˆæœä¸ºæ”¾å¤§å›¾ç‰‡ã€‚
+		// å¦‚æœåœ¨Yè½´ä¸Šç§»åŠ¨ï¼Œåˆ™å›¾ç‰‡ä¸Šä¸‹ç§»åŠ¨ï¼›Xè½´ä¸Šå¯¹åº”å›¾ç‰‡å·¦å³ç§»åŠ¨ã€‚
 		mCamera.translate(0.0f, 0.0f, 100.0f);
 
 		// As the angle of the view gets less, zoom in
@@ -273,8 +273,8 @@ public class CoverFlow extends Gallery {
 			float zoomAmount = (float) (mMaxZoom + (rotation * 1.5));
 			mCamera.translate(0.0f, 0.0f, zoomAmount);
 		}
-		// ÔÚYÖáÉÏĞı×ª£¬¶ÔÓ¦Í¼Æ¬ÊúÏòÏòÀï·­×ª¡£
-		// Èç¹ûÔÚXÖáÉÏĞı×ª£¬Ôò¶ÔÓ¦Í¼Æ¬ºáÏòÏòÀï·­×ª¡£
+		// åœ¨Yè½´ä¸Šæ—‹è½¬ï¼Œå¯¹åº”å›¾ç‰‡ç«–å‘å‘é‡Œç¿»è½¬ã€‚
+		// å¦‚æœåœ¨Xè½´ä¸Šæ—‹è½¬ï¼Œåˆ™å¯¹åº”å›¾ç‰‡æ¨ªå‘å‘é‡Œç¿»è½¬ã€‚
 		mCamera.rotateY(rotationAngle);
 		mCamera.getMatrix(imageMatrix);
 		imageMatrix.preTranslate(-(imageWidth / 2), -(imageHeight / 2));

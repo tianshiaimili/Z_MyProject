@@ -47,7 +47,7 @@ import com.hua.view.MyScrollView.LoadImageTask;
 
 
 /**
- * ÊµÏÖ»Øµ¯µÄscrollview
+ * å®ç°å›å¼¹çš„scrollview
  * @author Hua
  *
  */
@@ -58,7 +58,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 	private final static int REFRESHING = 2;
 	private final static int DONE = 3;
 	private final static int LOADING = 4;
-	// Êµ¼ÊµÄpaddingµÄ¾àÀëÓë½çÃæÉÏÆ«ÒÆ¾àÀëµÄ±ÈÀı
+	// å®é™…çš„paddingçš„è·ç¦»ä¸ç•Œé¢ä¸Šåç§»è·ç¦»çš„æ¯”ä¾‹
 	private final static int RATIO = 3;
 
 	private int headContentWidth;
@@ -66,120 +66,120 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 
 	private LinearLayout innerLayout;
 	private LinearLayout headView;
-	private ImageView arrowImageView;//¼ıÍ·Í¼Æ¬
+	private ImageView arrowImageView;//ç®­å¤´å›¾ç‰‡
 	private ProgressBar progressBar;
-	private TextView tipsTextview;// ÌáÊ¾ÏÂÀ­ ËÉ¿ª Ë¢ĞÂµÄÎÄ×Ö
+	private TextView tipsTextview;// æç¤ºä¸‹æ‹‰ æ¾å¼€ åˆ·æ–°çš„æ–‡å­—
 	private TextView lastUpdatedTextView;
 	private OnRefreshListener refreshListener;
 	private boolean isRefreshable;
 	private int state;
 	/**
-	 * Õâ¸öÊÇÓÃÀ´×öµ±ÏÂÀ­ºó£¬ÓÖÉÏÀ²Ê± ¶ÔarrowImageViewÍ¼Æ¬×öµÄÅĞ¶ÏÀ´¸Ä±ä¶¯»­
+	 * è¿™ä¸ªæ˜¯ç”¨æ¥åšå½“ä¸‹æ‹‰åï¼Œåˆä¸Šå•¦æ—¶ å¯¹arrowImageViewå›¾ç‰‡åšçš„åˆ¤æ–­æ¥æ”¹å˜åŠ¨ç”»
 	 */
 	private boolean isBack;
 
-	private RotateAnimation animation; //¼ıÍ·µÄ¶¯»­
+	private RotateAnimation animation; //ç®­å¤´çš„åŠ¨ç”»
 	private RotateAnimation reverseAnimation;
 
-	private boolean canReturn; //ÓÃÀ´±íÊ¾ËÉ¿ªÊÖºó¾Í¿ÉÒÔ»Øµ¯ÁË
+	private boolean canReturn; //ç”¨æ¥è¡¨ç¤ºæ¾å¼€æ‰‹åå°±å¯ä»¥å›å¼¹äº†
 	private boolean isRecored;
 	private int startY;
 
 	//////////////////////////////////////
 	/**
-	 * ÉèÖÃÉÏÀ²»¬¶¯
+	 * è®¾ç½®ä¸Šå•¦æ»‘åŠ¨
 	 */
 
 	/**
-	 * Ã¿Ò³Òª¼ÓÔØµÄÍ¼Æ¬ÊıÁ¿
+	 * æ¯é¡µè¦åŠ è½½çš„å›¾ç‰‡æ•°é‡
 	 */
 	public static final int PAGE_SIZE = 15;
 
 	/**
-	 * ¼ÇÂ¼µ±Ç°ÒÑ¼ÓÔØµ½µÚ¼¸Ò³
+	 * è®°å½•å½“å‰å·²åŠ è½½åˆ°ç¬¬å‡ é¡µ
 	 */
 	private int page;
 
 	/**
-	 * Ã¿Ò»ÁĞµÄ¿í¶È
+	 * æ¯ä¸€åˆ—çš„å®½åº¦
 	 */
 	private int columnWidth;
 
 	/**
-	 * µ±Ç°µÚÒ»ÁĞµÄ¸ß¶È
+	 * å½“å‰ç¬¬ä¸€åˆ—çš„é«˜åº¦
 	 */
 	private int firstColumnHeight;
 
 	/**
-	 * µ±Ç°µÚ¶şÁĞµÄ¸ß¶È
+	 * å½“å‰ç¬¬äºŒåˆ—çš„é«˜åº¦
 	 */
 	private int secondColumnHeight;
 
 	/**
-	 * µ±Ç°µÚÈıÁĞµÄ¸ß¶È
+	 * å½“å‰ç¬¬ä¸‰åˆ—çš„é«˜åº¦
 	 */
 	private int thirdColumnHeight;
 
 	/**
-	 * ÊÇ·ñÒÑ¼ÓÔØ¹ıÒ»´Îlayout£¬ÕâÀïonLayoutÖĞµÄ³õÊ¼»¯Ö»Ğè¼ÓÔØÒ»´Î
+	 * æ˜¯å¦å·²åŠ è½½è¿‡ä¸€æ¬¡layoutï¼Œè¿™é‡ŒonLayoutä¸­çš„åˆå§‹åŒ–åªéœ€åŠ è½½ä¸€æ¬¡
 	 */
 	private boolean loadOnce;
 
 	/**
-	 * ¶ÔÍ¼Æ¬½øĞĞ¹ÜÀíµÄ¹¤¾ßÀà
+	 * å¯¹å›¾ç‰‡è¿›è¡Œç®¡ç†çš„å·¥å…·ç±»
 	 */
 	private MyImageLoader imageLoader;
 
 	/**
-	 * µÚÒ»ÁĞµÄ²¼¾Ö
+	 * ç¬¬ä¸€åˆ—çš„å¸ƒå±€
 	 */
 	private LinearLayout firstColumn;
 
 	/**
-	 * µÚ¶şÁĞµÄ²¼¾Ö
+	 * ç¬¬äºŒåˆ—çš„å¸ƒå±€
 	 */
 	private LinearLayout secondColumn;
 
 	/**
-	 * µÚÈıÁĞµÄ²¼¾Ö
+	 * ç¬¬ä¸‰åˆ—çš„å¸ƒå±€
 	 */
 	private LinearLayout thirdColumn;
 
 	/**
-	 * ¼ÇÂ¼ËùÓĞÕıÔÚÏÂÔØ»òµÈ´ıÏÂÔØµÄÈÎÎñ¡£
+	 * è®°å½•æ‰€æœ‰æ­£åœ¨ä¸‹è½½æˆ–ç­‰å¾…ä¸‹è½½çš„ä»»åŠ¡ã€‚
 	 */
 	private static Set<LoadImageTask> taskCollection;
 
 	/**
-	 * MyScrollViewÏÂµÄÖ±½Ó×Ó²¼¾Ö¡£
+	 * MyScrollViewä¸‹çš„ç›´æ¥å­å¸ƒå±€ã€‚
 	 */
 	private static View scrollLayout;
 
 	/**
-	 * MyScrollView²¼¾ÖµÄ¸ß¶È¡£
+	 * MyScrollViewå¸ƒå±€çš„é«˜åº¦ã€‚
 	 */
 	private static int scrollViewHeight;
 
 	/**
-	 * ¼ÇÂ¼ÉÏ´¹Ö±·½ÏòµÄ¹ö¶¯¾àÀë¡£
+	 * è®°å½•ä¸Šå‚ç›´æ–¹å‘çš„æ»šåŠ¨è·ç¦»ã€‚
 	 */
 	private static int lastScrollY = -1;
 
 	/**
-	 * ¼ÇÂ¼ËùÓĞ½çÃæÉÏµÄÍ¼Æ¬£¬ÓÃÒÔ¿ÉÒÔËæÊ±¿ØÖÆ¶ÔÍ¼Æ¬µÄÊÍ·Å¡£
+	 * è®°å½•æ‰€æœ‰ç•Œé¢ä¸Šçš„å›¾ç‰‡ï¼Œç”¨ä»¥å¯ä»¥éšæ—¶æ§åˆ¶å¯¹å›¾ç‰‡çš„é‡Šæ”¾ã€‚
 	 */
 	private List<ImageView> imageViewList = new ArrayList<ImageView>();
 	/**
-	 * ÔÚHandlerÖĞ½øĞĞÍ¼Æ¬¿É¼ûĞÔ¼ì²éµÄÅĞ¶Ï£¬ÒÔ¼°¼ÓÔØ¸ü¶àÍ¼Æ¬µÄ²Ù×÷¡£
+	 * åœ¨Handlerä¸­è¿›è¡Œå›¾ç‰‡å¯è§æ€§æ£€æŸ¥çš„åˆ¤æ–­ï¼Œä»¥åŠåŠ è½½æ›´å¤šå›¾ç‰‡çš„æ“ä½œã€‚
 	 */
 	private static Handler handler = new Handler() {
 
 		public void handleMessage(android.os.Message msg) {
 			MyScrollView myScrollView = (MyScrollView) msg.obj;
 			int scrollY = myScrollView.getScrollY();
-			// Èç¹ûµ±Ç°µÄ¹ö¶¯Î»ÖÃºÍÉÏ´ÎÏàÍ¬£¬±íÊ¾ÒÑÍ£Ö¹¹ö¶¯
+			// å¦‚æœå½“å‰çš„æ»šåŠ¨ä½ç½®å’Œä¸Šæ¬¡ç›¸åŒï¼Œè¡¨ç¤ºå·²åœæ­¢æ»šåŠ¨
 			if (scrollY == lastScrollY) {
-				// µ±¹ö¶¯µÄ×îµ×²¿£¬²¢ÇÒµ±Ç°Ã»ÓĞÕıÔÚÏÂÔØµÄÈÎÎñÊ±£¬¿ªÊ¼¼ÓÔØÏÂÒ»Ò³µÄÍ¼Æ¬
+				// å½“æ»šåŠ¨çš„æœ€åº•éƒ¨ï¼Œå¹¶ä¸”å½“å‰æ²¡æœ‰æ­£åœ¨ä¸‹è½½çš„ä»»åŠ¡æ—¶ï¼Œå¼€å§‹åŠ è½½ä¸‹ä¸€é¡µçš„å›¾ç‰‡
 				if (scrollViewHeight + scrollY >= scrollLayout.getHeight()
 						&& taskCollection.isEmpty()) {
 					myScrollView.loadMoreImages();
@@ -189,7 +189,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 				lastScrollY = scrollY;
 				Message message = new Message();
 				message.obj = myScrollView;
-				// 5ºÁÃëºóÔÙ´Î¶Ô¹ö¶¯Î»ÖÃ½øĞĞÅĞ¶Ï
+				// 5æ¯«ç§’åå†æ¬¡å¯¹æ»šåŠ¨ä½ç½®è¿›è¡Œåˆ¤æ–­
 				handler.sendMessageDelayed(message, 5);
 			}
 		};
@@ -224,7 +224,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 		innerLayout.setOrientation(LinearLayout.VERTICAL);
 		
 		/**
-		 * ÏÂÀ­Ê± ÏÔÊ¾µÄ²¿·Ö
+		 * ä¸‹æ‹‰æ—¶ æ˜¾ç¤ºçš„éƒ¨åˆ†
 		 */
 		headView = (LinearLayout) inflater.inflate(R.layout.myscrollview_head,
 				null);
@@ -235,7 +235,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 				.findViewById(R.id.head_progressBar);
 		
 		/**
-		 * ÌáÊ¾ÏÂÀ­ ËÉ¿ª Ë¢ĞÂµÄÎÄ×Ö
+		 * æç¤ºä¸‹æ‹‰ æ¾å¼€ åˆ·æ–°çš„æ–‡å­—
 		 */
 		tipsTextview = (TextView) headView.findViewById(R.id.head_tipsTextView);
 		lastUpdatedTextView = (TextView) headView
@@ -246,8 +246,8 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 		measureView(headView);
 
 		/**
-		 * »ñÈ¡µÃÁËheaderviewµÄ´óĞ¡ºÍ¿í£¬È»ºóÉèÖÃpaddingÖµ£¬È»ËûÃÇÒ»¿ªÊ¼
-		 * ²»ÏÔÊ¾ÔÚscreen
+		 * è·å–å¾—äº†headerviewçš„å¤§å°å’Œå®½ï¼Œç„¶åè®¾ç½®paddingå€¼ï¼Œç„¶ä»–ä»¬ä¸€å¼€å§‹
+		 * ä¸æ˜¾ç¤ºåœ¨screen
 		 */
 		headContentHeight = headView.getMeasuredHeight();
 		headContentWidth = headView.getMeasuredWidth();
@@ -256,10 +256,10 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 
 		Log.i("size", "width:" + headContentWidth + " height:"
 				+ headContentHeight);
-		//°ÑheaderViewÌí¼Óµ½ÄÚ²¿µÄlinearlayoutÖĞ
+		//æŠŠheaderViewæ·»åŠ åˆ°å†…éƒ¨çš„linearlayoutä¸­
 		innerLayout.addView(headView);
 		/**
-		 * °ÑLinearlayoutÌí¼Óµ½µ±Ç°µÄScrollViewÖĞ
+		 * æŠŠLinearlayoutæ·»åŠ åˆ°å½“å‰çš„ScrollViewä¸­
 		 */
 		addView(innerLayout);
 
@@ -284,7 +284,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 
 	
 	/**
-	 * ½øĞĞÒ»Ğ©¹Ø¼üĞÔµÄ³õÊ¼»¯²Ù×÷£¬»ñÈ¡MyScrollViewµÄ¸ß¶È£¬ÒÔ¼°µÃµ½µÚÒ»ÁĞµÄ¿í¶ÈÖµ¡£²¢ÔÚÕâÀï¿ªÊ¼¼ÓÔØµÚÒ»Ò³µÄÍ¼Æ¬¡£
+	 * è¿›è¡Œä¸€äº›å…³é”®æ€§çš„åˆå§‹åŒ–æ“ä½œï¼Œè·å–MyScrollViewçš„é«˜åº¦ï¼Œä»¥åŠå¾—åˆ°ç¬¬ä¸€åˆ—çš„å®½åº¦å€¼ã€‚å¹¶åœ¨è¿™é‡Œå¼€å§‹åŠ è½½ç¬¬ä¸€é¡µçš„å›¾ç‰‡ã€‚
 	 */
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -303,7 +303,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 	
 
 	/**
-	 * ¼àÌıÓÃ»§µÄ´¥ÆÁÊÂ¼ş£¬Èç¹ûÓÃ»§ÊÖÖ¸Àë¿ªÆÁÄ»Ôò¿ªÊ¼½øĞĞ¹ö¶¯¼ì²â¡£
+	 * ç›‘å¬ç”¨æˆ·çš„è§¦å±äº‹ä»¶ï¼Œå¦‚æœç”¨æˆ·æ‰‹æŒ‡ç¦»å¼€å±å¹•åˆ™å¼€å§‹è¿›è¡Œæ»šåŠ¨æ£€æµ‹ã€‚
 	 */
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
@@ -318,14 +318,14 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 
 	
 	/**
-	 * ¿ªÊ¼¼ÓÔØÏÂÒ»Ò³µÄÍ¼Æ¬£¬Ã¿ÕÅÍ¼Æ¬¶¼»á¿ªÆôÒ»¸öÒì²½Ïß³ÌÈ¥ÏÂÔØ¡£
+	 * å¼€å§‹åŠ è½½ä¸‹ä¸€é¡µçš„å›¾ç‰‡ï¼Œæ¯å¼ å›¾ç‰‡éƒ½ä¼šå¼€å¯ä¸€ä¸ªå¼‚æ­¥çº¿ç¨‹å»ä¸‹è½½ã€‚
 	 */
 	public void loadMoreImages() {
 		if (hasSDCard()) {
 			int startIndex = page * PAGE_SIZE;
 			int endIndex = page * PAGE_SIZE + PAGE_SIZE;
 			if (startIndex < Images.imageUrls.length) {
-				Toast.makeText(getContext(), "ÕıÔÚ¼ÓÔØ...", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getContext(), "æ­£åœ¨åŠ è½½...", Toast.LENGTH_SHORT).show();
 				if (endIndex > Images.imageUrls.length) {
 					endIndex = Images.imageUrls.length;
 				}
@@ -336,15 +336,15 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 				}
 				page++;
 			} else {
-				Toast.makeText(getContext(), "ÒÑÃ»ÓĞ¸ü¶àÍ¼Æ¬", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getContext(), "å·²æ²¡æœ‰æ›´å¤šå›¾ç‰‡", Toast.LENGTH_SHORT).show();
 			}
 		} else {
-			Toast.makeText(getContext(), "Î´·¢ÏÖSD¿¨", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), "æœªå‘ç°SDå¡", Toast.LENGTH_SHORT).show();
 		}
 	}
 
 	/**
-	 * ±éÀúimageViewListÖĞµÄÃ¿ÕÅÍ¼Æ¬£¬¶ÔÍ¼Æ¬µÄ¿É¼ûĞÔ½øĞĞ¼ì²é£¬Èç¹ûÍ¼Æ¬ÒÑ¾­Àë¿ªÆÁÄ»¿É¼û·¶Î§£¬Ôò½«Í¼Æ¬Ìæ»»³ÉÒ»ÕÅ¿ÕÍ¼¡£
+	 * éå†imageViewListä¸­çš„æ¯å¼ å›¾ç‰‡ï¼Œå¯¹å›¾ç‰‡çš„å¯è§æ€§è¿›è¡Œæ£€æŸ¥ï¼Œå¦‚æœå›¾ç‰‡å·²ç»ç¦»å¼€å±å¹•å¯è§èŒƒå›´ï¼Œåˆ™å°†å›¾ç‰‡æ›¿æ¢æˆä¸€å¼ ç©ºå›¾ã€‚
 	 */
 	public void checkVisibility() {
 		for (int i = 0; i < imageViewList.size(); i++) {
@@ -367,9 +367,9 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 	}
 
 	/**
-	 * ÅĞ¶ÏÊÖ»úÊÇ·ñÓĞSD¿¨¡£
+	 * åˆ¤æ–­æ‰‹æœºæ˜¯å¦æœ‰SDå¡ã€‚
 	 * 
-	 * @return ÓĞSD¿¨·µ»Øtrue£¬Ã»ÓĞ·µ»Øfalse¡£
+	 * @return æœ‰SDå¡è¿”å›trueï¼Œæ²¡æœ‰è¿”å›falseã€‚
 	 */
 	private boolean hasSDCard() {
 		return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
@@ -377,24 +377,24 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 
 	
 	/**
-	 * Òì²½ÏÂÔØÍ¼Æ¬µÄÈÎÎñ¡£
+	 * å¼‚æ­¥ä¸‹è½½å›¾ç‰‡çš„ä»»åŠ¡ã€‚
 	 * 
 	 * @author guolin
 	 */
 	class LoadImageTask extends AsyncTask<Integer, Void, Bitmap> {
 
 		/**
-		 * ¼ÇÂ¼Ã¿¸öÍ¼Æ¬¶ÔÓ¦µÄÎ»ÖÃ
+		 * è®°å½•æ¯ä¸ªå›¾ç‰‡å¯¹åº”çš„ä½ç½®
 		 */
 		private int mItemPosition;
 
 		/**
-		 * Í¼Æ¬µÄURLµØÖ·
+		 * å›¾ç‰‡çš„URLåœ°å€
 		 */
 		private String mImageUrl;
 
 		/**
-		 * ¿ÉÖØ¸´Ê¹ÓÃµÄImageView
+		 * å¯é‡å¤ä½¿ç”¨çš„ImageView
 		 */
 		private ImageView mImageView;
 
@@ -402,7 +402,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 		}
 
 		/**
-		 * ½«¿ÉÖØ¸´Ê¹ÓÃµÄImageView´«Èë
+		 * å°†å¯é‡å¤ä½¿ç”¨çš„ImageViewä¼ å…¥
 		 * 
 		 * @param imageView
 		 */
@@ -432,11 +432,11 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 		}
 
 		/**
-		 * ¸ù¾İ´«ÈëµÄURL£¬¶ÔÍ¼Æ¬½øĞĞ¼ÓÔØ¡£Èç¹ûÕâÕÅÍ¼Æ¬ÒÑ¾­´æÔÚÓÚSD¿¨ÖĞ£¬ÔòÖ±½Ó´ÓSD¿¨Àï¶ÁÈ¡£¬·ñÔò¾Í´ÓÍøÂçÉÏÏÂÔØ¡£
+		 * æ ¹æ®ä¼ å…¥çš„URLï¼Œå¯¹å›¾ç‰‡è¿›è¡ŒåŠ è½½ã€‚å¦‚æœè¿™å¼ å›¾ç‰‡å·²ç»å­˜åœ¨äºSDå¡ä¸­ï¼Œåˆ™ç›´æ¥ä»SDå¡é‡Œè¯»å–ï¼Œå¦åˆ™å°±ä»ç½‘ç»œä¸Šä¸‹è½½ã€‚
 		 * 
 		 * @param imageUrl
-		 *            Í¼Æ¬µÄURLµØÖ·
-		 * @return ¼ÓÔØµ½ÄÚ´æµÄÍ¼Æ¬¡£
+		 *            å›¾ç‰‡çš„URLåœ°å€
+		 * @return åŠ è½½åˆ°å†…å­˜çš„å›¾ç‰‡ã€‚
 		 */
 		private Bitmap loadImage(String imageUrl) {
 			File imageFile = new File(getImagePath(imageUrl));
@@ -455,14 +455,14 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 		}
 
 		/**
-		 * ÏòImageViewÖĞÌí¼ÓÒ»ÕÅÍ¼Æ¬
+		 * å‘ImageViewä¸­æ·»åŠ ä¸€å¼ å›¾ç‰‡
 		 * 
 		 * @param bitmap
-		 *            ´ıÌí¼ÓµÄÍ¼Æ¬
+		 *            å¾…æ·»åŠ çš„å›¾ç‰‡
 		 * @param imageWidth
-		 *            Í¼Æ¬µÄ¿í¶È
+		 *            å›¾ç‰‡çš„å®½åº¦
 		 * @param imageHeight
-		 *            Í¼Æ¬µÄ¸ß¶È
+		 *            å›¾ç‰‡çš„é«˜åº¦
 		 */
 		private void addImage(Bitmap bitmap, int imageWidth, int imageHeight) {
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(imageWidth,
@@ -490,11 +490,11 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 		}
 
 		/**
-		 * ÕÒµ½´ËÊ±Ó¦¸ÃÌí¼ÓÍ¼Æ¬µÄÒ»ÁĞ¡£Ô­Ôò¾ÍÊÇ¶ÔÈıÁĞµÄ¸ß¶È½øĞĞÅĞ¶Ï£¬µ±Ç°¸ß¶È×îĞ¡µÄÒ»ÁĞ¾ÍÊÇÓ¦¸ÃÌí¼ÓµÄÒ»ÁĞ¡£
+		 * æ‰¾åˆ°æ­¤æ—¶åº”è¯¥æ·»åŠ å›¾ç‰‡çš„ä¸€åˆ—ã€‚åŸåˆ™å°±æ˜¯å¯¹ä¸‰åˆ—çš„é«˜åº¦è¿›è¡Œåˆ¤æ–­ï¼Œå½“å‰é«˜åº¦æœ€å°çš„ä¸€åˆ—å°±æ˜¯åº”è¯¥æ·»åŠ çš„ä¸€åˆ—ã€‚
 		 * 
 		 * @param imageView
 		 * @param imageHeight
-		 * @return Ó¦¸ÃÌí¼ÓÍ¼Æ¬µÄÒ»ÁĞ
+		 * @return åº”è¯¥æ·»åŠ å›¾ç‰‡çš„ä¸€åˆ—
 		 */
 		private LinearLayout findColumnToAdd(ImageView imageView, int imageHeight) {
 			if (firstColumnHeight <= secondColumnHeight) {
@@ -524,10 +524,10 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 		}
 
 		/**
-		 * ½«Í¼Æ¬ÏÂÔØµ½SD¿¨»º´æÆğÀ´¡£
+		 * å°†å›¾ç‰‡ä¸‹è½½åˆ°SDå¡ç¼“å­˜èµ·æ¥ã€‚
 		 * 
 		 * @param imageUrl
-		 *            Í¼Æ¬µÄURLµØÖ·¡£
+		 *            å›¾ç‰‡çš„URLåœ°å€ã€‚
 		 */
 		private void downloadImage(String imageUrl) {
 			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -575,7 +575,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 				}
 			}
 			if (imageFile != null) {
-				//¸ù¾İÏÂÔØÀ´µÄÍ¼Æ¬ ÊÊµ±¸Ä±ä´óĞ¡£¬È»ºó·ÅÈëµ½»º´æ
+				//æ ¹æ®ä¸‹è½½æ¥çš„å›¾ç‰‡ é€‚å½“æ”¹å˜å¤§å°ï¼Œç„¶åæ”¾å…¥åˆ°ç¼“å­˜
 				Bitmap bitmap = MyImageLoader.decodeSampledBitmapFromResource(imageFile.getPath(),
 						columnWidth);
 				if (bitmap != null) {
@@ -585,11 +585,11 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 		}
 
 		/**
-		 * »ñÈ¡Í¼Æ¬µÄ±¾µØ´æ´¢Â·¾¶¡£
+		 * è·å–å›¾ç‰‡çš„æœ¬åœ°å­˜å‚¨è·¯å¾„ã€‚
 		 * 
 		 * @param imageUrl
-		 *            Í¼Æ¬µÄURLµØÖ·¡£
-		 * @return Í¼Æ¬µÄ±¾µØ´æ´¢Â·¾¶¡£
+		 *            å›¾ç‰‡çš„URLåœ°å€ã€‚
+		 * @return å›¾ç‰‡çš„æœ¬åœ°å­˜å‚¨è·¯å¾„ã€‚
 		 */
 		private String getImagePath(String imageUrl) {
 			int lastSlashIndex = imageUrl.lastIndexOf("/");
@@ -606,7 +606,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 	}
 	
 	/**
-	 * ÏÂÃæÊÇ¹ØÓÚË¢ĞÂµÄ²Ù×÷
+	 * ä¸‹é¢æ˜¯å…³äºåˆ·æ–°çš„æ“ä½œ
 	 */
 	
 	@Override
@@ -617,8 +617,8 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 				if (getScrollY() == 0 && !isRecored) {
 					isRecored = true;
 					startY = (int) event.getY();
-					Log.i(TAG, "ÔÚdownÊ±ºò¼ÇÂ¼µ±Ç°Î»ÖÃ¡®");
-					LogUtils2.i("ÔÚdownÊ±ºò¼ÇÂ¼µ±Ç°Î»ÖÃ¡®==startY="+startY);
+					Log.i(TAG, "åœ¨downæ—¶å€™è®°å½•å½“å‰ä½ç½®â€˜");
+					LogUtils2.i("åœ¨downæ—¶å€™è®°å½•å½“å‰ä½ç½®â€˜==startY="+startY);
 				}
 				break;
 
@@ -626,14 +626,14 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 				int tempY = (int) event.getY();
 				
 				if (!isRecored && getScrollY() == 0) {
-					Log.i(TAG, "ÔÚmoveÊ±ºò¼ÇÂ¼ÏÂÎ»ÖÃ");
+					Log.i(TAG, "åœ¨moveæ—¶å€™è®°å½•ä¸‹ä½ç½®");
 					isRecored = true;
 					startY = tempY;
 				}
 				
 				LogUtils2.d("tempY=="+tempY+"   startY=="+startY);
 				/**
-				 *  done×´Ì¬ÏÂ  Ò»¿ªÊ¼µÄ×´Ì¬
+				 *  doneçŠ¶æ€ä¸‹  ä¸€å¼€å§‹çš„çŠ¶æ€
 				 */
 				if (state == DONE) {
 					if (tempY - startY > 0) {
@@ -643,31 +643,31 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 				}
 
 				/**
-				 *  »¹Ã»ÓĞµ½´ïÏÔÊ¾ËÉ¿ªË¢ĞÂµÄÊ±ºò,DONE»òÕßÊÇPULL_To_REFRESH×´Ì¬
+				 *  è¿˜æ²¡æœ‰åˆ°è¾¾æ˜¾ç¤ºæ¾å¼€åˆ·æ–°çš„æ—¶å€™,DONEæˆ–è€…æ˜¯PULL_To_REFRESHçŠ¶æ€
 				 */
 				if (state == PULL_To_REFRESH) {
 					canReturn = true;
 
-					// ÏÂÀ­µ½¿ÉÒÔ½øÈëRELEASE_TO_REFRESHµÄ×´Ì¬
+					// ä¸‹æ‹‰åˆ°å¯ä»¥è¿›å…¥RELEASE_TO_REFRESHçš„çŠ¶æ€
 					if ((tempY - startY) / RATIO >= headContentHeight) {
 						state = RELEASE_To_REFRESH;
 						isBack = true;
 						changeHeaderViewByState();
-						LogUtils2.i("ÓÉdone»òÕßÏÂÀ­Ë¢ĞÂ×´Ì¬×ª±äµ½ËÉ¿ªË¢ĞÂ");
+						LogUtils2.i("ç”±doneæˆ–è€…ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°æ¾å¼€åˆ·æ–°");
 					}else if (tempY - startY <= 0) {
-						// ÉÏÍÆµ½¶¥ÁË
+						// ä¸Šæ¨åˆ°é¡¶äº†
 						state = DONE;
 						changeHeaderViewByState();
-						Log.i(TAG, "ÓÉDOne»òÕßÏÂÀ­Ë¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");
-						LogUtils2.i("ÓÉDOne»òÕßÏÂÀ­Ë¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");
+						Log.i(TAG, "ç”±DOneæˆ–è€…ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");
+						LogUtils2.i("ç”±DOneæˆ–è€…ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");
 					}
 				}
 				
 				/**
-				 * ÕâÀïÊÇÉèÖÃµ±ÊÖÖ¸ÍÏÀ­ÍÑÈ¥Ë¢ĞÂµÄÊ±ºò
+				 * è¿™é‡Œæ˜¯è®¾ç½®å½“æ‰‹æŒ‡æ‹–æ‹‰è„±å»åˆ·æ–°çš„æ—¶å€™
 				 */
 				if (state != REFRESHING && isRecored && state != LOADING) {
-					// ¿ÉÒÔËÉÊÖÈ¥Ë¢ĞÂÁË
+					// å¯ä»¥æ¾æ‰‹å»åˆ·æ–°äº†
 					if (state == RELEASE_To_REFRESH) {
 						LogUtils2.i("*******************");
 						canReturn = true;
@@ -676,28 +676,28 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 								&& (tempY - startY) > 0) {
 							state = PULL_To_REFRESH;
 							changeHeaderViewByState();
-							Log.i(TAG, "ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½ÏÂÀ­Ë¢ĞÂ×´Ì¬");
-							LogUtils2.i("ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½ÏÂÀ­Ë¢ĞÂ×´Ì¬");
+							Log.i(TAG, "ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€");
+							LogUtils2.i("ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€");
 						}
-						// Ò»ÏÂ×ÓÍÆµ½¶¥ÁË
+						// ä¸€ä¸‹å­æ¨åˆ°é¡¶äº†
 						else if (tempY - startY <= 0) {
 							state = DONE;
 							changeHeaderViewByState();
-							Log.i(TAG, "ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");
-							LogUtils2.i("ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");
+							Log.i(TAG, "ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");
+							LogUtils2.i("ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");
 						} else {
-							// ²»ÓÃ½øĞĞÌØ±ğµÄ²Ù×÷£¬Ö»ÓÃ¸üĞÂpaddingTopµÄÖµ¾ÍĞĞÁË
+							// ä¸ç”¨è¿›è¡Œç‰¹åˆ«çš„æ“ä½œï¼Œåªç”¨æ›´æ–°paddingTopçš„å€¼å°±è¡Œäº†
 						}
 					}
 
-					// ¸üĞÂheadViewµÄsize
+					// æ›´æ–°headViewçš„size
 					if (state == PULL_To_REFRESH) {
 						headView.setPadding(0, -1 * headContentHeight
 								+ (tempY - startY) / RATIO, 0, 0);
 
 					}
 
-					// ¸üĞÂheadViewµÄpaddingTop
+					// æ›´æ–°headViewçš„paddingTop
 					if (state == RELEASE_To_REFRESH) {
 						headView.setPadding(0, (tempY - startY) / RATIO
 								- headContentHeight, 0, 0);
@@ -714,19 +714,19 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 			case MotionEvent.ACTION_UP:
 				if (state != REFRESHING && state != LOADING) {
 					if (state == DONE) {
-						// Ê²Ã´¶¼²»×ö
+						// ä»€ä¹ˆéƒ½ä¸åš
 					}
 					if (state == PULL_To_REFRESH) {
 						state = DONE;
 						changeHeaderViewByState();
-						Log.i(TAG, "ÓÉÏÂÀ­Ë¢ĞÂ×´Ì¬£¬µ½done×´Ì¬");
+						Log.i(TAG, "ç”±ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€ï¼Œåˆ°doneçŠ¶æ€");
 					}
 					if (state == RELEASE_To_REFRESH) {
 						state = REFRESHING;
 						changeHeaderViewByState();
-						LogUtils2.i("ÕâÀïµ÷ÓÃ..onRefresh");
+						LogUtils2.i("è¿™é‡Œè°ƒç”¨..onRefresh");
 						onRefresh();
-						Log.i(TAG, "ÓÉËÉ¿ªË¢ĞÂ×´Ì¬£¬µ½done×´Ì¬");
+						Log.i(TAG, "ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€ï¼Œåˆ°doneçŠ¶æ€");
 					}
 				}
 				isRecored = false;
@@ -739,7 +739,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 		return super.onTouchEvent(event);
 	}
 
-	// µ±×´Ì¬¸Ä±äÊ±ºò£¬µ÷ÓÃ¸Ã·½·¨£¬ÒÔ¸üĞÂ½çÃæ
+	// å½“çŠ¶æ€æ”¹å˜æ—¶å€™ï¼Œè°ƒç”¨è¯¥æ–¹æ³•ï¼Œä»¥æ›´æ–°ç•Œé¢
 	private void changeHeaderViewByState() {
 		switch (state) {
 		case RELEASE_To_REFRESH:
@@ -751,9 +751,9 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 			arrowImageView.clearAnimation();
 			arrowImageView.startAnimation(animation);
 
-			tipsTextview.setText("ËÉ¿ªË¢ĞÂ");
+			tipsTextview.setText("æ¾å¼€åˆ·æ–°");
 
-			LogUtils2.i("µ±Ç°×´Ì¬£¬ËÉ¿ªË¢ĞÂ*******");
+			LogUtils2.i("å½“å‰çŠ¶æ€ï¼Œæ¾å¼€åˆ·æ–°*******");
 			break;
 		case PULL_To_REFRESH:
 			progressBar.setVisibility(View.GONE);
@@ -761,18 +761,18 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 			lastUpdatedTextView.setVisibility(View.VISIBLE);
 			arrowImageView.clearAnimation();
 			arrowImageView.setVisibility(View.VISIBLE);
-			// ÊÇÓÉRELEASE_To_REFRESH×´Ì¬×ª±äÀ´µÄ
+			// æ˜¯ç”±RELEASE_To_REFRESHçŠ¶æ€è½¬å˜æ¥çš„
 			if (isBack) {
 				isBack = false;
 				arrowImageView.clearAnimation();
 				arrowImageView.startAnimation(reverseAnimation);
 
-				tipsTextview.setText("ÏÂÀ­Ë¢ĞÂ");
+				tipsTextview.setText("ä¸‹æ‹‰åˆ·æ–°");
 			} else {
-				tipsTextview.setText("ÏÂÀ­Ë¢ĞÂ");
+				tipsTextview.setText("ä¸‹æ‹‰åˆ·æ–°");
 			}
-			Log.i(TAG, "µ±Ç°×´Ì¬£¬ÏÂÀ­Ë¢ĞÂ");
-			LogUtils2.d("µ±Ç°×´Ì¬£¬ÏÂÀ­Ë¢ĞÂ...");
+			Log.i(TAG, "å½“å‰çŠ¶æ€ï¼Œä¸‹æ‹‰åˆ·æ–°");
+			LogUtils2.d("å½“å‰çŠ¶æ€ï¼Œä¸‹æ‹‰åˆ·æ–°...");
 			break;
 
 		case REFRESHING:
@@ -782,11 +782,11 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 			progressBar.setVisibility(View.VISIBLE);
 			arrowImageView.clearAnimation();
 			arrowImageView.setVisibility(View.GONE);
-			tipsTextview.setText("ÕıÔÚË¢ĞÂ...");
+			tipsTextview.setText("æ­£åœ¨åˆ·æ–°...");
 			lastUpdatedTextView.setVisibility(View.VISIBLE);
 
-			Log.i(TAG, "µ±Ç°×´Ì¬,ÕıÔÚË¢ĞÂ...");
-			LogUtils2.d("µ±Ç°×´Ì¬,ÕıÔÚË¢ĞÂ...");
+			Log.i(TAG, "å½“å‰çŠ¶æ€,æ­£åœ¨åˆ·æ–°...");
+			LogUtils2.d("å½“å‰çŠ¶æ€,æ­£åœ¨åˆ·æ–°...");
 			break;
 		case DONE:
 			headView.setPadding(0, -1 * headContentHeight, 0, 0);
@@ -794,20 +794,20 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 			progressBar.setVisibility(View.GONE);
 			arrowImageView.clearAnimation();
 			arrowImageView.setImageResource(R.drawable.goicon);
-			tipsTextview.setText("ÏÂÀ­Ë¢ĞÂ");
+			tipsTextview.setText("ä¸‹æ‹‰åˆ·æ–°");
 			lastUpdatedTextView.setVisibility(View.VISIBLE);
 
-			LogUtils2.i("µ±Ç°×´Ì¬£¬done......");
+			LogUtils2.i("å½“å‰çŠ¶æ€ï¼Œdone......");
 			break;
 		}
 	}
 
 	/**
-	 * MeasureSpec·â×°´Óparent´«µİ¸øchildµÄlayoutÒªÇó¡£Ã¿¸öMeasureSpec±íÊ¾¶Ôwidth/heightµÄÒªÇó¡£
-	 * MeasureSpecÓÉsizeºÍmode×é³É¡£¿ÉÓÃµÄmodeÓĞ3ÖÖ£º
-	1. UNSPECIFIED±íÊ¾parentÃ»ÓĞÇ¿¼Ó¸øchildÈÎºÎconstraint¡£
-	2. EXACTLY±íÊ¾parentÒÑ¾­È·¶¨childµÄ¾«È·size¡£
-	3. AT_MOST±íÊ¾child¿ÉÒÔÉè¶¨Îªspecified sizeÖ®ÄÚµÄÈÎºÎÖµ¡£
+	 * MeasureSpecå°è£…ä»parentä¼ é€’ç»™childçš„layoutè¦æ±‚ã€‚æ¯ä¸ªMeasureSpecè¡¨ç¤ºå¯¹width/heightçš„è¦æ±‚ã€‚
+	 * MeasureSpecç”±sizeå’Œmodeç»„æˆã€‚å¯ç”¨çš„modeæœ‰3ç§ï¼š
+	1. UNSPECIFIEDè¡¨ç¤ºparentæ²¡æœ‰å¼ºåŠ ç»™childä»»ä½•constraintã€‚
+	2. EXACTLYè¡¨ç¤ºparentå·²ç»ç¡®å®šchildçš„ç²¾ç¡®sizeã€‚
+	3. AT_MOSTè¡¨ç¤ºchildå¯ä»¥è®¾å®šä¸ºspecified sizeä¹‹å†…çš„ä»»ä½•å€¼ã€‚
 	 * @param child
 	 */
 	private void measureView(View child) {
@@ -819,7 +819,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 		}
 		
 		/**
-		 * ÕâÀïÓ¦¸ÃÊÇ²âÁ¿»ñÈ¡×ÓViewµÄ´óĞ¡°Ñ£¬È»ºóÔÚ¸¸viewÖĞ¸ø³öºÏÊÊµÄ´óĞ¡ÏÔÊ¾
+		 * è¿™é‡Œåº”è¯¥æ˜¯æµ‹é‡è·å–å­Viewçš„å¤§å°æŠŠï¼Œç„¶ååœ¨çˆ¶viewä¸­ç»™å‡ºåˆé€‚çš„å¤§å°æ˜¾ç¤º
 		 */
 		LogUtils2.d("p.width=="+p.width+"   p.height=="+p.height);
 		int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0 + 0, p.width);
@@ -852,7 +852,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 
 	public void onRefreshComplete() {
 		state = DONE;
-		lastUpdatedTextView.setText("×î½ü¸üĞÂ:" + new Date().toLocaleString());
+		lastUpdatedTextView.setText("æœ€è¿‘æ›´æ–°:" + new Date().toLocaleString());
 		changeHeaderViewByState();
 		invalidate();
 		scrollTo(0, 0);
@@ -860,7 +860,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 
 	private void onRefresh() {
 		if (refreshListener != null) {
-			LogUtils2.i("¿ªÊ¼...........onRefresh");
+			LogUtils2.i("å¼€å§‹...........onRefresh");
 			refreshListener.onRefresh();
 		}
 	}

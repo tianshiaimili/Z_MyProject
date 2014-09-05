@@ -22,7 +22,7 @@ import com.hua.util.LogUtils2;
 
 
 /**
- * ÊµÏÖ»Øµ¯µÄscrollview
+ * å®ç°å›å¼¹çš„scrollview
  * @author Hua
  *
  */
@@ -33,7 +33,7 @@ public class ElasticScrollView extends ScrollView {
 	private final static int REFRESHING = 2;
 	private final static int DONE = 3;
 	private final static int LOADING = 4;
-	// Êµ¼ÊµÄpaddingµÄ¾àÀëÓë½çÃæÉÏÆ«ÒÆ¾àÀëµÄ±ÈÀı
+	// å®é™…çš„paddingçš„è·ç¦»ä¸ç•Œé¢ä¸Šåç§»è·ç¦»çš„æ¯”ä¾‹
 	private final static int RATIO = 3;
 
 	private int headContentWidth;
@@ -41,22 +41,22 @@ public class ElasticScrollView extends ScrollView {
 
 	private LinearLayout innerLayout;
 	private LinearLayout headView;
-	private ImageView arrowImageView;//¼ıÍ·Í¼Æ¬
+	private ImageView arrowImageView;//ç®­å¤´å›¾ç‰‡
 	private ProgressBar progressBar;
-	private TextView tipsTextview;// ÌáÊ¾ÏÂÀ­ ËÉ¿ª Ë¢ĞÂµÄÎÄ×Ö
+	private TextView tipsTextview;// æç¤ºä¸‹æ‹‰ æ¾å¼€ åˆ·æ–°çš„æ–‡å­—
 	private TextView lastUpdatedTextView;
 	private OnRefreshListener refreshListener;
 	private boolean isRefreshable;
 	private int state;
 	/**
-	 * Õâ¸öÊÇÓÃÀ´×öµ±ÏÂÀ­ºó£¬ÓÖÉÏÀ²Ê± ¶ÔarrowImageViewÍ¼Æ¬×öµÄÅĞ¶ÏÀ´¸Ä±ä¶¯»­
+	 * è¿™ä¸ªæ˜¯ç”¨æ¥åšå½“ä¸‹æ‹‰åï¼Œåˆä¸Šå•¦æ—¶ å¯¹arrowImageViewå›¾ç‰‡åšçš„åˆ¤æ–­æ¥æ”¹å˜åŠ¨ç”»
 	 */
 	private boolean isBack;
 
-	private RotateAnimation animation; //¼ıÍ·µÄ¶¯»­
+	private RotateAnimation animation; //ç®­å¤´çš„åŠ¨ç”»
 	private RotateAnimation reverseAnimation;
 
-	private boolean canReturn; //ÓÃÀ´±íÊ¾ËÉ¿ªÊÖºó¾Í¿ÉÒÔ»Øµ¯ÁË
+	private boolean canReturn; //ç”¨æ¥è¡¨ç¤ºæ¾å¼€æ‰‹åå°±å¯ä»¥å›å¼¹äº†
 	private boolean isRecored;
 	private int startY;
 
@@ -79,7 +79,7 @@ public class ElasticScrollView extends ScrollView {
 		innerLayout.setOrientation(LinearLayout.VERTICAL);
 		
 		/**
-		 * ÏÂÀ­Ê± ÏÔÊ¾µÄ²¿·Ö
+		 * ä¸‹æ‹‰æ—¶ æ˜¾ç¤ºçš„éƒ¨åˆ†
 		 */
 		headView = (LinearLayout) inflater.inflate(R.layout.myscrollview_head,
 				null);
@@ -90,7 +90,7 @@ public class ElasticScrollView extends ScrollView {
 				.findViewById(R.id.head_progressBar);
 		
 		/**
-		 * ÌáÊ¾ÏÂÀ­ ËÉ¿ª Ë¢ĞÂµÄÎÄ×Ö
+		 * æç¤ºä¸‹æ‹‰ æ¾å¼€ åˆ·æ–°çš„æ–‡å­—
 		 */
 		tipsTextview = (TextView) headView.findViewById(R.id.head_tipsTextView);
 		lastUpdatedTextView = (TextView) headView
@@ -101,8 +101,8 @@ public class ElasticScrollView extends ScrollView {
 		measureView(headView);
 
 		/**
-		 * »ñÈ¡µÃÁËheaderviewµÄ´óĞ¡ºÍ¿í£¬È»ºóÉèÖÃpaddingÖµ£¬È»ËûÃÇÒ»¿ªÊ¼
-		 * ²»ÏÔÊ¾ÔÚscreen
+		 * è·å–å¾—äº†headerviewçš„å¤§å°å’Œå®½ï¼Œç„¶åè®¾ç½®paddingå€¼ï¼Œç„¶ä»–ä»¬ä¸€å¼€å§‹
+		 * ä¸æ˜¾ç¤ºåœ¨screen
 		 */
 		headContentHeight = headView.getMeasuredHeight();
 		headContentWidth = headView.getMeasuredWidth();
@@ -111,10 +111,10 @@ public class ElasticScrollView extends ScrollView {
 
 		Log.i("size", "width:" + headContentWidth + " height:"
 				+ headContentHeight);
-		//°ÑheaderViewÌí¼Óµ½ÄÚ²¿µÄlinearlayoutÖĞ
+		//æŠŠheaderViewæ·»åŠ åˆ°å†…éƒ¨çš„linearlayoutä¸­
 		innerLayout.addView(headView);
 		/**
-		 * °ÑLinearlayoutÌí¼Óµ½µ±Ç°µÄScrollViewÖĞ
+		 * æŠŠLinearlayoutæ·»åŠ åˆ°å½“å‰çš„ScrollViewä¸­
 		 */
 		addView(innerLayout);
 
@@ -145,8 +145,8 @@ public class ElasticScrollView extends ScrollView {
 				if (getScrollY() == 0 && !isRecored) {
 					isRecored = true;
 					startY = (int) event.getY();
-					Log.i(TAG, "ÔÚdownÊ±ºò¼ÇÂ¼µ±Ç°Î»ÖÃ¡®");
-					LogUtils2.i("ÔÚdownÊ±ºò¼ÇÂ¼µ±Ç°Î»ÖÃ¡®==startY="+startY);
+					Log.i(TAG, "åœ¨downæ—¶å€™è®°å½•å½“å‰ä½ç½®â€˜");
+					LogUtils2.i("åœ¨downæ—¶å€™è®°å½•å½“å‰ä½ç½®â€˜==startY="+startY);
 				}
 				break;
 
@@ -154,14 +154,14 @@ public class ElasticScrollView extends ScrollView {
 				int tempY = (int) event.getY();
 				
 				if (!isRecored && getScrollY() == 0) {
-					Log.i(TAG, "ÔÚmoveÊ±ºò¼ÇÂ¼ÏÂÎ»ÖÃ");
+					Log.i(TAG, "åœ¨moveæ—¶å€™è®°å½•ä¸‹ä½ç½®");
 					isRecored = true;
 					startY = tempY;
 				}
 				
 				LogUtils2.d("tempY=="+tempY+"   startY=="+startY);
 				/**
-				 *  done×´Ì¬ÏÂ  Ò»¿ªÊ¼µÄ×´Ì¬
+				 *  doneçŠ¶æ€ä¸‹  ä¸€å¼€å§‹çš„çŠ¶æ€
 				 */
 				if (state == DONE) {
 					if (tempY - startY > 0) {
@@ -171,31 +171,31 @@ public class ElasticScrollView extends ScrollView {
 				}
 
 				/**
-				 *  »¹Ã»ÓĞµ½´ïÏÔÊ¾ËÉ¿ªË¢ĞÂµÄÊ±ºò,DONE»òÕßÊÇPULL_To_REFRESH×´Ì¬
+				 *  è¿˜æ²¡æœ‰åˆ°è¾¾æ˜¾ç¤ºæ¾å¼€åˆ·æ–°çš„æ—¶å€™,DONEæˆ–è€…æ˜¯PULL_To_REFRESHçŠ¶æ€
 				 */
 				if (state == PULL_To_REFRESH) {
 					canReturn = true;
 
-					// ÏÂÀ­µ½¿ÉÒÔ½øÈëRELEASE_TO_REFRESHµÄ×´Ì¬
+					// ä¸‹æ‹‰åˆ°å¯ä»¥è¿›å…¥RELEASE_TO_REFRESHçš„çŠ¶æ€
 					if ((tempY - startY) / RATIO >= headContentHeight) {
 						state = RELEASE_To_REFRESH;
 						isBack = true;
 						changeHeaderViewByState();
-						LogUtils2.i("ÓÉdone»òÕßÏÂÀ­Ë¢ĞÂ×´Ì¬×ª±äµ½ËÉ¿ªË¢ĞÂ");
+						LogUtils2.i("ç”±doneæˆ–è€…ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°æ¾å¼€åˆ·æ–°");
 					}else if (tempY - startY <= 0) {
-						// ÉÏÍÆµ½¶¥ÁË
+						// ä¸Šæ¨åˆ°é¡¶äº†
 						state = DONE;
 						changeHeaderViewByState();
-						Log.i(TAG, "ÓÉDOne»òÕßÏÂÀ­Ë¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");
-						LogUtils2.i("ÓÉDOne»òÕßÏÂÀ­Ë¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");
+						Log.i(TAG, "ç”±DOneæˆ–è€…ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");
+						LogUtils2.i("ç”±DOneæˆ–è€…ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");
 					}
 				}
 				
 				/**
-				 * ÕâÀïÊÇÉèÖÃµ±ÊÖÖ¸ÍÏÀ­ÍÑÈ¥Ë¢ĞÂµÄÊ±ºò
+				 * è¿™é‡Œæ˜¯è®¾ç½®å½“æ‰‹æŒ‡æ‹–æ‹‰è„±å»åˆ·æ–°çš„æ—¶å€™
 				 */
 				if (state != REFRESHING && isRecored && state != LOADING) {
-					// ¿ÉÒÔËÉÊÖÈ¥Ë¢ĞÂÁË
+					// å¯ä»¥æ¾æ‰‹å»åˆ·æ–°äº†
 					if (state == RELEASE_To_REFRESH) {
 						LogUtils2.i("*******************");
 						canReturn = true;
@@ -204,28 +204,28 @@ public class ElasticScrollView extends ScrollView {
 								&& (tempY - startY) > 0) {
 							state = PULL_To_REFRESH;
 							changeHeaderViewByState();
-							Log.i(TAG, "ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½ÏÂÀ­Ë¢ĞÂ×´Ì¬");
-							LogUtils2.i("ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½ÏÂÀ­Ë¢ĞÂ×´Ì¬");
+							Log.i(TAG, "ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€");
+							LogUtils2.i("ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€");
 						}
-						// Ò»ÏÂ×ÓÍÆµ½¶¥ÁË
+						// ä¸€ä¸‹å­æ¨åˆ°é¡¶äº†
 						else if (tempY - startY <= 0) {
 							state = DONE;
 							changeHeaderViewByState();
-							Log.i(TAG, "ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");
-							LogUtils2.i("ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");
+							Log.i(TAG, "ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");
+							LogUtils2.i("ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");
 						} else {
-							// ²»ÓÃ½øĞĞÌØ±ğµÄ²Ù×÷£¬Ö»ÓÃ¸üĞÂpaddingTopµÄÖµ¾ÍĞĞÁË
+							// ä¸ç”¨è¿›è¡Œç‰¹åˆ«çš„æ“ä½œï¼Œåªç”¨æ›´æ–°paddingTopçš„å€¼å°±è¡Œäº†
 						}
 					}
 
-					// ¸üĞÂheadViewµÄsize
+					// æ›´æ–°headViewçš„size
 					if (state == PULL_To_REFRESH) {
 						headView.setPadding(0, -1 * headContentHeight
 								+ (tempY - startY) / RATIO, 0, 0);
 
 					}
 
-					// ¸üĞÂheadViewµÄpaddingTop
+					// æ›´æ–°headViewçš„paddingTop
 					if (state == RELEASE_To_REFRESH) {
 						headView.setPadding(0, (tempY - startY) / RATIO
 								- headContentHeight, 0, 0);
@@ -242,19 +242,19 @@ public class ElasticScrollView extends ScrollView {
 			case MotionEvent.ACTION_UP:
 				if (state != REFRESHING && state != LOADING) {
 					if (state == DONE) {
-						// Ê²Ã´¶¼²»×ö
+						// ä»€ä¹ˆéƒ½ä¸åš
 					}
 					if (state == PULL_To_REFRESH) {
 						state = DONE;
 						changeHeaderViewByState();
-						Log.i(TAG, "ÓÉÏÂÀ­Ë¢ĞÂ×´Ì¬£¬µ½done×´Ì¬");
+						Log.i(TAG, "ç”±ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€ï¼Œåˆ°doneçŠ¶æ€");
 					}
 					if (state == RELEASE_To_REFRESH) {
 						state = REFRESHING;
 						changeHeaderViewByState();
-						LogUtils2.i("ÕâÀïµ÷ÓÃ..onRefresh");
+						LogUtils2.i("è¿™é‡Œè°ƒç”¨..onRefresh");
 						onRefresh();
-						Log.i(TAG, "ÓÉËÉ¿ªË¢ĞÂ×´Ì¬£¬µ½done×´Ì¬");
+						Log.i(TAG, "ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€ï¼Œåˆ°doneçŠ¶æ€");
 					}
 				}
 				isRecored = false;
@@ -267,7 +267,7 @@ public class ElasticScrollView extends ScrollView {
 		return super.onTouchEvent(event);
 	}
 
-	// µ±×´Ì¬¸Ä±äÊ±ºò£¬µ÷ÓÃ¸Ã·½·¨£¬ÒÔ¸üĞÂ½çÃæ
+	// å½“çŠ¶æ€æ”¹å˜æ—¶å€™ï¼Œè°ƒç”¨è¯¥æ–¹æ³•ï¼Œä»¥æ›´æ–°ç•Œé¢
 	private void changeHeaderViewByState() {
 		switch (state) {
 		case RELEASE_To_REFRESH:
@@ -279,9 +279,9 @@ public class ElasticScrollView extends ScrollView {
 			arrowImageView.clearAnimation();
 			arrowImageView.startAnimation(animation);
 
-			tipsTextview.setText("ËÉ¿ªË¢ĞÂ");
+			tipsTextview.setText("æ¾å¼€åˆ·æ–°");
 
-			LogUtils2.i("µ±Ç°×´Ì¬£¬ËÉ¿ªË¢ĞÂ*******");
+			LogUtils2.i("å½“å‰çŠ¶æ€ï¼Œæ¾å¼€åˆ·æ–°*******");
 			break;
 		case PULL_To_REFRESH:
 			progressBar.setVisibility(View.GONE);
@@ -289,18 +289,18 @@ public class ElasticScrollView extends ScrollView {
 			lastUpdatedTextView.setVisibility(View.VISIBLE);
 			arrowImageView.clearAnimation();
 			arrowImageView.setVisibility(View.VISIBLE);
-			// ÊÇÓÉRELEASE_To_REFRESH×´Ì¬×ª±äÀ´µÄ
+			// æ˜¯ç”±RELEASE_To_REFRESHçŠ¶æ€è½¬å˜æ¥çš„
 			if (isBack) {
 				isBack = false;
 				arrowImageView.clearAnimation();
 				arrowImageView.startAnimation(reverseAnimation);
 
-				tipsTextview.setText("ÏÂÀ­Ë¢ĞÂ");
+				tipsTextview.setText("ä¸‹æ‹‰åˆ·æ–°");
 			} else {
-				tipsTextview.setText("ÏÂÀ­Ë¢ĞÂ");
+				tipsTextview.setText("ä¸‹æ‹‰åˆ·æ–°");
 			}
-			Log.i(TAG, "µ±Ç°×´Ì¬£¬ÏÂÀ­Ë¢ĞÂ");
-			LogUtils2.d("µ±Ç°×´Ì¬£¬ÏÂÀ­Ë¢ĞÂ...");
+			Log.i(TAG, "å½“å‰çŠ¶æ€ï¼Œä¸‹æ‹‰åˆ·æ–°");
+			LogUtils2.d("å½“å‰çŠ¶æ€ï¼Œä¸‹æ‹‰åˆ·æ–°...");
 			break;
 
 		case REFRESHING:
@@ -310,11 +310,11 @@ public class ElasticScrollView extends ScrollView {
 			progressBar.setVisibility(View.VISIBLE);
 			arrowImageView.clearAnimation();
 			arrowImageView.setVisibility(View.GONE);
-			tipsTextview.setText("ÕıÔÚË¢ĞÂ...");
+			tipsTextview.setText("æ­£åœ¨åˆ·æ–°...");
 			lastUpdatedTextView.setVisibility(View.VISIBLE);
 
-			Log.i(TAG, "µ±Ç°×´Ì¬,ÕıÔÚË¢ĞÂ...");
-			LogUtils2.d("µ±Ç°×´Ì¬,ÕıÔÚË¢ĞÂ...");
+			Log.i(TAG, "å½“å‰çŠ¶æ€,æ­£åœ¨åˆ·æ–°...");
+			LogUtils2.d("å½“å‰çŠ¶æ€,æ­£åœ¨åˆ·æ–°...");
 			break;
 		case DONE:
 			headView.setPadding(0, -1 * headContentHeight, 0, 0);
@@ -322,20 +322,20 @@ public class ElasticScrollView extends ScrollView {
 			progressBar.setVisibility(View.GONE);
 			arrowImageView.clearAnimation();
 			arrowImageView.setImageResource(R.drawable.goicon);
-			tipsTextview.setText("ÏÂÀ­Ë¢ĞÂ");
+			tipsTextview.setText("ä¸‹æ‹‰åˆ·æ–°");
 			lastUpdatedTextView.setVisibility(View.VISIBLE);
 
-			LogUtils2.i("µ±Ç°×´Ì¬£¬done......");
+			LogUtils2.i("å½“å‰çŠ¶æ€ï¼Œdone......");
 			break;
 		}
 	}
 
 	/**
-	 * MeasureSpec·â×°´Óparent´«µİ¸øchildµÄlayoutÒªÇó¡£Ã¿¸öMeasureSpec±íÊ¾¶Ôwidth/heightµÄÒªÇó¡£
-	 * MeasureSpecÓÉsizeºÍmode×é³É¡£¿ÉÓÃµÄmodeÓĞ3ÖÖ£º
-	1. UNSPECIFIED±íÊ¾parentÃ»ÓĞÇ¿¼Ó¸øchildÈÎºÎconstraint¡£
-	2. EXACTLY±íÊ¾parentÒÑ¾­È·¶¨childµÄ¾«È·size¡£
-	3. AT_MOST±íÊ¾child¿ÉÒÔÉè¶¨Îªspecified sizeÖ®ÄÚµÄÈÎºÎÖµ¡£
+	 * MeasureSpecå°è£…ä»parentä¼ é€’ç»™childçš„layoutè¦æ±‚ã€‚æ¯ä¸ªMeasureSpecè¡¨ç¤ºå¯¹width/heightçš„è¦æ±‚ã€‚
+	 * MeasureSpecç”±sizeå’Œmodeç»„æˆã€‚å¯ç”¨çš„modeæœ‰3ç§ï¼š
+	1. UNSPECIFIEDè¡¨ç¤ºparentæ²¡æœ‰å¼ºåŠ ç»™childä»»ä½•constraintã€‚
+	2. EXACTLYè¡¨ç¤ºparentå·²ç»ç¡®å®šchildçš„ç²¾ç¡®sizeã€‚
+	3. AT_MOSTè¡¨ç¤ºchildå¯ä»¥è®¾å®šä¸ºspecified sizeä¹‹å†…çš„ä»»ä½•å€¼ã€‚
 	 * @param child
 	 */
 	private void measureView(View child) {
@@ -347,7 +347,7 @@ public class ElasticScrollView extends ScrollView {
 		}
 		
 		/**
-		 * ÕâÀïÓ¦¸ÃÊÇ²âÁ¿»ñÈ¡×ÓViewµÄ´óĞ¡°Ñ£¬È»ºóÔÚ¸¸viewÖĞ¸ø³öºÏÊÊµÄ´óĞ¡ÏÔÊ¾
+		 * è¿™é‡Œåº”è¯¥æ˜¯æµ‹é‡è·å–å­Viewçš„å¤§å°æŠŠï¼Œç„¶ååœ¨çˆ¶viewä¸­ç»™å‡ºåˆé€‚çš„å¤§å°æ˜¾ç¤º
 		 */
 		LogUtils2.d("p.width=="+p.width+"   p.height=="+p.height);
 		int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0 + 0, p.width);
@@ -380,7 +380,7 @@ public class ElasticScrollView extends ScrollView {
 
 	public void onRefreshComplete() {
 		state = DONE;
-		lastUpdatedTextView.setText("×î½ü¸üĞÂ:" + new Date().toLocaleString());
+		lastUpdatedTextView.setText("æœ€è¿‘æ›´æ–°:" + new Date().toLocaleString());
 		changeHeaderViewByState();
 		invalidate();
 		scrollTo(0, 0);
@@ -388,7 +388,7 @@ public class ElasticScrollView extends ScrollView {
 
 	private void onRefresh() {
 		if (refreshListener != null) {
-			LogUtils2.i("¿ªÊ¼...........onRefresh");
+			LogUtils2.i("å¼€å§‹...........onRefresh");
 			refreshListener.onRefresh();
 		}
 	}

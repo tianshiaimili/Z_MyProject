@@ -59,38 +59,38 @@ public class HomeFragment extends BaseFragment implements
 	}
 
 	/**
-	 * »ñÈ¡µ±Ç°ÆÁÄ»µÄÃÜ¶È
+	 * è·å–å½“å‰å±å¹•çš„å¯†åº¦
 	 */
 	private DisplayMetrics dm;
 
 	/**
-	 * ÁÄÌì½çÃæµÄFragment
+	 * èŠå¤©ç•Œé¢çš„Fragment
 	 */
 	private Fragment01 chatFragment;
 
 	/**
-	 * ·¢ÏÖ½çÃæµÄFragment
+	 * å‘ç°ç•Œé¢çš„Fragment
 	 */
 	private FoundFragment foundFragment;
 
 	/**
-	 * Í¨Ñ¶Â¼½çÃæµÄFragment
+	 * é€šè®¯å½•ç•Œé¢çš„Fragment
 	 */
 	private ContactsFragment contactsFragment;
 
 	/**
-	 * µÚËÄ¸öfragment
+	 * ç¬¬å››ä¸ªfragment
 	 */
 	private FourFragment fourFragment;
 
 	/**
-	 * ±êÌâ×é
+	 * æ ‡é¢˜ç»„
 	 */
-	private final String[] titles = { "¾«Ñ¡", "·¢ÏÖ", "°ñµ¥", "ÍÅ¹º" };
+	private final String[] titles = { "ç²¾é€‰", "å‘ç°", "æ¦œå•", "å›¢è´­" };
 
 	private MyPagerAdapter myPagerAdapter;
 	/**
-	 * µ±Ç°viewpagerµÄitem
+	 * å½“å‰viewpagerçš„item
 	 */
 	int currentViewPItem;
 
@@ -166,7 +166,7 @@ public class HomeFragment extends BaseFragment implements
 		setTabsValue();
 
 		/**
-		 * ×¢²áµã»÷±êÌâ±ä»¯µÄ¼àÌıÆ÷
+		 * æ³¨å†Œç‚¹å‡»æ ‡é¢˜å˜åŒ–çš„ç›‘å¬å™¨
 		 */
 		// mTopIndicator.setOnTopIndicatorListener(this);
 
@@ -174,33 +174,33 @@ public class HomeFragment extends BaseFragment implements
 	}
 
 	/**
-	 * ¶ÔPagerSlidingTabStripµÄ¸÷ÏîÊôĞÔ½øĞĞ¸³Öµ¡£
+	 * å¯¹PagerSlidingTabStripçš„å„é¡¹å±æ€§è¿›è¡Œèµ‹å€¼ã€‚
 	 */
 	private void setTabsValue() {
-		// ÉèÖÃTabÊÇ×Ô¶¯Ìî³äÂúÆÁÄ»µÄ
+		// è®¾ç½®Tabæ˜¯è‡ªåŠ¨å¡«å……æ»¡å±å¹•çš„
 		tabs.setShouldExpand(true);
-		// ÉèÖÃTabµÄ·Ö¸îÏßÊÇÍ¸Ã÷µÄ
+		// è®¾ç½®Tabçš„åˆ†å‰²çº¿æ˜¯é€æ˜çš„
 		// tabs.setDividerColor(Color.TRANSPARENT);
 		tabs.setDividerColor(Color.WHITE);
 		/**
-		 * ÉèÖÃTabµ×²¿ÏßµÄ¸ß¶È Õâ¸ö·½·¨ÊÇ×ª±äÎª±ê×¼³ß´çµÄÒ»¸öº¯Êı£¬ÀıÈç ¡¡¡¡ int size =
-		 * (int)TypedValue.applyDimension(TypedValue. ¡¡¡¡ COMPLEX_UNIT_SP, 20, ¡¡¡¡
-		 * context.getResources().getDisplayMetrics()); ¡¡
-		 * ¡¡ÕâÀïCOMPLEX_UNIT_SPÊÇµ¥Î»£¬20ÊÇÊıÖµ£¬Ò²¾ÍÊÇ20sp¡£
+		 * è®¾ç½®Tabåº•éƒ¨çº¿çš„é«˜åº¦ è¿™ä¸ªæ–¹æ³•æ˜¯è½¬å˜ä¸ºæ ‡å‡†å°ºå¯¸çš„ä¸€ä¸ªå‡½æ•°ï¼Œä¾‹å¦‚ ã€€ã€€ int size =
+		 * (int)TypedValue.applyDimension(TypedValue. ã€€ã€€ COMPLEX_UNIT_SP, 20, ã€€ã€€
+		 * context.getResources().getDisplayMetrics()); ã€€
+		 * ã€€è¿™é‡ŒCOMPLEX_UNIT_SPæ˜¯å•ä½ï¼Œ20æ˜¯æ•°å€¼ï¼Œä¹Ÿå°±æ˜¯20spã€‚
 		 */
 		tabs.setUnderlineHeight((int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 2, dm));
-		// ÉèÖÃTab IndicatorµÄ¸ß¶È
+		// è®¾ç½®Tab Indicatorçš„é«˜åº¦
 		tabs.setIndicatorHeight((int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 4, dm));
-		// ÉèÖÃTab±êÌâÎÄ×ÖµÄ´óĞ¡
+		// è®¾ç½®Tabæ ‡é¢˜æ–‡å­—çš„å¤§å°
 		tabs.setTextSize((int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_SP, 16, dm));
-		// ÉèÖÃTab IndicatorµÄÑÕÉ«
+		// è®¾ç½®Tab Indicatorçš„é¢œè‰²
 		tabs.setIndicatorColor(Color.parseColor("#45c01a"));
-		// ÉèÖÃÑ¡ÖĞTabÎÄ×ÖµÄÑÕÉ« (ÕâÊÇÎÒ×Ô¶¨ÒåµÄÒ»¸ö·½·¨)
+		// è®¾ç½®é€‰ä¸­Tabæ–‡å­—çš„é¢œè‰² (è¿™æ˜¯æˆ‘è‡ªå®šä¹‰çš„ä¸€ä¸ªæ–¹æ³•)
 		tabs.setSelectedTextColor(Color.parseColor("#45c01a"));
-		// È¡Ïûµã»÷TabÊ±µÄ±³¾°É«
+		// å–æ¶ˆç‚¹å‡»Tabæ—¶çš„èƒŒæ™¯è‰²
 		tabs.setTabBackground(0);
 	}
 

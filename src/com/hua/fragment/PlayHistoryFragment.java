@@ -55,11 +55,11 @@ public class PlayHistoryFragment extends Fragment {
 			public void onClick(View v) {
 
 				if (content.getVisibility() == View.VISIBLE) {
-					System.out.println("µÚ2´Îµã»÷");
+					System.out.println("ç¬¬2æ¬¡ç‚¹å‡»");
 					innerScrollView.resume();
 					content.setVisibility(View.GONE);
 				} else {
-					System.out.println("µÚ1´Îµã»÷");
+					System.out.println("ç¬¬1æ¬¡ç‚¹å‡»");
 					innerScrollView.scrollTo(v);
 					content.setVisibility(View.VISIBLE);
 				}

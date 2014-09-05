@@ -23,13 +23,13 @@ import com.hua.activity.R;
   
 public class CustomListView extends ListView implements OnScrollListener {  
   
-    // ËÉ¿ªË¢ĞÂ±êÖ¾   
+    // æ¾å¼€åˆ·æ–°æ ‡å¿—   
     private final static int RELEASE_To_REFRESH = 0;  
-    // ÏÂÀ­Ë¢ĞÂ±êÖ¾   
+    // ä¸‹æ‹‰åˆ·æ–°æ ‡å¿—   
     private final static int PULL_To_REFRESH = 1;  
-    // ÕıÔÚË¢ĞÂ±êÖ¾   
+    // æ­£åœ¨åˆ·æ–°æ ‡å¿—   
     private final static int REFRESHING = 2;  
-    // Ë¢ĞÂÍê³É±êÖ¾   
+    // åˆ·æ–°å®Œæˆæ ‡å¿—   
     private final static int DONE = 3;  
   
     private LayoutInflater inflater;  
@@ -39,11 +39,11 @@ public class CustomListView extends ListView implements OnScrollListener {
     private TextView lastUpdatedTextView;  
     private ImageView arrowImageView;  
     private ProgressBar progressBar;  
-    // ÓÃÀ´ÉèÖÃ¼ıÍ·Í¼±ê¶¯»­Ğ§¹û   
+    // ç”¨æ¥è®¾ç½®ç®­å¤´å›¾æ ‡åŠ¨ç”»æ•ˆæœ   
     private RotateAnimation animation;  
     private RotateAnimation reverseAnimation;  
   
-    // ÓÃÓÚ±£Ö¤startYµÄÖµÔÚÒ»¸öÍêÕûµÄtouchÊÂ¼şÖĞÖ»±»¼ÇÂ¼Ò»´Î   
+    // ç”¨äºä¿è¯startYçš„å€¼åœ¨ä¸€ä¸ªå®Œæ•´çš„touchäº‹ä»¶ä¸­åªè¢«è®°å½•ä¸€æ¬¡   
     private boolean isRecored;  
   
     private int headContentWidth;  
@@ -124,7 +124,7 @@ public class CustomListView extends ListView implements OnScrollListener {
                 startY = (int) event.getY();  
                 isRecored = true;  
   
-                Log.v(TAG, "¼ÇÂ¼°´ÏÂÊ±µÄÎ»ÖÃ");  
+                Log.v(TAG, "è®°å½•æŒ‰ä¸‹æ—¶çš„ä½ç½®");  
             }  
             break;  
   
@@ -132,20 +132,20 @@ public class CustomListView extends ListView implements OnScrollListener {
   
             if (state != REFRESHING) {  
                 if (state == DONE) {  
-                    Log.v(TAG, "Ê²Ã´¶¼²»×ö");  
+                    Log.v(TAG, "ä»€ä¹ˆéƒ½ä¸åš");  
                 }  
                 if (state == PULL_To_REFRESH) {  
                     state = DONE;  
                     changeHeaderViewByState();  
   
-                    Log.v(TAG, "ÓÉÏÂÀ­Ë¢ĞÂ×´Ì¬µ½Ë¢ĞÂÍê³É×´Ì¬");  
+                    Log.v(TAG, "ç”±ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€åˆ°åˆ·æ–°å®ŒæˆçŠ¶æ€");  
                 }  
                 if (state == RELEASE_To_REFRESH) {  
                     state = REFRESHING;  
                     changeHeaderViewByState();  
                     onRefresh();  
   
-                    Log.v(TAG, "ÓÉËÉ¿ªË¢ĞÂ×´Ì¬£¬µ½Ë¢ĞÂÍê³É×´Ì¬");  
+                    Log.v(TAG, "ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€ï¼Œåˆ°åˆ·æ–°å®ŒæˆçŠ¶æ€");  
                 }  
             }  
   
@@ -157,53 +157,53 @@ public class CustomListView extends ListView implements OnScrollListener {
         case MotionEvent.ACTION_MOVE:  
             int tempY = (int) event.getY();  
             if (!isRecored && firstItemIndex == 0) {  
-                Log.v(TAG, "¼ÇÂ¼ÍÏ×§Ê±µÄÎ»ÖÃ");  
+                Log.v(TAG, "è®°å½•æ‹–æ‹½æ—¶çš„ä½ç½®");  
                 isRecored = true;  
                 startY = tempY;  
             }  
             if (state != REFRESHING && isRecored) {  
-                // ¿ÉÒÔËÉ¿ªË¢ĞÂÁË   
+                // å¯ä»¥æ¾å¼€åˆ·æ–°äº†   
                 if (state == RELEASE_To_REFRESH) {  
-                    // ÍùÉÏÍÆ£¬ÍÆµ½ÆÁÄ»×ã¹»ÑÚ¸ÇheadµÄ³Ì¶È£¬µ«»¹Ã»ÓĞÈ«²¿ÑÚ¸Ç   
+                    // å¾€ä¸Šæ¨ï¼Œæ¨åˆ°å±å¹•è¶³å¤Ÿæ©ç›–headçš„ç¨‹åº¦ï¼Œä½†è¿˜æ²¡æœ‰å…¨éƒ¨æ©ç›–   
                     if ((tempY - startY < headContentHeight)  
                             && (tempY - startY) > 0) {  
                         state = PULL_To_REFRESH;  
                         changeHeaderViewByState();  
   
-                        Log.v(TAG, "ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½ÏÂÀ­Ë¢ĞÂ×´Ì¬");  
+                        Log.v(TAG, "ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€");  
                     }  
-                    // Ò»ÏÂ×ÓÍÆµ½¶¥   
+                    // ä¸€ä¸‹å­æ¨åˆ°é¡¶   
                     else if (tempY - startY <= 0) {  
                         state = DONE;  
                         changeHeaderViewByState();  
   
-                        Log.v(TAG, "ÓÉËÉ¿ªË¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");  
+                        Log.v(TAG, "ç”±æ¾å¼€åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");  
                     }  
-                    // ÍùÏÂÀ­£¬»òÕß»¹Ã»ÓĞÉÏÍÆµ½ÆÁÄ»¶¥²¿ÑÚ¸Çhead   
+                    // å¾€ä¸‹æ‹‰ï¼Œæˆ–è€…è¿˜æ²¡æœ‰ä¸Šæ¨åˆ°å±å¹•é¡¶éƒ¨æ©ç›–head   
                     else {  
-                        // ²»ÓÃ½øĞĞÌØ±ğµÄ²Ù×÷£¬Ö»ÓÃ¸üĞÂpaddingTopµÄÖµ¾ÍĞĞÁË   
+                        // ä¸ç”¨è¿›è¡Œç‰¹åˆ«çš„æ“ä½œï¼Œåªç”¨æ›´æ–°paddingTopçš„å€¼å°±è¡Œäº†   
                     }  
                 }  
-                // »¹Ã»ÓĞµ½´ïÏÔÊ¾ËÉ¿ªË¢ĞÂµÄÊ±ºò,DONE»òÕßÊÇPULL_To_REFRESH×´Ì¬   
+                // è¿˜æ²¡æœ‰åˆ°è¾¾æ˜¾ç¤ºæ¾å¼€åˆ·æ–°çš„æ—¶å€™,DONEæˆ–è€…æ˜¯PULL_To_REFRESHçŠ¶æ€   
                 if (state == PULL_To_REFRESH) {  
-                    // ÏÂÀ­µ½¿ÉÒÔ½øÈëRELEASE_TO_REFRESHµÄ×´Ì¬   
+                    // ä¸‹æ‹‰åˆ°å¯ä»¥è¿›å…¥RELEASE_TO_REFRESHçš„çŠ¶æ€   
                     if (tempY - startY >= headContentHeight) {  
                         state = RELEASE_To_REFRESH;  
                         isBack = true;  
                         changeHeaderViewByState();  
   
-                        Log.v(TAG, "ÓÉdone»òÕßÏÂÀ­Ë¢ĞÂ×´Ì¬×ª±äµ½ËÉ¿ªË¢ĞÂ");  
+                        Log.v(TAG, "ç”±doneæˆ–è€…ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°æ¾å¼€åˆ·æ–°");  
                     }  
-                    // ÉÏÍÆµ½¶¥ÁË   
+                    // ä¸Šæ¨åˆ°é¡¶äº†   
                     else if (tempY - startY <= 0) {  
                         state = DONE;  
                         changeHeaderViewByState();  
   
-                        Log.v(TAG, "ÓÉDone»òÕßÏÂÀ­Ë¢ĞÂ×´Ì¬×ª±äµ½done×´Ì¬");  
+                        Log.v(TAG, "ç”±Doneæˆ–è€…ä¸‹æ‹‰åˆ·æ–°çŠ¶æ€è½¬å˜åˆ°doneçŠ¶æ€");  
                     }  
                 }  
   
-                // done×´Ì¬ÏÂ   
+                // doneçŠ¶æ€ä¸‹   
                 if (state == DONE) {  
                     if (tempY - startY > 0) {  
                         state = PULL_To_REFRESH;  
@@ -211,14 +211,14 @@ public class CustomListView extends ListView implements OnScrollListener {
                     }  
                 }  
   
-                // ¸üĞÂheadViewµÄsize   
+                // æ›´æ–°headViewçš„size   
                 if (state == PULL_To_REFRESH) {  
                     headView.setPadding(0, -1 * headContentHeight  
                             + (tempY - startY), 0, 0);  
                     headView.invalidate();  
                 }  
   
-                // ¸üĞÂheadViewµÄpaddingTop   
+                // æ›´æ–°headViewçš„paddingTop   
                 if (state == RELEASE_To_REFRESH) {  
                     headView.setPadding(0, tempY - startY - headContentHeight,  
                             0, 0);  
@@ -230,7 +230,7 @@ public class CustomListView extends ListView implements OnScrollListener {
         return super.onTouchEvent(event);  
     }  
   
-    // µ±×´Ì¬¸Ä±äÊ±ºò£¬µ÷ÓÃ¸Ã·½·¨£¬ÒÔ¸üĞÂ½çÃæ   
+    // å½“çŠ¶æ€æ”¹å˜æ—¶å€™ï¼Œè°ƒç”¨è¯¥æ–¹æ³•ï¼Œä»¥æ›´æ–°ç•Œé¢   
     private void changeHeaderViewByState() {  
         switch (state) {  
         case RELEASE_To_REFRESH:  
@@ -243,9 +243,9 @@ public class CustomListView extends ListView implements OnScrollListener {
             arrowImageView.clearAnimation();  
             arrowImageView.startAnimation(animation);  
   
-            tipsTextview.setText("ËÉ¿ª¿ÉÒÔË¢ĞÂ");  
+            tipsTextview.setText("æ¾å¼€å¯ä»¥åˆ·æ–°");  
   
-            Log.v(TAG, "µ±Ç°×´Ì¬£¬ËÉ¿ªË¢ĞÂ");  
+            Log.v(TAG, "å½“å‰çŠ¶æ€ï¼Œæ¾å¼€åˆ·æ–°");  
             break;  
         case PULL_To_REFRESH:  
   
@@ -259,11 +259,11 @@ public class CustomListView extends ListView implements OnScrollListener {
                 arrowImageView.clearAnimation();  
                 arrowImageView.startAnimation(reverseAnimation);  
   
-                tipsTextview.setText("ÏÂÀ­¿ÉÒÔË¢ĞÂ");  
+                tipsTextview.setText("ä¸‹æ‹‰å¯ä»¥åˆ·æ–°");  
             } else {  
-                tipsTextview.setText("ÏÂÀ­¿ÉÒÔË¢ĞÂ");  
+                tipsTextview.setText("ä¸‹æ‹‰å¯ä»¥åˆ·æ–°");  
             }  
-            Log.v(TAG, "µ±Ç°×´Ì¬£¬ÏÂÀ­Ë¢ĞÂ");  
+            Log.v(TAG, "å½“å‰çŠ¶æ€ï¼Œä¸‹æ‹‰åˆ·æ–°");  
             break;  
   
         case REFRESHING:  
@@ -274,10 +274,10 @@ public class CustomListView extends ListView implements OnScrollListener {
             progressBar.setVisibility(View.VISIBLE);  
             arrowImageView.clearAnimation();  
             arrowImageView.setVisibility(View.GONE);  
-            tipsTextview.setText("ÕıÔÚË¢ĞÂ£¬ÇëÉÔºó...");  
+            tipsTextview.setText("æ­£åœ¨åˆ·æ–°ï¼Œè¯·ç¨å...");  
             lastUpdatedTextView.setVisibility(View.GONE);  
   
-            Log.v(TAG, "µ±Ç°×´Ì¬,ÕıÔÚË¢ĞÂ...");  
+            Log.v(TAG, "å½“å‰çŠ¶æ€,æ­£åœ¨åˆ·æ–°...");  
             break;  
         case DONE:  
             headView.setPadding(0, -1 * headContentHeight, 0, 0);  
@@ -285,13 +285,13 @@ public class CustomListView extends ListView implements OnScrollListener {
   
             progressBar.setVisibility(View.GONE);  
             arrowImageView.clearAnimation();  
-            // ´Ë´¦¸ü»»Í¼±ê   
+            // æ­¤å¤„æ›´æ¢å›¾æ ‡   
             arrowImageView.setImageResource(R.drawable.goicon);  
   
-            tipsTextview.setText("ÏÂÀ­¿ÉÒÔË¢ĞÂ");  
+            tipsTextview.setText("ä¸‹æ‹‰å¯ä»¥åˆ·æ–°");  
             lastUpdatedTextView.setVisibility(View.VISIBLE);  
   
-            Log.v(TAG, "µ±Ç°×´Ì¬£¬done");  
+            Log.v(TAG, "å½“å‰çŠ¶æ€ï¼Œdone");  
             break;  
         }  
     }  
@@ -306,7 +306,7 @@ public class CustomListView extends ListView implements OnScrollListener {
   
     public void onRefreshComplete() {  
         state = DONE;  
-        lastUpdatedTextView.setText("×î½ü¸üĞÂ:" + new Date().toLocaleString());  
+        lastUpdatedTextView.setText("æœ€è¿‘æ›´æ–°:" + new Date().toLocaleString());  
         changeHeaderViewByState();  
     }  
   
@@ -316,7 +316,7 @@ public class CustomListView extends ListView implements OnScrollListener {
         }  
     }  
   
-    // ´Ë´¦ÊÇ¡°¹À¼Æ¡±headViewµÄwidthÒÔ¼°height   
+    // æ­¤å¤„æ˜¯â€œä¼°è®¡â€headViewçš„widthä»¥åŠheight   
     private void measureView(View child) {  
         ViewGroup.LayoutParams p = child.getLayoutParams();  
         if (p == null) {  

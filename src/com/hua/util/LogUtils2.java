@@ -22,7 +22,7 @@ public class LogUtils2 {
 //				Log.e(className + "." + methodName + "():" + lineNumber,
 //						message);
 				
-				Log.e(TAG,className + "£º" + lineNumber+"ÐÐ:"+
+				Log.e(TAG,className + "ï¼š" + lineNumber+"è¡Œ:"+
 						message);
 			}
 		}
@@ -43,7 +43,7 @@ public class LogUtils2 {
 //				Log.e(className + "." + methodName + "():" + lineNumber,
 //						message);
 				
-				Log.e(tag,className + "£º" + lineNumber+"ÐÐ:"+
+				Log.e(tag,className + "ï¼š" + lineNumber+"è¡Œ:"+
 						message);
 			}
 		}
@@ -61,10 +61,10 @@ public class LogUtils2 {
 						.lastIndexOf(".") + 1);
 				String methodName = elements[3].getMethodName();
 				int lineNumber = elements[3].getLineNumber();
-//				Log.d("TAG",className + "." + methodName + "():" + lineNumber+"ÐÐ"+
+//				Log.d("TAG",className + "." + methodName + "():" + lineNumber+"è¡Œ"+
 //						message);
 				
-				Log.d(TAG,className + " £º " + lineNumber+"ÐÐ£º"+
+				Log.d(TAG,className + " ï¼š " + lineNumber+"è¡Œï¼š"+
 						message);
 			}
 		}
@@ -83,10 +83,10 @@ public class LogUtils2 {
 						.lastIndexOf(".") + 1);
 				String methodName = elements[3].getMethodName();
 				int lineNumber = elements[3].getLineNumber();
-//				Log.d("TAG",className + "." + methodName + "():" + lineNumber+"ÐÐ"+
+//				Log.d("TAG",className + "." + methodName + "():" + lineNumber+"è¡Œ"+
 //						message);
 				
-				Log.d(TAG,className + " £º " + lineNumber+"ÐÐ£º"+
+				Log.d(TAG,className + " ï¼š " + lineNumber+"è¡Œï¼š"+
 						message);
 			}
 		}
@@ -106,7 +106,7 @@ public class LogUtils2 {
 				int lineNumber = elements[3].getLineNumber();
 //				Log.i(className + "." + methodName + "():" + lineNumber,
 //						message);
-				Log.i(TAG,className + " £º " + lineNumber+"ÐÐ£º"+
+				Log.i(TAG,className + " ï¼š " + lineNumber+"è¡Œï¼š"+
 						message);
 			}
 		}
@@ -127,7 +127,7 @@ public class LogUtils2 {
 				int lineNumber = elements[3].getLineNumber();
 //				Log.i(className + "." + methodName + "():" + lineNumber,
 //						message);
-				Log.i(TAG,className + " £º " + lineNumber+"ÐÐ£º"+
+				Log.i(TAG,className + " ï¼š " + lineNumber+"è¡Œï¼š"+
 						message);
 			}
 		}
@@ -149,7 +149,7 @@ public class LogUtils2 {
 //				Log.w(className + "." + methodName + "():" + lineNumber,
 //						message);
 				
-				Log.w(TAG,className + " £º " + lineNumber+"ÐÐ£º"+
+				Log.w(TAG,className + " ï¼š " + lineNumber+"è¡Œï¼š"+
 						message);
 			}
 		}
@@ -171,7 +171,7 @@ public class LogUtils2 {
 //				Log.w(className + "." + methodName + "():" + lineNumber,
 //						message);
 				
-				Log.w(TAG,className + " £º " + lineNumber+"ÐÐ£º"+
+				Log.w(TAG,className + " ï¼š " + lineNumber+"è¡Œï¼š"+
 						message);
 			}
 		}
@@ -192,7 +192,7 @@ public class LogUtils2 {
 				int lineNumber = elements[3].getLineNumber();
 //				Log.v(className + "." + methodName + "():" + lineNumber,
 //						message);
-				Log.v(TAG,className + " £º " + lineNumber+"ÐÐ£º"+
+				Log.v(TAG,className + " ï¼š " + lineNumber+"è¡Œï¼š"+
 						message);
 				
 			}
@@ -214,7 +214,7 @@ public class LogUtils2 {
 				int lineNumber = elements[3].getLineNumber();
 //				Log.v(className + "." + methodName + "():" + lineNumber,
 //						message);
-				Log.v(TAG,className + " £º " + lineNumber+"ÐÐ£º"+
+				Log.v(TAG,className + " ï¼š " + lineNumber+"è¡Œï¼š"+
 						message);
 				
 			}

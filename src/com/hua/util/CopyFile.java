@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 public class CopyFile {
 	/**
-	 * 这是复制数据库的操作
+	 * 杩欐槸澶嶅埗鏁版嵁搴撶殑鎿嶄綔
 	 * dirPath = "/data/data/com.baidu.locTest/databases"
 	 * is = this.getApplicationContext().getResources().openRawResource(R.raw.zhy);
 	 * @param is
