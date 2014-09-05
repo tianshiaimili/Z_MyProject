@@ -15,7 +15,7 @@ import com.hua.app.BaseActivity;
 import com.hua.util.LogUtils2;
 
 /**
- * 刚打开时显示的页面，后台在加载数据    
+ * 刚打开时显示的页面，后台在加载数据    啦啦啦德玛西亚
  * 提交ok？lalalallalas大三大四的
  * @author Hua
  *
