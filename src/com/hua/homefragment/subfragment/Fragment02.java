@@ -38,6 +38,7 @@ import com.hua.androidos.HandlerTimer;
 import com.hua.model.CategoryInfo;
 import com.hua.model.ShopAppApplication;
 import com.hua.util.LogUtils2;
+import com.hua.view.ElasticListView;
 import com.hua.view.ElasticScrollView;
 import com.hua.view.ElasticScrollView.OnRefreshListener;
 import com.hua.view.MyGridView;
@@ -53,6 +54,7 @@ public class Fragment02 extends Fragment {
 	 * µ¯ÐÔscrollview
 	 */
 	private ElasticScrollView elasticScrollView;
+	private ElasticListView elasticListView;
 	
 	/**
 	 * ºá·ùµÄviewpgaer 

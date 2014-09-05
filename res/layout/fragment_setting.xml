@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eeeeee"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingBottom="50dp"
+     >
 
     <!-- title bar -->
 
     <!-- <include layout="@layout/title_bar" /> -->
 
     <ScrollView
+        android:id="@+id/setting_scrollview"
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
+        android:layout_height="wrap_content"
         android:layout_weight="1.0"
         android:paddingBottom="20dip"
         android:paddingLeft="10dip"
@@ -162,4 +165,8 @@
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <include layout="@layout/setting_menu_layout"
+        android:layout_below="@id/setting_scrollview"
+        />
+    
+</RelativeLayout>

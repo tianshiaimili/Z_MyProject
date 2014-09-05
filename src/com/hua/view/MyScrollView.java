@@ -203,7 +203,11 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 			int startIndex = page * PAGE_SIZE;
 			int endIndex = page * PAGE_SIZE + PAGE_SIZE;
 			if (startIndex < Images.imageUrls.length) {
-				Toast.makeText(getContext(), "正在加载...", Toast.LENGTH_SHORT).show();
+				int isVisibility = this.getVisibility();
+				if(isVisibility == View.VISIBLE){
+					LogUtils2.e("isVisibility-----------------------");
+//					Toast.makeText(getContext(), "正在加载...", Toast.LENGTH_SHORT).show();
+				}
 				if (endIndex > Images.imageUrls.length) {
 					endIndex = Images.imageUrls.length;
 				}

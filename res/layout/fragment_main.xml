@@ -43,5 +43,24 @@
         android:layout_below="@+id/progressBar1"
         android:layout_marginTop="34dp"
         android:text="Switch" />
+    
+        <TextView 
+        android:id="@+id/textview"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:hint="内容即将呈现...."
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:layout_below="@id/switch1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        
+        />
+    
 
 </RelativeLayout>
