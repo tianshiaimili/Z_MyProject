@@ -16,6 +16,7 @@ import com.hua.util.LogUtils2;
 
 /**
  * 刚打开时显示的页面，后台在加载数据    
+ * 提交ok？
  * @author Hua
  *
  */
