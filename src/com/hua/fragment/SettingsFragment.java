@@ -1,24 +1,33 @@
 package com.hua.fragment;
 
-import android.R.integer;
+import java.util.LinkedHashSet;
+
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.OvershootInterpolator;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.hua.activity.MTNApplication;
 import com.hua.activity.R;
+import com.hua.settingfragment.subfragment.CopyOfSwipeMenuFragment;
+import com.hua.settingfragment.subfragment.SettingCustomerLoginFragment;
+import com.hua.settingfragment.subfragment.SwipeMenuFragment;
+import com.hua.util.FragmentUtils;
+import com.hua.util.FragmentUtils.FragmentTabSwitcherFeed;
+import com.hua.util.FragmentUtils.FragmentTabSwitcherWithoutZorder;
 import com.hua.util.LogUtils2;
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.Animator.AnimatorListener;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
-import com.nineoldandroids.animation.Animator.AnimatorListener;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
 public class SettingsFragment extends Fragment implements OnClickListener{
@@ -32,6 +41,28 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 	    private Button mItemButton5;
 	    private boolean mIsMenuOpen = false;//判断是否一打开
 	    
+	    
+	    public static final String CUSTOMER_LOGIN_TAG="customerLogin";
+		public static final String TERMS_CONDITIONS_TAG="termsConditions";
+		public static final String PRODUCT_OFFER_TAG="productOffer";
+		public static final String HOW_TO_USE="howToUse";
+		public static final String CUSTOMER_FEEDBACK="customerFeedback";
+		private FragmentTabSwitcherWithoutZorder fragmentSwitcher;
+		private boolean isTablet;
+		
+	    
+	    
+		private Fragment getCurFragment(){
+			return this;
+		}
+		
+		@Override
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			initFragmentSwitcher();
+		
+		}
+		
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	    	// TODO Auto-generated method stub
@@ -67,7 +98,7 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_setting, container,
 				false);
-		
+		isTablet = MTNApplication.isTablet(getActivity());
 		initButton(view);
 		
 		return view;
@@ -109,10 +140,30 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 			
 		case R.id.item2:
 			doAnimationCloseBySubButton();
+			
+			if (isTablet) {
+//				customerLoginLayout.setSelected(true);
+//				termsConditionsLayout.setSelected(false);
+//				productLayoutLayout.setSelected(false);
+//				useLayout.setSelected(false);
+//				feedbackLayout.setSelected(false);
+			}
+			changeFragment(CUSTOMER_LOGIN_TAG);
+			
 			break;
 			
 		case R.id.item3:
 			doAnimationCloseBySubButton();
+			
+			if (isTablet) {
+//				customerLoginLayout.setSelected(true);
+//				termsConditionsLayout.setSelected(false);
+//				productLayoutLayout.setSelected(false);
+//				useLayout.setSelected(false);
+//				feedbackLayout.setSelected(false);
+			}
+			changeFragment(TERMS_CONDITIONS_TAG);
+			
 			break;
 			
 		case R.id.item4:
@@ -122,7 +173,9 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 		case R.id.item5:
 			doAnimationCloseBySubButton();
 			
-			
+//			new MainActivityPhone().startFragment(new SwipeMenuFragment());
+			Intent intent = new Intent(getActivity(), SwipeMenuFragment.class);
+			getActivity().startActivity(intent);
 			
 			break;
 			
@@ -285,5 +338,69 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 //
 //        set.setDuration(DURATION).start();
     }
+    
+    
+    public void initFragmentSwitcher(){
+		FragmentTabSwitcherFeed feed = new  FragmentTabSwitcherFeed() {
+			@Override
+			public Fragment newRootFragment(String tag) {
+				if(CUSTOMER_LOGIN_TAG.equalsIgnoreCase(tag)){
+					return new SettingCustomerLoginFragment();
+				}else if(TERMS_CONDITIONS_TAG.equalsIgnoreCase(tag)){
+					return new CopyOfSwipeMenuFragment();
+//					return new SettingCustomerLoginFragment();
+				}else if(PRODUCT_OFFER_TAG.equalsIgnoreCase(tag)){
+//					return new SettingDetailFragment();
+					return new SettingCustomerLoginFragment();
+				}else if(HOW_TO_USE.equalsIgnoreCase(tag)){
+//					return new SettingDetailFragment();
+					return new SettingCustomerLoginFragment();
+				}else if(CUSTOMER_FEEDBACK.equalsIgnoreCase(tag)){
+//					return new SettingDetailFragment();
+					return new SettingCustomerLoginFragment();
+				}else{
+					return null;
+				}
+			}
+			@Override
+			public LinkedHashSet<String> getRootFragmentTags() {
+				return FragmentUtils.makeRootFragmentTags(CUSTOMER_LOGIN_TAG, TERMS_CONDITIONS_TAG,
+						PRODUCT_OFFER_TAG, HOW_TO_USE, CUSTOMER_FEEDBACK);
+			}
+			
+		};
+		fragmentSwitcher = new FragmentTabSwitcherWithoutZorder(getActivity(), R.id.rightLayout, feed);
+	}
+    
+    /**
+     * 改变tag 显示不同的fargment
+     * @param tag
+     */
+	public void changeFragment(String tag) {
+//		if(CUSTOMER_LOGIN_TAG.equalsIgnoreCase(tag)){
+//			image1 = (ImageView)getView().findViewById(R.id.arrow1);
+//		}else if(TERMS_CONDITIONS_TAG.equalsIgnoreCase(tag)){
+//			image1 = (ImageView)getView().findViewById(R.id.arrow4);
+//		}
+//		image1.setSelected(true);
+		if (isTablet) {
+			fragmentSwitcher.switchTab(tag);
+		} else {
+			if (CUSTOMER_LOGIN_TAG.equalsIgnoreCase(tag)) {
+				MTNApplication.startFragment(getCurFragment(), new SettingCustomerLoginFragment());
+			}else if(PRODUCT_OFFER_TAG.equalsIgnoreCase(tag)){
+				MTNApplication.startFragment(getCurFragment(), new SettingCustomerLoginFragment());
+			}else if(HOW_TO_USE.equalsIgnoreCase(tag)){
+				MTNApplication.startFragment(getCurFragment(), new SettingCustomerLoginFragment());
+			}else if(CUSTOMER_FEEDBACK.equalsIgnoreCase(tag)){
+				MTNApplication.startFragment(getCurFragment(), new SettingCustomerLoginFragment());
+			}
+			else if(TERMS_CONDITIONS_TAG.equalsIgnoreCase(tag)){
+				MTNApplication.startFragment(getCurFragment(), new CopyOfSwipeMenuFragment());
+			}else{
+				MTNApplication.startFragment(getCurFragment(), new SettingCustomerLoginFragment());
+			}
+		}
+	}
     
 }

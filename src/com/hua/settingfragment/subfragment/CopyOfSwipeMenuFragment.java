@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.ResolveInfo;
@@ -12,14 +13,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -27,24 +29,47 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.baoyz.swipemenulistview.SwipeMenuListView.OnMenuItemClickListener;
 import com.hua.activity.R;
+import com.hua.app.BaseFragment;
+import com.hua.util.LogUtils2;
 
-public class SwipeMenuFragment extends Activity {
+/**
+ * 仿QQ 的滑动删除 效果
+ * @author zero
+ *
+ */
+public class CopyOfSwipeMenuFragment extends BaseFragment{
 
+	/**
+	 * 一开始加载的全局view
+	 */
+	private View view;
 	private List<ApplicationInfo> mAppList;
-
+	private Context context;
+	
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.swipemenu_fragment);
-
-		mAppList = getPackageManager().getInstalledApplications(0);
-
-		SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.listView);
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		
+		context = activity;
+		
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+//		context = getActivity();
+		view = inflater.inflate(R.layout.swipemenu_fragment, null); 
+		mAppList = context.getPackageManager().getInstalledApplications(0);
+		LogUtils2.d("mAppList=="+mAppList.size());
+		
+		SwipeMenuListView listView = (SwipeMenuListView) view.findViewById(R.id.listView);
 		
 		AppAdapter adapter = new AppAdapter();
 		
 		listView.setAdapter(adapter);
-
 		// step 1. create a MenuCreator
 		SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -81,42 +106,50 @@ public class SwipeMenuFragment extends Activity {
 				menu.addMenuItem(deleteItem);
 			}
 		};
+		
 		// set creator
-		listView.setMenuCreator(creator);
+				listView.setMenuCreator(creator);
 
-		// step 2. listener item click event
-		listView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-			@Override
-			public void onMenuItemClick(int position, SwipeMenu menu, int index) {
-				ApplicationInfo item = mAppList.get(position);
-				switch (index) {
-				case 0:
-					// open
-					open(item);
-					break;
-				case 1:
-					// delete
-					delete(item);
-					break;
-				}
-			}
-		});
+				// step 2. listener item click event
+				listView.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+					@Override
+					public void onMenuItemClick(int position, SwipeMenu menu, int index) {
+						ApplicationInfo item = mAppList.get(position);
+						switch (index) {
+						case 0:
+							// open
+							open(item);
+							break;
+						case 1:
+							// delete
+							delete(item);
+							break;
+						}
+					}
+				});
 
-		// other setting
-//		listView.setCloseInterpolator(new BounceInterpolator());
+				// other setting
+//				listView.setCloseInterpolator(new BounceInterpolator());
 
-		// test item long click
-		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+				// test item long click
+				listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Toast.makeText(getApplicationContext(), position + " long click", 0).show();
-				return false;
-			}
-		});
+					@Override
+					public boolean onItemLongClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						Toast.makeText(getApplicationContext(), position + " long click", 0).show();
+						return false;
+					}
+				});
+		
+		return view;//super.onCreateView(inflater, container, savedInstanceState);
 	}
-
+	
+	
+	/**
+	 * 卸载
+	 * @param item
+	 */
 	private void delete(ApplicationInfo item) {
 		// delete app
 		try {
@@ -126,13 +159,17 @@ public class SwipeMenuFragment extends Activity {
 		} catch (Exception e) {
 		}
 	}
-
+	
+	/**
+	 * 打开APP
+	 * @param item
+	 */
 	private void open(ApplicationInfo item) {
 		// open app
 		Intent resolveIntent = new Intent(Intent.ACTION_MAIN, null);
 		resolveIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 		resolveIntent.setPackage(item.packageName);
-		List<ResolveInfo> resolveInfoList = getPackageManager()
+		List<ResolveInfo> resolveInfoList = context.getPackageManager()
 				.queryIntentActivities(resolveIntent, 0);
 		if (resolveInfoList != null && resolveInfoList.size() > 0) {
 			ResolveInfo resolveInfo = resolveInfoList.get(0);
@@ -141,14 +178,22 @@ public class SwipeMenuFragment extends Activity {
 
 			Intent intent = new Intent(Intent.ACTION_MAIN);
 			intent.addCategory(Intent.CATEGORY_LAUNCHER);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			LogUtils2.d("activityPackageName=="+activityPackageName+"    className=="+className);
 			ComponentName componentName = new ComponentName(
 					activityPackageName, className);
 
 			intent.setComponent(componentName);
 			startActivity(intent);
+			getActivity().overridePendingTransition(R.anim.activityanim_in, R.anim.activityanim_out);
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @author zero
+	 *
+	 */
 	class AppAdapter extends BaseAdapter {
 
 		@Override
@@ -175,8 +220,8 @@ public class SwipeMenuFragment extends Activity {
 			}
 			ViewHolder holder = (ViewHolder) convertView.getTag();
 			ApplicationInfo item = getItem(position);
-			holder.iv_icon.setImageDrawable(item.loadIcon(getPackageManager()));
-			holder.tv_name.setText(item.loadLabel(getPackageManager()));
+			holder.iv_icon.setImageDrawable(item.loadIcon(context.getPackageManager()));
+			holder.tv_name.setText(item.loadLabel(context.getPackageManager()));
 			return convertView;
 		}
 
@@ -191,7 +236,10 @@ public class SwipeMenuFragment extends Activity {
 			}
 		}
 	}
-
+	
+	/**
+	 * 
+	 */
 	private int dp2px(int dp) {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
 				getResources().getDisplayMetrics());

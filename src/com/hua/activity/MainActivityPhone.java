@@ -49,8 +49,8 @@ public class MainActivityPhone extends BaseFragmentActivity {
 	private RelativeLayout navigationBar;
 	//search
 	private ImageView searchButton;
-	private boolean isCrew;//Ó¦¸ÃÊÇÅĞ¶ÏuserÊÇ·ñµã»÷ÁËÏêÏ¸ĞÅÏ¢»òÕß½øÈëĞÂµÄpage
-	private boolean isOnclickDetail;//Ó¦¸ÃÊÇÅĞ¶ÏuserÊÇ·ñµã»÷ÁËÏêÏ¸ĞÅÏ¢»òÕß½øÈëĞÂµÄpage
+	private boolean isCrew;//åº”è¯¥æ˜¯åˆ¤æ–­useræ˜¯å¦ç‚¹å‡»äº†è¯¦ç»†ä¿¡æ¯æˆ–è€…è¿›å…¥æ–°çš„page
+	private boolean isOnclickDetail;//åº”è¯¥æ˜¯åˆ¤æ–­useræ˜¯å¦ç‚¹å‡»äº†è¯¦ç»†ä¿¡æ¯æˆ–è€…è¿›å…¥æ–°çš„page
 	
 	private ImageView filterButton;
 	private long lastClickBackTime = 0;
@@ -102,13 +102,13 @@ public class MainActivityPhone extends BaseFragmentActivity {
 		});
 	}
 	
-	public void startFragment(Fragment fragment) {
+	public  void startFragment(Fragment fragment) {
 		mFragmentTabSwitcher.pushFragment(fragment);
 	}
 	
 	private void initUI() {
 		// TODO Auto-generated method stub
-		//·µ»ØµÄ²¼¾Ö
+		//è¿”å›çš„å¸ƒå±€
 		backLayout = (ViewGroup) findViewById(R.id.main_activity_navigation_bar_back_layout);
 		backButton = (ImageView) findViewById(R.id.main_activity_navigation_bar_back_img);
 		backLogo = (ImageView) findViewById(R.id.main_activity_navigation_bar_back_logo);
@@ -131,7 +131,7 @@ public class MainActivityPhone extends BaseFragmentActivity {
 		});
 		
 		/**
-		 * ÏÂÃæÊÇ¹ıÂËµÄÉèÖÃ
+		 * ä¸‹é¢æ˜¯è¿‡æ»¤çš„è®¾ç½®
 		 */
 		filterButton = (ImageView) findViewById(R.id.main_activity_navigation_bar_right_filter);
 		filterButton.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +170,7 @@ public class MainActivityPhone extends BaseFragmentActivity {
 			@Override
 			public LinkedHashSet getRootFragmentTags() {
 				/**
-				 * linkHashset±éÀú»áµÃ³ö¼ÓÈëÊ±µÄË³Ğò
+				 * linkHashsetéå†ä¼šå¾—å‡ºåŠ å…¥æ—¶çš„é¡ºåº
 				 */
 				LogUtils2.e("getRootFragmentTags********");
 				return FragmentUtils.makeRootFragmentTags(new String[]{TAB_TV, TAB_MOVIE, TAB_PLAY_HISTORY, TAB_DOWNLOAD, TAB_SETTING});
@@ -272,7 +272,7 @@ public class MainActivityPhone extends BaseFragmentActivity {
 			}
 		});
 		
-		///Ê×ÏÈ°ÑTVfragmentTabÉú³É 
+		///é¦–å…ˆæŠŠTVfragmentTabç”Ÿæˆ 
 		mFragmentTabSwitcher.switchTab(TAB_TV);
 		
 	}
@@ -319,7 +319,7 @@ public class MainActivityPhone extends BaseFragmentActivity {
 	}
 	
 	/**
-	 * ´ó¸ÅÉèÖÃÊÇµ±Ñ¡ÖĞÄ³¸ötabÊ±£¬ÈÃ°üº¬ÔÚ´ËtabÖĞµÄÈ«²¿view¶¼¸ßÁÁÏÔÊ¾£¨¼´±»Ñ¡ÖĞ×´Ì¬£©
+	 * å¤§æ¦‚è®¾ç½®æ˜¯å½“é€‰ä¸­æŸä¸ªtabæ—¶ï¼Œè®©åŒ…å«åœ¨æ­¤tabä¸­çš„å…¨éƒ¨viewéƒ½é«˜äº®æ˜¾ç¤ºï¼ˆå³è¢«é€‰ä¸­çŠ¶æ€ï¼‰
 	 * @param selected
 	 */
 	private void setCurrentSelected(View selected) {

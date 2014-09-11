@@ -161,6 +161,9 @@ public class LayoutUtils {
 		convertView.getLayoutParams().height = visible ? height : 0;
 	}
 
+	/**
+	 * 判断是否平板
+	 */
 	public static boolean isTablet(Context context) {
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int smallestWidth = (int) ((float) metrics.widthPixels / metrics.density);

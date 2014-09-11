@@ -28,6 +28,7 @@
         <activity android:name="com.hua.activity.FilterPhoneActivity"></activity>
         <activity android:name="com.hua.activity.ImageDetailsActivity" ></activity>
         <activity android:name="com.hua.activity.WelcomeActivity" ></activity>
+        <activity android:name="com.hua.settingfragment.subfragment.SwipeMenuFragment" ></activity>
     </application>
 
 </manifest>

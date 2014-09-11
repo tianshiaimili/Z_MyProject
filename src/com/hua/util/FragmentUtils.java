@@ -39,8 +39,8 @@ public class FragmentUtils
         protected FragmentActivity mFragmentActivity;
         protected int mContainerId;
         protected FragmentTabSwitcherFeed mSwitcherFeed;
-        //ÊÇHashMapµÄÒ»¸ö×ÓÀà£¬±£´æÁË¼ÇÂ¼µÄ²åÈëË³Ðò£¬ÔÚÓÃIterator±éÀúLinkedHashMapÊ±£¬ÏÈµÃµ½µÄ¼ÇÂ¼¿Ï¶¨ÊÇÏÈ²åÈëµÄ.
-        protected LinkedHashMap mRootFragmentTags;//Õâ¸öhashmapÊÇÒ»Í·½øÒ»Í·³öµÄ 
+        //ï¿½ï¿½HashMapï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½à£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ë¼ï¿½Â¼ï¿½Ä²ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iteratorï¿½ï¿½ï¿½ï¿½LinkedHashMapÊ±ï¿½ï¿½ï¿½ÈµÃµï¿½ï¿½Ä¼ï¿½Â¼ï¿½Ï¶ï¿½ï¿½ï¿½ï¿½È²ï¿½ï¿½ï¿½ï¿½.
+        protected LinkedHashMap mRootFragmentTags;//ï¿½ï¿½ï¿½hashmapï¿½ï¿½Ò»Í·ï¿½ï¿½Ò»Í·ï¿½ï¿½ï¿½ï¿½ 
         protected final LinkedHashMap mTabStacks = new LinkedHashMap();
         private final int mTabCount;
         protected Fragment mCurrentFragment;
@@ -74,7 +74,7 @@ public class FragmentUtils
         }
 
         /**
-         * »ñÈ¡µ±Ç°Ñ¡ÖÐµÄÏÂ±ê
+         * ï¿½ï¿½È¡ï¿½ï¿½Ç°Ñ¡ï¿½Ðµï¿½ï¿½Â±ï¿½
          * @return
          */
         public int getCurrentTabIndex()
@@ -88,7 +88,7 @@ public class FragmentUtils
         }
 
         /**
-         * »ñÈ¡ÉÏÒ»¸öµÄindex
+         * ï¿½ï¿½È¡ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½index
          * @return
          */
         public int getPreviousTabIndex()
@@ -97,7 +97,7 @@ public class FragmentUtils
         }
 
         /**
-         * ÅÐ¶ÏÊÇ·ñÍ¬Ò»¸ötab±êÇ©
+         * ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Í¬Ò»ï¿½ï¿½tabï¿½ï¿½Ç©
          * @return
          */
         protected boolean isSameTab()
@@ -149,7 +149,7 @@ public class FragmentUtils
     }
 
     /**
-     * Ò»¸ö¿ØÖÆÏÂ±ßtabµÄÀà
+     * Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â±ï¿½tabï¿½ï¿½ï¿½ï¿½
      * @author Hua
      *
      */
@@ -197,7 +197,7 @@ public class FragmentUtils
         }
     	
         /**
-         * Ìí¼Ótab ºóË¢ÐÂ
+         * ï¿½ï¿½ï¿½tab ï¿½ï¿½Ë¢ï¿½ï¿½
          * @param rebuild
          */
         private void refreshTabBar(boolean rebuild)
@@ -289,7 +289,7 @@ public class FragmentUtils
         }
     	
         /**
-         * Ïàµ±ÓÚÌí¼ÓÐÂµÄtab
+         * ï¿½àµ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½tab
          */
         public void switchTab(String rootFragmentTag, boolean skipSameTab)
         {
@@ -329,7 +329,7 @@ public class FragmentUtils
             } 
             else {
             	
-            	LogUtils2.i("getCurrentTabStack().size() £¡+++===0");
+            	LogUtils2.i("getCurrentTabStack().size() ï¿½ï¿½+++===0");
                 pushFragment(false, new Fragment[] {
                     peekTopmostFragment()
                 });
@@ -344,9 +344,9 @@ public class FragmentUtils
         }
 
         /**
-         * ´æ·ÅTabfragmentTagµÄLinkedList
-         * ÀïÃæµÄmTabStacks ÊÇÒ»¸öLinkedHashMap Ëû´æ·Å¸ñÊ½ÊÇ£¨¡°Tag¡±£¬LinkedList£©
-         * tag¾ÍÊÇ½çÃæÏÂÃæµÄÄÇ5¸ötab
+         * ï¿½ï¿½ï¿½TabfragmentTagï¿½ï¿½LinkedList
+         * ï¿½ï¿½ï¿½ï¿½ï¿½mTabStacks ï¿½ï¿½Ò»ï¿½ï¿½LinkedHashMap ï¿½ï¿½ï¿½Å¸ï¿½Ê½ï¿½Ç£ï¿½ï¿½ï¿½Tagï¿½ï¿½ï¿½ï¿½LinkedListï¿½ï¿½
+         * tagï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½5ï¿½ï¿½tab
          * @return
          */
         private LinkedList getCurrentTabStack()
@@ -379,7 +379,7 @@ public class FragmentUtils
         }
 
         /**
-         * ´ÓgetCurrentTabStack£¨£©»ñÈ¡µ½µÚÒ»¸öfragment
+         * ï¿½ï¿½getCurrentTabStackï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½fragment
          * @return
          */
         public Fragment peekTopmostFragment()
@@ -391,9 +391,9 @@ public class FragmentUtils
         }
 
         /**
-         * ÍùgetCurrentTabStack£¨£©ÖÐÌí¼Ófragment»òÕß...
-         * @param add ÅÐ¶ÏÊÇÌí¼Ó»¹ÊÇ°ó¸¿µ½fragment
-         * @param fragments ÐèÒªÌí¼ÓµÄfragment
+         * ï¿½ï¿½getCurrentTabStackï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fragmentï¿½ï¿½ï¿½ï¿½...
+         * @param add ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½Ó»ï¿½ï¿½Ç°ó¸¿µï¿½fragment
+         * @param fragments ï¿½ï¿½Òªï¿½ï¿½Óµï¿½fragment
          */
         private void pushFragment(boolean add, Fragment fragments[])
         {
@@ -408,11 +408,11 @@ public class FragmentUtils
                 {
                     Log.d(FragmentUtils.TAG, (new StringBuilder("Detach fragment ")).append(mCurrentFragment.getTag()).toString());
                    /**
-                    * detach()»á½«view´ÓviewtreeÖÐÉ¾³ý,ºÍremove()²»Í¬,
-                    * ´ËÊ±fragmentµÄ×´Ì¬ÒÀÈ»±£³Ö×Å,ÔÚÊ¹ÓÃattach()Ê±»áÔÙ´Îµ÷ÓÃonCreateView()
-                    * À´ÖØ»æÊÓÍ¼,×¢ÒâÊ¹ÓÃdetach()
-                    * ºófragment.isAdded()·½·¨½«·µ»Øfalse,ÔÚÊ¹ÓÃattach()
-                    * »¹Ô­fragmentºóisAdded()»áÒÀÈ»·µ»Øfalse(ÐèÒªÔÙ´ÎÈ·ÈÏ)
+                    * detach()ï¿½á½«viewï¿½ï¿½viewtreeï¿½ï¿½É¾ï¿½ï¿½,ï¿½ï¿½remove()ï¿½ï¿½Í¬,
+                    * ï¿½ï¿½Ê±fragmentï¿½ï¿½×´Ì¬ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Ê¹ï¿½ï¿½attach()Ê±ï¿½ï¿½ï¿½Ù´Îµï¿½ï¿½ï¿½onCreateView()
+                    * ï¿½ï¿½ï¿½Ø»ï¿½ï¿½ï¿½Í¼,×¢ï¿½ï¿½Ê¹ï¿½ï¿½detach()
+                    * ï¿½ï¿½fragment.isAdded()ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½false,ï¿½ï¿½Ê¹ï¿½ï¿½attach()
+                    * ï¿½ï¿½Ô­fragmentï¿½ï¿½isAdded()ï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½ï¿½ï¿½false(ï¿½ï¿½Òªï¿½Ù´ï¿½È·ï¿½ï¿½)
                     */
                     LogUtils2.i("pushFragment*******");
                     ft.detach(mCurrentFragment);
@@ -420,7 +420,7 @@ public class FragmentUtils
                 if(add)
                 {
                 	LogUtils2.i("add********=="+add);
-                	//ÀýÈç "TV - 3"
+                	//ï¿½ï¿½ï¿½ï¿½ "TV - 3"
                     String fragmentTag = (new StringBuilder(String.valueOf(mCurrentRootFragmentTag))).append("-").append(getCurrentTabStack().size()).toString();
                     Log.d(FragmentUtils.TAG, (new StringBuilder("Add new fragment ")).append(fragmentTag).toString());
                     ft.add(mContainerId, fragment, fragmentTag);
@@ -451,7 +451,7 @@ public class FragmentUtils
         }
 
         /**
-         * ¸ù¾øTag»ñÈ¡µ½µ±Ç°ÔÚLinkedListµÄÊ×¸öfragment
+         * ï¿½ï¿½ï¿½Tagï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½LinkedListï¿½ï¿½ï¿½×¸ï¿½fragment
          * @return
          */
         private Fragment popTopmostFragment()
@@ -468,7 +468,7 @@ public class FragmentUtils
         }
 
         /**
-         * ÒÆ³ýµ±Ç°µÄÊ×¸öfragment
+         * ï¿½Æ³ï¿½Ç°ï¿½ï¿½ï¿½×¸ï¿½fragment
          * @return
          */
         public Fragment popFragment()
@@ -507,7 +507,7 @@ public class FragmentUtils
         }
 
         /**
-         * ·µ»ØÉÏÒ»¸öfragmenttab
+         * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½fragmenttab
          */
         public void onFragmentActivityBackPressed()
         {
@@ -837,7 +837,7 @@ public class FragmentUtils
         act.getSupportFragmentManager().beginTransaction().add(containerId, fragment, tag).commit();
     }
 
-    public static LinkedHashSet makeRootFragmentTags(String[] tags)
+    public static LinkedHashSet makeRootFragmentTags(String... tags)
     {
         if(tags == null || tags.length == 0)
             return null;

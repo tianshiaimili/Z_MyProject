@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/setting_tabel_view_bg_color" >
+
+    <RelativeLayout
+        android:id="@+id/bigRlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" >
+
+        <ImageView
+            android:id="@+id/mtnPlayerImage"
+            android:layout_width="@dimen/setting_detail_login_mtn_palyer_image_width"
+            android:layout_height="@dimen/setting_detail_login_mtn_palyer_image_height"
+            android:layout_above="@+id/centerLine"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/logo_mtnplayer" />
+
+        <RelativeLayout
+            android:id="@+id/leftLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/centerLine" >
+
+            <EditText
+                android:id="@+id/usernameBox"
+                android:layout_width="@dimen/setting_detail_login_input_box_width"
+                android:layout_height="@dimen/setting_detail_login_input_box_height"
+                android:layout_marginRight="@dimen/tablet_setting_login_usenamebox_margin_right"
+                android:layout_marginTop="@dimen/tablet_setting_login_usenamebox_margin_top"
+                android:background="@drawable/input_bg_grey"
+                android:paddingLeft="@dimen/setting_detail_login_input_box_label_margin_left"
+                android:text="@string/setting_login_input_box_login_label"
+                android:textColor="@color/setting_detail_login_input_label_color"
+                android:textCursorDrawable="@color/setting_detail_login_input_label_color"
+                android:textSize="@dimen/setting_detail_login_input_box_label_size" />
+
+            <EditText
+                android:id="@+id/passwordBox"
+                android:layout_width="@dimen/setting_detail_login_input_box_width"
+                android:layout_height="@dimen/setting_detail_login_input_box_height"
+                android:layout_below="@+id/usernameBox"
+                android:layout_marginRight="@dimen/tablet_setting_login_usenamebox_margin_right"
+                android:layout_marginTop="@dimen/setting_detail_login_input_box_password_margin_top"
+                android:background="@drawable/input_bg_grey"
+                android:paddingLeft="@dimen/setting_detail_login_input_box_label_margin_left"
+                android:text="@string/setting_login_input_box_password_label"
+                android:textColor="@color/setting_detail_login_input_label_color"
+                android:textCursorDrawable="@color/setting_detail_login_input_label_color"
+                android:textSize="@dimen/setting_detail_login_input_box_label_size" />
+
+            <TextView
+                android:id="@+id/forgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/passwordBox"
+                android:layout_below="@+id/passwordBox"
+                android:layout_marginTop="@dimen/setting_detail_login_fogot_password_margin_top"
+                android:text="@string/setting_login_forgot_password"
+                android:textColor="#ffc20e"
+                android:textSize="@dimen/setting_detail_login_fogot_password_label_size" >
+            </TextView>
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/setting_detail_login_input_box_height"
+                android:layout_alignRight="@+id/passwordBox"
+                android:layout_below="@+id/forgotPassword"
+                android:layout_marginTop="@dimen/setting_detail_login_button_login_margin_top"
+                android:background="@drawable/btn_bg_grey_trans"
+                android:text="@string/setting_login_button_login"
+                android:textColor="@color/setting_detail_login_input_label_color"
+                android:textSize="@dimen/setting_detail_login_button_label_size" >
+            </Button>
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/centerLine"
+            android:layout_width="@dimen/tablet_setting_login_center_line_width"
+            android:layout_height="@dimen/tablet_setting_login_center_line_height"
+            android:layout_centerInParent="true"
+            android:background="@color/setting_seperator_color" />
+
+        <Button
+            android:id="@+id/signButton"
+            android:layout_width="@dimen/setting_detail_login_input_box_width"
+            android:layout_height="@dimen/setting_detail_login_input_box_height"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/tablet_setting_login_sign_button_margin_left"
+            android:layout_marginTop="@dimen/tablet_setting_login_sign_button_margin_top"
+            android:layout_toRightOf="@+id/centerLine"
+            android:background="@drawable/btn_bg_yellow"
+            android:text="@string/setting_login_button_sign"
+            android:textColor="#000000"
+            android:textSize="@dimen/setting_detail_login_button_label_size" >
+        </Button>
+    </RelativeLayout>
+
+</RelativeLayout>
