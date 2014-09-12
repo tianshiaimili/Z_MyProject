@@ -322,6 +322,7 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 		private Bitmap loadImage(String imageUrl) {
 			File imageFile = new File(getImagePath(imageUrl));
 			if (!imageFile.exists()) {
+//				imageLoader.downloadImages(imageUrl,columnWidth);
 				downloadImage(imageUrl);
 			}
 			if (imageUrl != null) {
@@ -429,13 +430,14 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 				con.setDoInput(true);
 				con.setDoOutput(true);
 				bis = new BufferedInputStream(con.getInputStream());
+				
 				imageFile = new File(getImagePath(imageUrl));
 				fos = new FileOutputStream(imageFile);
 				bos = new BufferedOutputStream(fos);
-				byte[] b = new byte[1024];
+				byte[] buff = new byte[1024];
 				int length;
-				while ((length = bis.read(b)) != -1) {
-					bos.write(b, 0, length);
+				while ((length = bis.read(buff)) != -1) {
+					bos.write(buff, 0, length);
 					bos.flush();
 				}
 			} catch (Exception e) {
@@ -473,10 +475,11 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 		 * @return 图片的本地存储路径。
 		 */
 		private String getImagePath(String imageUrl) {
+			LogUtils2.i("ImageURL=="+imageUrl);
 			int lastSlashIndex = imageUrl.lastIndexOf("/");
 			String imageName = imageUrl.substring(lastSlashIndex + 1);
 			String imageDir = Environment.getExternalStorageDirectory().getPath()
-					+ "/PhotoWallFalls/";
+					+ "/PhotoWallFall3333/";
 			File file = new File(imageDir);
 			if (!file.exists()) {
 				file.mkdirs();

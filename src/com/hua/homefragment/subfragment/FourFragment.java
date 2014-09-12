@@ -31,7 +31,7 @@ public class FourFragment extends Fragment {
 		LogUtils2.i("*********onCreateView*************");
 		
 		 TuanGouFragment tuanGouFragment = new TuanGouFragment();
-		 View historyView = LayoutInflater.from(getActivity()).inflate(R.layout.homefragment_tuangou_, null);
+//		 View historyView = LayoutInflater.from(getActivity()).inflate(R.layout.homefragment_tuangou_, null);
 		 MyScrollView myScrollView = (MyScrollView) LayoutInflater.from(getActivity()).
 				inflate(R.layout.fragment_tuangou, null);
 		LogUtils2.e("myScrollView===="+myScrollView);

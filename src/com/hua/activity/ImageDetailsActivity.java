@@ -24,19 +24,19 @@ import com.hua.util.LogUtils2;
 import com.hua.view.ZoomImageView;
 
 /**
- * ²é¿´´óÍ¼µÄActivity½çÃæ¡£
+ * æŸ¥çœ‹å¤§å›¾çš„Activityç•Œé¢ã€‚
  * 
  */
 public class ImageDetailsActivity extends Activity implements
 		OnPageChangeListener {
 
 	/**
-	 * ÓÃÓÚ¹ÜÀíÍ¼Æ¬µÄ»¬¶¯
+	 * ç”¨äºç®¡ç†å›¾ç‰‡çš„æ»‘åŠ¨
 	 */
 	private ViewPager viewPager;
 
 	/**
-	 * ÏÔÊ¾µ±Ç°Í¼Æ¬µÄÒ³Êı
+	 * æ˜¾ç¤ºå½“å‰å›¾ç‰‡çš„é¡µæ•°
 	 */
 	private TextView pageText;
 
@@ -53,12 +53,12 @@ public class ImageDetailsActivity extends Activity implements
 		viewPager.setCurrentItem(imagePosition);
 		viewPager.setOnPageChangeListener(this);
 		viewPager.setEnabled(false);
-		// Éè¶¨µ±Ç°µÄÒ³ÊıºÍ×ÜÒ³Êı
+		// è®¾å®šå½“å‰çš„é¡µæ•°å’Œæ€»é¡µæ•°
 		pageText.setText((imagePosition + 1) + "/" + Images.imageUrls.length);
 	}
 
 	/**
-	 * ViewPagerµÄÊÊÅäÆ÷
+	 * ViewPagerçš„é€‚é…å™¨
 	 * 
 	 * @author guolin
 	 */
@@ -100,11 +100,11 @@ public class ImageDetailsActivity extends Activity implements
 	}
 
 	/**
-	 * »ñÈ¡Í¼Æ¬µÄ±¾µØ´æ´¢Â·¾¶¡£
+	 * è·å–å›¾ç‰‡çš„æœ¬åœ°å­˜å‚¨è·¯å¾„ã€‚
 	 * 
 	 * @param imageUrl
-	 *            Í¼Æ¬µÄURLµØÖ·¡£
-	 * @return Í¼Æ¬µÄ±¾µØ´æ´¢Â·¾¶¡£
+	 *            å›¾ç‰‡çš„URLåœ°å€ã€‚
+	 * @return å›¾ç‰‡çš„æœ¬åœ°å­˜å‚¨è·¯å¾„ã€‚
 	 */
 	private String getImagePath(String imageUrl) {
 		int lastSlashIndex = imageUrl.lastIndexOf("/");
@@ -131,7 +131,7 @@ public class ImageDetailsActivity extends Activity implements
 
 	@Override
 	public void onPageSelected(int currentPage) {
-		// Ã¿µ±Ò³Êı·¢Éú¸Ä±äÊ±ÖØĞÂÉè¶¨Ò»±éµ±Ç°µÄÒ³ÊıºÍ×ÜÒ³Êı
+		// æ¯å½“é¡µæ•°å‘ç”Ÿæ”¹å˜æ—¶é‡æ–°è®¾å®šä¸€éå½“å‰çš„é¡µæ•°å’Œæ€»é¡µæ•°
 		pageText.setText((currentPage + 1) + "/" + Images.imageUrls.length);
 	}
 	

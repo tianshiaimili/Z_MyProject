@@ -8,6 +8,9 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="18" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    
     <application
         android:name=".MTNApplication"
         android:allowBackup="true"

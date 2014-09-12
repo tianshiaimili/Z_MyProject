@@ -4,20 +4,7 @@ public class Images {
 
 	public final static String[] imageUrls = new String[] {
 		
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/jkl.jpg",
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/a.jpg",
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/qq.jpg",
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/po.jpg",
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/qw.jpg",
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/sdasa.jpg",
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/sdfasad.jpg",
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/tyrtyrt.jpg",
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/sxsd.jpg",
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/rtt.jpg",
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/wqqweqw.jpg",
-			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/tyt.jpg"
-			
-			/*"http://img.my.csdn.net/uploads/201309/01/1378037235_3453.jpg",
+			"http://img.my.csdn.net/uploads/201309/01/1378037235_3453.jpg",
 			"http://img.my.csdn.net/uploads/201309/01/1378037235_7476.jpg",
 			"http://img.my.csdn.net/uploads/201309/01/1378037235_9280.jpg",
 			"http://img.my.csdn.net/uploads/201309/01/1378037234_3539.jpg",
@@ -68,5 +55,18 @@ public class Images {
 			"http://img.my.csdn.net/uploads/201308/31/1377949441_8987.jpg",
 			"http://img.my.csdn.net/uploads/201308/31/1377949441_5454.jpg",
 			"http://img.my.csdn.net/uploads/201308/31/1377949454_6367.jpg",
-			"http://img.my.csdn.net/uploads/201308/31/1377949442_4562.jpg" */};
+			"http://img.my.csdn.net/uploads/201308/31/1377949442_4562.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/jkl.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/a.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/qq.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/po.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/qw.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/sdasa.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/sdfasad.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/tyrtyrt.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/sxsd.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/rtt.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/wqqweqw.jpg",
+			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/tyt.jpg"
+	};
 }
