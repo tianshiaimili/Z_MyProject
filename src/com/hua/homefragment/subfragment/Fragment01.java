@@ -2,6 +2,7 @@ package com.hua.homefragment.subfragment;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,18 +19,18 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
+import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hua.activity.MTNApplication;
 import com.hua.activity.R;
 import com.hua.adapter.HF01_RecommendAdapter;
 import com.hua.adapter.HomeSubFragment1_GridViewAdater;
@@ -37,6 +38,11 @@ import com.hua.adapter.HomeSubViewPagerAdater;
 import com.hua.androidos.HandlerTimer;
 import com.hua.model.CategoryInfo;
 import com.hua.model.ShopAppApplication;
+import com.hua.settingfragment.subfragment.CopyOfSwipeMenuFragment;
+import com.hua.settingfragment.subfragment.SettingCustomerLoginFragment;
+import com.hua.util.FragmentUtils;
+import com.hua.util.FragmentUtils.FragmentTabSwitcherFeed;
+import com.hua.util.FragmentUtils.FragmentTabSwitcherWithoutZorder;
 import com.hua.util.LogUtils2;
 import com.hua.view.ElasticScrollView;
 import com.hua.view.ElasticScrollView.OnRefreshListener;
@@ -93,6 +99,12 @@ public class Fragment01 extends Fragment {
 	
 	private HandlerTimer handlerTimer;
 	
+	/**
+	 * 选项其
+	 */
+	private FragmentTabSwitcherWithoutZorder fragmentSwitcher;
+	private String ITEM_BAR = "item_bar";
+	
 	Handler handler = new Handler(){
 		public void handleMessage(Message message) {
 			int what = message.what;
@@ -132,6 +144,15 @@ public class Fragment01 extends Fragment {
 			
 		};
 	};
+	
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+    	// TODO Auto-generated method stub
+    	super.onCreate(savedInstanceState);
+    	initFragmentSwitcher();
+    	
+    }
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -481,6 +502,7 @@ public class Fragment01 extends Fragment {
 					int position, long id) {
 				// TODO Auto-generated method stub
 				Toast.makeText(getActivity(), "您选中："+list2.get(position).getMsg(), 300).show();
+				changeFragment(ITEM_BAR);
 			}
 		});
 	}
@@ -569,5 +591,50 @@ public class Fragment01 extends Fragment {
 
 	}
 	
+	/**
+	 * 初始化 选想起
+	 */
+	  public void initFragmentSwitcher(){
+			FragmentTabSwitcherFeed feed = new  FragmentTabSwitcherFeed() {
+				@Override
+				public Fragment newRootFragment(String tag) {
+					if(ITEM_BAR.equalsIgnoreCase(tag)){
+						return new HotFragment();
+					}
+					
+					return null;
+				}
+				@Override
+				public LinkedHashSet<String> getRootFragmentTags() {
+					return FragmentUtils.makeRootFragmentTags(ITEM_BAR);
+				}
+				
+			};
+			fragmentSwitcher = new FragmentTabSwitcherWithoutZorder(getActivity(), R.id.rightLayout, feed);
+		}
+	  
+	   /**
+	     * 改变tag 显示不同的fargment
+	     * @param tag
+	     */
+		public void changeFragment(String tag) {
+//			if(CUSTOMER_LOGIN_TAG.equalsIgnoreCase(tag)){
+//				image1 = (ImageView)getView().findViewById(R.id.arrow1);
+//			}else if(TERMS_CONDITIONS_TAG.equalsIgnoreCase(tag)){
+//				image1 = (ImageView)getView().findViewById(R.id.arrow4);
+//			}
+//			image1.setSelected(true);
+			if (false) {
+				fragmentSwitcher.switchTab(tag);
+			} else {
+				if (ITEM_BAR.equalsIgnoreCase(tag)) {
+					MTNApplication.startFragment(getCurFragment(), new HotFragment());
+				}
+			}
+		}
+	  
+		public Fragment getCurFragment(){
+			return this;
+		}
 	
 }

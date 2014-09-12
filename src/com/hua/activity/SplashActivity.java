@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 /**
- * ½øÈëAppÏÔÊ¾µÄÊ×Ò³
+ * ï¿½ï¿½ï¿½ï¿½Appï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ò³
  * @author Hua
  *
  */
@@ -53,7 +53,7 @@ public class SplashActivity extends BaseActivity {
 		}else {
 			
 			LogUtils2.d("+++++++++++++");
-			Intent intent = new Intent(getBaseContext(), MainActivityPhone.class);
+			Intent intent = new Intent(getBaseContext(), WelcomeActivity2.class);
 //			Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
 			startActivity(intent);
 			finish();

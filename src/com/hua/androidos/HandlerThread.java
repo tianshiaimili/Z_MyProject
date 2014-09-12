@@ -26,7 +26,6 @@ import android.os.Message;
  * Handy class for starting a new thread that has a looper. The looper can then be 
  * used to create handler classes. Note that start() must still be called.
  */
-@SuppressLint("NewApi")
 public class HandlerThread extends Thread {
     int mPriority;
     int mTid = -1;

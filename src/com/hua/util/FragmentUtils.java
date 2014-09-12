@@ -846,7 +846,7 @@ public class FragmentUtils
         for(int i = 0; i < size; i++)
             tagSet.add(tags[i]);
 
-        LogUtils2.i("tags[i]="+tags[0]+tags[1]+tags[2]);
+//        LogUtils2.i("tags[i]="+tags[0]+tags[1]+tags[2]);
         
         
         return tagSet;

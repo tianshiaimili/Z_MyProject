@@ -16,7 +16,9 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:hardwareAccelerated="false"
+         >
         <activity
             android:name="com.hua.activity.SplashActivity"
             android:label="@string/app_name" >
@@ -31,6 +33,7 @@
         <activity android:name="com.hua.activity.FilterPhoneActivity"></activity>
         <activity android:name="com.hua.activity.ImageDetailsActivity" ></activity>
         <activity android:name="com.hua.activity.WelcomeActivity" ></activity>
+        <activity android:name="com.hua.activity.WelcomeActivity2" ></activity>
         <activity android:name="com.hua.settingfragment.subfragment.SwipeMenuFragment" ></activity>
     </application>
 

@@ -264,6 +264,8 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 	 */
 	class LoadImageTask extends AsyncTask<Integer, Void, Bitmap> {
 
+		private static final String PICTURE_FILE = "/PhotoWallFalls/";
+
 		/**
 		 * 记录每个图片对应的位置
 		 */
@@ -479,7 +481,7 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 			int lastSlashIndex = imageUrl.lastIndexOf("/");
 			String imageName = imageUrl.substring(lastSlashIndex + 1);
 			String imageDir = Environment.getExternalStorageDirectory().getPath()
-					+ "/PhotoWallFall3333/";
+					+ PICTURE_FILE;
 			File file = new File(imageDir);
 			if (!file.exists()) {
 				file.mkdirs();

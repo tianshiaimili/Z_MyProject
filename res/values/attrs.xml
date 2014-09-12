@@ -15,4 +15,11 @@
         <attr name="pstsTextAllCaps" format="boolean" />
     </declare-styleable>
 
+    
+    <declare-styleable name="PowerImageView">
+        <attr name="auto_play" format="boolean"/>
+            
+        
+    </declare-styleable>
+    
 </resources>
