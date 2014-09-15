@@ -36,6 +36,7 @@ import com.hua.adapter.HF01_RecommendAdapter;
 import com.hua.adapter.HomeSubFragment1_GridViewAdater;
 import com.hua.adapter.HomeSubViewPagerAdater;
 import com.hua.androidos.HandlerTimer;
+import com.hua.contants.Constant;
 import com.hua.model.CategoryInfo;
 import com.hua.model.ShopAppApplication;
 import com.hua.settingfragment.subfragment.CopyOfSwipeMenuFragment;
@@ -74,14 +75,14 @@ public class Fragment01 extends Fragment {
 	 */
 	private GridView gv_category;
 	private MyGridView gv_recommend;
-	int[] recommend_icon = new int[] { R.drawable.huoying_bg,
-			R.drawable.haizie_bg, R.drawable.heizi, R.drawable.sishen_bg,
-			R.drawable.huoying,R.drawable.caomao,R.drawable.diguang,R.drawable.huoying,
-			R.drawable.huoying,R.drawable.caomao,R.drawable.diguang,R.drawable.huoying};
-	String[] recommend_msg = new String[] { "火影忍者", "海贼王", "黑子的篮球", "死神",
-			"火影忍者", "海贼王", "黑子的篮球", "死神","死神","德玛西亚","黑子的篮球", "死神"
-			};
-	String[] ad_text = new String[] { "火影忍者", "海贼王", "黑子的篮球", "死神","德玛西亚" };
+//	int[] recommend_icon = new int[] { R.drawable.huoying_bg,
+//			R.drawable.haizie_bg, R.drawable.heizi, R.drawable.sishen_bg,
+//			R.drawable.huoying,R.drawable.caomao,R.drawable.diguang,R.drawable.huoying,
+//			R.drawable.huoying,R.drawable.caomao,R.drawable.diguang,R.drawable.huoying};
+//	String[] recommend_msg = new String[] { "火影忍者", "海贼王", "黑子的篮球", "死神",
+//			"火影忍者", "海贼王", "黑子的篮球", "死神","死神","德玛西亚","黑子的篮球", "死神"
+//			};
+//	String[] ad_text = new String[] { "火影忍者", "海贼王", "黑子的篮球", "死神","德玛西亚" };
 	
 	/**
 	 * 用来计算分ge图片
@@ -98,6 +99,7 @@ public class Fragment01 extends Fragment {
 	private boolean isCanel;
 	
 	private HandlerTimer handlerTimer;
+	List<Integer> list = new ArrayList<Integer>();
 	
 	/**
 	 * 选项其
@@ -159,7 +161,7 @@ public class Fragment01 extends Fragment {
 		View view = inflater.inflate(R.layout.home_subfragment01, null);
 		
 		elasticScrollView = (ElasticScrollView) view.findViewById(R.id.home_sub_fragment01_sv);
-		
+//		elasticScrollView.gety
 		View subView = LayoutInflater.from(getActivity()).
 				inflate(R.layout.home_subfragment01_item, null);
 		
@@ -415,7 +417,7 @@ public class Fragment01 extends Fragment {
 	 * 获得广告数据
 	 */
 	private void getAdData() {
-		List<Integer> list = new ArrayList<Integer>();
+	
 
 		list.add(R.drawable.huoying);
 		list.add(R.drawable.caomao);
@@ -451,19 +453,19 @@ public class Fragment01 extends Fragment {
 		
 		switch (position) {
 		case 0:
-			tv_title.setText(ad_text[position]);
+			tv_title.setText(Constant.ad_text[position]);
 			break;
 		case 1:
-			tv_title.setText(ad_text[position]);
+			tv_title.setText(Constant.ad_text[position]);
 			break;
 		case 2:
-			tv_title.setText(ad_text[position]);
+			tv_title.setText(Constant.ad_text[position]);
 			break;
 		case 3:
-			tv_title.setText(ad_text[position]);
+			tv_title.setText(Constant.ad_text[position]);
 			break;
 		case 4:
-			tv_title.setText(ad_text[position]);
+			tv_title.setText(Constant.ad_text[position]);
 			break;
 		}
 		
@@ -487,10 +489,10 @@ public class Fragment01 extends Fragment {
 	 */
 	private void getRecommendData() {
 		final List<CategoryInfo> list2 = new ArrayList<CategoryInfo>();
-		for (int i = 0; i < recommend_icon.length; i++) {
+		for (int i = 0; i < Constant.recommend_icon.length; i++) {
 			CategoryInfo categoryInfo = new CategoryInfo();
-			categoryInfo.setIcon(recommend_icon[i]);
-			categoryInfo.setMsg(recommend_msg[i]);
+			categoryInfo.setIcon(Constant.recommend_icon[i]);
+			categoryInfo.setMsg(Constant.recommend_msg[i]);
 			list2.add(categoryInfo);
 		}
 		gv_recommend.setSelector(new ColorDrawable(Color.TRANSPARENT));

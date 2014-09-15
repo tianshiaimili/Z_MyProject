@@ -3,17 +3,36 @@ package com.hua.contants;
 import com.hua.activity.R;
 
 public class Constant {
+	
+	public static int BAR_LIST_SIZE = 5;
+	
 	public static int[] category_icon = new int[] { R.drawable.lizhi, R.drawable.baihe,
 			R.drawable.gaoda, R.drawable.gaoxiao, R.drawable.kehuan,
 			R.drawable.qingnian, R.drawable.shaonv, R.drawable.tiyu,
 			R.drawable.xuanyi, R.drawable.zhiyu };
+	
 	public static String[] category_msg = new String[] { "励志", "百合", "高达", "搞笑", "科幻", "青年",
 			"少女", "体育", "推理", "治愈" };
+	
 	public static int[] hot_icon = new int[] { R.drawable.hot_bg1, R.drawable.hot_bg2,
 		R.drawable.hot_bg3, R.drawable.hot_bg4 };
+	
 	public static String[] hot_title = new String[]{
 		"火影忍着","海贼王","刀剑神域","起风了"
 	};
+	
+	
+	public static String[] recommend_msg = new String[] { "火影忍者", "海贼王", "黑子的篮球", "死神",
+		"火影忍者", "海贼王", "黑子的篮球", "死神","死神","德玛西亚","黑子的篮球", "死神"
+		};
+	
+	public static String[] ad_text = new String[] { "火影忍者", "海贼王", "黑子的篮球", "死神","德玛西亚" };
+	
+	public static int[] recommend_icon = new int[] { R.drawable.huoying_bg,
+		R.drawable.haizie_bg, R.drawable.heizi, R.drawable.sishen_bg,
+		R.drawable.huoying,R.drawable.caomao,R.drawable.diguang,R.drawable.huoying,
+		R.drawable.huoying,R.drawable.caomao,R.drawable.diguang,R.drawable.huoying};
+	
 	public static String[] hot_intro = new String[]{
 		"这是一个忍者的世界。因为身上封印着邪恶的九尾妖狐，鸣人受尽了村人的冷落，只是拼命用各种恶作剧试图吸引大家的注意力。好在还是有依鲁卡老师的关心，鸣人的性格才没有变得扭曲，他总是干劲十足、非常乐观。为了让更多的人认可自己，鸣人的目标是成为火影。鸣人的同伴，是由老师确定的同班同学，随着共同的战斗，终于成了互相认可、信赖的好伙伴。",
 		"拥有财富、名声、权力，这世界上的一切的男人 “海贼王”哥尔·D·罗杰，在被行刑受死之前说了一句话，让全世界的人都涌向了大海。",

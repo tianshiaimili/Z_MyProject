@@ -9,8 +9,9 @@ import android.os.Message;
 import android.util.Log;
 
 import com.hua.androidos.CustomHandlerThread;
+import com.hua.util.LogUtils2;
 /**
- * ¶¨Ê±Æ÷£¬ÓÃÀ´×ö¹ã¸æºá·ù¶¯»­
+ * å®šæ—¶å™¨ï¼Œç”¨æ¥åšå¹¿å‘Šæ¨ªå¹…åŠ¨ç”»
  * @author Hua
  *
  */
@@ -20,7 +21,7 @@ public class HandlerTimer
     private static final String TAG = "com/pccw/gzmobile/androidos/HandlerTimer.getSimpleName()";
 	protected static final int START_NUM = 9;
     /**
-     * ¼Ì³ĞÏß³ÌµÄ×ÓÀà
+     * ç»§æ‰¿çº¿ç¨‹çš„å­ç±»
      */
     private CustomHandlerThread mHandlerThread;
     private Handler mHandler;
@@ -29,29 +30,31 @@ public class HandlerTimer
      */
     private Runnable mRepeatTask;
     /**
-     *¼ä¸ôµÄ¶à¾ÃÖ´ĞĞ 
+     *é—´éš”çš„å¤šä¹…æ‰§è¡Œ 
      */
     private long mInterval;
     /**
-     * ÅĞ¶ÏÊÇ·ñÒÑ¾­ÔÚÖ´ĞĞ
+     * åˆ¤æ–­æ˜¯å¦å·²ç»åœ¨æ‰§è¡Œ
      */
     private boolean mRunning;
     /**
-     * ÅĞ¶ÏÊÇ·ñÍÆ³ö
+     * åˆ¤æ–­æ˜¯å¦æ¨å‡º
      */
     private boolean mQuit;
     /**
-     * ¿ªÆôÏß³ÌÖ´ĞĞ
+     * å¼€å¯çº¿ç¨‹æ‰§è¡Œ
      */
     private Runnable mOnTick = new Runnable() {
 
         public void run()
         {
+        	LogUtils2.d("************************");
             mRepeatTask.run();
             if(mRunning && !mQuit)
                 mHandler.postDelayed(mOnTick, mInterval);
             Message message = mHandler.obtainMessage(START_NUM);
             mHandler.sendMessage(message);
+            LogUtils2.d("message.what=="+message.what);
         }
 
 //        final HandlerTimer this$0;
@@ -104,6 +107,7 @@ public class HandlerTimer
     public synchronized void scheduleRepeatExecution(Runnable task, long delay, long interval)
         throws IllegalStateException, IllegalArgumentException
     {
+    	 LogUtils2.d("scheduleRepeatExecution---------");
         Log.d(TAG, (new StringBuilder("scheduleRepeatExecution(), delay = ")).append(delay).append(", interval = ").append(interval).append("ms").toString());
         checkTimer(task, delay, interval);
         if(mRunning)
@@ -113,8 +117,10 @@ public class HandlerTimer
         mRunning = true;
         if(delay == 0L)
             mHandler.post(mOnTick);
+        
         else
             mHandler.postDelayed(mOnTick, delay);
+        LogUtils2.d("Handler---------");
     }
 
     public synchronized void cancelRepeatExecution()

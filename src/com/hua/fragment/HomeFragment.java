@@ -27,6 +27,7 @@ import com.hua.homefragment.subfragment.Fragment01;
 import com.hua.homefragment.subfragment.ContactsFragment;
 import com.hua.homefragment.subfragment.FoundFragment;
 import com.hua.homefragment.subfragment.FourFragment;
+import com.hua.homefragment.subfragment.Fragment02;
 import com.hua.util.LogUtils2;
 import com.hua.view.MyScrollView;
 import com.hua.wiget.PagerSlidingTabStrip;
@@ -66,7 +67,8 @@ public class HomeFragment extends BaseFragment implements
 	/**
 	 * 聊天界面的Fragment
 	 */
-	private Fragment01 chatFragment;
+//	private Fragment01 chatFragment;
+	private Fragment02 chatFragment;
 
 	/**
 	 * 发现界面的Fragment
@@ -354,7 +356,8 @@ public class HomeFragment extends BaseFragment implements
 				LogUtils2.i("******chatFragment******");
 				if (chatFragment == null) {
 					LogUtils2.i("******chatFragment******");
-					chatFragment = new Fragment01();
+//					chatFragment = new Fragment01();
+					chatFragment = new Fragment02();
 					// MTNApplication.startFragment(getCurFragment(),
 					// chatFragment);
 				}

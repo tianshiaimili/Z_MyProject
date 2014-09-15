@@ -3,16 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:id="@+id/home_sub_header_layout"
+     >
 
     <FrameLayout
         android:id="@+id/home_sub_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp" >
+         >
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vp_ad"
+        <com.hua.view.MyViewPager
+            android:id="@+id/vp_ad2"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
 
@@ -24,7 +26,7 @@
             android:gravity="center_vertical" >
 
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tv_title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
@@ -32,7 +34,7 @@
                 android:text="火影忍者" />
 
             <LinearLayout
-                android:id="@+id/llayout"
+                android:id="@+id/llayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom"
@@ -45,9 +47,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="3dp"
         android:background="@color/home_group_item_e4" />
-
+<!-- 
     <GridView
         android:id="@+id/gv_category"
         android:layout_width="match_parent"
@@ -145,6 +147,6 @@
         android:background="#00000000"
         android:orientation="vertical" >
 
-    </LinearLayout>
+    </LinearLayout> -->
 
 </LinearLayout>

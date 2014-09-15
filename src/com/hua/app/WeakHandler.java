@@ -21,7 +21,7 @@ public abstract class WeakHandler<VODFragment> extends Handler
     public WeakHandler(Object contextObject)
     {
     	/**
-    	 * WeakReference<T>£ºÈõÒıÓÃ-->ËæÊ±¿ÉÄÜ»á±»À¬»ø»ØÊÕÆ÷»ØÊÕ£¬²»Ò»¶¨ÒªµÈµ½ĞéÄâ»úÄÚ´æ²»×ãÊ±²ÅÇ¿ÖÆ»ØÊÕ¡£Òª»ñÈ¡¶ÔÏóÊ±£¬Í¬Ñù¿ÉÒÔµ÷ÓÃget·½·¨¡£
+    	 * WeakReference<T>ï¼šå¼±å¼•ç”¨-->éšæ—¶å¯èƒ½ä¼šè¢«åƒåœ¾å›æ”¶å™¨å›æ”¶ï¼Œä¸ä¸€å®šè¦ç­‰åˆ°è™šæ‹Ÿæœºå†…å­˜ä¸è¶³æ—¶æ‰å¼ºåˆ¶å›æ”¶ã€‚è¦è·å–å¯¹è±¡æ—¶ï¼ŒåŒæ ·å¯ä»¥è°ƒç”¨getæ–¹æ³•ã€‚
     	 */
         mContextObject = new WeakReference(contextObject);
     }
