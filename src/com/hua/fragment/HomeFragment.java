@@ -35,7 +35,7 @@ import com.hua.wiget.TopIndicator2;
 import com.hua.wiget.TopIndicator2.OnClickTopIndicatorListener;
 
 public class HomeFragment extends BaseFragment implements
-		/* OnTopIndicatorListener, */OnClickTopIndicatorListener {
+		/* OnTopIndicatorListener, */OnClickTopIndicatorListener ,OnPageChangeListener{
 
 	public static final String TAG = "HomeFragment";
 	private static final int PagerCount = 4;
@@ -512,11 +512,30 @@ public class HomeFragment extends BaseFragment implements
 		}
 	}*/
 
+	
 	@Override
 	public void onClickIndicatorSelected(int index) {
 		// TODO Auto-generated method stub
 		LogUtils2.d("index====" + index);
 		mViewPager.setCurrentItem(index);
 		currentViewPItem = index;
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPageSelected(int arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

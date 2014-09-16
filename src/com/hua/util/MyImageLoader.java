@@ -11,6 +11,10 @@ import java.net.URL;
 import java.security.Principal;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -19,11 +23,23 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 import android.util.LruCache;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
+
+import com.hua.activity.ImageDetailsActivity;
+import com.hua.activity.R;
+import com.hua.contants.Constant;
 
 /**
  * 对图片进行管理的工具类。
@@ -31,6 +47,15 @@ import android.util.LruCache;
  * @author Tony
  */
 public class MyImageLoader {
+
+	/**
+	 * 记录所有正在下载或等待下载的任务。
+	 */
+	public static Set<MyLoadImageTask> taskCollection;
+	/**
+	 * 记录所有界面上的图片，用以可以随时控制对图片的释放。
+	 */
+	private static List<ImageView> imageViewList = new ArrayList<ImageView>();
 
 	/**
 	 * 图片缓存技术的核心类，用于缓存所有下载好的图片，在程序内存达到设定值时会将最少最近使用的图片移除掉。
@@ -41,8 +66,12 @@ public class MyImageLoader {
 	 * ImageLoader的实例。
 	 */
 	private static MyImageLoader mImageLoader;
+	private static Context mContext;
 
-	private MyImageLoader() {
+	private MyImageLoader(Context context) {
+
+		taskCollection = new HashSet<MyLoadImageTask>();
+		mContext = context;
 		// 获取应用程序最大可用内存
 		int maxMemory = (int) Runtime.getRuntime().maxMemory();
 		int cacheSize = maxMemory / 8;
@@ -60,9 +89,9 @@ public class MyImageLoader {
 	 * 
 	 * @return ImageLoader的实例。
 	 */
-	public static MyImageLoader getInstance() {
+	public static MyImageLoader getInstance(Context context) {
 		if (mImageLoader == null) {
-			mImageLoader = new MyImageLoader();
+			mImageLoader = new MyImageLoader(context);
 		}
 		return mImageLoader;
 	}
@@ -75,7 +104,7 @@ public class MyImageLoader {
 	 * @param bitmap
 	 *            LruCache的键，这里传入从网络上下载的Bitmap对象。
 	 */
-	public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+	public static void addBitmapToMemoryCache(String key, Bitmap bitmap) {
 		if (getBitmapFromMemoryCache(key) == null) {
 			mMemoryCache.put(key, bitmap);
 		}
@@ -88,7 +117,7 @@ public class MyImageLoader {
 	 *            LruCache的键，这里传入图片的URL地址。
 	 * @return 对应传入键的Bitmap对象，或者null。
 	 */
-	public Bitmap getBitmapFromMemoryCache(String key) {
+	public static Bitmap getBitmapFromMemoryCache(String key) {
 		return mMemoryCache.get(key);
 	}
 
@@ -149,7 +178,7 @@ public class MyImageLoader {
 	 *            图片的URL地址。
 	 * @return 图片的本地存储路径。
 	 */
-	private String getImagePath(String imageUrl) {
+	private static String getImagePath(String imageUrl) {
 		LogUtils2.i("ImageURL==" + imageUrl);
 		int lastSlashIndex = imageUrl.lastIndexOf("/");
 		String imageName = imageUrl.substring(lastSlashIndex + 1);
@@ -167,31 +196,32 @@ public class MyImageLoader {
 
 	/**
 	 * 下载图片
+	 * 
 	 * @param imageUrl
 	 */
-	public void downloadImages(String imageUrl,int columnWidth) {
+	public static void downloadImages(String imageUrl, int columnWidth) {
 
-		if(imageUrl == null || imageUrl.equals(""))
+		if (imageUrl == null || imageUrl.equals(""))
 			return;
 		String urlHead = "http";
 		String tempUrlHead = imageUrl.substring(0, 5);
-		LogUtils2.d("tempUrlHead=="+tempUrlHead);
-		LogUtils2.d("imageUrl=="+imageUrl);
-		if(tempUrlHead.equals("http:")){
+		LogUtils2.d("tempUrlHead==" + tempUrlHead);
+		LogUtils2.d("imageUrl==" + imageUrl);
+		if (tempUrlHead.equals("http:")) {
 			LogUtils2.d("--------------");
-			downloadImageForHttp(imageUrl,columnWidth);
-		}else if(tempUrlHead.equals("https")){
-			downloadImageForHttps(imageUrl,columnWidth);
+			downloadImageForHttp(imageUrl, columnWidth);
+		} else if (tempUrlHead.equals("https")) {
+			downloadImageForHttps(imageUrl, columnWidth);
 		}
-		
+
 	}
-	
+
 	/**
 	 * 通过http下载的图片
 	 * 
 	 * @param imageUrl
 	 */
-	public void downloadImageForHttp(String imageUrl,int columnWidth) {
+	public static void downloadImageForHttp(String imageUrl, int columnWidth) {
 		LogUtils2.d("downloadImageForHttp----");
 		if (Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
@@ -243,11 +273,11 @@ public class MyImageLoader {
 		if (imageFile != null) {
 			LogUtils2.d("8888888888888888");
 			LogUtils2.d("getImagePath(imageUrl)==" + getImagePath(imageUrl));
-			//根据下载来的图片 适当改变大小，然后放入到缓存
-			Bitmap bitmap = MyImageLoader.decodeSampledBitmapFromResource(imageFile.getPath(),
-					columnWidth);
+			// 根据下载来的图片 适当改变大小，然后放入到缓存
+			Bitmap bitmap = MyImageLoader.decodeSampledBitmapFromResource(
+					imageFile.getPath(), columnWidth);
 			if (bitmap != null) {
-				this.addBitmapToMemoryCache(imageUrl, bitmap);
+				addBitmapToMemoryCache(imageUrl, bitmap);
 			}
 		}
 
@@ -258,7 +288,7 @@ public class MyImageLoader {
 	 * 
 	 * @param imageUrl
 	 */
-	public void downloadImageForHttps(String imageUrl,int columnWidth) {
+	public static void downloadImageForHttps(String imageUrl, int columnWidth) {
 
 		if (Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
@@ -318,14 +348,39 @@ public class MyImageLoader {
 			LogUtils2.d("89999998");
 			LogUtils2.d("getImagePath(imageUrl)==" + getImagePath(imageUrl));
 			// bitmap = BitmapFactory.decodeFile(getImagePath(imageUrl));
-			//根据下载来的图片 适当改变大小，然后放入到缓存
-			Bitmap bitmap = MyImageLoader.decodeSampledBitmapFromResource(imageFile.getPath(),
-					columnWidth);
+			// 根据下载来的图片 适当改变大小，然后放入到缓存
+			Bitmap bitmap = MyImageLoader.decodeSampledBitmapFromResource(
+					imageFile.getPath(), columnWidth);
 			if (bitmap != null) {
-				this.addBitmapToMemoryCache(imageUrl, bitmap);
+				LogUtils2.d("add to the cache------");
+				addBitmapToMemoryCache(imageUrl, bitmap);
 			}
 		}
 
+	}
+
+	/**
+	 * 根据传入的URL，对图片进行加载。如果这张图片已经存在于SD卡中，则直接从SD卡里读取，否则就从网络上下载。
+	 * 
+	 * @param imageUrl
+	 *            图片的URL地址
+	 * @return 加载到内存的图片。
+	 */
+	private static Bitmap loadImage(String imageUrl, int columnWidth) {
+		File imageFile = new File(getImagePath(imageUrl));
+		if (!imageFile.exists()) {
+			// imageLoader.downloadImages(imageUrl,columnWidth);
+			downloadImages(imageUrl, columnWidth);
+		}
+		if (imageUrl != null) {
+			Bitmap bitmap = MyImageLoader.decodeSampledBitmapFromResource(
+					imageFile.getPath(), columnWidth);
+			if (bitmap != null) {
+				addBitmapToMemoryCache(imageUrl, bitmap);
+				return bitmap;
+			}
+		}
+		return null;
 	}
 
 	static class MyX509TrustManager implements X509TrustManager {
@@ -388,6 +443,152 @@ public class MyImageLoader {
 			LogUtils2.d("hostname=" + hostname + ",PeerHost= "
 					+ session.getPeerHost());
 			return true;
+		}
+
+	}
+
+	/**
+	 * 图片异步加载的类
+	 */
+	public static class MyLoadImageTask extends
+			AsyncTask<Integer, Void, Bitmap> {
+
+		private static Context context;
+		/**
+		 * 图片的url集合
+		 */
+		private List<String> imageUrlList;
+		/**
+		 * 记录每个图片对应的位置
+		 */
+		private int mItemPosition;
+
+		/**
+		 * 图片的URL地址
+		 */
+		private String mImageUrl;
+
+		/**
+		 * 可重复使用的ImageView
+		 */
+		private ImageView mImageView;
+
+		/**
+		 * 图片显示的宽度
+		 */
+		private int columnWidth;
+		/**
+		 * 内部的task集合
+		 */
+		public static Set<MyLoadImageTask> tempTtaskCollection;
+		
+		/**
+		 * 内部类 记录所有界面上的图片，用以可以随时控制对图片的释放。
+		 */
+		public static List<ImageView> innerImageViewList = new ArrayList<ImageView>();
+		
+		
+
+		public MyLoadImageTask() {
+		}
+
+		/**
+		 * 将可重复使用的ImageView传入
+		 * 
+		 * @param imageView
+		 */
+		public MyLoadImageTask(ImageView imageView, List<String> list,
+				int tempColumnWidth, Context tempContext) {
+			mImageView = imageView;
+			imageUrlList = list;
+			columnWidth = tempColumnWidth;
+			context = tempContext;
+			tempTtaskCollection = new HashSet<MyLoadImageTask>();
+		}
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+		}
+
+		@Override
+		protected Bitmap doInBackground(Integer... params) {
+
+			mItemPosition = params[0];
+			mImageUrl = imageUrlList.get(mItemPosition);
+			Bitmap bitmap = getBitmapFromMemoryCache(mImageUrl);
+			if (bitmap == null) {
+				// 缓存中 没有 则从网络获取
+				bitmap = loadImage(mImageUrl, columnWidth);
+			}
+
+			return bitmap;
+		}
+
+		@Override
+		protected void onPostExecute(Bitmap bitmap) {
+
+			if (bitmap != null) {
+				double ratio = bitmap.getWidth() / (columnWidth * 1.0);
+				int scaledHeight = (int) (bitmap.getHeight() / ratio);
+				addImage(bitmap, columnWidth, scaledHeight);
+			}
+			if (taskCollection != null) {
+
+				taskCollection.remove(this);
+			}
+			if (tempTtaskCollection != null) {
+
+				tempTtaskCollection.remove(this);
+			}
+			// super.onPostExecute(result);
+		}
+
+		/**
+		 * 向ImageView中添加一张图片
+		 * 
+		 * @param bitmap
+		 *            待添加的图片
+		 * @param imageWidth
+		 *            图片的宽度
+		 * @param imageHeight
+		 *            图片的高度
+		 */
+		private void addImage(Bitmap bitmap, int imageWidth, int imageHeight) {
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					imageWidth, imageHeight);
+			if (mImageView != null) {
+				mImageView.setImageBitmap(bitmap);
+			} else {
+				ImageView imageView = new ImageView(context);
+				imageView.setLayoutParams(params);
+				imageView.setImageBitmap(bitmap);
+				imageView.setScaleType(ScaleType.FIT_XY);
+				// imageView.setPadding(5, 5, 5, 5);
+				imageView.setTag(R.string.image_url, mImageUrl);
+				// imageView.setOnClickListener(new OnClickListener() {
+				// @Override
+				// public void onClick(View v) {
+				// Intent intent = new Intent(context,
+				// ImageDetailsActivity.class);
+				// intent.putExtra("image_position", mItemPosition);
+				// context.startActivity(intent);
+				// }
+				// });
+				// findColumnToAdd(imageView, imageHeight).addView(imageView);
+				if(imageViewList != null)
+				imageViewList.add(imageView);
+				
+				if(innerImageViewList != null)
+				innerImageViewList.add(imageView);
+				Constant.bannerImageViews.add(imageView);
+				LogUtils2.d("9999++=="+innerImageViewList.size());
+				LogUtils2.d("8888++=="+Constant.bannerImageViews.size());
+				if(Constant.bannerImageViews.size() == 4){
+//					Constant.setBannerImageViews(innerImageViewList);
+				}
+			}
 		}
 
 	}

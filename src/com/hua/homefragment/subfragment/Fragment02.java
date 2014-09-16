@@ -36,6 +36,7 @@ import com.hua.util.FragmentUtils;
 import com.hua.util.LogUtils2;
 import com.hua.util.FragmentUtils.FragmentTabSwitcherFeed;
 import com.hua.util.FragmentUtils.FragmentTabSwitcherWithoutZorder;
+import com.hua.util.MyImageLoader.MyLoadImageTask;
 import com.hua.view.ElasticScrollView;
 import com.hua.view.MyGridView;
 import com.hua.view.MyViewPager;
@@ -101,7 +102,7 @@ public class Fragment02 extends Fragment {
 	private HomeSubFragment1_ListViewBaseAdater adapter;
 	private List<View> barList = new ArrayList<View>();
 //	
-	
+	private MyLoadImageTask myLoadImageTask = new MyLoadImageTask();
 	
 	Handler handler = new Handler(){
 		public void handleMessage(Message message) {
@@ -119,7 +120,17 @@ public class Fragment02 extends Fragment {
 						adapter.notifyDataSetChanged();
 						
 					}
+				case 3:
 					
+					LogUtils2.d("wwwwww+=="+Constant.bannerImageViews.size());
+//					adapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), Constant.bannerImageViews,barImageList);
+					adapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), barList,barImageList);
+					contentListView.setAdapter(adapter);
+					if(!adapter.isCanel())
+					adapter.startViewPagerTimer();
+					
+					adapter.notifyDataSetChanged();
+					break;
 			default:
 				break;
 			}
@@ -133,14 +144,15 @@ public class Fragment02 extends Fragment {
     	super.onCreate(savedInstanceState);
 //    	initFragmentSwitcher();
     	
+//    	LogUtils2.d("+++++=="+myLoadImageTask.innerImageViewList.size());
+//    	LogUtils2.d("wwwwww+=="+Constant.bannerImageViews.size());
+    	
     }
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.home_subfragment02, null);
-		
-//		elasticScrollView = (ElasticScrollView) view.findViewById(R.id.home_sub_fragment01_sv);
 		
 		mPullRefreshListView = (PullToRefreshListView) view.findViewById(R.id.home_sub_fragment02_listview);
 		contentListView = mPullRefreshListView.getRefreshableView();
@@ -190,9 +202,9 @@ public class Fragment02 extends Fragment {
 		// TODO Auto-generated method stub
 		// 获得服务端广告图片，这里我们就简单的直接取本地数据
 		super.onActivityCreated(savedInstanceState);
-		contentListView.setAdapter(adapter);
-		if(!adapter.isCanel())
-		adapter.startViewPagerTimer();
+//		contentListView.setAdapter(adapter);
+//		if(!adapter.isCanel())
+//		adapter.startViewPagerTimer();
 //		mPullRefreshListView.set
 		///
 //		getCategoryData();
@@ -205,8 +217,14 @@ public class Fragment02 extends Fragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		if(adapter.isCanel()){
-			adapter.startViewPagerTimer();
+		
+		LogUtils2.e("777777777777777777777777777777");
+		
+		if(adapter != null){
+			if(adapter.isCanel()){
+				LogUtils2.e("oooooooooooooooo");
+				adapter.startViewPagerTimer();
+			}
 		}
 		
 	}
@@ -215,10 +233,20 @@ public class Fragment02 extends Fragment {
 	public void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		if(!adapter.isCanel()){
-			adapter.stopViewPagerTimer();
-			adapter.setCanel(true);
+		if(adapter != null){
+			LogUtils2.d("pause--------------");
+			if(!adapter.isCanel()){
+				adapter.stopViewPagerTimer();
+				adapter.setCanel(true);
+			}
+			
+			LogUtils2.d("setviewpager--------------");
+//			HomeSubFragment1_ListViewBaseAdater.setViewPager();
+//			LogUtils2.e("pause=====mViewPager="+mViewPager.getCurrentItem());
+			
 		}
+		
+		
 		
 	}
 	
@@ -232,7 +260,7 @@ public class Fragment02 extends Fragment {
 //		tv_title = (TextView) view.findViewById(R.id.tv_title2);
 		getAdData();
 //		createPoint(view);
-		adapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), barList,barImageList);
+//		adapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), barList,barImageList);
 		mViewPager = (MyViewPager) view.findViewById(R.id.vp_ad2);
 //		contentListView.setAdapter(adapter);
 //		gv_c
@@ -243,14 +271,23 @@ public class Fragment02 extends Fragment {
 	 * 获得广告数据
 	 */
 	private void getAdData() {
-		List<Integer> list = new ArrayList<Integer>();
-//		List<Integer> barImageList = new ArrayList<Integer>(Constant.BAR_LIST_SIZE);
-		list.add(R.drawable.huoying);
-		list.add(R.drawable.caomao);
-		list.add(R.drawable.yinhun);
-		list.add(R.drawable.diguang);
-		list.add(R.drawable.jianxin);
-		barImageList = list;
+		
+		if(Constant.bannerImageViews.size() >= 0){
+//			barImageList = 
+			List<Integer> list = new ArrayList<Integer>();
+//			List<Integer> barImageList = new ArrayList<Integer>(Constant.BAR_LIST_SIZE);
+			list.add(R.drawable.huoying);
+			list.add(R.drawable.caomao);
+			list.add(R.drawable.yinhun);
+			list.add(R.drawable.diguang);
+			list.add(R.drawable.jianxin);
+			
+			barImageList = list;
+			handler.sendMessage(handler.obtainMessage(3));
+			
+		}
+		
+		
 //		mViewPager = 
 
 	}

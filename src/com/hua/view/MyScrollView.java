@@ -43,6 +43,10 @@ import com.hua.util.MyImageLoader;
 public class MyScrollView extends ScrollView implements OnTouchListener {
 
 	/**
+	 * 图片存放文件路径
+	 */
+	private static final String PICTURE_FILE = "/MyPhotoWallFalls/";
+	/**
 	 * 每页要加载的图片数量
 	 */
 	public static final int PAGE_SIZE = 15;
@@ -157,7 +161,7 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 	 */
 	public MyScrollView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		imageLoader = MyImageLoader.getInstance();
+		imageLoader = MyImageLoader.getInstance(context);
 		taskCollection = new HashSet<LoadImageTask>();
 		setOnTouchListener(this);
 	}
@@ -260,11 +264,10 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 	/**
 	 * 异步下载图片的任务。
 	 * 
-	 * @author guolin
 	 */
 	class LoadImageTask extends AsyncTask<Integer, Void, Bitmap> {
 
-		private static final String PICTURE_FILE = "/PhotoWallFalls/";
+		
 
 		/**
 		 * 记录每个图片对应的位置
@@ -326,8 +329,10 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 			if (!imageFile.exists()) {
 //				imageLoader.downloadImages(imageUrl,columnWidth);
 				downloadImage(imageUrl);
+				LogUtils2.d("CCCCCCCCCCCCCCCCCCCCCCCC");
 			}
 			if (imageUrl != null) {
+				LogUtils2.d("PPPPPPPPPPP");
 				Bitmap bitmap = MyImageLoader.decodeSampledBitmapFromResource(imageFile.getPath(),
 						columnWidth);
 				if (bitmap != null) {
@@ -414,6 +419,9 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 		 *            图片的URL地址。
 		 */
 		private void downloadImage(String imageUrl) {
+			
+			LogUtils2.e("xddxdddddd---------------");
+			
 			if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 				Log.d("TAG", "monted sdcard");
 			} else {
@@ -424,16 +432,21 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 			BufferedOutputStream bos = null;
 			BufferedInputStream bis = null;
 			File imageFile = null;
+			LogUtils2.e("xexxxeeeeeecllc");
 			try {
 				URL url = new URL(imageUrl);
+				LogUtils2.e("xqqqeeecllc");
 				con = (HttpURLConnection) url.openConnection();
+				LogUtils2.e("xwwwweeecllc");
 				con.setConnectTimeout(5 * 1000);
 				con.setReadTimeout(15 * 1000);
 				con.setDoInput(true);
 				con.setDoOutput(true);
+				LogUtils2.e("rrrrrrreeeeeeeecllc");
 				bis = new BufferedInputStream(con.getInputStream());
-				
+				LogUtils2.e("xeeeeeeeeeeecllc");
 				imageFile = new File(getImagePath(imageUrl));
+				LogUtils2.e("xxlclcllclcllc");
 				fos = new FileOutputStream(imageFile);
 				bos = new BufferedOutputStream(fos);
 				byte[] buff = new byte[1024];
@@ -441,7 +454,10 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 				while ((length = bis.read(buff)) != -1) {
 					bos.write(buff, 0, length);
 					bos.flush();
+					LogUtils2.d("write over");
 				}
+				
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -457,6 +473,7 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
+					LogUtils2.e("error-------------------");
 				}
 			}
 			if (imageFile != null) {
@@ -487,6 +504,7 @@ public class MyScrollView extends ScrollView implements OnTouchListener {
 				file.mkdirs();
 			}
 			String imagePath = imageDir + imageName;
+			LogUtils2.d("imagePath=="+imagePath);
 			return imagePath;
 		}
 	}

@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.FrameLayout.LayoutParams;
 
 /**
- * 
+ * viewpager的第四个页面 瀑布
  * http://blog.csdn.net/guolin_blog/article/details/26365683
  * 
  */
@@ -32,6 +32,7 @@ public class FourFragment extends Fragment {
 		
 		 TuanGouFragment tuanGouFragment = new TuanGouFragment();
 //		 View historyView = LayoutInflater.from(getActivity()).inflate(R.layout.homefragment_tuangou_, null);
+		 
 		 MyScrollView myScrollView = (MyScrollView) LayoutInflater.from(getActivity()).
 				inflate(R.layout.fragment_tuangou, null);
 		LogUtils2.e("myScrollView===="+myScrollView);

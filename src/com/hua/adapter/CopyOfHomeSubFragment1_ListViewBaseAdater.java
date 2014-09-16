@@ -1,4 +1,4 @@
-package com.hua.adapter;
+/*package com.hua.adapter;
 
 import java.util.List;
 import java.util.Timer;
@@ -23,10 +23,10 @@ import com.hua.contants.Constant;
 import com.hua.util.LogUtils2;
 import com.hua.view.MyViewPager;
 
-public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
+public class CopyOfHomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	protected static final int START_BAR = 9;
 	private Context mContext;
-	private List<View> mImageList;
+	private List<ImageView> mImageList;
 
 	private View topViewPager; // 顶部View
 	private MyViewPager viewPager; // 顶部View 中的ViewPager
@@ -39,9 +39,9 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	private TextView tv_title;
 	private HandlerTimer handlerTimer;
 	
-	/**
+	*//**
 	 * 设计广告副 走动
-	 */
+	 *//*
 	private int currentItem=0;
 	private Timer timer;
 	private TimerTask task;
@@ -57,7 +57,7 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 			
 				case 9:
 					if(viewPager !=null){
-						LogUtils2.d("999999999utyuiyiyiuyui==+++=="+currentItem);
+						LogUtils2.d("999999999utyuiyiyiuyui");
 						viewPager.setCurrentItem(currentItem);
 						
 					}
@@ -70,12 +70,12 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	};
 	
 	
-	public HomeSubFragment1_ListViewBaseAdater(Context mContext,
-			List<View> mList,List<Integer> pagerList) {
+	public CopyOfHomeSubFragment1_ListViewBaseAdater(Context mContext,
+			List<ImageView> mList,List<Integer> pagerList) {
 		this.mContext = mContext;
 		this.mImageList = mList;
 		this.mPagerList = pagerList;
-		pagerAdater = new HomeSubViewPagerAdater(mContext, pagerList);
+		pagerAdater = new HomeSubViewPagerAdater(mContext, mImageList);
 	}
 
 	@Override
@@ -162,10 +162,10 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	}
 
 
-	/**
+	*//**
 	 * 创建指示点
 	 * @param view
-	 */
+	 *//*
 	private void createPoint(View view) {
 		// six index round point
 		LinearLayout ll = (LinearLayout) view.findViewById(R.id.llayout2);
@@ -187,10 +187,10 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	}
 	
 	
-	/**
+	*//**
 	 * 改变显示的文字
 	 * @param position
-	 */
+	 *//*
 	public void setCurPoint(int position) {
 		// TODO Auto-generated method stub
 		if(position < 0 || position > mImageViews.length || position == currentPosition){
@@ -223,13 +223,13 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	}
 	
 	
-	/**
+	*//**
 	 * start viewPager's timer
-	 */
+	 *//*
 	public void startViewPagerTimer() {
-		 /**
+		 *//**
 		    * 设置广告横幅走动
-		    */
+		    *//*
 			//自动跳转广告
 			task = new TimerTask() {
 
@@ -257,9 +257,9 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 			isCanel = false;
 	}
 	
-	/**
+	*//**
 	 * stop viewPager's timer
-	 */
+	 *//*
 	public void stopViewPagerTimer() {
 
 		timer.cancel();
@@ -283,3 +283,4 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	
 	
 }
+*/

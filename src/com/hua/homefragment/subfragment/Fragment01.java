@@ -425,7 +425,7 @@ public class Fragment01 extends Fragment {
 		list.add(R.drawable.diguang);
 		list.add(R.drawable.jianxin);
 
-		viewPager.setAdapter(new HomeSubViewPagerAdater(getActivity(), list));
+//		viewPager.setAdapter(new HomeSubViewPagerAdater(getActivity(), list));
 		viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {

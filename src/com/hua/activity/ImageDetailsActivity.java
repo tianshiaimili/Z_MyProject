@@ -31,6 +31,10 @@ public class ImageDetailsActivity extends Activity implements
 		OnPageChangeListener {
 
 	/**
+	 * 图片存放文件路径
+	 */
+	private static final String PICTURE_FILE = "/MyPhotoWallFalls/";
+	/**
 	 * 用于管理图片的滑动
 	 */
 	private ViewPager viewPager;
@@ -110,7 +114,7 @@ public class ImageDetailsActivity extends Activity implements
 		int lastSlashIndex = imageUrl.lastIndexOf("/");
 		String imageName = imageUrl.substring(lastSlashIndex + 1);
 		String imageDir = Environment.getExternalStorageDirectory().getPath()
-				+ "/PhotoWallFalls/";
+				+ PICTURE_FILE;
 		File file = new File(imageDir);
 		if (!file.exists()) {
 			file.mkdirs();

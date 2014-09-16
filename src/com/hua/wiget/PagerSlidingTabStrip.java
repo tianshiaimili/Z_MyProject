@@ -45,6 +45,11 @@ import android.widget.TextView;
 import com.hua.activity.R;
 import com.hua.util.LogUtils2;
 
+/**
+ * 这是首页顶部的指示器
+ * @author zero
+ *
+ */
 public class PagerSlidingTabStrip extends HorizontalScrollView {
 
 	public interface IconTabProvider {

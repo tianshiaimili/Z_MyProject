@@ -44,7 +44,9 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="#FFFFFF"
-        android:scrollbars="none"
+        android:scrollbars="vertical"
+        android:fastScrollEnabled="true" 
+        android:scrollbarStyle="outsideOverlay"
          >
 
     </com.handmark.pulltorefresh.library.PullToRefreshListView>

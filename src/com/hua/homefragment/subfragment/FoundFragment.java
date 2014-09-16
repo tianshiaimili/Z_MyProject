@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.FrameLayout.LayoutParams;
 
 /**
- * 
+ * 第二个 viewpager的页面
  * http://blog.csdn.net/guolin_blog/article/details/26365683
  * 
  */

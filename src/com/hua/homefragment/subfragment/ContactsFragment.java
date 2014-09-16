@@ -30,7 +30,7 @@ import com.hua.view.LetterView;
 import com.hua.view.LetterView.OnLetterChangeListener;
 
 /**
- * 
+ * 右边有字母的查找列表 类似 电话本 viewpager的第三个页面
  * http://blog.csdn.net/guolin_blog/article/details/26365683
  * 
  */

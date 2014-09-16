@@ -209,7 +209,7 @@ public class ElasticScrollViewTuanGou extends ScrollView  implements OnTouchList
 
 	public ElasticScrollViewTuanGou(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		imageLoader = MyImageLoader.getInstance();
+		imageLoader = MyImageLoader.getInstance(context);
 		taskCollection = new HashSet<LoadImageTask>();
 		setOnTouchListener(this);
 		init(context);
