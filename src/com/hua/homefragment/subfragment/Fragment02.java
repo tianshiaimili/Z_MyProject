@@ -8,6 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,6 +50,8 @@ import com.hua.view.MyViewPager;
 public class Fragment02 extends Fragment {
 	
 	protected static final int START_BAR = 9;
+
+	private static final int BANNER_NUM = 3;
 
 	/**
 	 * 弹性scrollview
@@ -101,8 +104,15 @@ public class Fragment02 extends Fragment {
 	private ListView contentListView;
 	private HomeSubFragment1_ListViewBaseAdater adapter;
 	private List<View> barList = new ArrayList<View>();
+	private List<ImageView> mImageViewList = new ArrayList<ImageView>();
 //	
 	private MyLoadImageTask myLoadImageTask = new MyLoadImageTask();
+	
+	/**
+	 * 用来判断是否关闭定时器
+	 */
+	private SharedPreferences mPreferences;
+	
 	
 	Handler handler = new Handler(){
 		public void handleMessage(Message message) {
@@ -112,7 +122,7 @@ public class Fragment02 extends Fragment {
     		
     		switch (what) {
 			
-				case 9:
+				case START_BAR:
 					if(mViewPager !=null){
 						LogUtils2.d("999999999utyuiyiyiuyui");
 						mViewPager.setCurrentItem(currentItem);
@@ -120,13 +130,14 @@ public class Fragment02 extends Fragment {
 						adapter.notifyDataSetChanged();
 						
 					}
-				case 3:
+				case BANNER_NUM:
 					
 					LogUtils2.d("wwwwww+=="+Constant.bannerImageViews.size());
+					LogUtils2.d("bbbbbb+=="+Constant.bannerBitmaps.size());
 //					adapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), Constant.bannerImageViews,barImageList);
-					adapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), barList,barImageList);
+					adapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), mImageViewList,barImageList,Constant.bannerBitmaps);
 					contentListView.setAdapter(adapter);
-					if(!adapter.isCanel())
+					if(!mPreferences.getBoolean("isCanel", false));
 					adapter.startViewPagerTimer();
 					
 					adapter.notifyDataSetChanged();
@@ -142,10 +153,7 @@ public class Fragment02 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
     	// TODO Auto-generated method stub
     	super.onCreate(savedInstanceState);
-//    	initFragmentSwitcher();
-    	
-//    	LogUtils2.d("+++++=="+myLoadImageTask.innerImageViewList.size());
-//    	LogUtils2.d("wwwwww+=="+Constant.bannerImageViews.size());
+    	mPreferences = getActivity().getSharedPreferences(Constant.TIMER_ISCANEL, Context.MODE_PRIVATE);
     	
     }
 	
@@ -163,12 +171,8 @@ public class Fragment02 extends Fragment {
             imageView.setImageResource(R.drawable.icon_1_n);
             barList.add(imageView);  
         }
-		
-        ///
-//        contentListView.setAdapter(adapter);
-		
-		
-		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
+
+        mPullRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 				
@@ -221,7 +225,7 @@ public class Fragment02 extends Fragment {
 		LogUtils2.e("777777777777777777777777777777");
 		
 		if(adapter != null){
-			if(adapter.isCanel()){
+			if(!mPreferences.getBoolean("isCanel", false)){
 				LogUtils2.e("oooooooooooooooo");
 				adapter.startViewPagerTimer();
 			}
@@ -234,10 +238,9 @@ public class Fragment02 extends Fragment {
 		// TODO Auto-generated method stub
 		super.onPause();
 		if(adapter != null){
-			LogUtils2.d("pause--------------");
-			if(!adapter.isCanel()){
+			LogUtils2.e("pause--------------");
+			if(mPreferences.getBoolean("isCanel", false)){
 				adapter.stopViewPagerTimer();
-				adapter.setCanel(true);
 			}
 			
 			LogUtils2.d("setviewpager--------------");
@@ -283,13 +286,10 @@ public class Fragment02 extends Fragment {
 			list.add(R.drawable.jianxin);
 			
 			barImageList = list;
-			handler.sendMessage(handler.obtainMessage(3));
+			mImageViewList = Constant.bannerImageViews;
+			handler.sendMessage(handler.obtainMessage(BANNER_NUM));
 			
 		}
-		
-		
-//		mViewPager = 
-
 	}
 //	
 //	

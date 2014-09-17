@@ -3,6 +3,7 @@ package com.hua.contants;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.hua.activity.R;
@@ -57,6 +58,11 @@ public class Constant {
 			"https://raw.githubusercontent.com/tianshiaimili/MyResource/master/res/drawable-hdpi/banner4.png"
 	};
 	
+	/**
+	 * 用来判断计时器开关的
+	 */
+	public static final String TIMER_ISCANEL = "TIMER_ISCANEL"; 
+	
 	public static List<ImageView> bannerImageViews = new ArrayList<ImageView>();
 	
 	public static List<ImageView> getBannerImageViews() {
@@ -66,6 +72,10 @@ public class Constant {
 	public static void setBannerImageViews(List<ImageView> bannerImageViews) {
 		Constant.bannerImageViews = bannerImageViews;
 	}
+	
+	public static List<Bitmap> bannerBitmaps = new ArrayList<Bitmap>();
+	
+	
 	/**
 	 * 头部下面 种类的图片url
 	 */

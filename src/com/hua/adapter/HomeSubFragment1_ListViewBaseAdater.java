@@ -5,6 +5,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -26,7 +29,8 @@ import com.hua.view.MyViewPager;
 public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	protected static final int START_BAR = 9;
 	private Context mContext;
-	private List<View> mImageList;
+	private List<ImageView> mImageList;
+	private List<Bitmap> mBitmaps;
 
 	private View topViewPager; // 顶部View
 	private MyViewPager viewPager; // 顶部View 中的ViewPager
@@ -38,6 +42,7 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	private int currentPosition = 0;
 	private TextView tv_title;
 	private HandlerTimer handlerTimer;
+	private SharedPreferences mPreferences;
 	
 	/**
 	 * 设计广告副 走动
@@ -71,11 +76,13 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	
 	
 	public HomeSubFragment1_ListViewBaseAdater(Context mContext,
-			List<View> mList,List<Integer> pagerList) {
+			List<ImageView> mList,List<Integer> pagerList,List<Bitmap> mBitmapList) {
 		this.mContext = mContext;
 		this.mImageList = mList;
 		this.mPagerList = pagerList;
-		pagerAdater = new HomeSubViewPagerAdater(mContext, pagerList);
+		this.mBitmaps = mBitmapList;
+		mPreferences = mContext.getSharedPreferences(Constant.TIMER_ISCANEL, Context.MODE_PRIVATE); 
+		pagerAdater = new HomeSubViewPagerAdater(mContext, mImageList,mBitmaps);
 	}
 
 	@Override
@@ -254,7 +261,11 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 			timer = new Timer();
 			timer.schedule(task, 2000, 3000);
 //			startViewPagerTimer();
-			isCanel = false;
+			isCanel = true;
+			Editor editor = mPreferences.edit();
+			editor.putBoolean("isCanel", isCanel);
+			editor.commit();
+			
 	}
 	
 	/**
@@ -263,8 +274,14 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	public void stopViewPagerTimer() {
 
 		timer.cancel();
-		isCanel = true;
-
+		isCanel = false;
+		Editor editor = mPreferences.edit();
+		editor.putBoolean("isCanel", isCanel);
+		editor.commit();
+//		this =null;
+		topViewPager = null;
+		pagerAdater = null;
+		
 	}
 	
 	private class ViewHolder {

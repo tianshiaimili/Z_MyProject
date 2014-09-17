@@ -486,6 +486,10 @@ public class MyImageLoader {
 		 * 内部类 记录所有界面上的图片，用以可以随时控制对图片的释放。
 		 */
 		public static List<ImageView> innerImageViewList = new ArrayList<ImageView>();
+		/**
+		 * 内部类 保存bitmap集合
+		 */
+		public static List<Bitmap> innerBitmapList = new ArrayList<Bitmap>();
 		
 		
 
@@ -583,6 +587,11 @@ public class MyImageLoader {
 				if(innerImageViewList != null)
 				innerImageViewList.add(imageView);
 				Constant.bannerImageViews.add(imageView);
+				
+				if(innerBitmapList != null){
+					Constant.bannerBitmaps.add(bitmap);
+				}
+				
 				LogUtils2.d("9999++=="+innerImageViewList.size());
 				LogUtils2.d("8888++=="+Constant.bannerImageViews.size());
 				if(Constant.bannerImageViews.size() == 4){
