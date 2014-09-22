@@ -2,12 +2,17 @@ package com.hua.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.security.Principal;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -24,22 +29,20 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.text.format.Time;
 import android.util.Log;
 import android.util.LruCache;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
-import com.hua.activity.ImageDetailsActivity;
 import com.hua.activity.R;
 import com.hua.contants.Constant;
+import com.hua.util.JsonZip.ZipType;
 
 /**
  * 对图片进行管理的工具类。
@@ -602,4 +605,49 @@ public class MyImageLoader {
 
 	}
 
+	
+	/**
+	 * Download JSON ZIP 
+	 * @param zipType Type of JSON Zip.
+	 * @return true if file updated and downloaded; false if download fail.
+	 */	
+	private boolean downloadJSONZipVersion(ZipType zipType) {
+		boolean updated = false;
+		try {
+			URL url = new URL(/*getJsonZipUrl(zipType)*/"");
+			URLConnection connection = url.openConnection();
+			
+            connection.connect();
+            
+            InputStream input = new BufferedInputStream(url.openStream());
+            BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
+			StringBuilder newContent = new StringBuilder();
+            String line;
+		    while ((line = buffer.readLine()) != null) {
+		    	newContent.append(line);
+		    }
+            
+		    String oldContent = "";//getCurrentJSONZipPath(zipType);
+            if (oldContent != null && oldContent.equals(newContent)) {
+            	// update file date only
+            	File versionFile = new File(mContext.getCacheDir(), /*zipType.versionFileName*/"");
+            	Time time = new Time();
+            	time.setToNow();
+            	versionFile.setLastModified(time.toMillis(false));
+            } else {
+            	OutputStream output = new FileOutputStream(new File(mContext.getCacheDir(), /*zipType.versionFileName*/""));
+            	output.write(newContent.toString().getBytes());
+            	output.flush();
+            	output.close();
+            }
+        	updated = true;
+            
+            input.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return updated;
+	}
+	
 }
