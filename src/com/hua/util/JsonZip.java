@@ -442,4 +442,67 @@ Log.d(TAG, "mNewZip : " + mNewZip.getAbsolutePath());
 		
 		return outputString;
 	}
+	
+	/**
+	 * 这是一个解析压缩文件 读取json格式数据的方法
+	 * Get the JSON data in string from JSON zip
+	 * @param relativePath the relative file and filename to be retrieved inside the Zip file.
+	 * @return JSON Zip file data in
+	 *  String  data.zip String data = "data.json";  
+	 */
+	public static synchronized String getJSONData(String zipPath,String relativePath) {
+		String outputString = "";
+		String tempZipPath ="";
+		if(zipPath == null && zipPath.equals("")){
+		
+			return null;
+		}
+		tempZipPath = zipPath;
+		String tempFileName = "";
+		try {
+			
+			File file = new File(tempZipPath);
+			
+			FileInputStream fin = new FileInputStream(file);
+			ZipInputStream zin = new ZipInputStream(fin);
+			ZipEntry ze = null;
+			
+			while ((ze = zin.getNextEntry()) != null) {
+				if(ze.getName().contains("/")){
+					tempFileName = ze.getName().substring(ze.getName().lastIndexOf("/") + 1);
+				}
+				if (tempFileName.equals(relativePath)) {
+					break;
+				}
+			}
+			
+			if (ze != null) {
+				final int BUFFER_SIZE = 1024;
+				byte buffer[] = new byte[BUFFER_SIZE];
+				ByteArrayOutputStream bout = new ByteArrayOutputStream();
+				int count = 0;
+				
+				while ((count = zin.read(buffer, 0, BUFFER_SIZE)) != -1) {
+					bout.write(buffer, 0, count);
+				}
+				
+				outputString = bout.toString();
+				bout.close();
+			} else {
+//				Log.d(TAG, "json not exist in zip: " + relativePath);
+			}
+			
+			
+			zin.closeEntry();
+			zin.close();
+			fin.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("outputString--"+outputString);
+		return outputString;
+	}
+	
+	
 }

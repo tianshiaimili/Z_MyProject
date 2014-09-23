@@ -19,6 +19,8 @@ import com.hua.activity.MTNApplication;
 import com.hua.activity.R;
 import com.hua.settingfragment.subfragment.CopyOfSwipeMenuFragment;
 import com.hua.settingfragment.subfragment.SettingCustomerLoginFragment;
+import com.hua.settingfragment.subfragment.SettingPagerAdapterFragment1;
+import com.hua.settingfragment.subfragment.ShowSettingPagerAdpterFragment;
 import com.hua.settingfragment.subfragment.SwipeMenuFragment;
 import com.hua.util.FragmentUtils;
 import com.hua.util.FragmentUtils.FragmentTabSwitcherFeed;
@@ -47,6 +49,7 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 		public static final String PRODUCT_OFFER_TAG="productOffer";
 		public static final String HOW_TO_USE="howToUse";
 		public static final String CUSTOMER_FEEDBACK="customerFeedback";
+		public static final String TEST_FRAGMENT_PAGER_ADAPTER="pagertest";
 		private FragmentTabSwitcherWithoutZorder fragmentSwitcher;
 		private boolean isTablet;
 		
@@ -133,9 +136,9 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 			break;
 
 		case R.id.item1:
-			Toast.makeText(getActivity(), "lalalla", 300).show();
+//			Toast.makeText(getActivity(), "lalalla", 300).show();
 			doAnimationCloseBySubButton();
-			
+			changeFragment(TEST_FRAGMENT_PAGER_ADAPTER);
 			break;
 			
 		case R.id.item2:
@@ -359,13 +362,13 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 //					return new SettingDetailFragment();
 					return new SettingCustomerLoginFragment();
 				}else{
-					return null;
+					return new ShowSettingPagerAdpterFragment();
 				}
 			}
 			@Override
 			public LinkedHashSet<String> getRootFragmentTags() {
 				return FragmentUtils.makeRootFragmentTags(CUSTOMER_LOGIN_TAG, TERMS_CONDITIONS_TAG,
-						PRODUCT_OFFER_TAG, HOW_TO_USE, CUSTOMER_FEEDBACK);
+						PRODUCT_OFFER_TAG, HOW_TO_USE, CUSTOMER_FEEDBACK,TEST_FRAGMENT_PAGER_ADAPTER);
 			}
 			
 		};
@@ -394,6 +397,8 @@ public class SettingsFragment extends Fragment implements OnClickListener{
 				MTNApplication.startFragment(getCurFragment(), new SettingCustomerLoginFragment());
 			}else if(CUSTOMER_FEEDBACK.equalsIgnoreCase(tag)){
 				MTNApplication.startFragment(getCurFragment(), new SettingCustomerLoginFragment());
+			}else if(TEST_FRAGMENT_PAGER_ADAPTER.equalsIgnoreCase(tag)){
+				MTNApplication.startFragment(getCurFragment(), new ShowSettingPagerAdpterFragment());
 			}
 			else if(TERMS_CONDITIONS_TAG.equalsIgnoreCase(tag)){
 				MTNApplication.startFragment(getCurFragment(), new CopyOfSwipeMenuFragment());
