@@ -47,7 +47,6 @@ import com.hua.util.JsonZip.ZipType;
 /**
  * 对图片进行管理的工具类。
  * 
- * @author Tony
  */
 public class MyImageLoader {
 

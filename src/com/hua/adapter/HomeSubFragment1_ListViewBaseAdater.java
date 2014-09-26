@@ -19,6 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hua.activity.R;
 import com.hua.androidos.HandlerTimer;
@@ -155,7 +156,6 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 				}
 			});
 
-			
 			tv_title = (TextView) topViewPager.findViewById(R.id.tv_title2);
 			createPoint(topViewPager);
 			LogUtils2.d("XXXXXXXXXXXXX");
@@ -259,7 +259,7 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 			};
 			// /
 			timer = new Timer();
-			timer.schedule(task, 2000, 3000);
+			timer.schedule(task, 2000, 5000);
 //			startViewPagerTimer();
 			isCanel = true;
 			Editor editor = mPreferences.edit();

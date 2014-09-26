@@ -82,6 +82,7 @@ public class WelcomeActivity2 extends BaseActivity {
 								Intent intent = new Intent(getBaseContext(), MainActivityPhone.class);
 //								Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
 								startActivity(intent);
+								overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 								finish();
 							}
 							

@@ -58,7 +58,7 @@ public class ShowSettingPagerAdpterFragment extends Fragment implements
 		
 		viewpager = (ViewPager)view.findViewById(R.id.viewPager);
 		
-		adapter = new SettingPagerAdapterFragmentAdapter(getActivity().getSupportFragmentManager(), null);
+		adapter = new SettingPagerAdapterFragmentAdapter(getChildFragmentManager(), null);
 		viewpager.setAdapter(adapter);
 		setupView(view);
 		addListener();

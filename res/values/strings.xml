@@ -81,6 +81,12 @@
     <string name="mobile_number_hint">方便我们尽快反馈</string>
     <string name="content_edit_hint">欢迎在这儿发表宝贵的意见哦~</string>
     
+    
+      <!-- 首页PopupWnidow -->
+    <string name="barcode_buy">条码购</string>
+    <string name="camera_buy">拍照购</string>
+    <string name="color_buy">颜色购</string>
+    
     <!--  error messge
     <string name="ok">OK</string>
     <string name="tbc">TBC</string>

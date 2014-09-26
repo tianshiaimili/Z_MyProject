@@ -5,11 +5,15 @@ import java.util.LinkedHashSet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,8 +26,10 @@ import com.hua.fragment.HomeFragment;
 import com.hua.fragment.PlayHistoryFragment;
 import com.hua.fragment.SearchAutoCompleteCrewDetailFragment;
 import com.hua.fragment.SearchAutoCompleteFragment;
+import com.hua.fragment.SearchFragment;
 import com.hua.fragment.SettingsFragment;
 import com.hua.fragment.VODFragment;
+import com.hua.util.CommonTools;
 import com.hua.util.FragmentUtils;
 import com.hua.util.FragmentUtils.FragmentTabBarController;
 import com.hua.util.FragmentUtils.FragmentTabSwitcher;
@@ -31,6 +37,8 @@ import com.hua.util.FragmentUtils.FragmentTabSwitcherFeed;
 import com.hua.util.KeyboardUtils;
 import com.hua.util.LayoutUtils;
 import com.hua.util.LogUtils2;
+import com.hua.wiget.HomeSearchBarPopupWindow;
+import com.hua.wiget.HomeSearchBarPopupWindow.OnSearchBarItemClickListener;
 
 public class MainActivityPhone extends BaseFragmentActivity {
 
@@ -59,7 +67,9 @@ public class MainActivityPhone extends BaseFragmentActivity {
 	private static final String CURRENT_FRAGMENT_TAG = "currentFragmentTag";
 	private SearchAutoCompleteFragment searchAutoCompleteFragment;
 	private SearchAutoCompleteCrewDetailFragment searchAutoCompleteCrewDetailFragment;
-	
+	private HomeSearchBarPopupWindow mHomeSearchBarPopupWindow = null;
+	private EditText mEditText;
+	private SearchFragment mSearchFragment;
 
 	//
 	
@@ -94,10 +104,15 @@ public class MainActivityPhone extends BaseFragmentActivity {
 		searchButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				searchAutoCompleteFragment = new SearchAutoCompleteFragment();
-				startFragment(searchAutoCompleteFragment);
-				searchAutoCompleteFragment.setHostActivity(MainActivityPhone.this);
-				navigationBar.setVisibility(View.GONE);
+//				searchAutoCompleteFragment = new SearchAutoCompleteFragment();
+//				startFragment(searchAutoCompleteFragment);
+//				searchAutoCompleteFragment.setHostActivity(MainActivityPhone.this);
+//				navigationBar.setVisibility(View.GONE);
+				
+				int height = navigationBar.getHeight()
+						+ CommonTools.getStatusBarHeight(MainActivityPhone.this);
+				mHomeSearchBarPopupWindow.showAtLocation(navigationBar, Gravity.TOP, 0, height);
+				
 			}
 		});
 	}
@@ -107,7 +122,32 @@ public class MainActivityPhone extends BaseFragmentActivity {
 	}
 	
 	private void initUI() {
-		// TODO Auto-generated method stub
+
+		mHomeSearchBarPopupWindow = new HomeSearchBarPopupWindow(this,
+				LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+		mHomeSearchBarPopupWindow.setOnSearchBarItemClickListener(new MyOnSearchBarItemClickListener());
+		//
+		mEditText = (EditText) findViewById(R.id.index_search_edit);
+		mEditText.setInputType(InputType.TYPE_NULL);
+//		mEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
+//			@Override
+//			public void onFocusChange(View v, boolean hasFocus) {
+//				Toast.makeText(getApplicationContext(), "asdasda", 300).show();mSearchFragment = new SearchFragment();
+//				startFragment(mSearchFragment);
+//				mSearchFragment.setHostActivity(MainActivityPhone.this);
+//				navigationBar.setVisibility(View.GONE);	
+//			}
+//		});
+		mEditText.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Toast.makeText(getApplicationContext(), "asdasda", 300).show();mSearchFragment = new SearchFragment();
+				mSearchFragment = new SearchFragment();
+				startFragment(mSearchFragment);
+				mSearchFragment.setHostActivity(MainActivityPhone.this);
+				navigationBar.setVisibility(View.GONE);	
+			}
+		});
 		//返回的布局
 		backLayout = (ViewGroup) findViewById(R.id.main_activity_navigation_bar_back_layout);
 		backButton = (ImageView) findViewById(R.id.main_activity_navigation_bar_back_img);
@@ -140,6 +180,7 @@ public class MainActivityPhone extends BaseFragmentActivity {
 				Intent intent = new Intent(MainActivityPhone.this,FilterPhoneActivity.class);
 				intent.putExtra(CURRENT_FRAGMENT_TAG, mFragmentTabSwitcher.getCurrentTabId());
 				startActivityForResult(intent, 200);
+				overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 			}
 		});
 		
@@ -152,15 +193,19 @@ public class MainActivityPhone extends BaseFragmentActivity {
 			@Override
 			public Fragment newRootFragment(String tag) {
 				if(TAB_TV.equalsIgnoreCase(tag)) {
-					HomeFragment homeFragment = new HomeFragment();
-					return homeFragment;
+					/**
+					 * 
+					 */
+					return new PlayHistoryFragment();
+				
 				} else if(TAB_MOVIE.equalsIgnoreCase(tag)) {
 					VODFragment vodFragment = new VODFragment();
 					return vodFragment;
 				} else if(TAB_DOWNLOAD.equalsIgnoreCase(tag)) {
 					return new DownloadFragment();
 				} else if(TAB_PLAY_HISTORY.equalsIgnoreCase(tag)) {
-					return new PlayHistoryFragment();
+					HomeFragment homeFragment = new HomeFragment();
+					return homeFragment;
 				} else if(TAB_SETTING.equalsIgnoreCase(tag)) {
 					return new SettingsFragment();
 				} 
@@ -353,6 +398,28 @@ public class MainActivityPhone extends BaseFragmentActivity {
 
 	public void setFilterButtonVisibility(int visibility) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	class MyOnSearchBarItemClickListener implements OnSearchBarItemClickListener{
+
+		@Override
+		public void onBarCodeButtonClick() {
+			// TODO Auto-generated method stub
+			CommonTools.showShortToast(MainActivityPhone.this, "条码购");
+		}
+
+		@Override
+		public void onCameraButtonClick() {
+			// TODO Auto-generated method stub
+			CommonTools.showShortToast(MainActivityPhone.this, "拍照购");
+		}
+
+		@Override
+		public void onColorButtonClick() {
+			// TODO Auto-generated method stub
+			CommonTools.showShortToast(MainActivityPhone.this, "颜色购");
+		}
 		
 	}
 	

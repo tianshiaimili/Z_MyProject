@@ -45,6 +45,7 @@ import com.hua.view.MyViewPager;
 /**
  * 
  * http://blog.csdn.net/guolin_blog/article/details/26365683
+ * 这是homefragment中viewpager的首页
  * 
  */
 public class Fragment02 extends Fragment {

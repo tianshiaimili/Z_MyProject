@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.util.SimpleArrayMap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -33,6 +34,9 @@ public class HomeSubViewPagerAdater extends PagerAdapter implements
 	private Bundle mBundle;
 	private Intent mIntent;
 	private int mImagePosition;
+//	private SimpleArrayMap<String, V>
+	private String [] bannerImageTag2 = {"banner0","banner1","banner2","banner3","banner4"};
+	private String [] bannerImageTag = {"0","1","2","3","4"};
 
 	public HomeSubViewPagerAdater(Context mContext, List<ImageView> mDatas,
 			List<Bitmap> mBitmapList) {
@@ -75,7 +79,7 @@ public class HomeSubViewPagerAdater extends PagerAdapter implements
 
 		mImageView.setAdjustViewBounds(true);
 		mImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-		// mImageView.setTag(pos);
+		 mImageView.setTag(bannerImageTag[position % bannerImageTag.length]);
 		mImageView.setOnClickListener(this);
 
 		mImageView.setImageBitmap(bitmap);
@@ -94,7 +98,7 @@ public class HomeSubViewPagerAdater extends PagerAdapter implements
 
 	@Override
 	public void onClick(View v) {
-
+		LogUtils2.e("mImageView.getTag().toString()---== "+mImageView.getTag().toString());
 		switch ((Integer.valueOf(mImageView.getTag().toString()))) {
 		case 0:
 			Toast.makeText(mContext, "----"+mImagePosition, 300).show();

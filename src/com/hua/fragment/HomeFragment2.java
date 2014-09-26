@@ -87,7 +87,7 @@ public class HomeFragment2 extends BaseFragment implements /*OnTopIndicatorListe
 		mTopIndicator2 = (TopIndicator2) view.findViewById(R.id.top_indicator);
 		
 		/**
-		 * 注册点击标题变化的监听器
+		 * 娉ㄥ唽鐐瑰嚮鏍囬鍙樺寲鐨勭洃鍚櫒
 		 */
 //		mTopIndicator.setOnTopIndicatorListener(this);
 		mTopIndicator2.setOnClickTopIndicatorListener(this);
