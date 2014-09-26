@@ -33,7 +33,6 @@
         android:id="@+id/top_indicator"
         android:layout_width="fill_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="@dimen/top_margin"
         android:background="#FFFFFF"
         >
         

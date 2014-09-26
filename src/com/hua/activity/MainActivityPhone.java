@@ -11,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -141,7 +140,7 @@ public class MainActivityPhone extends BaseFragmentActivity {
 		mEditText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "asdasda", 300).show();mSearchFragment = new SearchFragment();
+//				Toast.makeText(getApplicationContext(), "asdasda", 300).show();mSearchFragment = new SearchFragment();
 				mSearchFragment = new SearchFragment();
 				startFragment(mSearchFragment);
 				mSearchFragment.setHostActivity(MainActivityPhone.this);
@@ -205,6 +204,7 @@ public class MainActivityPhone extends BaseFragmentActivity {
 					return new DownloadFragment();
 				} else if(TAB_PLAY_HISTORY.equalsIgnoreCase(tag)) {
 					HomeFragment homeFragment = new HomeFragment();
+					navigationBar.setVisibility(View.GONE);
 					return homeFragment;
 				} else if(TAB_SETTING.equalsIgnoreCase(tag)) {
 					return new SettingsFragment();
@@ -280,6 +280,7 @@ public class MainActivityPhone extends BaseFragmentActivity {
 						// TODO Auto-generated method stub
 						String tag = (String)v.getTag();
 						if(TAB_PLAY_HISTORY.equals(tag) || TAB_DOWNLOAD.equals(tag)){
+							
 							mFragmentTabSwitcher.switchTab(tag, false);
 						}else{
 							mFragmentTabSwitcher.switchTab(tag);
@@ -288,7 +289,12 @@ public class MainActivityPhone extends BaseFragmentActivity {
 						////
 						setCurrentSelected(v);
 						//
-						navigationBar.setVisibility(View.VISIBLE);
+						if(TAB_PLAY_HISTORY.equals(tag) && navigationBar != null){
+							navigationBar.setVisibility(View.GONE);
+						}else {
+							
+							navigationBar.setVisibility(View.VISIBLE);
+						}
 						KeyboardUtils.hideKeyboard(navigationBar);
 						if(mFragmentTabSwitcher.isRootFragment()) {
 							setBackButtonVisible(false);
@@ -419,6 +425,50 @@ public class MainActivityPhone extends BaseFragmentActivity {
 		public void onColorButtonClick() {
 			// TODO Auto-generated method stub
 			CommonTools.showShortToast(MainActivityPhone.this, "颜色购");
+		}
+		
+	}
+	
+	
+	public void clickCategory(View view){
+		
+		int ID = view.getId();
+		switch (ID) {
+		case R.id.index_promotion_btn:
+			Toast.makeText(getApplicationContext(), "1", 300).show();
+			break;
+			
+		case R.id.index_recharge_btn:
+			Toast.makeText(getApplicationContext(), "2", 300).show();
+			break;
+
+		case R.id.index_groupbuy_btn:
+			Toast.makeText(getApplicationContext(), "3", 300).show();
+			break;
+			
+		case R.id.index_lottery_btn:
+			Toast.makeText(getApplicationContext(), "4", 300).show();
+			break;
+			
+		case R.id.index_order_btn:
+			Toast.makeText(getApplicationContext(), "5", 300).show();
+			break;
+			
+		case R.id.index_history_btn:
+			
+			break;
+
+		case R.id.index_collect_btn:
+			
+			break;
+			
+		case R.id.index_life_journey_btn:
+			
+			break;
+			
+
+		default:
+			break;
 		}
 		
 	}

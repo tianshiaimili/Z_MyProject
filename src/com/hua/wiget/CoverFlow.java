@@ -14,6 +14,11 @@ import android.view.animation.Transformation;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
+/**
+ * 
+ * @author zero
+ *
+ */
 public class CoverFlow extends Gallery {
 
 	private Camera mCamera = new Camera();

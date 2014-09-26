@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
+import com.hua.activity.R;
 import com.hua.app.BaseFragment;
 
 import android.content.Context;
@@ -399,6 +400,7 @@ public class FragmentUtils
         {
             FragmentManager manager = mFragmentActivity.getSupportFragmentManager();
             FragmentTransaction ft = manager.beginTransaction();
+            ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_in);
             Fragment afragment[];
             int j = (afragment = fragments).length;
             for(int i = 0; i < j; i++)
@@ -424,6 +426,7 @@ public class FragmentUtils
                     String fragmentTag = (new StringBuilder(String.valueOf(mCurrentRootFragmentTag))).append("-").append(getCurrentTabStack().size()).toString();
                     Log.d(FragmentUtils.TAG, (new StringBuilder("Add new fragment ")).append(fragmentTag).toString());
                     ft.add(mContainerId, fragment, fragmentTag);
+                    
                     getCurrentTabStack().addFirst(fragmentTag);
                 } else
                 {

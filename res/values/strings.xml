@@ -87,6 +87,27 @@
     <string name="camera_buy">拍照购</string>
     <string name="color_buy">颜色购</string>
     
+     <!-- 首页 -->
+    <string name="index_limit">还剩</string>
+    <string name="index_hour">时</string>
+    <string name="index_min">分</string>
+    <string name="index_seconds">秒</string>
+    <string name="index_price">秒杀价:</string>
+    <string name="index_raw_price">原价:</string>
+    <string name="index_slogan">疯狂秒杀</string>
+    <string name="index_promotion">促销卖场</string>
+    <string name="index_recharge">充值</string>
+    <string name="index_group_buy">团购</string>
+    <string name="index_lottery">彩票</string>
+    <string name="index_order">订单状态</string>
+    <string name="index_history">浏览历史</string>
+    <string name="index_collect">我的关注</string>
+    <string name="index_life_journey">生活娱乐</string>
+    <string name="index_notify_info">向左滑，更多优惠等你抢</string>
+    <string name="index_shopping_jinqiufengbao">金秋风暴</string>
+    <string name="index_shopping_remenyouhui">热门特惠</string>
+    
+    
     <!--  error messge
     <string name="ok">OK</string>
     <string name="tbc">TBC</string>

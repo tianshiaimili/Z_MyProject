@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.vf"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+     >
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="@drawable/tab_bg"
+        />
+    
+    <com.hua.wiget.LayersLayout
+        android:id="@+id/layerslayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="50dp"
+         >
+
+        <!-- 下拉刷新 -->
+
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/playhistory_pulltorefreshlistview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:drawSelectorOnTop="false"
+            android:fadingEdgeLength="0dip"
+            android:fastScrollEnabled="true"  
+             style="@style/ListViewStyle"
+            >
+        </com.handmark.pulltorefresh.library.PullToRefreshListView>
+
+        
+        
+    </com.hua.wiget.LayersLayout> 
+
+</LinearLayout>
