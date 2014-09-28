@@ -37,6 +37,7 @@ import android.widget.AdapterView;
 import android.widget.Scroller;
 
 import com.hua.activity.R;
+import com.hua.util.LogUtils2;
 
 /**
  * A horizontally scrollable {@link ViewGroup} with items populated from an
@@ -52,6 +53,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 	private static final int INVALID_SCREEN = -1;
 	private final static int TOUCH_STATE_REST = 0;
 	private final static int TOUCH_STATE_SCROLLING = 1;
+	
 
 	private LinkedList<View> mLoadedViews;
 	private int mCurrentBufferIndex;
@@ -75,6 +77,12 @@ public class ViewFlow extends AdapterView<Adapter> {
 	private long timeSpan = 3000;
 	private Handler handler;
 	public static boolean onTouch = false;// 是否点击到了viewFlow的区域，用于自定义图层中重定向事件的传递。
+	
+	private int startY=0;
+	private int startX=0;
+	private static final int MINREFRESHY = 10;//用来设置下来时 最小的下啦值，然后判断下啦
+	private static final int MAXREFRESHX = 50;
+	
 	private OnGlobalLayoutListener orientationChangeListener = new OnGlobalLayoutListener() {
 
 		@Override
@@ -233,6 +241,9 @@ public class ViewFlow extends AdapterView<Adapter> {
 				mScroller.abortAnimation();
 			}
 
+			getParent().requestDisallowInterceptTouchEvent(true);
+			startX = (int) ev.getX();
+			startY = (int) ev.getY();
 			// Remember where the motion event started
 			mLastMotionX = x;
 
@@ -243,6 +254,17 @@ public class ViewFlow extends AdapterView<Adapter> {
 			break;
 
 		case MotionEvent.ACTION_MOVE:
+			
+			int statY = (int) ev.getY();
+			int statX = (int) ev.getX();
+			
+			 int tempY = Math.abs(statY - startY);
+			 int tempX = Math.abs(statX - startX);
+			 
+			if((tempY > MINREFRESHY) &&(tempX < MAXREFRESHX)){
+				getParent().requestDisallowInterceptTouchEvent(false);
+			}
+			
 			final int xDiff = (int) Math.abs(x - mLastMotionX);
 
 			boolean xMoved = xDiff > mTouchSlop;

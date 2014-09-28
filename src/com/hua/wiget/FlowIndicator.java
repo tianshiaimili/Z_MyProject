@@ -15,6 +15,9 @@
  */
 package com.hua.wiget;
 
+/**
+ * 这是viewflow 的接口类
+ */
 import com.hua.wiget.ViewFlow.ViewSwitchListener;
 
 /**

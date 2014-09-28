@@ -1,5 +1,6 @@
 package com.hua.adapter;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -15,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +28,7 @@ import com.hua.androidos.HandlerTimer;
 import com.hua.contants.Constant;
 import com.hua.util.LogUtils2;
 import com.hua.view.MyViewPager;
+import com.hua.wiget.FixedSpeedScroller;
 
 public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	protected static final int START_BAR = 9;
@@ -44,6 +47,7 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	private TextView tv_title;
 	private HandlerTimer handlerTimer;
 	private SharedPreferences mPreferences;
+	private FixedSpeedScroller mScroller;
 	
 	/**
 	 * 设计广告副 走动
@@ -64,6 +68,7 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 				case 9:
 					if(viewPager !=null){
 						LogUtils2.d("999999999utyuiyiyiuyui==+++=="+currentItem);
+						
 						viewPager.setCurrentItem(currentItem);
 						
 					}
@@ -156,6 +161,19 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 				}
 			});
 
+			try {  
+	            Field mField = ViewPager.class.getDeclaredField("mScroller");  
+	            mField.setAccessible(true);  
+	            mScroller = new FixedSpeedScroller(viewPager.getContext(),  
+	                    new DecelerateInterpolator());  
+	            //可以用setDuration的方式调整速率  
+	            mScroller.setmDuration(1000);  
+	            mField.set(viewPager, mScroller);  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	            LogUtils2.d("error=====");
+	        }
+			
 			tv_title = (TextView) topViewPager.findViewById(R.id.tv_title2);
 			createPoint(topViewPager);
 			LogUtils2.d("XXXXXXXXXXXXX");

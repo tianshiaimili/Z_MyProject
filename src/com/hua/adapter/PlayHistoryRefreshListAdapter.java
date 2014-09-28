@@ -4,12 +4,16 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,14 +78,18 @@ public class PlayHistoryRefreshListAdapter extends BaseAdapter {
 		} else {
 //			mViewHolder = new TextView(context);
 			mViewHolder = new ViewHolder();
-			convertView =  new TextView(context);
-			mViewHolder.tempTextView = (TextView) convertView;
+//			convertView =  new TextView(context);
+			convertView = mInflater.inflate(R.layout.playhistory_item, null);
+			
+			mViewHolder.tempTextView = (TextView) convertView.findViewById(R.id.playhistory_textview_title);
 		}
-		mViewHolder.tempTextView.setBackgroundResource(R.drawable.bg_text_iteml);
-		mViewHolder.tempTextView.setHeight((int)TypedValue.complexToDimension(30, context.getResources().getDisplayMetrics()));
+//		mViewHolder.tempTextView.setBackgroundResource(R.drawable.bg_text_iteml);
+//		mViewHolder.tempTextView.setHeight((int)TypedValue.complexToDimension(30, context.getResources().getDisplayMetrics()));
 //		contentTv.setText(contentStr[position]);
 		mViewHolder.tempTextView.setText(mDataList.get(position));
-		mViewHolder.tempTextView.setTextColor(Color.parseColor("#666666"));
+//		mViewHolder.tempTextView.setTextColor(Color.parseColor("#666666"));
+//		mViewHolder.tempTextView.setBackgroundResource(R.drawable.setting_bg);
+//		mViewHolder.tempTextView.
 		convertView.setTag(mViewHolder);
 		LogUtils2.e("textviiii----"+convertView);
 		return convertView;

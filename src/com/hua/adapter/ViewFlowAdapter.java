@@ -1,5 +1,7 @@
 package com.hua.adapter;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +22,8 @@ public class ViewFlowAdapter extends BaseAdapter {
 
 	private LayoutInflater mInflater;
 	private static final int[] ids = { R.drawable.test1, R.drawable.test2,
-			R.drawable.test3 };
-	private String[] urls = {"url1","url2","url3"};
+			R.drawable.test3,R.drawable.test1 ,R.drawable.test2,R.drawable.xianjian1};
+	private String[] urls = {"url1","url2","url3","url4"};
 
 	private Context mContext;
 	

@@ -166,7 +166,7 @@ public class CircleFlowIndicator extends View implements FlowIndicator,
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		int count = 3;
+		int count = 4;
 		if (viewFlow != null) {
 			count = viewFlow.getViewsCount();
 		}

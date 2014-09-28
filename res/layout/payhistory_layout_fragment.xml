@@ -3,39 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res/com.vf"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-     >
-    
+    android:background="@color/homebg_color"
+    android:orientation="vertical" >
+
     <View
         android:layout_width="match_parent"
         android:layout_height="47dp"
-        android:background="@drawable/tab_bg"
-        />
-    
+        android:background="@drawable/tab_bg" />
+
     <com.hua.wiget.LayersLayout
         android:id="@+id/layerslayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginBottom="50dp"
-         >
+        android:orientation="vertical" >
 
         <!-- 下拉刷新 -->
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:id="@+id/playhistory_pulltorefreshlistview"
+            style="@style/ListViewStyle"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:drawSelectorOnTop="false"
             android:fadingEdgeLength="0dip"
-            android:fastScrollEnabled="true"  
-             style="@style/ListViewStyle"
-            >
+            android:fastScrollEnabled="true"
+            android:scrollbars="none" >
         </com.handmark.pulltorefresh.library.PullToRefreshListView>
-
-        
-        
-    </com.hua.wiget.LayersLayout> 
+    </com.hua.wiget.LayersLayout>
 
 </LinearLayout>

@@ -79,7 +79,7 @@ public class PlayHistoryFragment extends Fragment {
 		
 		mViewFlow = (ViewFlow) headerView.findViewById(R.id.viewflow);// 获得viewFlow对象
 		mViewFlow.setAdapter(new ViewFlowAdapter(getActivity())); // 对viewFlow添加图片
-		mViewFlow.setmSideBuffer(3);
+		mViewFlow.setmSideBuffer(6);
 		
 		mCircleFlowIndicator = (CircleFlowIndicator) mContentView.findViewById(R.id.viewflowindic);
 		

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/playhistory_item_selector" >
+
+        <RelativeLayout
+            android:id="@+id/playhistory_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/ph_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baihe"
+                android:layout_centerVertical="true"
+                 />
+
+            <TextView
+                android:id="@+id/playhistory_textview_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="lalallala"
+                android:textColor="@drawable/playhistory_text_item_selector"
+                android:textSize="18sp"
+                android:layout_alignTop="@id/ph_imageview"
+                 />
+
+            <RatingBar
+                android:id="@+id/ph_ratingBar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/playhistory_textview_title"
+                 />
+            
+            <Button 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下载"
+                android:textColor="#FFFFFF"
+                android:background="#339933"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                />
+            
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/playhistory_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/playhistory_layout1"
+            android:background="#CCCCCC"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/home_selected"
+                android:text="lalallala"
+                android:textColor="@drawable/playhistory_text_item_selector"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

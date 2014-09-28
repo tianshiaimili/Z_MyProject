@@ -14,10 +14,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,13 +36,14 @@ import com.hua.adapter.HomeSubFragment1_ListViewBaseAdater;
 import com.hua.androidos.HandlerTimer;
 import com.hua.contants.Constant;
 import com.hua.util.FragmentUtils;
-import com.hua.util.LogUtils2;
 import com.hua.util.FragmentUtils.FragmentTabSwitcherFeed;
 import com.hua.util.FragmentUtils.FragmentTabSwitcherWithoutZorder;
+import com.hua.util.LogUtils2;
 import com.hua.util.MyImageLoader.MyLoadImageTask;
 import com.hua.view.ElasticScrollView;
 import com.hua.view.MyGridView;
 import com.hua.view.MyViewPager;
+import com.hua.wiget.FixedSpeedScroller;
 
 /**
  * 
@@ -108,6 +111,8 @@ public class Fragment02 extends Fragment {
 	private List<ImageView> mImageViewList = new ArrayList<ImageView>();
 //	
 	private MyLoadImageTask myLoadImageTask = new MyLoadImageTask();
+	
+	private FixedSpeedScroller mScroller;
 	
 	/**
 	 * 用来判断是否关闭定时器
@@ -266,6 +271,7 @@ public class Fragment02 extends Fragment {
 //		createPoint(view);
 //		adapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), barList,barImageList);
 		mViewPager = (MyViewPager) view.findViewById(R.id.vp_ad2);
+		
 //		contentListView.setAdapter(adapter);
 //		gv_c
 	}
