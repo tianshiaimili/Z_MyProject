@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -22,7 +23,7 @@ public class ShowWebPageActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.show_webpage_activity);
-
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Intent intent = this.getIntent();
 		urlStr = intent.getStringExtra("url");
 		oldURL = urlStr;

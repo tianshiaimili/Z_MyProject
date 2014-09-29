@@ -3,12 +3,15 @@ package com.hua.util;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -40,8 +43,12 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hua.activity.R;
 import com.hua.contants.Constant;
+import com.hua.model.AppData.HomeBannerData;
+import com.hua.model.AppData.TempAppData;
 import com.hua.util.JsonZip.ZipType;
 
 /**
@@ -70,7 +77,7 @@ public class MyImageLoader {
 	private static MyImageLoader mImageLoader;
 	private static Context mContext;
 
-	private MyImageLoader(Context context) {
+	public MyImageLoader(Context context) {
 
 		taskCollection = new HashSet<MyLoadImageTask>();
 		mContext = context;
@@ -368,7 +375,7 @@ public class MyImageLoader {
 	 *            图片的URL地址
 	 * @return 加载到内存的图片。
 	 */
-	private static Bitmap loadImage(String imageUrl, int columnWidth) {
+	public static Bitmap loadImage(String imageUrl, int columnWidth) {
 		File imageFile = new File(getImagePath(imageUrl));
 		if (!imageFile.exists()) {
 			// imageLoader.downloadImages(imageUrl,columnWidth);
@@ -647,6 +654,171 @@ public class MyImageLoader {
 		}
 		
 		return updated;
+	}
+	
+	/**
+	 * 下载文件 到手机中
+	 * @param url_address
+	 * @return
+	 * @throws Exception
+	 */
+	public static boolean  downDataFiles(String imageUrl)
+			throws Exception {
+		LogUtils2.d("downDataFiles---------------");
+		String path =getDataFileNamePath(imageUrl);
+		LogUtils2.d("path=="+path);
+		URL url = new URL(imageUrl);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setConnectTimeout(5000);
+		conn.setRequestMethod("GET");
+		if (conn.getResponseCode() == 200) {
+			LogUtils2.e("ppppttrrtrtrtpp");
+			// byte[] buffer = readInputStream(conn.getInputStream());
+			InputStream in = conn.getInputStream();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			LogUtils2.e("ppppttrrtrtrtpp");
+			File file = new File(path);
+			LogUtils2.e("p22222222222p");
+			FileOutputStream outputStream = new FileOutputStream(file);
+			
+			LogUtils2.e("ppppppppppp");
+			
+			byte[] buffer = new byte[1024];
+			int len = 0;
+			while ((len = in.read(buffer)) != -1) {
+//				baos.write(buffer, 0, len);
+				outputStream.write(buffer, 0, len);
+				outputStream.flush();
+			}
+			in.close();
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * 获取已经下载了的json数据文件路径
+	 * @param imageUrl
+	 * @return
+	 */
+	public  static String getDataFileNamePath(String imageUrl) {
+		LogUtils2.i("ImageURL==" + imageUrl);
+		int lastSlashIndex = imageUrl.lastIndexOf("/");
+		String imageName = imageUrl.substring(lastSlashIndex + 1);
+		String imageDir = Environment.getExternalStorageDirectory().getPath()
+				+ Constant.APPFILE_DATA_PATH;
+		File file = new File(imageDir);
+		if (!file.exists()) {
+			LogUtils2.d("xxxxxx88888887787787xxxxx");
+			file.mkdirs();
+		}
+		String imagePath = imageDir + imageName;
+		LogUtils2.d("imagePath==" + imagePath);
+		return imagePath;
+	}
+	
+	
+	/**
+	 * 判断要下载的文件是否已经存在
+	 * @param imageUrl
+	 * @return
+	 */
+	public static boolean isDataFileExist(String imageUrl){
+		
+		int lastSlashIndex = imageUrl.lastIndexOf("/");
+		String imageName = imageUrl.substring(lastSlashIndex + 1);
+		
+		String dataFilePath = Environment.getExternalStorageDirectory().getPath()
+				+ Constant.APPFILE_DATA_PATH+imageName;
+		LogUtils2.i("imageDir----"+dataFilePath);
+		File file = new File(dataFilePath);
+		if(!file.exists()){
+			LogUtils2.e("file not exist-----");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	/**
+	 * 读取已经存在的数据文件 获取json格式的数据
+	 * @param url_address
+	 * @param c
+	 * @return
+	 * @throws Exception
+	 */
+	public static Object getDataFromExistFile(String filePath)
+			throws Exception {
+		LogUtils2.d("getDataFromExistFile-----------");
+		if(filePath == null || filePath.equals("")){
+			return null;
+		}
+		
+		File file = new File(filePath);
+		
+		FileInputStream inputStream = new FileInputStream(file);
+		BufferedInputStream  reader = new BufferedInputStream(inputStream);
+//		FileOutputStream outputStream = new 
+//		BufferedWriter writer = new 
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		int len = 0;
+		while((len = reader.read(buffer)) != -1){
+			
+			bos.write(buffer, 0, len);
+			bos.flush();
+		}
+		
+		reader.close();
+		
+		byte[] buf = bos.toByteArray();
+		String temp = new String(buf);
+		return temp;
+		
+//		return bos.toByteArray();
+	}
+	
+	/**
+	 * 解析json数据获取 HomeBannerData list集合
+	 * @param jsonStr
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<HomeBannerData> fromHomeBannerDataJson(String jsonStr)
+			throws Exception {
+		LogUtils2.e("----fromJson------");
+		Gson gson = new Gson();
+		Type list = new TypeToken<List<HomeBannerData>>() {
+		}.getType();
+		
+//		Type type = new TypeToken<>
+		
+		List<HomeBannerData> data = gson.fromJson(jsonStr, list);
+		
+		return data;
+	}
+	
+	/**
+	 * 解析json数据获取 HomeBannerData list集合
+	 * @param jsonStr
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<TempAppData> fromTempAppDataJson(String jsonStr)
+			throws Exception {
+		LogUtils2.e("----fromJson------");
+		Gson gson = new Gson();
+		Type list = new TypeToken<List<TempAppData>>() {
+		}.getType();
+		
+//		Type type = new TypeToken<>
+		
+		List<TempAppData> data = gson.fromJson(jsonStr, list);
+		
+		return data;
 	}
 	
 }

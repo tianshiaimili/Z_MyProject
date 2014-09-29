@@ -20,6 +20,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.hua.activity.R;
 import com.hua.adapter.PlayHistoryRefreshListAdapter;
 import com.hua.adapter.ViewFlowAdapter;
+import com.hua.contants.Constant;
 import com.hua.wiget.CircleFlowIndicator;
 import com.hua.wiget.LayersLayout;
 import com.hua.wiget.ViewFlow;
@@ -80,7 +81,12 @@ public class PlayHistoryFragment extends Fragment {
 		
 		mViewFlow = (ViewFlow) headerView.findViewById(R.id.viewflow);// 获得viewFlow对象
 		mViewFlow.setAdapter(new ViewFlowAdapter(getActivity())); // 对viewFlow添加图片
-		mViewFlow.setmSideBuffer(6);
+		if(Constant.homeBannerBitmaps != null){
+			
+			mViewFlow.setmSideBuffer(Constant.homeBannerBitmaps.size());
+		}else {
+			mViewFlow.setmSideBuffer(8);			
+		}
 		
 		mCircleFlowIndicator = (CircleFlowIndicator) mContentView.findViewById(R.id.viewflowindic);
 		

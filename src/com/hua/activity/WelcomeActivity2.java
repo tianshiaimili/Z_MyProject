@@ -1,21 +1,26 @@
 package com.hua.activity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import android.R.integer;
+import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 import com.hua.app.BaseActivity;
 import com.hua.contants.Constant;
+import com.hua.model.AppData.HomeBannerData;
+import com.hua.model.AppData.TempAppData;
 import com.hua.util.LogUtils2;
 import com.hua.util.MyImageLoader;
 import com.hua.util.MyImageLoader.MyLoadImageTask;
@@ -38,6 +43,12 @@ public class WelcomeActivity2 extends BaseActivity {
 	private Animation animation1;
 	int count;
 	private MyLoadImageTask task;
+	private MyImageLoader myImageLoader;
+	/**
+	 * 读取文件解析出来的json格式数据的 list
+	 */
+	private List<HomeBannerData> mHomeBannerDatas = null;
+	private List<TempAppData> mTempAppDatas = null;
 	
 	Handler handler = new Handler(){
 		
@@ -65,13 +76,11 @@ public class WelcomeActivity2 extends BaseActivity {
 							
 							@Override
 							public void onAnimationStart(Animator arg0) {
-								// TODO Auto-generated method stub
 								
 							}
 							
 							@Override
 							public void onAnimationRepeat(Animator arg0) {
-								// TODO Auto-generated method stub
 								
 							}
 							
@@ -80,6 +89,12 @@ public class WelcomeActivity2 extends BaseActivity {
 								// TODO Auto-generated method stub
 								LogUtils2.d("+++++++++++++");
 								Intent intent = new Intent(getBaseContext(), MainActivityPhone.class);
+//								Bundle extras = new Bundle();
+//								extras.put
+								if(mHomeBannerDatas != null){
+									
+									intent.putExtra("appName",mHomeBannerDatas.get(0).getAppName());
+								}
 //								Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
 								startActivity(intent);
 								overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
@@ -99,9 +114,6 @@ public class WelcomeActivity2 extends BaseActivity {
 				}
 				break;
 			case 3:
-				
-				
-				
 				break;
 			default:
 				break;
@@ -119,9 +131,10 @@ public class WelcomeActivity2 extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.welcome_activity2);
+		myImageLoader = new MyImageLoader(getApplicationContext());
 		welcomeTextView = (TextView) findViewById(R.id.welcome_text);
 //		animation1 = AnimationUtils.loadAnimation(getBaseContext(), R.animator.shake);
-		
+		LoadAppData();
 		loadBannerImages();
 		
 		new Thread(){
@@ -152,7 +165,8 @@ public class WelcomeActivity2 extends BaseActivity {
 		MyImageLoader myImageLoader = MyImageLoader.getInstance(getBaseContext());
 		
 		for (int i = 0; i < 5; i++) {
-			/*MyLoadImageTask*/ task = new MyLoadImageTask(null,imageUrls,width,getApplicationContext());
+			/*MyLoadImageTask*/ 
+			task = new MyLoadImageTask(null,imageUrls,width,getApplicationContext());
 //			taskCollection.add(task);
 			LogUtils2.e("***1111333111*****");
 			task.tempTtaskCollection.add(task);
@@ -163,5 +177,150 @@ public class WelcomeActivity2 extends BaseActivity {
 	}
 
 
+	public void LoadAppData(){
+		String[] urls = {Constant.HOMEBANNER_DATA,Constant.APPDATA};
+		for(String temUrl:urls){
+			LogUtils2.e("temUrl--- "+temUrl);
+			new MyDownloadAsyncTask().execute(temUrl);
+		}
+		
+	}
+	
+	
+	private class MyDownloadAsyncTask extends AsyncTask<String, Integer, Bitmap> {
+
+		ImageView tempImageView;
+		String tempDataUrlPath;
+		
+		public MyDownloadAsyncTask(ImageView imageView){
+			
+			tempImageView = imageView;
+		}
+		
+		public MyDownloadAsyncTask(){
+			
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			
+		}
+
+		@Override
+		protected Bitmap doInBackground(String... params) {
+			String url = params[0];//tempUrl.substring(index+1, tempUrl.length());
+			LogUtils2.d("url--=="+url);
+		
+			if(url == null || url.equals("")){
+				return null;
+			}
+
+			
+			if(url.equals(Constant.HOMEBANNER_DATA)){
+				
+				if(myImageLoader.isDataFileExist(url)){
+					LogUtils2.d("##********************#");
+					try {
+						getHomeBannerData(myImageLoader,url);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						LogUtils2.d("****error*****");
+						return null;
+					}
+				}
+				//第一次下载文件....
+				else {
+					LogUtils2.d("###############");
+					try {
+						if(myImageLoader.downDataFiles(url)){
+							
+							getHomeBannerData(myImageLoader,url);
+						}else {
+							return null;
+						}
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						LogUtils2.d("****error*****"+e.getMessage());
+						return null;
+					}
+					
+				}
+			}
+			//下载appdata模拟数据
+			else if(url.equals(Constant.APPDATA)){
+				
+				if(myImageLoader.isDataFileExist(url)){
+					LogUtils2.d("##********************#");
+					try {
+						getTempAppDataList(myImageLoader, url);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						LogUtils2.d("****error*****");
+						return null;
+					}
+				}
+				//第一次下载文件....
+				else {
+					LogUtils2.d("###############");
+					try {
+						if(myImageLoader.downDataFiles(url)){
+							LogUtils2.d("@@@@@@@###############");
+							getTempAppDataList(myImageLoader, url);
+							
+						}else {
+							return null;
+						}
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						LogUtils2.d("****error*****"+e.getMessage());
+						return null;
+					}
+					
+				}
+				
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Bitmap result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+		}
+
+	}
+	
+	public void getTempAppDataList(MyImageLoader myImageLoader,String url) throws Exception{
+		
+		String jsonStr = (String) myImageLoader.getDataFromExistFile(myImageLoader.getDataFileNamePath(url));
+		mTempAppDatas = myImageLoader.fromTempAppDataJson(jsonStr);
+		LogUtils2.e("getTempAppDataList===  "+ mTempAppDatas.size());
+		
+		for(TempAppData tempAppData:mTempAppDatas){
+			Constant.tempAppDataLists.add(tempAppData);
+			LogUtils2.e("Constant.tempAppDataLists。size-=88= "+Constant.tempAppDataLists.size());
+		}
+		
+	}
+	
+	
+	public void getHomeBannerData(MyImageLoader myImageLoader,String url) throws Exception{
+		
+		String jsonStr = (String) myImageLoader.getDataFromExistFile(myImageLoader.getDataFileNamePath(url));
+		mHomeBannerDatas = myImageLoader.fromHomeBannerDataJson(jsonStr);
+		for(HomeBannerData tempBannerData:mHomeBannerDatas){
+			Constant.homeBannerBitmaps.add(myImageLoader.loadImage(tempBannerData.getHomeBannerImageUrl(), getBaseContext().getResources().getDisplayMetrics().widthPixels));
+			LogUtils2.d("Constant.homeBannerBitmaps。size-== "+Constant.homeBannerBitmaps.size());
+		}
+		
+	}
+	
 	
 }

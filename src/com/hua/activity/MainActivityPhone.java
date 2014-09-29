@@ -77,6 +77,10 @@ public class MainActivityPhone extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 		LayoutUtils.setActivityNoTitleBar(this);
 		setContentView(R.layout.main_activity_phone);
+		
+		Intent mIntent = getIntent();
+		LogUtils2.e("*********== "+mIntent.getStringExtra("appName"));
+		
 		initFragmentTabSwitcher();
 		initUI();
 //		downloadHandler = new DownloadHandler(this);

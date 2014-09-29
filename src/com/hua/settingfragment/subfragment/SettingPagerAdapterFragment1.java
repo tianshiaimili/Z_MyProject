@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.hua.activity.R;
 import com.hua.activity.ShowWebPageActivity;
+import com.hua.contants.Constant;
 
 public class SettingPagerAdapterFragment1 extends Fragment implements View.OnClickListener{
 
@@ -77,16 +78,16 @@ public class SettingPagerAdapterFragment1 extends Fragment implements View.OnCli
 		Intent in=new Intent(getActivity(),ShowWebPageActivity.class);
 		switch (v.getId()) {
 			case R.id.ll_btn1:
-				in.putExtra("url", "http://www.baidu.com/");
+				in.putExtra("url",Constant.TEST_WEB_URLS[0]);
 				break;
 			case R.id.ll_btn2:
-				in.putExtra("url", "http://m.hao123.com/");
+				in.putExtra("url", Constant.TEST_WEB_URLS[1]);
 				break;
 			case R.id.ll_btn3:
-				in.putExtra("url", "http://m.hao123.com/");
+				in.putExtra("url", Constant.TEST_WEB_URLS[2]);
 				break;
 			case R.id.ll_btn4:
-				in.putExtra("url", "http://m.hao123.com/");
+				in.putExtra("url", Constant.TEST_WEB_URLS[3]);
 				break;
 		}
 		startActivity(in);
