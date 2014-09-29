@@ -12,10 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.hua.activity.R;
 import com.hua.adapter.PlayHistoryRefreshListAdapter;
@@ -65,6 +65,7 @@ public class PlayHistoryFragment extends Fragment {
 
 		mContentView = inflater.inflate(R.layout.payhistory_layout_fragment, null);
 		mPullToRefreshListView =  (PullToRefreshListView) mContentView.findViewById(R.id.playhistory_pulltorefreshlistview);
+		mPullToRefreshListView.setMode(Mode.BOTH);
 		mListView = mPullToRefreshListView.getRefreshableView();
 		mLayersLayout = (LayersLayout) mContentView.findViewById(R.id.layerslayout);
 
@@ -93,9 +94,25 @@ public class PlayHistoryFragment extends Fragment {
 		mLayersLayout.setView(mViewFlow); // 将viewFlow对象传递给自定义图层，用于对事件进行重定向
 		
 		
-		mPullToRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
+//		mPullToRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
+//			@Override
+//			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+//				
+//				String label = DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(),
+//						DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+//
+//				// Update the LastUpdatedLabel
+//				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+//
+//				// Do work to refresh the list here.
+//						getData();
+//					}
+//				});
+		
+		mPullToRefreshListView.setOnRefreshListener(new OnRefreshListener2() {
+
 			@Override
-			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				
 				String label = DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(),
 						DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
@@ -105,8 +122,23 @@ public class PlayHistoryFragment extends Fragment {
 
 				// Do work to refresh the list here.
 						getData();
-					}
-				});
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+
+				String label = DateUtils.formatDateTime(getActivity(), System.currentTimeMillis(),
+						DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+
+				// Update the LastUpdatedLabel
+				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+
+				// Do work to refresh the list here.
+						getData();
+				
+			}
+		});
+		
 		
 		return mContentView;//super.onCreateView(inflater, container, savedInstanceState);
 	}
