@@ -1,8 +1,13 @@
 package com.hua.fragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +26,9 @@ import com.hua.activity.R;
 import com.hua.adapter.PlayHistoryRefreshListAdapter;
 import com.hua.adapter.ViewFlowAdapter;
 import com.hua.contants.Constant;
+import com.hua.model.AppData.TempAppData;
+import com.hua.model.AppData.TrueAppData;
+import com.hua.util.MyImageLoader;
 import com.hua.wiget.CircleFlowIndicator;
 import com.hua.wiget.LayersLayout;
 import com.hua.wiget.ViewFlow;
@@ -41,13 +49,20 @@ public class PlayHistoryFragment extends Fragment {
 //			"ListView9", "ListView10", "ListView11", "ListView12",*/ };
 	private PlayHistoryRefreshListAdapter mPullToRefreshListAdapter;
 	private static final int REFRESH_ADAPTER_DATA = 0;
+	/**
+	 * 内部的task集合
+	 */
+	public static Set<GetDataTask> tempTtaskCollection;
+	private List<TrueAppData> trueAppDatas;
+	private MyImageLoader myImageLoader;
+	
 	
 	Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			int whatCode = msg.what;
 			switch (whatCode) {
 			case 0:
-				mPullToRefreshListAdapter = new PlayHistoryRefreshListAdapter(getActivity(),adapterList);
+				mPullToRefreshListAdapter = new PlayHistoryRefreshListAdapter(getActivity(),trueAppDatas);
 				mListView.setAdapter(mPullToRefreshListAdapter); // 绑定数据
 				mPullToRefreshListAdapter.notifyDataSetInvalidated();
 				break;
@@ -68,6 +83,10 @@ public class PlayHistoryFragment extends Fragment {
 		mPullToRefreshListView =  (PullToRefreshListView) mContentView.findViewById(R.id.playhistory_pulltorefreshlistview);
 		mPullToRefreshListView.setMode(Mode.BOTH);
 		mListView = mPullToRefreshListView.getRefreshableView();
+		mListView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
+		tempTtaskCollection = new HashSet<GetDataTask>();
+		trueAppDatas = new ArrayList<TrueAppData>();
+		myImageLoader = new MyImageLoader(getActivity());
 		mLayersLayout = (LayersLayout) mContentView.findViewById(R.id.layerslayout);
 
 		LayoutInflater mLayoutInflater = LayoutInflater.from(getActivity());
@@ -127,6 +146,7 @@ public class PlayHistoryFragment extends Fragment {
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
 				// Do work to refresh the list here.
+				trueAppDatas.clear();
 						getData();
 			}
 
@@ -140,6 +160,7 @@ public class PlayHistoryFragment extends Fragment {
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
 				// Do work to refresh the list here.
+				trueAppDatas.clear();
 						getData();
 				
 			}
@@ -151,8 +172,15 @@ public class PlayHistoryFragment extends Fragment {
 	
 	public void getData(){
 		
-		new GetDataTask().execute();
-		
+		if(Constant.tempAppDataLists != null){
+			Collections.shuffle(Constant.tempAppDataLists);
+			for(int i=0;i<Constant.tempAppDataLists.size();i++){
+//				new GetDataTask().execute();
+				GetDataTask task = new GetDataTask();
+				task.execute(Constant.tempAppDataLists.get(i));
+				tempTtaskCollection.add(task);
+			}
+		}
 	}
 	
 	
@@ -161,26 +189,44 @@ public class PlayHistoryFragment extends Fragment {
 	  * @author zero
 	  *
 	  */
-	 private class GetDataTask extends AsyncTask<Void, Void, String> {
-			
-
+	 private class GetDataTask extends AsyncTask<TempAppData, Void, Bitmap> {
 			// 后台处理部分
-		 
 			@Override
-			protected String doInBackground(Void... params) {
+			protected Bitmap doInBackground(TempAppData... params) {
 				// Simulates a background job.
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
+				if(params[0] != null){
+					
+					try {
+//						Thread.sleep(1000);
+						TempAppData tempAppData = params[0];
+						TrueAppData trueAppData = new TrueAppData();
+						Bitmap temBitmap = myImageLoader.loadImage(tempAppData.getAppIco(), 50);
+						if(temBitmap != null){
+							trueAppData.setAppIco(temBitmap);
+						}else {
+							trueAppData.setAppIco(new BitmapFactory().decodeResource(getResources(), R.drawable.baihe));
+						}
+						trueAppData.setAppName(tempAppData.getAppName());
+						trueAppData.setAppScore(tempAppData.getAppScore());
+						trueAppData.setAppDownLoadNum(tempAppData.getAppDownLoadNum());
+						trueAppData.setAppSize(tempAppData.getAppSize());
+						trueAppData.setAppComment(tempAppData.getAppComment());
+						trueAppData.setAppDowmUrl(tempAppData.getAppDowmUrl());
+						trueAppDatas.add(trueAppData);
+						
+					} catch (Exception e) {
+					}
+					
 				}
+			
 				String str = "Added after refresh..." + (count++) + " add";
-				return str;
+				return null;
 			}
 
 			// 这里是对刷新的响应，可以利用addFirst（）和addLast()函数将新加的内容加到LISTView中
 			// 根据AsyncTask的原理，onPostExecute里的result的值就是doInBackground()的返回值
 			@Override
-			protected void onPostExecute(String result) {
+			protected void onPostExecute(Bitmap result) {
 				// 在头部增加新添内容
 //				mListItems.addFirst(result);
 
@@ -189,10 +235,13 @@ public class PlayHistoryFragment extends Fragment {
 				// Call onRefreshComplete when the list has been refreshed.
 //				Toast.makeText(getActivity(), "lal=="+result, 300).show();
 //				contentStr = Arrays.asList(array)
-				adapterList.add(result);
+//				adapterList.add(result);
+				tempTtaskCollection.remove(this);
 				mHandler.obtainMessage(REFRESH_ADAPTER_DATA).sendToTarget();
+				if(tempTtaskCollection.size() <=0){
+					mPullToRefreshListView.onRefreshComplete();
+				}
 				
-				mPullToRefreshListView.onRefreshComplete();
 				
 				
 				super.onPostExecute(result);// 这句是必有的，AsyncTask规定的格式

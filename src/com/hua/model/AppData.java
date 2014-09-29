@@ -2,6 +2,9 @@ package com.hua.model;
 
 import java.util.List;
 
+import android.graphics.Bitmap;
+import android.widget.ImageView;
+
 /**
  * 存放Mypeoject解析数据的po类
  * @author zero
@@ -42,7 +45,7 @@ public class AppData {
 	 * @author zero
 	 *
 	 */
-	public class TempAppData{
+	public static class TempAppData{
 		
 		String appIco;
 		String appName;
@@ -117,10 +120,81 @@ public class AppData {
 		public void setAppDowmUrl(String appDowmUrl) {
 			this.appDowmUrl = appDowmUrl;
 		}
+	}
+	
+	/**
+	 * 解析json文件后的AppData
+	 * @author Hua
+	 *
+	 */
+	public static class TrueAppData{
+		Bitmap appIco;
+		String appName;
+		/**
+		 * 评分
+		 */
+		String appScore;
+		/**
+		 * 下载数量
+		 */
+		String appDownLoadNum;
+		/**
+		 * app大小
+		 */
+		String appSize;
+		/**
+		 * app的评论
+		 */
+		String appComment;
+		/**
+		 * 下载url
+		 */
+		String appDowmUrl;
+		public Bitmap getAppIco() {
+			return appIco;
+		}
+		public void setAppIco(Bitmap appIco) {
+			this.appIco = appIco;
+		}
+		public String getAppName() {
+			return appName;
+		}
+		public void setAppName(String appName) {
+			this.appName = appName;
+		}
+		public String getAppScore() {
+			return appScore;
+		}
+		public void setAppScore(String appScore) {
+			this.appScore = appScore;
+		}
+		public String getAppDownLoadNum() {
+			return appDownLoadNum;
+		}
+		public void setAppDownLoadNum(String appDownLoadNum) {
+			this.appDownLoadNum = appDownLoadNum;
+		}
+		public String getAppSize() {
+			return appSize;
+		}
+		public void setAppSize(String appSize) {
+			this.appSize = appSize;
+		}
+		public String getAppComment() {
+			return appComment;
+		}
+		public void setAppComment(String appComment) {
+			this.appComment = appComment;
+		}
+		public String getAppDowmUrl() {
+			return appDowmUrl;
+		}
+		public void setAppDowmUrl(String appDowmUrl) {
+			this.appDowmUrl = appDowmUrl;
+		}
 		
 		
 		
 	}
-	
 	
 }

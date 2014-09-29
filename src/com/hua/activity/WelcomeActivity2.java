@@ -49,6 +49,7 @@ public class WelcomeActivity2 extends BaseActivity {
 	 */
 	private List<HomeBannerData> mHomeBannerDatas = null;
 	private List<TempAppData> mTempAppDatas = null;
+	private boolean isSendToHander;
 	
 	Handler handler = new Handler(){
 		
@@ -137,23 +138,23 @@ public class WelcomeActivity2 extends BaseActivity {
 		LoadAppData();
 		loadBannerImages();
 		
-		new Thread(){
-			
-			public void run() {
-				try {
-					Thread.sleep(3000);
-					
-//					welcomeTextView.setAlpha(0.0f);
-//					handler.obtainMessage().sendToTarget();
-					handler.sendMessage(handler.obtainMessage(5));
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			};
-			
-		}.start();
+//		new Thread(){
+//			
+//			public void run() {
+//				try {
+//					Thread.sleep(3000);
+//					
+////					welcomeTextView.setAlpha(0.0f);
+////					handler.obtainMessage().sendToTarget();
+//					handler.sendMessage(handler.obtainMessage(5));
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				
+//			};
+//			
+//		}.start();
 	}
 
 	private void loadBannerImages() {
@@ -292,6 +293,18 @@ public class WelcomeActivity2 extends BaseActivity {
 		protected void onPostExecute(Bitmap result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
+			
+			if(!isSendToHander){
+				isSendToHander = true;
+				LogUtils2.e("set isSendToHander----------");
+			}else if(isSendToHander){
+				LogUtils2.e("set isSendToHander*********");
+			welcomeTextView.setAlpha(0.0f);
+			handler.obtainMessage().sendToTarget();
+			handler.sendMessage(handler.obtainMessage(5));
+				
+			}
+			
 			
 		}
 
