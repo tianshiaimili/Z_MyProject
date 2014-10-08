@@ -37,7 +37,7 @@ public class ViewFlowAdapter extends BaseAdapter {
 		
 		if(Constant.homeBannerBitmaps != null){
 			
-			mBitmaps = Constant.homeBannerBitmaps;
+			mBitmaps = Constant.homeBannerBitmaps.subList(0, 5);
 			
 		}
 		

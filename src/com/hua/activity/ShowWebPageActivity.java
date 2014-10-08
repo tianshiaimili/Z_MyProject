@@ -22,8 +22,8 @@ public class ShowWebPageActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.show_webpage_activity);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		this.setContentView(R.layout.show_webpage_activity);
 		Intent intent = this.getIntent();
 		urlStr = intent.getStringExtra("url");
 		oldURL = urlStr;

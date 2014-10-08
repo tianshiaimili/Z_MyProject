@@ -7,8 +7,8 @@
         android:id="@+id/ph_layout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/playhistory_item_selector" 
         android:clickable="true"
@@ -106,8 +106,8 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/home_selected"
                 android:text="lalallala"
-                android:textColor="@drawable/playhistory_text_item_selector"
-                android:textSize="18sp" />
+                android:textColor="#8E8E8E"
+                android:textSize="16sp" />
         </LinearLayout>
     </RelativeLayout>
 

@@ -93,7 +93,8 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return mImageList.size();
+//		return mImageList.size();
+		return 50;
 	}
 
 	@Override
@@ -130,6 +131,7 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 			
 			TextView textView = new TextView(mContext);
 			textView.setText("123456");
+			textView.setTextSize(48.0f);
 			textView.setBackgroundColor(Color.parseColor("#FFFCCC"));
 			convertView = textView;
 			

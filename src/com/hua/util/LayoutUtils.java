@@ -9,7 +9,9 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.*;
+import android.view.View.MeasureSpec;
 import android.widget.*;
+
 import java.io.PrintStream;
 
 public class LayoutUtils {
@@ -194,13 +196,46 @@ public class LayoutUtils {
 		activity.getWindow().setFlags(1024, 1024);
 	}
 
+	
+	/**
+	 * MeasureSpec封装从parent传递给child的layout要求。每个MeasureSpec表示对width/height的要求。
+	 * MeasureSpec由size和mode组成。可用的mode有3种：
+	1. UNSPECIFIED表示parent没有强加给child任何constraint。
+	2. EXACTLY表示parent已经确定child的精确size。
+	3. AT_MOST表示child可以设定为specified size之内的任何值。
+	 * @param child
+	 */
+	public  void measureView(View child) {
+		
+		ViewGroup.LayoutParams p = child.getLayoutParams();
+		if (p == null) {
+			p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+					ViewGroup.LayoutParams.WRAP_CONTENT);
+		}
+		
+		/**
+		 * 这里应该是测量获取子View的大小把，然后在父view中给出合适的大小显示
+		 */
+		LogUtils2.d("p.width=="+p.width+"   p.height=="+p.height);
+		int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0 + 0, p.width);
+		int lpHeight = p.height;
+		int childHeightSpec;
+		/**
+		 * 
+		 */
+		if (lpHeight > 0) {
+			childHeightSpec = MeasureSpec.makeMeasureSpec(lpHeight,
+					MeasureSpec.EXACTLY);
+		} else {
+			childHeightSpec = MeasureSpec.makeMeasureSpec(0,
+					MeasureSpec.UNSPECIFIED);
+		}
+		
+		//
+		LogUtils2.i("childWidthSpec=="+childWidthSpec+"   childHeightSpec="+childHeightSpec);
+		child.measure(childWidthSpec, childHeightSpec);
+	}
+	
+	
 }
 
-/*
- * DECOMPILATION REPORT
- * 
- * Decompiled from:
- * E:\WorkSoftwareTool\NowEclipse\workspace2\nmplayer\trunk\nmplayer
- * \libs\supportlib.jar Total time: 1351 ms Jad reported messages/errors: Exit
- * status: 0 Caught exceptions:
- */

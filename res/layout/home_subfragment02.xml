@@ -45,7 +45,7 @@
         android:layout_height="fill_parent"
         android:background="#FFFFFF"
         android:scrollbars="vertical"
-        android:fastScrollEnabled="true" 
+        android:fastScrollEnabled="false" 
         android:scrollbarStyle="outsideOverlay"
          >
 

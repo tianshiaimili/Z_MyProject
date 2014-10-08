@@ -100,6 +100,12 @@
         <item name="android:dividerHeight">1.0px</item>
         <item name="android:listSelector">@color/homebg_color</item>
         <item name="android:scrollbars">vertical</item>
+        <item name="android:scrollingCache">true</item>
+        <item name="android:scrollbarStyle">insideOverlay</item>
+        <item name="android:footerDividersEnabled">false</item>
+        <item name="android:fastScrollEnabled">false</item>
+        <item name="android:headerDividersEnabled">false</item>
+        <item name="android:smoothScrollbar">true</item>
     </style>
     
     

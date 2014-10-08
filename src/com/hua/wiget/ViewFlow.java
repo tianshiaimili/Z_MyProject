@@ -34,6 +34,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.AbsListView;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.HeaderViewListAdapter;
 import android.widget.Scroller;
 
 import com.hua.activity.R;
@@ -158,7 +159,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 	public void stopAutoFlowTimer() {
 		if (handler != null)
 			handler.removeMessages(0);
-		handler = null;
+//		handler = null;
 	}
 
 	public void onConfigurationChanged(Configuration newConfig) {

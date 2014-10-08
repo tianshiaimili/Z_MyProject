@@ -14,7 +14,7 @@
         <FrameLayout
             android:id="@+id/framelayout"
             android:layout_width="fill_parent"
-            android:layout_height="120dip"
+            android:layout_height="130dip"
             android:background="@drawable/tab_bg" >
 
             <com.hua.wiget.ViewFlow

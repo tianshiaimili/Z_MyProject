@@ -37,7 +37,7 @@ public class PlayHistoryRefreshListAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 //		return contentStr.length;
-		return mDataList.size();
+		return mDataList != null?mDataList.size():0;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class PlayHistoryRefreshListAdapter extends BaseAdapter {
 		}
 		
 		if (convertView != null && ((ViewHolder)convertView.getTag()).tempAppName != null) {
-			LogUtils2.e("text2222222--"+convertView);
+//			LogUtils2.e("text2222222--"+convertView);
 			mViewHolder = (ViewHolder) convertView.getTag();
 //			return convertView;
 		} else {
@@ -99,7 +99,7 @@ public class PlayHistoryRefreshListAdapter extends BaseAdapter {
 		tempDownUrl = trueAppData.getAppDowmUrl();
 		mViewHolder.tempAppDownButton.setOnClickListener(new MyOnClickListener(tempDownUrl));
 		convertView.setTag(mViewHolder);
-		LogUtils2.e("textviiii----"+convertView);
+//		LogUtils2.e("textviiii----"+convertView);
 		return convertView;
 	}
 	
