@@ -381,6 +381,7 @@ public class FragmentUtils
 
         /**
          * ��getCurrentTabStack������ȡ����һ��fragment
+         * 当按下返回键后 把当前的fragment去掉，把之前的换做为第一个
          * @return
          */
         public Fragment peekTopmostFragment()
@@ -400,7 +401,7 @@ public class FragmentUtils
         {
             FragmentManager manager = mFragmentActivity.getSupportFragmentManager();
             FragmentTransaction ft = manager.beginTransaction();
-            ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_in);
+            ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
             Fragment afragment[];
             int j = (afragment = fragments).length;
             for(int i = 0; i < j; i++)
@@ -478,6 +479,8 @@ public class FragmentUtils
         {
             FragmentManager manager = mFragmentActivity.getSupportFragmentManager();
             FragmentTransaction ft = manager.beginTransaction();
+//            ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
+//            ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
             ft.remove(popTopmostFragment());
             mCurrentFragment = peekTopmostFragment();
             ft.attach(mCurrentFragment);
@@ -522,6 +525,7 @@ public class FragmentUtils
         {
             Fragment f = getCurrentTabFragment();
             LogUtils2.d("Currtent=size=="+getCurrentTabStack().size());
+            LogUtils2.d("getCurrentTabFragment=="+getCurrentTabFragment());
             if(f == null)
             {
             	LogUtils2.e("f==="+f);

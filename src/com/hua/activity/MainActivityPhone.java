@@ -364,7 +364,10 @@ public class MainActivityPhone extends BaseFragmentActivity {
                  else  
                  {  
 //                	 clearFilterSharedPreferences();
-                     finish();  
+                	 Toast.makeText(getApplicationContext(), "asd", 300).show();
+                	 LogUtils2.d("00000000000000000");
+                     finish();
+                     overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
                      System.exit(0);  
                  }  
                  return true;
