@@ -16,12 +16,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hua.activity.R;
 import com.hua.androidos.HandlerTimer;
@@ -56,6 +55,7 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	private Timer timer;
 	private TimerTask task;
 	private boolean isCanel;
+	private HandlerTimer mHandlerTimer;
 
 	Handler handler = new Handler(){
 		public void handleMessage(Message message) {
@@ -167,9 +167,9 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	            Field mField = ViewPager.class.getDeclaredField("mScroller");  
 	            mField.setAccessible(true);  
 	            mScroller = new FixedSpeedScroller(viewPager.getContext(),  
-	                    new DecelerateInterpolator());  
+	                    new AccelerateInterpolator());  
 	            //可以用setDuration的方式调整速率  
-	            mScroller.setmDuration(1000);  
+	            mScroller.setmDuration(700);  
 	            mField.set(viewPager, mScroller);  
 	        } catch (Exception e) {  
 	            e.printStackTrace();  
@@ -317,6 +317,32 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 		this.isCanel = isCanel;
 	}
 
+	/**
+	 * start viewPager's timer
+	 */
+	public void startViewPagerTimer2() {
+		if (mHandlerTimer == null) {
+			mHandlerTimer = new HandlerTimer(true);
+			mHandlerTimer.scheduleRepeatExecution(new Runnable() {
+				@Override
+				public void run() {
+//					coverFlow.setSelection((currentItem + 1) % bannerDataList.size() + 20 * bannerDataList.size());
+					currentItem = viewPager.getCurrentItem() + 1;
+					viewPager.setCurrentItem(currentItem);
+				}
+			}, 4000, 3000);
+		}
+	}
 	
-	
+	/**
+	 * stop viewPager's timer
+	 */
+	public void stopViewPagerTimer2() {
+		if (mHandlerTimer != null) {
+			mHandlerTimer.cancelRepeatExecution();
+			mHandlerTimer.quit();
+			mHandlerTimer = null;
+		}
+
+	}
 }

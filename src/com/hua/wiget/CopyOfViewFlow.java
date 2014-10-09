@@ -23,7 +23,6 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -35,6 +34,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.AbsListView;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.HeaderViewListAdapter;
 import android.widget.Scroller;
 
 import com.hua.activity.R;
@@ -48,7 +48,7 @@ import com.hua.util.LogUtils2;
  * buffer size can be changed using the {@code sidebuffer} xml attribute.
  * 
  */
-public class ViewFlow extends AdapterView<Adapter> {
+public class CopyOfViewFlow extends AdapterView<Adapter> {
 
 	private static final int SNAP_VELOCITY = 200;
 	private static final int INVALID_SCREEN = -1;
@@ -76,57 +76,13 @@ public class ViewFlow extends AdapterView<Adapter> {
 	private FlowIndicator mIndicator;
 	private int mLastOrientation = -1;
 	private long timeSpan = 3000;
-//	private Handler handler;
+	private Handler handler;
 	public static boolean onTouch = false;// 是否点击到了viewFlow的区域，用于自定义图层中重定向事件的传递。
 	
 	private int startY=0;
 	private int startX=0;
 	private static final int MINREFRESHY = 10;//用来设置下来时 最小的下啦值，然后判断下啦
 	private static final int MAXREFRESHX = 50;
-	protected static final int VIEWFOLW_WHAT = 100;
-	
-	/**
-	 * 间隔的时间 默认3秒
-	 */ 
-	private long mInterval = 3000;
-	/**
-	 * 是否在运行
-	 */
-	private boolean mRunning;
-	/**
-	 * 是否退出
-	 */
-	private boolean mQuit;
-	
-	private Handler handler = new Handler(Looper.getMainLooper()) {
-		@Override
-		public void handleMessage(Message msg) {
-			if(msg.what == VIEWFOLW_WHAT){
-				LogUtils2.e("startAutoFlowTimer-******************");
-				
-				snapToScreen((mCurrentScreen + 1) % getChildCount());
-				Message message = handler.obtainMessage(VIEWFOLW_WHAT);
-				sendMessageDelayed(message, timeSpan);
-			}
-		}
-	};
-	
-	  private Runnable mOnTick = new Runnable() {
-
-	        public void run()
-	        {
-//	            mRepeatTask.run();
-//	            if(mRunning && !mQuit)
-//	                handler.postDelayed(mOnTick, 3000);
-	            	if (mRunning && !mQuit){
-	    				Message message = handler.obtainMessage(VIEWFOLW_WHAT);
-	    				handler.sendMessageDelayed(message, timeSpan);
-	    				LogUtils2.d("lalal德玛西亚------------"); 
-//	    				mainHandler.postDelayed(mOnTick, mInterval);
-	    				}
-	        }
-
-	    };
 	
 	private OnGlobalLayoutListener orientationChangeListener = new OnGlobalLayoutListener() {
 
@@ -156,19 +112,19 @@ public class ViewFlow extends AdapterView<Adapter> {
 
 	}
 
-	public ViewFlow(Context context) {
+	public CopyOfViewFlow(Context context) {
 		super(context);
 		mSideBuffer = 3;
 		init();
 	}
 
-	public ViewFlow(Context context, int sideBuffer) {
+	public CopyOfViewFlow(Context context, int sideBuffer) {
 		super(context);
 		mSideBuffer = sideBuffer;
 		init();
 	}
 
-	public ViewFlow(Context context, AttributeSet attrs) {
+	public CopyOfViewFlow(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		TypedArray styledAttrs = context.obtainStyledAttributes(attrs,
 				R.styleable.ViewFlow);
@@ -181,57 +137,28 @@ public class ViewFlow extends AdapterView<Adapter> {
 		mScroller = new Scroller(getContext());
 		final ViewConfiguration configuration = ViewConfiguration
 				.get(getContext());
-		//意思应该是触发移动事件的最短距离，如果小于这个距离就不触发移动控件
 		mTouchSlop = configuration.getScaledTouchSlop();
 		mMaximumVelocity = configuration.getScaledMaximumFlingVelocity();
 	}
 
-	//TODO
 	public void startAutoFlowTimer() {
-		
-		
-		
-		handler = new Handler(Looper.getMainLooper()) {
+		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
-				if(msg.what == VIEWFOLW_WHAT){
-					LogUtils2.e("startAutoFlowTimer-******************");
-					
-					snapToScreen((mCurrentScreen + 1) % getChildCount());
-					Message message = handler.obtainMessage(VIEWFOLW_WHAT);
-					sendMessageDelayed(message, timeSpan);
-				}
+
+				snapToScreen((mCurrentScreen + 1) % getChildCount());
+				Message message = handler.obtainMessage(0);
+				sendMessageDelayed(message, timeSpan);
 			}
 		};
 
-		
-		LogUtils2.e("startAutoFlowTimer------");
-		Message message = handler.obtainMessage(VIEWFOLW_WHAT);
-//		handler.sendMessageDelayed(message, timeSpan);
-		handler.postDelayed(mOnTick, timeSpan);
+		Message message = handler.obtainMessage(0);
+		handler.sendMessageDelayed(message, timeSpan);
 	}
 
-	public synchronized void scheduleRepeatExecution( long delay,
-			long interval) throws IllegalStateException,
-			IllegalArgumentException {
-		// Log.d(TAG, (new
-		// StringBuilder("scheduleRepeatExecution(), delay = ")).append(delay).append(", interval = ").append(interval).append("ms").toString());
-//		checkTimer(null, delay, interval);
-		if (mRunning)
-			throw new IllegalStateException(
-					"Timer is running a repeating execution. You should stop it before schedule a new one.");
-//		mRepeatTask = null;
-		mInterval = interval;
-		mRunning = true;
-		if (delay == 0L)
-			handler.post(mOnTick);
-		else
-			handler.postDelayed(mOnTick, delay);
-	}
-	
 	public void stopAutoFlowTimer() {
 		if (handler != null)
-			handler.removeMessages(VIEWFOLW_WHAT);
+			handler.removeMessages(0);
 //		handler = null;
 	}
 
@@ -324,7 +251,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 			mTouchState = mScroller.isFinished() ? TOUCH_STATE_REST
 					: TOUCH_STATE_SCROLLING;
 			if (handler != null)
-				handler.removeMessages(VIEWFOLW_WHAT);
+				handler.removeMessages(0);
 			break;
 
 		case MotionEvent.ACTION_MOVE:
@@ -395,7 +322,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 
 			mTouchState = TOUCH_STATE_REST;
 			if (handler != null) {
-				Message message = handler.obtainMessage(VIEWFOLW_WHAT);
+				Message message = handler.obtainMessage(0);
 				handler.sendMessageDelayed(message, timeSpan);
 			}
 			break;
@@ -435,7 +362,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 			mTouchState = mScroller.isFinished() ? TOUCH_STATE_REST
 					: TOUCH_STATE_SCROLLING;
 			if (handler != null)
-				handler.removeMessages(VIEWFOLW_WHAT);
+				handler.removeMessages(0);
 			break;
 
 		case MotionEvent.ACTION_MOVE:
@@ -506,7 +433,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 			mTouchState = TOUCH_STATE_REST;
 
 			if (handler != null) {
-				Message message = handler.obtainMessage(VIEWFOLW_WHAT);
+				Message message = handler.obtainMessage(0);
 				handler.sendMessageDelayed(message, timeSpan);
 			}
 			break;
@@ -646,7 +573,8 @@ public class ViewFlow extends AdapterView<Adapter> {
 	 */
 	public void setFlowIndicator(FlowIndicator flowIndicator) {
 		mIndicator = flowIndicator;
-		mIndicator.setViewFlow(this);
+//		mIndicator.setViewFlow(this);
+		//TODO
 	}
 
 	@Override
@@ -838,8 +766,4 @@ public class ViewFlow extends AdapterView<Adapter> {
 	public void setmSideBuffer(int mSideBuffer) {
 		this.mSideBuffer = mSideBuffer;
 	}
-	
-	
-  
-	
 }

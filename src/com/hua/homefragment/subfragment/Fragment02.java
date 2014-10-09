@@ -144,7 +144,7 @@ public class Fragment02 extends Fragment {
 					adapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), mImageViewList,barImageList,Constant.bannerBitmaps);
 					contentListView.setAdapter(adapter);
 					if(!mPreferences.getBoolean("isCanel", false));
-					adapter.startViewPagerTimer();
+					adapter.startViewPagerTimer2();
 					
 					adapter.notifyDataSetChanged();
 					break;
@@ -233,7 +233,7 @@ public class Fragment02 extends Fragment {
 		if(adapter != null){
 			if(!mPreferences.getBoolean("isCanel", false)){
 				LogUtils2.e("oooooooooooooooo");
-				adapter.startViewPagerTimer();
+				adapter.startViewPagerTimer2();
 			}
 		}
 		
@@ -246,7 +246,7 @@ public class Fragment02 extends Fragment {
 		if(adapter != null){
 			LogUtils2.e("pause--------------");
 			if(mPreferences.getBoolean("isCanel", false)){
-				adapter.stopViewPagerTimer();
+				adapter.stopViewPagerTimer2();
 			}
 			
 			LogUtils2.d("setviewpager--------------");

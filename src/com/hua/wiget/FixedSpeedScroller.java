@@ -37,6 +37,8 @@ public class FixedSpeedScroller extends Scroller {
     @Override  
     public void startScroll(int startX, int startY, int dx, int dy, int duration) {  
         // Ignore received duration, use fixed one instead  
+//    	final int newX = whichScreen * getWidth();
+//		final int delta = newX - getScrollX();
         super.startScroll(startX, startY, dx, dy, mDuration);  
     }  
   

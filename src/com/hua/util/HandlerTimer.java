@@ -37,6 +37,12 @@ public class HandlerTimer
         Log.d(TAG, "HandlerTimer is ready.");
     }
 
+    /**
+     * 检查是否已关闭 
+     * @param task 子线程
+     * @param delay  延迟的时间
+     * @param interval 间隔时间
+     */
     private void checkTimer(Runnable task, long delay, long interval)
     {
         if(mQuit)
@@ -136,13 +142,13 @@ public class HandlerTimer
                 mHandler.postDelayed(mOnTick, mInterval);
         }
 
-        final HandlerTimer this$0;
-
-            
-            {
-                this$0 = HandlerTimer.this;
-//                super();
-            }
+//        final HandlerTimer this$0;
+//
+//            
+//            {
+//                this$0 = HandlerTimer.this;
+////                super();
+//            }
     }
 ;
 

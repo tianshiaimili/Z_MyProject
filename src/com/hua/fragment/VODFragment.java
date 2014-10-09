@@ -194,10 +194,10 @@ public class VODFragment extends BaseFragment{
 				@Override
 				public void run() {
 					LogUtils2.d("currentItem=="+currentItem);
-					LogUtils2.e("ÊÇ·ñ¿Éµã"+coverFlow.isClickable());
+					LogUtils2.e("ï¿½Ç·ï¿½Éµï¿½"+coverFlow.isClickable());
 					coverFlow.setSelection((currentItem + 1) % bannerDataList.size() /*+ 20 * bannerDataList.size()*/);
 				}
-			}, 60000, 60000);
+			}, 4000, 3000);
 		}
 	}
 
@@ -227,7 +227,7 @@ public class VODFragment extends BaseFragment{
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				
-				LogUtils2.d("*****ÕâÀï*************");
+				LogUtils2.d("*****ï¿½ï¿½ï¿½ï¿½*************");
 				int targetPosition = position % bannerDataList.size();
 				pageIndexer.updateSelected(targetPosition);
 				currentItem = targetPosition;
@@ -257,7 +257,7 @@ public class VODFragment extends BaseFragment{
 				case MotionEvent.ACTION_UP:
 				case MotionEvent.ACTION_CANCEL:
 					/**
-					 * true±íÊ¾×Ô¼ºÏû»¯ÊÂ¼þ
+					 * trueï¿½ï¿½Ê¾ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
 					 */
 					listView.setTouchInterested(true);
 					break;

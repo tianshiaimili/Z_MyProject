@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.HeaderViewListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -67,6 +68,7 @@ public class PlayHistoryFragment extends Fragment {
 	private List<TrueAppData> trueAppDatas;
 	private MyImageLoader myImageLoader;
 	private boolean isRefreshAll;
+	private HeaderViewListAdapter mHeaderViewListAdapter;
 
 	Handler mHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -82,6 +84,8 @@ public class PlayHistoryFragment extends Fragment {
 				mListView.setAdapter(mPullToRefreshListAdapter); // 绑定数据
 				mListView.requestLayout();
 				mViewFlowAdapter.notifyDataSetInvalidated();
+//				mViewFlowAdapter.notifyDataSetChanged();
+//				((PlayHistoryRefreshListAdapter)((HeaderViewListAdapter)mListView.getAdapter()).getWrappedAdapter()).notifyDataSetChanged();;
 				mPullToRefreshListAdapter.notifyDataSetInvalidated();
 				break;
 
@@ -90,12 +94,13 @@ public class PlayHistoryFragment extends Fragment {
 //				mViewFlow.setAdapter(mViewFlowAdapter); // 对viewFlow添加图片
 				mListView.requestLayout();
 				mViewFlowAdapter.notifyDataSetInvalidated();
-				
+//				mViewFlowAdapter.notifyDataSetChanged();
 //				mPullToRefreshListAdapter = new PlayHistoryRefreshListAdapter(
 //						getActivity(), trueAppDatas);
 //				mListView.setAdapter(mPullToRefreshListAdapter); // 绑定数据
 				mListView.requestLayout();
 				mPullToRefreshListAdapter.notifyDataSetInvalidated();
+//				mPullToRefreshListAdapter.notifyDataSetChanged();
 				if (isNotData) {
 					Toast.makeText(getActivity(), "Not data", 300).show();
 				}
@@ -151,7 +156,8 @@ public class PlayHistoryFragment extends Fragment {
 		mViewFlow.setFlowIndicator(mCircleFlowIndicator);
 		mViewFlow.setTimeSpan(5500);
 		mViewFlow.setSelection(3 * 1000); // 设置初始位置
-		 mViewFlow.startAutoFlowTimer(); // 启动自动播放
+//		 mViewFlow.startAutoFlowTimer(); // 启动自动播放
+		 mViewFlow.scheduleRepeatExecution(3000,3000);
 //		mViewFlow.stopAutoFlowTimer();
 		mViewFlowAdapter = new ViewFlowAdapter(getActivity());
 		mViewFlow.setAdapter(mViewFlowAdapter);
@@ -172,7 +178,7 @@ public class PlayHistoryFragment extends Fragment {
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
 				// LogUtils2.i("999999999");
-				LogUtils2.d("view.getScaleY()==" + view.getScaleY());
+//				LogUtils2.d("view.getScaleY()==" + view.getScaleY());
 				if (mListView.getFirstVisiblePosition() != 1) {
 					// LogUtils2.d("111111111111111111  "
 					// + mListView.getFirstVisiblePosition());
