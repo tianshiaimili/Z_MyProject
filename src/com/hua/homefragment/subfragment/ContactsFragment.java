@@ -28,6 +28,7 @@ import com.hua.util.CopyFile;
 import com.hua.util.LogUtils2;
 import com.hua.view.LetterView;
 import com.hua.view.LetterView.OnLetterChangeListener;
+import com.hua.wiget.CustomerToast;
 
 /**
  * 右边有字母的查找列表 类似 电话本 viewpager的第三个页面
@@ -48,6 +49,7 @@ public class ContactsFragment extends Fragment implements OnScrollListener,OnIte
 	private LetterView letterView;
 	/**自定义Toast**/
 	private Toast toast;
+	private CustomerToast mCustomerToast;
 	/**Toast视图中的TextView**/
 	private TextView tvToast;
 	
