@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <solid android:color="#FFFFBD00" />
+
+    <stroke
+        android:width="2dp"
+        android:color="#FFFFFF" />
+
+    <gradient
+        android:endColor="#339933"
+        android:gradientRadius="0"
+        android:startColor="#339933"
+        android:centerColor="#99CC33"
+        android:type="linear"
+        android:angle="90"
+         />
+
+    <corners
+        android:bottomLeftRadius="15dp"
+        android:bottomRightRadius="15dp"
+        android:topLeftRadius="15dp"
+        android:topRightRadius="15dp" />
+     <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
+
+</shape>
+<!--
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--
+    
          <item android:state_pressed="true"><shape>
 
             渐变
@@ -13,8 +39,8 @@
 
             <padding android:bottom="10dp" android:left="10dp" android:right="10dp" android:top="10dp" />
         </shape>
-     </item>
-    -->
+     </item>
+   
     <item android:state_focused="true"><shape>
             <solid android:color="#FC6E36AA" />
 
@@ -22,6 +48,7 @@
 
             <corners android:bottomLeftRadius="5dp" android:bottomRightRadius="5dp" android:topLeftRadius="5dp" android:topRightRadius="5dp" />
         </shape></item>
+        
     <item android:state_selected="true"><shape>
             <solid android:color="#FC6E36AA" />
 
@@ -31,6 +58,7 @@
 
             <corners android:bottomLeftRadius="5dp" android:bottomRightRadius="5dp" android:topLeftRadius="5dp" android:topRightRadius="5dp" />
         </shape></item>
+        
     <item android:state_pressed="true"><shape>
             <solid android:color="#FC6E36AA" />
 
@@ -40,14 +68,14 @@
 
             <corners android:bottomLeftRadius="5dp" android:bottomRightRadius="5dp" android:topLeftRadius="5dp" android:topRightRadius="5dp" />
         </shape></item>
+        
     <item><shape>
             <solid android:color="#FFFFBD00" />
 
             <stroke android:width="2dp" android:color="#FFFFFF" />
-
-            <gradient android:endColor="#339933" android:gradientRadius="50" android:startColor="#339933" android:type="linear" />
-
+  			<gradient android:endColor="#339933" android:gradientRadius="50" android:startColor="#339933" android:type="linear" />
             <corners android:bottomLeftRadius="5dp" android:bottomRightRadius="5dp" android:topLeftRadius="5dp" android:topRightRadius="5dp" />
         </shape></item>
 
 </selector>
+-->
