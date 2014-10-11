@@ -29,7 +29,7 @@ import com.hua.util.LogUtils2;
 import com.hua.view.MyViewPager;
 import com.hua.wiget.FixedSpeedScroller;
 
-public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
+public class HomeSubFragment2_ListViewBaseAdater extends BaseAdapter {
 	protected static final int START_BAR = 9;
 	private Context mContext;
 	private List<ImageView> mImageList;
@@ -81,7 +81,7 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 	};
 	
 	
-	public HomeSubFragment1_ListViewBaseAdater(Context mContext,
+	public HomeSubFragment2_ListViewBaseAdater(Context mContext,
 			List<ImageView> mList,List<Integer> pagerList,List<Bitmap> mBitmapList) {
 		this.mContext = mContext;
 		this.mImageList = mList;
@@ -91,6 +91,14 @@ public class HomeSubFragment1_ListViewBaseAdater extends BaseAdapter {
 		pagerAdater = new HomeSubViewPagerAdater(mContext, mImageList,mBitmaps);
 	}
 
+	
+	public HomeSubFragment2_ListViewBaseAdater(Context context,List<Bitmap> bitmaps){
+		
+		
+		
+	}
+	
+	
 	@Override
 	public int getCount() {
 //		return mImageList.size();

@@ -68,7 +68,7 @@ public class Constant {
 	
 	public static List<ImageView> getBannerImageViews() {
 		return bannerImageViews;
-	}
+	}   
 
 	public static void setBannerImageViews(List<ImageView> bannerImageViews) {
 		Constant.bannerImageViews = bannerImageViews;
@@ -209,7 +209,7 @@ public class Constant {
 		
 		"http://m.360buy.com",
 		"http://m.meilishuo.com",
-		"http://m.vip.com",
+		"http://m.kaixinyizhan.com/xiaohua/35290.html",
 		"http://i.meituan.com"
 		
 	};
@@ -241,5 +241,12 @@ public class Constant {
 	 * 这个是homebanner图片的json地址
 	 */
 	public static final String HOMEBANNER_DATA="https://raw.githubusercontent.com/tianshiaimili/MyResource/master/assets/homebanner.json";
+	
+	
+	/**
+	 * 开心驿站的url
+	 */
+	public static final String KAIXINYIZHAN = "https://raw.githubusercontent.com/tianshiaimili/MyResource/master/assets/kaixinyizhan1.xml";
+	
 	
 }

@@ -14,7 +14,7 @@
          >
 
         <com.hua.view.MyViewPager
-            android:id="@+id/vp_ad2"
+            android:id="@+id/mBannerViewPager"
             android:layout_width="match_parent"
             android:layout_height="120dp" />
 

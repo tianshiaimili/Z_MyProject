@@ -1,5 +1,6 @@
 package com.hua.homefragment.subfragment;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -13,10 +14,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,10 +33,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.hua.activity.MTNApplication;
 import com.hua.activity.R;
 import com.hua.adapter.HomeSubFragment1_ListViewBaseAdater;
-import com.hua.adapter.HomeSubFragment2_ListViewBaseAdater;
 import com.hua.androidos.HandlerTimer;
 import com.hua.contants.Constant;
-import com.hua.model.JXBannerData;
 import com.hua.util.FragmentUtils;
 import com.hua.util.FragmentUtils.FragmentTabSwitcherFeed;
 import com.hua.util.FragmentUtils.FragmentTabSwitcherWithoutZorder;
@@ -50,7 +51,7 @@ import com.hua.wiget.FixedSpeedScroller;
  * 这是homefragment中viewpager的首页
  * 
  */
-public class Fragment02 extends Fragment {
+public class Fragment03 extends Fragment {
 	
 	protected static final int START_BAR = 9;
 
@@ -105,9 +106,7 @@ public class Fragment02 extends Fragment {
 	private List<Integer> barImageList = new ArrayList<Integer>(Constant.BAR_LIST_SIZE);
 	
 	private ListView contentListView;
-	private HomeSubFragment1_ListViewBaseAdater mAdapter;
-	private HomeSubFragment2_ListViewBaseAdater mBannerAdater;
-	private List<JXBannerData> bannerHomeBannerDatas;
+	private HomeSubFragment1_ListViewBaseAdater adapter;
 	private List<View> barList = new ArrayList<View>();
 	private List<ImageView> mImageViewList = new ArrayList<ImageView>();
 //	
@@ -119,8 +118,6 @@ public class Fragment02 extends Fragment {
 	 * 用来判断是否关闭定时器
 	 */
 	private SharedPreferences mPreferences;
-	
-	private Context mContext;
 	
 	
 	Handler handler = new Handler(){
@@ -136,7 +133,7 @@ public class Fragment02 extends Fragment {
 						LogUtils2.d("999999999utyuiyiyiuyui");
 						mViewPager.setCurrentItem(currentItem);
 						LogUtils2.d("mViewPager.getCurrentItem()=="+mViewPager.getCurrentItem());
-						mAdapter.notifyDataSetChanged();
+						adapter.notifyDataSetChanged();
 						
 					}
 				case BANNER_NUM:
@@ -144,12 +141,12 @@ public class Fragment02 extends Fragment {
 					LogUtils2.d("wwwwww+=="+Constant.bannerImageViews.size());
 					LogUtils2.d("bbbbbb+=="+Constant.bannerBitmaps.size());
 //					adapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), Constant.bannerImageViews,barImageList);
-					mAdapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), mImageViewList,barImageList,Constant.bannerBitmaps);
-					contentListView.setAdapter(mAdapter);
+					adapter = new HomeSubFragment1_ListViewBaseAdater(getActivity(), mImageViewList,barImageList,Constant.bannerBitmaps);
+					contentListView.setAdapter(adapter);
 					if(!mPreferences.getBoolean("isCanel", false));
-					mAdapter.startViewPagerTimer2();
+					adapter.startViewPagerTimer2();
 					
-					mAdapter.notifyDataSetChanged();
+					adapter.notifyDataSetChanged();
 					break;
 			default:
 				break;
@@ -162,7 +159,6 @@ public class Fragment02 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
     	// TODO Auto-generated method stub
     	super.onCreate(savedInstanceState);
-    	mContext = getActivity();
     	mPreferences = getActivity().getSharedPreferences(Constant.TIMER_ISCANEL, Context.MODE_PRIVATE);
     	
     }
@@ -174,7 +170,13 @@ public class Fragment02 extends Fragment {
 		
 		mPullRefreshListView = (PullToRefreshListView) view.findViewById(R.id.home_sub_fragment02_listview);
 		contentListView = mPullRefreshListView.getRefreshableView();
-		mBannerAdater = new HomeSubFragment2_ListViewBaseAdater(mContext, Constant.bannerBitmaps);
+		
+	     //造1个 假数据  
+        for (int i = 0; i <80; i++) {  
+            ImageView imageView = new ImageView(getActivity());
+            imageView.setImageResource(R.drawable.icon_1_n);
+            barList.add(imageView);  
+        }
 
         mPullRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
@@ -194,11 +196,13 @@ public class Fragment02 extends Fragment {
 		headerViewLayout = (LinearLayout) LayoutInflater.from(getActivity()).
 				inflate(R.layout.home_subfragment02_header_item, null);
 //		headerViewLayout = (LinearLayout) subView;
-		contentListView.addHeaderView(headerViewLayout);
+		
 		initSubView(getActivity(),headerViewLayout);
+		
 		   /**
 		    * 设置广告横幅走动
 		    */
+		
 		return view;
 	}
 
@@ -208,7 +212,6 @@ public class Fragment02 extends Fragment {
 		// TODO Auto-generated method stub
 		// 获得服务端广告图片，这里我们就简单的直接取本地数据
 		super.onActivityCreated(savedInstanceState);
-		
 //		contentListView.setAdapter(adapter);
 //		if(!adapter.isCanel())
 //		adapter.startViewPagerTimer();
@@ -227,10 +230,10 @@ public class Fragment02 extends Fragment {
 		
 		LogUtils2.e("777777777777777777777777777777");
 		
-		if(mAdapter != null){
+		if(adapter != null){
 			if(!mPreferences.getBoolean("isCanel", false)){
 				LogUtils2.e("oooooooooooooooo");
-				mAdapter.startViewPagerTimer2();
+				adapter.startViewPagerTimer2();
 			}
 		}
 		
@@ -240,10 +243,10 @@ public class Fragment02 extends Fragment {
 	public void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		if(mAdapter != null){
+		if(adapter != null){
 			LogUtils2.e("pause--------------");
 			if(mPreferences.getBoolean("isCanel", false)){
-				mAdapter.stopViewPagerTimer2();
+				adapter.stopViewPagerTimer2();
 			}
 			
 			LogUtils2.d("setviewpager--------------");
