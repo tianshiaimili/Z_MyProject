@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hua.app.BaseActivity2;
 import com.hua.app.BaseFragmentActivity;
 import com.hua.fragment.DownloadFragment;
 import com.hua.fragment.HomeFragment;
@@ -37,10 +38,10 @@ import com.hua.utils.LogUtils2;
 import com.hua.utils.FragmentUtils.FragmentTabBarController;
 import com.hua.utils.FragmentUtils.FragmentTabSwitcher;
 import com.hua.utils.FragmentUtils.FragmentTabSwitcherFeed;
-import com.hua.wiget.HomeSearchBarPopupWindow;
-import com.hua.wiget.HomeSearchBarPopupWindow.OnSearchBarItemClickListener;
+import com.hua.weget.HomeSearchBarPopupWindow;
+import com.hua.weget.HomeSearchBarPopupWindow.OnSearchBarItemClickListener;
 
-public class MainActivityPhone extends BaseFragmentActivity {
+public class MainActivityPhone extends BaseActivity2 {
 
 	private FragmentTabSwitcher mFragmentTabSwitcher;
 	private static final String TAB_TV = "tv";
@@ -74,7 +75,7 @@ public class MainActivityPhone extends BaseFragmentActivity {
 	//
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		LayoutUtils.setActivityNoTitleBar(this);
 		setContentView(R.layout.main_activity_phone);
@@ -100,7 +101,7 @@ public class MainActivityPhone extends BaseFragmentActivity {
 	}
 
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 		setBackButtonVisible(false);
 		navigationBar = (RelativeLayout) findViewById(R.id.main_activity_navigation_bar);

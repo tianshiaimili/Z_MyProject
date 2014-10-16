@@ -20,10 +20,10 @@ import com.hua.app.BaseFragment;
 import com.hua.utils.LogUtils2;
 import com.hua.view.ElasticScrollView;
 import com.hua.view.MyScrollView;
-import com.hua.wiget.TopIndicator;
-import com.hua.wiget.TopIndicator.OnTopIndicatorListener;
-import com.hua.wiget.TopIndicator2;
-import com.hua.wiget.TopIndicator2.OnClickTopIndicatorListener;
+import com.hua.weget.TopIndicator;
+import com.hua.weget.TopIndicator2;
+import com.hua.weget.TopIndicator.OnTopIndicatorListener;
+import com.hua.weget.TopIndicator2.OnClickTopIndicatorListener;
 
 public class HomeFragment2 extends BaseFragment implements /*OnTopIndicatorListener,*/OnClickTopIndicatorListener{
 

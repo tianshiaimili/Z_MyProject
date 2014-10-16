@@ -54,6 +54,10 @@
         <activity android:name="com.hua.activity.WelcomeActivity2" ></activity>
         <activity android:name="com.hua.settingfragment.subfragment.SwipeMenuFragment" ></activity>
         <activity android:name="com.hua.activity.ShowWebPageActivity" ></activity>
+        <activity android:name="com.hua.activity.DetailsActivity_" ></activity>
+        <activity android:name="com.hua.activity.ImageDetailActivity_" ></activity>
+        
+        
     </application>
 
 </manifest>

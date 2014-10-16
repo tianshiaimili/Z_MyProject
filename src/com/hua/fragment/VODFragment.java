@@ -43,9 +43,9 @@ import com.hua.utils.ImageUtil;
 import com.hua.utils.LayoutUtils;
 import com.hua.utils.LogUtils2;
 import com.hua.view.PlaceholderView;
-import com.hua.wiget.CoverFlow;
-import com.hua.wiget.ObservableListView;
-import com.hua.wiget.PageIndexer;
+import com.hua.weget.CoverFlow;
+import com.hua.weget.ObservableListView;
+import com.hua.weget.PageIndexer;
 
 public class VODFragment extends BaseFragment{
 

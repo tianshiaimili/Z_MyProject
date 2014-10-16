@@ -33,9 +33,9 @@ import com.hua.model.AppData.TempAppData;
 import com.hua.model.AppData.TrueAppData;
 import com.hua.utils.LogUtils2;
 import com.hua.utils.MyImageLoader;
-import com.hua.wiget.CircleFlowIndicator;
-import com.hua.wiget.LayersLayout;
-import com.hua.wiget.ViewFlow;
+import com.hua.weget.CircleFlowIndicator;
+import com.hua.weget.LayersLayout;
+import com.hua.weget.ViewFlow;
 
 public class PlayHistoryFragment extends Fragment {
 

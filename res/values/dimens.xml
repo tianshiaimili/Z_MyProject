@@ -227,6 +227,8 @@
     <dimen name="item_image_height">60.0dip</dimen>
     <dimen name="item_image_width">86.0dip</dimen>
     
+    <dimen name="progress_inner_size">28dp</dimen>
+    
     
     
 </resources>

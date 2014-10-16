@@ -17,7 +17,7 @@ import com.hua.fragment.VODFragment;
 import com.hua.model.Banner.BannerData;
 import com.hua.utils.ImageUtil;
 import com.hua.utils.LogUtils2;
-import com.hua.wiget.CoverFlow;
+import com.hua.weget.CoverFlow;
 
 public class CoverFlowAdapter extends BaseAdapter {
 	private Context mContext;

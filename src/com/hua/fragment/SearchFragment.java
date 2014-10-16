@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import com.hua.activity.R;
 import com.hua.app.BaseFragment;
 import com.hua.utils.CommonTools;
-import com.hua.wiget.AutoClearEditText;
+import com.hua.weget.AutoClearEditText;
 
 public class SearchFragment extends BaseFragment {
 

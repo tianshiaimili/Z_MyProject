@@ -28,7 +28,7 @@ import com.hua.utils.CopyFile;
 import com.hua.utils.LogUtils2;
 import com.hua.view.LetterView;
 import com.hua.view.LetterView.OnLetterChangeListener;
-import com.hua.wiget.CustomerToast;
+import com.hua.weget.CustomerToast;
 
 /**
  * 右边有字母的查找列表 类似 电话本 viewpager的第三个页面

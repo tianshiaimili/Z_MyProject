@@ -26,7 +26,7 @@
             android:persistentDrawingCache="animation" />
          -->
 
-        <com.hua.wiget.CoverFlow
+        <com.hua.weget.CoverFlow
             android:id="@+id/coverFlow"
             android:layout_width="match_parent"
             android:layout_height="match_parent" 
@@ -35,7 +35,7 @@
 		/>
        
         
-        <com.hua.wiget.PageIndexer
+        <com.hua.weget.PageIndexer
             android:id="@+id/page_indexer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             />
     </LinearLayout>
 <!-- android:background="@android:color/transparent" -->
-    <com.hua.wiget.ObservableListView
+    <com.hua.weget.ObservableListView
         android:id="@+id/vodListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

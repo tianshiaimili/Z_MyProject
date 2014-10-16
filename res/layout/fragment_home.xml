@@ -29,14 +29,14 @@
         >
     </com.hua.wiget.TopIndicator2> -->
     
-    <com.hua.wiget.PagerSlidingTabStrip 
+    <com.hua.weget.PagerSlidingTabStrip 
         android:id="@+id/top_indicator"
         android:layout_width="fill_parent"
         android:layout_height="48dp"
         android:background="#FFFFFF"
         >
         
-    </com.hua.wiget.PagerSlidingTabStrip>
+    </com.hua.weget.PagerSlidingTabStrip>
     
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"

@@ -27,7 +27,7 @@ import com.hua.androidos.HandlerTimer;
 import com.hua.contants.Constant;
 import com.hua.utils.LogUtils2;
 import com.hua.view.MyViewPager;
-import com.hua.wiget.FixedSpeedScroller;
+import com.hua.weget.FixedSpeedScroller;
 
 public class HomeSubFragment2_ListViewBaseAdater extends BaseAdapter {
 	protected static final int START_BAR = 9;

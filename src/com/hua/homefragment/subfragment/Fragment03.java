@@ -43,7 +43,7 @@ import com.hua.utils.MyImageLoader.MyLoadImageTask;
 import com.hua.view.ElasticScrollView;
 import com.hua.view.MyGridView;
 import com.hua.view.MyViewPager;
-import com.hua.wiget.FixedSpeedScroller;
+import com.hua.weget.FixedSpeedScroller;
 
 /**
  * 

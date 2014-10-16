@@ -30,9 +30,9 @@ import com.hua.homefragment.subfragment.FourFragment;
 import com.hua.homefragment.subfragment.Fragment02;
 import com.hua.utils.LogUtils2;
 import com.hua.view.MyScrollView;
-import com.hua.wiget.PagerSlidingTabStrip;
-import com.hua.wiget.TopIndicator2;
-import com.hua.wiget.TopIndicator2.OnClickTopIndicatorListener;
+import com.hua.weget.PagerSlidingTabStrip;
+import com.hua.weget.TopIndicator2;
+import com.hua.weget.TopIndicator2.OnClickTopIndicatorListener;
 
 public class HomeFragment extends BaseFragment implements
 		/* OnTopIndicatorListener, */OnClickTopIndicatorListener ,OnPageChangeListener{

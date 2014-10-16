@@ -23,15 +23,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
 
+import com.hua.activity.DetailsActivity_;
+import com.hua.activity.ImageDetailActivity_;
 import com.hua.activity.R;
 import com.hua.adapter.CardsAnimationAdapter;
 import com.hua.adapter.NewAdapter;
+import com.hua.app.BaseActivity2;
 import com.hua.app.BaseFragment2;
 import com.hua.bean.NewModle;
 import com.hua.contants.Url;
 import com.hua.initview.InitView;
 import com.hua.network.http.json.NewListJson;
 import com.hua.network.utils.HttpUtil;
+import com.hua.utils.LogUtils2;
 import com.hua.utils.StringUtils;
 import com.hua.wedget.swiptlistview.SwipeListView;
 import com.hua.wedget.viewimage.Animations.DescriptionAnimation;
@@ -181,13 +185,14 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
         Bundle bundle = new Bundle();
         bundle.putSerializable("newModle", newModle);
         Class<?> class1;
-     /*   if (newModle.getImagesModle() != null && newModle.getImagesModle().getImgList().size() > 1) {
+       if (newModle.getImagesModle() != null && newModle.getImagesModle().getImgList().size() > 1) {
+    	   LogUtils2.d("ImageDetailActivity_----------------");
             class1 = ImageDetailActivity_.class;
         } else {
             class1 = DetailsActivity_.class;
         }
-        ((BaseActivity) getActivity()).openActivity(class1,
-                bundle, 0);*/
+        ((BaseActivity2) getActivity()).openActivity(class1,
+                bundle, 0);
         // Intent intent = new Intent(getActivity(), class1);
         // intent.putExtras(bundle);
         // IntentUtils.startPreviewActivity(getActivity(), intent);

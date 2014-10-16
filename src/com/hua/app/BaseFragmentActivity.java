@@ -5,15 +5,17 @@
 
 package com.hua.app;
 
+import java.util.Locale;
+
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import java.util.Locale;
+
+import com.hua.wedget.slideingactivity.SlidingActivity;
 
 // Referenced classes of package com.pccw.gzmobile.app:
 //            AppLocaleAide, AppProgressDialogAide
 
-public class BaseFragmentActivity extends FragmentActivity
+public class BaseFragmentActivity extends SlidingActivity
     implements AppLocaleAide.AppLocaleAideSupport
 {
 
@@ -30,7 +32,7 @@ public class BaseFragmentActivity extends FragmentActivity
         super.onCreate(arg0);
         mAppDialogAide = new AppProgressDialogAide(this);
         /**
-         * ¸Ä±äÓïÑÔÉèÖÃ
+         * ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         mAppLocaleAide.syncLocaleWithAppLocaleOnCreate(this);
     }
