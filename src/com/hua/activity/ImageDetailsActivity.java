@@ -20,7 +20,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.hua.model.Images;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 import com.hua.view.ZoomImageView;
 
 /**

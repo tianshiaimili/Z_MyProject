@@ -12,7 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.hua.util.Utils;
+import com.hua.utils.Utils;
 
 public class VOD {
 	private static final String TAG = VOD.class.getSimpleName(); 

@@ -22,9 +22,9 @@ import com.hua.app.BaseActivity;
 import com.hua.contants.Constant;
 import com.hua.model.AppData.HomeBannerData;
 import com.hua.model.AppData.TempAppData;
-import com.hua.util.LogUtils2;
-import com.hua.util.MyImageLoader;
-import com.hua.util.MyImageLoader.MyLoadImageTask;
+import com.hua.utils.LogUtils2;
+import com.hua.utils.MyImageLoader;
+import com.hua.utils.MyImageLoader.MyLoadImageTask;
 
 /**
  * ����App��ʾ����ҳ

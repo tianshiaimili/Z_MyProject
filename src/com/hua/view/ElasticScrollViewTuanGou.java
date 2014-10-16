@@ -41,8 +41,8 @@ import android.widget.ImageView.ScaleType;
 import com.hua.activity.ImageDetailsActivity;
 import com.hua.activity.R;
 import com.hua.model.Images;
-import com.hua.util.LogUtils2;
-import com.hua.util.MyImageLoader;
+import com.hua.utils.LogUtils2;
+import com.hua.utils.MyImageLoader;
 import com.hua.view.MyScrollView.LoadImageTask;
 
 

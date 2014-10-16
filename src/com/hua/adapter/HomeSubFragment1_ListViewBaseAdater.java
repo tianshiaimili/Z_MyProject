@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.hua.activity.R;
 import com.hua.androidos.HandlerTimer;
 import com.hua.contants.Constant;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 import com.hua.view.MyViewPager;
 import com.hua.wiget.FixedSpeedScroller;
 

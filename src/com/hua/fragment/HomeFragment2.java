@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.hua.activity.R;
 import com.hua.app.BaseFragment;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 import com.hua.view.ElasticScrollView;
 import com.hua.view.MyScrollView;
 import com.hua.wiget.TopIndicator;

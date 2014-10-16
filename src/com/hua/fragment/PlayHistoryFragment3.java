@@ -21,8 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hua.activity.R;
-import com.hua.util.LayoutUtils;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LayoutUtils;
+import com.hua.utils.LogUtils2;
 import com.hua.view.ElasticScrollView;
 import com.hua.view.ElasticScrollView.OnRefreshListener;
 import com.hua.view.InnerScrollView;

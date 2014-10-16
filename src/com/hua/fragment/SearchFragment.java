@@ -10,7 +10,7 @@ import android.widget.ImageButton;
 
 import com.hua.activity.R;
 import com.hua.app.BaseFragment;
-import com.hua.util.CommonTools;
+import com.hua.utils.CommonTools;
 import com.hua.wiget.AutoClearEditText;
 
 public class SearchFragment extends BaseFragment {

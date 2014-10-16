@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 /**
  * 自定义的ImageView控制，可对图片进行多点触控缩放和拖动

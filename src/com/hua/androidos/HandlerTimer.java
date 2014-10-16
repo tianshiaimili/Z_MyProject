@@ -9,7 +9,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.hua.androidos.CustomHandlerThread;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 /**
  * 定时器，用来做广告横幅动画
  * @author Hua

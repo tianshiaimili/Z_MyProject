@@ -208,4 +208,25 @@
     <dimen name="medium_text_size">18sp</dimen>
     <dimen name="large_text_size">22sp</dimen>
 
+    
+    <dimen name="drop_down_list_footer_progress_bar_height">36dp</dimen>
+    <dimen name="drop_down_list_header_progress_bar_height">36dp</dimen>
+     <dimen name="drop_down_list_footer_font_size">14sp</dimen>
+    
+     <dimen name="listview_scrollbar_width">2dp</dimen>
+     
+     <dimen name="head_size">28.0dip</dimen>
+     
+     <dimen name="title_bar_height">44.0dip</dimen>
+     
+     <dimen name="list_item_horizontal_padding">15.0dip</dimen>
+     
+     <dimen name="right_image_width">86.0dip</dimen>
+    <dimen name="right_image_height">60.0dip</dimen>
+     
+    <dimen name="item_image_height">60.0dip</dimen>
+    <dimen name="item_image_width">86.0dip</dimen>
+    
+    
+    
 </resources>

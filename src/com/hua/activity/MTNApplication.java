@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.hua.app.BaseApplication;
-import com.hua.util.LayoutUtils;
+import com.hua.utils.LayoutUtils;
 
 public class MTNApplication extends BaseApplication {
 

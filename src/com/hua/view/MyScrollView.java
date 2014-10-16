@@ -33,8 +33,8 @@ import android.widget.Toast;
 import com.hua.activity.ImageDetailsActivity;
 import com.hua.activity.R;
 import com.hua.model.Images;
-import com.hua.util.LogUtils2;
-import com.hua.util.MyImageLoader;
+import com.hua.utils.LogUtils2;
+import com.hua.utils.MyImageLoader;
 
 /**
  * 自定义的ScrollView，在其中动态地对图片进行添加。

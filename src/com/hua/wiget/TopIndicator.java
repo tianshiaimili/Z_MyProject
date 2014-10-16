@@ -16,8 +16,8 @@ import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 
 import com.hua.activity.R;
-import com.hua.util.DensityUtil;
-import com.hua.util.LogUtils2;
+import com.hua.utils.DensityUtil;
+import com.hua.utils.LogUtils2;
 
 /**
  * 顶部indicator

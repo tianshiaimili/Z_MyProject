@@ -30,7 +30,7 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.baoyz.swipemenulistview.SwipeMenuListView.OnMenuItemClickListener;
 import com.hua.activity.R;
 import com.hua.app.BaseFragment;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 /**
  * 仿QQ 的滑动删除 效果

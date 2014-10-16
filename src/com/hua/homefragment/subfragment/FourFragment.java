@@ -2,7 +2,7 @@ package com.hua.homefragment.subfragment;
 
 import com.hua.activity.R;
 import com.hua.fragment.TuanGouFragment;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 import com.hua.view.MyScrollView;
 
 import android.graphics.Color;

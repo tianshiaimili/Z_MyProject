@@ -6,7 +6,7 @@ import java.util.List;
 import android.app.Application;
 
 import com.hua.contants.Constant;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 public class ShopAppApplication extends Application {
 	public static List<CategoryInfo> mDatas;

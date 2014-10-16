@@ -22,20 +22,21 @@ import android.widget.Toast;
 import com.hua.app.BaseFragmentActivity;
 import com.hua.fragment.DownloadFragment;
 import com.hua.fragment.HomeFragment;
+import com.hua.fragment.NewsFragment_;
 import com.hua.fragment.PlayHistoryFragment;
 import com.hua.fragment.SearchAutoCompleteCrewDetailFragment;
 import com.hua.fragment.SearchAutoCompleteFragment;
 import com.hua.fragment.SearchFragment;
 import com.hua.fragment.SettingsFragment;
 import com.hua.fragment.VODFragment;
-import com.hua.util.CommonTools;
-import com.hua.util.FragmentUtils;
-import com.hua.util.FragmentUtils.FragmentTabBarController;
-import com.hua.util.FragmentUtils.FragmentTabSwitcher;
-import com.hua.util.FragmentUtils.FragmentTabSwitcherFeed;
-import com.hua.util.KeyboardUtils;
-import com.hua.util.LayoutUtils;
-import com.hua.util.LogUtils2;
+import com.hua.utils.CommonTools;
+import com.hua.utils.FragmentUtils;
+import com.hua.utils.KeyboardUtils;
+import com.hua.utils.LayoutUtils;
+import com.hua.utils.LogUtils2;
+import com.hua.utils.FragmentUtils.FragmentTabBarController;
+import com.hua.utils.FragmentUtils.FragmentTabSwitcher;
+import com.hua.utils.FragmentUtils.FragmentTabSwitcherFeed;
 import com.hua.wiget.HomeSearchBarPopupWindow;
 import com.hua.wiget.HomeSearchBarPopupWindow.OnSearchBarItemClickListener;
 
@@ -202,8 +203,17 @@ public class MainActivityPhone extends BaseFragmentActivity {
 					return new PlayHistoryFragment();
 				
 				} else if(TAB_MOVIE.equalsIgnoreCase(tag)) {
-					VODFragment vodFragment = new VODFragment();
-					return vodFragment;
+					
+					/**
+					 * 第二个 tab项
+					 */
+//					VODFragment vodFragment = new VODFragment();
+//					return vodFragment;
+					
+					
+					NewsFragment_ newsFragment = new NewsFragment_();
+					return newsFragment;
+					
 				} else if(TAB_DOWNLOAD.equalsIgnoreCase(tag)) {
 					return new DownloadFragment();
 				} else if(TAB_PLAY_HISTORY.equalsIgnoreCase(tag)) {

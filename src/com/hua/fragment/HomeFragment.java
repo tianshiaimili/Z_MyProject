@@ -28,7 +28,7 @@ import com.hua.homefragment.subfragment.ContactsFragment;
 import com.hua.homefragment.subfragment.FoundFragment;
 import com.hua.homefragment.subfragment.FourFragment;
 import com.hua.homefragment.subfragment.Fragment02;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 import com.hua.view.MyScrollView;
 import com.hua.wiget.PagerSlidingTabStrip;
 import com.hua.wiget.TopIndicator2;

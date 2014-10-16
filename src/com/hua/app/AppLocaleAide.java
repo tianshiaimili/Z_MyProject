@@ -11,7 +11,7 @@ import android.util.Log;
 
 import java.util.Locale;
 
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 public final class AppLocaleAide
 {
@@ -94,7 +94,7 @@ public final class AppLocaleAide
             res.updateConfiguration(cfg, res.getDisplayMetrics());
             Locale.setDefault(cfg.locale);
             /**
-             * ±£´æÐÞ¸ÄºóµÄÓïÑÔÉèÖÃ
+             * ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸Äºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
              */
             android.content.SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
             editor.putString("app_locale_language", newLocale.getLanguage());

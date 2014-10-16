@@ -1,5 +1,7 @@
 package com.hua.activity;
 
+import org.androidannotations.annotations.EActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -12,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hua.app.BaseActivity;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 /**
  * 刚打开时显示的页面，后台在加载数据    啦啦啦德玛西亚   啦啦啦啦啦啦的玛西亚
@@ -20,6 +22,7 @@ import com.hua.util.LogUtils2;
  * @author Hua
  *
  */
+//@EActivity
 public class WelcomeActivity extends BaseActivity implements AnimationListener{
 
 

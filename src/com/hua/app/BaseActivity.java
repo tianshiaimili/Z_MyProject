@@ -11,7 +11,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.widget.Toast;
 
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 // Referenced classes of package com.pccw.gzmobile.app:
 //            AppLocaleAide, AppProgressDialogAide
@@ -36,7 +36,7 @@ public class BaseActivity extends Activity
         if(savedInstanceState != null)
             Log.e(TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" savedInstanceState = ").append(savedInstanceState).toString());
         /**
-         * ¸Ä±äÓïÑÔµÄÉèÖÃ
+         * ï¿½Ä±ï¿½ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ï¿½ï¿½
          */
         mAppLocaleAide.syncLocaleWithAppLocaleOnCreate(this);
         mAppDialogAide = new AppProgressDialogAide(this);

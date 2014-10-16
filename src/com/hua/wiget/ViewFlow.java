@@ -38,7 +38,7 @@ import android.widget.AdapterView;
 import android.widget.Scroller;
 
 import com.hua.activity.R;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 /**
  * A horizontally scrollable {@link ViewGroup} with items populated from an

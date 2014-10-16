@@ -22,7 +22,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Scroller;
 
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 public class CustomeViewFlow extends AdapterView<Adapter> {
 

@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
 
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 /**
  * 表示在scrollview内部滑动的scrollview

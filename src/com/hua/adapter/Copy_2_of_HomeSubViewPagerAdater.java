@@ -3,7 +3,7 @@ package com.hua.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 import android.content.Context;
 import android.content.Intent;

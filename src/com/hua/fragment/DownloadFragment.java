@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.hua.activity.R;
-import com.hua.util.DisplayUtils;
-import com.hua.util.LogUtils2;
+import com.hua.utils.DisplayUtils;
+import com.hua.utils.LogUtils2;
 
 import android.R.integer;
 import android.annotation.SuppressLint;

@@ -108,5 +108,70 @@
         <item name="android:smoothScrollbar">true</item>
     </style>
     
+    <!-- SwipeListView的styple -->
+    <style name="drop_down_list_footer_progress_bar_style">
+        <item name="android:minHeight">@dimen/drop_down_list_footer_progress_bar_height</item>
+        <item name="android:maxHeight">@dimen/drop_down_list_footer_progress_bar_height</item>
+    </style>
+    
+    <style name="drop_down_list_footer_font_style">
+        <item name="android:textColor">@color/drop_down_list_footer_font_color</item>
+        <item name="android:textSize">@dimen/drop_down_list_footer_font_size</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+    
+    
+    <style name="myProgressBarStyleLarge">
+　　        <item name="android:indeterminateDrawable">@drawable/progress_large_white</item>
+    </style>
+    
+     <!-- 自定义loading dialog -->
+    <style name="loading_dialog_tran" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+    
+    <style name="title_bar_style">
+        <item name="android:background">@drawable/bg_titlebar</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/title_bar_height</item>
+    </style>
+    
+    
+    <style name="top_update_count">
+        <item name="android:textSize">10.0sp</item>
+        <item name="android:textColor">#ffcc3131</item>
+        <item name="android:gravity">center</item>
+        <item name="android:height">15.0dip</item>
+        <item name="android:width">15.0dip</item>
+    </style>
+    
+    <style name="item_title">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">@color/item_title</item>
+    </style>
+    
+    <style name="item_content">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/ss_comment_from</item>
+    </style>
+    
+     <style name="item_image">
+        <item name="android:background">@drawable/small_image_holder_listpage</item>
+        <item name="android:layout_width">@dimen/item_image_width</item>
+        <item name="android:layout_height">@dimen/item_image_height</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="item_image_gap">
+        <item name="android:layout_width">15.0dip</item>
+        <item name="android:layout_height">1.0dip</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
     
 </resources>

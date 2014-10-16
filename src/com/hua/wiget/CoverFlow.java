@@ -1,6 +1,6 @@
 package com.hua.wiget;
 
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 import android.content.Context;
 import android.graphics.Camera;

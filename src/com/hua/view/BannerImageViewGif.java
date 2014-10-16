@@ -18,7 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import com.hua.activity.R;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 public class BannerImageViewGif extends ImageView implements OnClickListener{
 

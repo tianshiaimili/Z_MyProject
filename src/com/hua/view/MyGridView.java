@@ -10,7 +10,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.GridView;
 import android.widget.ScrollView;
 
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 public class MyGridView extends GridView implements OnScrollListener{
 

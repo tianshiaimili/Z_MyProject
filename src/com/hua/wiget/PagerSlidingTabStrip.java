@@ -43,7 +43,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hua.activity.R;
-import com.hua.util.LogUtils2;
+import com.hua.utils.LogUtils2;
 
 /**
  * 这是首页顶部的指示器
