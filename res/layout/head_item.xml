@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="right"
-        grid:selected_color="#555555"
+        grid:selected_color="#FF6666"
         grid:unselected_color="#55555555"
         grid:shape="oval"
         grid:selected_padding_left="3dp"

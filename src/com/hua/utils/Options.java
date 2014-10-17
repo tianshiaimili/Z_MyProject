@@ -18,6 +18,7 @@ public class Options {
                 .showImageForEmptyUri(R.drawable.base_article_bigimage)
                 // // 设置图片加载/解码过程中错误时候显示的图片
                 .showImageOnFail(R.drawable.base_article_bigimage)
+                //把图片加入缓存
                 .cacheInMemory(true)
                 // 设置下载的图片是否缓存在内存中
                 .cacheOnDisc(true)

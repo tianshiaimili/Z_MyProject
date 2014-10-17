@@ -33,6 +33,14 @@ public class HttpUtil {
         return result;
     }
 
+    /**
+     * 通过HttpClient 加载数据
+     * @param context
+     * @param strUrl 数据url
+     * @param nameValuePairs 
+     * @return
+     * @throws Exception
+     */
     public static String getByHttpClient(Context context, String strUrl,
             NameValuePair... nameValuePairs) throws Exception {
         String result = CustomHttpClient.getFromWebByHttpClient(context, strUrl, nameValuePairs);

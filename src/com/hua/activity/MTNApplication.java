@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
@@ -141,7 +142,7 @@ public class MTNApplication extends BaseApplication {
                         // .discCacheFileNameGenerator(new
                         // HashCodeFileNameGenerator())//将保存的时候的URI名称用HASHCODE加密
                         .tasksProcessingOrder(QueueProcessingType.LIFO)
-                        // .discCacheFileCount(100) //缓存的File数量
+                         .discCacheFileCount(100) //缓存的File数量
                         .discCache(new UnlimitedDiscCache(cacheDir))// 自定义缓存路径
                         .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
                         .imageDownloader(new BaseImageDownloader(context, 5 *
@@ -149,8 +150,15 @@ public class MTNApplication extends BaseApplication {
                         // readTimeout(30)// 超时时间
                         .writeDebugLogs() // Remove for release app
                         .build();
+        
+//        ImageLoader mImageLoader = ImageLoader.getInstance();
+//        mImageLoader.
+        //这样创建默认的ImageLoader配置器
+//        ImageLoaderConfiguration mImageLoaderConfiguration = ImageLoaderConfiguration.createDefault(context);
+        
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config);// 全局初始化此配置
+//        ImageSize mImageSize = new ImageSize(100, 100);
     }
 	
 	

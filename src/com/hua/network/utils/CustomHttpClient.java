@@ -36,6 +36,11 @@ import android.util.Log;
 
 import com.hua.activity.R;
 
+/**
+ * 自定义的HttpClient工具类
+ * @author zero
+ *
+ */
 public class CustomHttpClient {
     private static String TAG = "CustomHttpClient";
     private static final String CHARSET_UTF8 = HTTP.UTF_8;
@@ -101,6 +106,15 @@ public class CustomHttpClient {
         }
     }
 
+    /**
+     * 从html网页上获取json数据 
+     * http://c.m.163.com/nc/article/headline/T1348647909107/0-20.html
+     * @param context
+     * @param url
+     * @param nameValuePairs
+     * @return
+     * @throws Exception
+     */
     public static String getFromWebByHttpClient(Context context, String url,
             NameValuePair... nameValuePairs) throws Exception {
         // http地址
@@ -136,6 +150,18 @@ public class CustomHttpClient {
         }
         cookieStore = httpclient.getCookieStore();
 
+        /////////////////
+        
+//        HttpGet mHttpGet = new HttpGet(sb.toString());
+//        //
+//        DefaultHttpClient mHttpClient = new DefaultHttpClient();
+//        mHttpClient.setParams(new BasicHttpParams());
+//        HttpResponse mHttpResponse = mHttpClient.execute(mHttpGet);
+//        if(mHttpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+//        	String content = EntityUtils.toString(mHttpResponse.getEntity());
+//        }
+        
+        
         return EntityUtils.toString(httpResponse.getEntity());
 
     }

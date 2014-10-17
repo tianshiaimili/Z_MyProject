@@ -6,34 +6,49 @@ import java.util.List;
 public class NewModle extends BaseModle {
     /**
      * 
+     * {"hasCover":false,"hasHead":1,
+     * "replyCount":10257,"hasImg":1,
+     * "digest":"旺角被占领道路交通恢复，在场警员与市民鼓掌欢呼。",
+     * "adTitle":"网易新闻有态度！","hasIcon":false,
+     * "docid":"A8OF785R0001124J",
+     * "title":"香港开始清除旺角\"占中\"路障","order":1,"priority":250,"lmodify":"2014-10-17 10:09:54",
+     * "url_3w":"http://news.163.com/14/1017/09/A8OF785R0001124J.html",
+     * "template":"manual","timeConsuming":"1分钟","alias":"Top News",
+     * "cid":"C1348646712614","url":"http://3g.163.com/news/14/1017/09/A8OF785R0001124J.html",
+     * "hasAD":1,
+     * "source":"新华网","subtitle":"",
+     * "imgsrc":"http://img4.cache.netease.com/3g/2014/10/17/2014101711124264c2d.jpg",
+     * "tname":"头条","ename":"androidnews",
+     * "ptime":"2014-10-17 09:16:31"}
+     * 
      */
     private static final long serialVersionUID = 1L;
     /**
-     * docid
+     * docid 文档ID？
      */
     private String docid;
     /**
-     * ����
+     * 新闻的标题  如"香港开始清除旺角\"占中\"路障"
      */
     private String title;
     /**
-     * С����
+     *新闻的简要说明
      */
     private String digest;
     /**
-     * ͼƬ��ַ
+     * 图片的urlַ
      */
     private String imgsrc;
     /**
-     * ��Դ
+     * 新闻来源 如来自新华网
      */
     private String source;
     /**
-     * ʱ��
+     * 新闻发布时间
      */
     private String ptime;
     /**
-     * TAG
+     * TAG 有可能是"独家"、或者"视频"这样的标签
      */
     private String tag;
     /**

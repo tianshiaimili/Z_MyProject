@@ -11,6 +11,7 @@ import com.hua.utils.ScreenUtils;
 import com.hua.utils.SettingsManager;
 import com.hua.wedget.slidingmenu.SlidingMenu;
 import com.hua.wedget.swiptlistview.SwipeListView;
+import com.nostra13.universalimageloader.core.download.ImageDownloader.Scheme;
 
 public class InitView {
     private static InitView initView;
@@ -55,7 +56,11 @@ public class InitView {
      * @param swipeLayout
      */
     public void initSwipeRefreshLayout(SwipeRefreshLayout swipeLayout) {
-        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+//        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+//                android.R.color.holo_green_light, android.R.color.holo_orange_light,
+//                android.R.color.holo_red_light);
+        
+        swipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light, android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
     }

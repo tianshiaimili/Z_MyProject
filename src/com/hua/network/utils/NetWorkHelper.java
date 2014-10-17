@@ -18,21 +18,38 @@ public class NetWorkHelper {
      * 判断是否有网络连�?
      */
     public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connectivity = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity == null) {
-            return false;
-        } else {
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null) {
-                for (int i = 0; i < info.length; i++) {
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+//        ConnectivityManager connectivity = (ConnectivityManager) context
+//                .getSystemService(Context.CONNECTIVITY_SERVICE);
+//        if (connectivity == null) {
+//            return false;
+//        } else {
+//            NetworkInfo[] info = connectivity.getAllNetworkInfo();
+//            if (info != null) {
+//                for (int i = 0; i < info.length; i++) {
+//                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
+//        return false;
+    	
+    	ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    	if(mConnectivityManager == null){
+    		return false;
+    	}else {
+			
+    		NetworkInfo[] mNetworkInfos = mConnectivityManager.getAllNetworkInfo();
+    		if(mNetworkInfos != null){
+    			for(NetworkInfo networkInfo :mNetworkInfos){
+    				if(networkInfo.getState() == NetworkInfo.State.CONNECTED){
+    					return true;
+    				}
+    			}
+    		}
+    		
+		}
+    	return false;
     }
 
     public static boolean checkNetState(Context context) {

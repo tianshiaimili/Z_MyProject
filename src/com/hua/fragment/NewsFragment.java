@@ -44,6 +44,7 @@ import com.hua.wedget.viewimage.SliderTypes.BaseSliderView;
 import com.hua.wedget.viewimage.SliderTypes.BaseSliderView.OnSliderClickListener;
 import com.hua.wedget.viewimage.SliderTypes.TextSliderView;
 import com.nhaarman.listviewanimations.swinginadapters.AnimationAdapter;
+import com.nhaarman.listviewanimations.swinginadapters.prepared.ScaleInAnimationAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 @EFragment(R.layout.activity_main)
@@ -53,6 +54,9 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
 	 * 头部的横幅滑动布局
 	 */
     protected SliderLayout mDemoSlider;
+    /**
+     *新的Components SwipeRefreshLayout 类似ScrollView
+     */
     @ViewById(R.id.swipe_container)
     protected SwipeRefreshLayout swipeLayout;
     /**
@@ -66,7 +70,7 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
 
     protected HashMap<String, NewModle> newHashMap;
 
-    @Bean
+    @Bean  
     protected NewAdapter newAdapter;
     protected List<NewModle> listsModles;
     private int index = 0;
@@ -78,11 +82,10 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
     }
 
     @AfterInject
-    protected void init() {
+    protected void initVariate() {
 
         listsModles = new ArrayList<NewModle>();
         url_maps = new HashMap<String, String>();
-
         newHashMap = new HashMap<String, NewModle>();
     }
 
@@ -94,9 +97,15 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.head_item, null);
         mDemoSlider = (SliderLayout) headView.findViewById(R.id.slider);
         mListView.addHeaderView(headView);
-        AnimationAdapter animationAdapter = new CardsAnimationAdapter(newAdapter);
-        animationAdapter.setAbsListView(mListView);
-        mListView.setAdapter(animationAdapter);
+        /**
+         * 开发快捷键 ctrl + t 可以查看当前类的结构 包括有那些子类 父类等
+         */
+//        AnimationAdapter animationAdapter = new CardsAnimationAdapter(newAdapter);
+//        animationAdapter.setAbsListView(mListView);
+        AnimationAdapter mAnimationAdapter = new ScaleInAnimationAdapter(newAdapter);
+        mAnimationAdapter.setAbsListView(mListView);
+        mListView.setAdapter(mAnimationAdapter);
+       
         loadData(getNewUrl(index + ""));
 
         mListView.setOnBottomListener(new OnClickListener() {
@@ -109,6 +118,10 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
         });
     }
 
+    /**
+     * 
+     * @param url
+     */
     private void loadData(String url) {
         if (getMyActivity().hasNetWork()) {
             loadNewList(url);
@@ -155,7 +168,7 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
             mDemoSlider.addSlider(textSliderView);
         }
 
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.FlipHorizontal);
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
         newAdapter.appendList(newModles);
@@ -198,17 +211,26 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
         // IntentUtils.startPreviewActivity(getActivity(), intent);
     }
 
+    /**
+     * 相当于用AsynTask 进行异步加载
+     * @param url
+     */
     @Background
     void loadNewList(String url) {
         String result;
         try {
             result = HttpUtil.getByHttpClient(getActivity(), url);
+            LogUtils2.i("result=="+result);
             getResult(result);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * 
+     * @param result
+     */
     @UiThread
     public void getResult(String result) {
         getMyActivity().setCacheStr("NewsFragment" + currentPagte, result);
@@ -221,7 +243,7 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
         swipeLayout.setRefreshing(false);
         List<NewModle> list =
                 NewListJson.instance(getActivity()).readJsonNewModles(result,
-                        Url.TopId);
+                        Url.TopId);  
         if (index == 0) {
             initSliderLayout(list);
         } else {
