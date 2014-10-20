@@ -19,6 +19,11 @@ import android.view.View;
 
 import com.hua.activity.R;
 
+/**
+ * 自定义的饼图 ProgressBar
+ * @author zero
+ *
+ */
 public class ProgressPieView extends View {
 
     public interface OnProgressListener {

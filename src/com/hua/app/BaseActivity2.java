@@ -16,6 +16,7 @@ import com.hua.contants.Url;
 import com.hua.network.utils.HttpUtil;
 import com.hua.utils.ACache;
 import com.hua.utils.DialogUtil;
+import com.hua.utils.LogUtils2;
 import com.hua.wedget.crouton.Crouton;
 import com.hua.wedget.crouton.Style;
 import com.hua.wedget.slideingactivity.IntentUtils;
@@ -163,6 +164,9 @@ public class BaseActivity2 extends SlidingActivity {
         // actityAnim();
     }
 
+    
+    
+    
     /**
      * 判断是否有网络
      * 
@@ -239,6 +243,17 @@ public class BaseActivity2 extends SlidingActivity {
      */
     public void doBack(View view) {
         onBackPressed();
+        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
     }
 
+    
+    @Override
+    public void onBackPressed() {
+    	// TODO Auto-generated method stub
+    	super.onBackPressed();
+    	LogUtils2.e("onBackPressed---------");
+    	overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+    	
+    }
+    
 }

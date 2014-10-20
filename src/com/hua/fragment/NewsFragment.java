@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import com.hua.activity.DetailsActivity_;
 import com.hua.activity.ImageDetailActivity_;
 import com.hua.activity.R;
+import com.hua.adapter.CardsAnimationAdapter;
 import com.hua.adapter.NewAdapter;
 import com.hua.app.BaseActivity2;
 import com.hua.app.BaseFragment2;
@@ -43,8 +44,6 @@ import com.hua.wedget.viewimage.SliderTypes.BaseSliderView;
 import com.hua.wedget.viewimage.SliderTypes.BaseSliderView.OnSliderClickListener;
 import com.hua.wedget.viewimage.SliderTypes.TextSliderView;
 import com.nhaarman.listviewanimations.swinginadapters.AnimationAdapter;
-import com.nhaarman.listviewanimations.swinginadapters.prepared.AlphaInAnimationAdapter;
-import com.nhaarman.listviewanimations.swinginadapters.prepared.ScaleInAnimationAdapter;
 import com.umeng.analytics.MobclickAgent;
 
 @EFragment(R.layout.activity_main)
@@ -102,7 +101,7 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
          */
 //        AnimationAdapter animationAdapter = new CardsAnimationAdapter(newAdapter);
 //        animationAdapter.setAbsListView(mListView);
-        AnimationAdapter mAnimationAdapter = new AlphaInAnimationAdapter(newAdapter);
+        AnimationAdapter mAnimationAdapter = new CardsAnimationAdapter(newAdapter);
         mAnimationAdapter.setAbsListView(mListView);
         mListView.setAdapter(mAnimationAdapter);
        
@@ -186,6 +185,7 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
                 currentPagte = 1;
                 isRefresh = true;
                 loadData(getNewUrl("0"));
+                index = 0;
                 url_maps.clear();
                 mDemoSlider.removeAllSliders();
             }
@@ -247,6 +247,7 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
             isRefresh = false;
             newAdapter.clear();
             listsModles.clear();
+            LogUtils2.d("Index=="+index);
         }
         mProgressBar.setVisibility(View.GONE);
         swipeLayout.setRefreshing(false);

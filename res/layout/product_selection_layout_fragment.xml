@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.vf"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/homebg_color"
+    android:orientation="vertical" >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/tab_bg" />
+
+    <com.hua.weget.LayersLayout
+        android:id="@+id/pro_selection_layerslayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical" >
+
+        <!-- 下拉刷新 -->
+
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/selection_pulltorefreshlistview"
+            style="@style/ListViewStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:drawSelectorOnTop="false"
+            android:fadingEdge="none"
+            android:fadingEdgeLength="0dip"
+            android:paddingRight="0.4dp"
+            android:scrollbarSize="5dip"
+            android:scrollbarThumbVertical="@drawable/scrollbar_vertical_thumb" >
+        </com.handmark.pulltorefresh.library.PullToRefreshListView>
+    </com.hua.weget.LayersLayout>
+
+</LinearLayout>

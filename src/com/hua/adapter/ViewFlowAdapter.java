@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.hua.activity.R;
 import com.hua.contants.Constant;
+import com.hua.utils.LogUtils2;
 
 /**
  * 这是作为首页 banner 的adapter
@@ -43,6 +44,16 @@ public class ViewFlowAdapter extends BaseAdapter {
 		
 	}
 
+	
+	public void setAdapterData(List<Bitmap> bitmaps){
+		if(bitmaps != null){
+			mBitmaps = bitmaps;
+		}else {
+			LogUtils2.e("error ----- not data");
+		}
+		
+	}
+	
 	@Override
 	public int getCount() {
 		return Integer.MAX_VALUE;

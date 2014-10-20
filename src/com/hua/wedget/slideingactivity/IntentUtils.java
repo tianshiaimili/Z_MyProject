@@ -15,8 +15,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.hua.activity.R;
+
 /**
- * Created by chenjishi on 14-3-19.
  */
 public class IntentUtils {
     public static String KEY_PREVIEW_IMAGE = "preview_image";
@@ -46,6 +47,8 @@ public class IntentUtils {
             @Override
             public void run() {
                 context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                
             }
         };
 
@@ -53,7 +56,8 @@ public class IntentUtils {
         Runnable action = new Runnable() {
             @Override
             public void run() {
-                /**
+               ///////////这一段 是用来设置，当点击某个item进入新的activity后，然后可以直接滑动就实现返回上一页////////////////////////////
+            	/**
                  * activity's root layout id, you can change the android.R.id.content to your root
                  * layout id
                  */
@@ -82,6 +86,8 @@ public class IntentUtils {
                         bitmap = null;
                     }
                 }
+                
+                ////////////////////
                 mainThread.post(postAction);
             }
         };

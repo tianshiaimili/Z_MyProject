@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:src="@drawable/xianjian1" />
 
-    <com.hua.wedget.ProgressButton
+    <com.hua.weget.ProgressButton
         android:id="@+id/progressButton"
         style="@style/ProgressButton.1"
         android:layout_width="wrap_content"

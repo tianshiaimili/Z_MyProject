@@ -34,6 +34,11 @@ import com.hua.activity.R;
 import com.hua.utils.LogUtils2;
 import com.hua.wedget.flipview.Recycler.Scrap;
 
+/**
+ * 这是专门用来浏览图片的自定义组件
+ * @author zero
+ *
+ */
 public class FlipView extends FrameLayout {
 
     public interface OnFlipListener {

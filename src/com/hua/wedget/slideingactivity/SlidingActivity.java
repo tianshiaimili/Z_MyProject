@@ -19,7 +19,8 @@ import com.hua.activity.R;
 import com.nineoldandroids.view.ViewHelper;
 
 /**
- * Created by chenjishi on 14-3-17.
+ * 可滑动的activity
+ * 
  */
 public class SlidingActivity extends FragmentActivity {
     private static final float MIN_SCALE = 0.85f;
