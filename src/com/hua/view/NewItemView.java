@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.hua.activity.R;
 import com.hua.bean.NewModle;
+import com.hua.utils.LogUtils2;
 import com.hua.utils.Options;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,9 +32,15 @@ public class NewItemView extends LinearLayout {
     @ViewById(R.id.item_content)
     protected TextView itemConten;
 
+    /**
+     * Listview中单个的Item（包含图片和文字的）
+     */
     @ViewById(R.id.article_top_layout)
     protected RelativeLayout articleLayout;
 
+    /**
+     * 这个就是ListView中包含多个图片（其实就是三张图片）的item
+     */
     @ViewById(R.id.layout_image)
     protected LinearLayout imageLayout;
 
@@ -58,6 +65,13 @@ public class NewItemView extends LinearLayout {
         options = Options.getListOptions();
     }
 
+    /**
+     * 在Adapter中调用 用来设置item
+     * @param titleText 新闻的标题
+     * @param contentText 新闻简介
+     * @param imgUrl  	新闻url
+     * @param currentItem 当前所在的item
+     */
     public void setTexts(String titleText, String contentText, String imgUrl, String currentItem) {
         articleLayout.setVisibility(View.VISIBLE);
         imageLayout.setVisibility(View.GONE);
@@ -80,6 +94,7 @@ public class NewItemView extends LinearLayout {
         articleLayout.setVisibility(View.GONE);
         itemAbstract.setText(newModle.getTitle());
         List<String> imageModle = newModle.getImagesModle().getImgList();
+        LogUtils2.i("imageModle.size=="+imageModle.size());
         imageLoader.displayImage(imageModle.get(0), item_image0, options);
         imageLoader.displayImage(imageModle.get(1), item_image1, options);
         imageLoader.displayImage(imageModle.get(2), item_image2, options);

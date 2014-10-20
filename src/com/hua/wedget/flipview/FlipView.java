@@ -366,6 +366,7 @@ public class FlipView extends FrameLayout {
             }
             if (mCurrentPageIndex >= 0 && mCurrentPageIndex < mPageCount) {
                 fillPageForIndex(mCurrentPage, mCurrentPageIndex);
+                LogUtils2.e("");
                 addView(mCurrentPage.v);
             }
             if (mCurrentPageIndex < mPageCount - 1) {
@@ -675,8 +676,10 @@ public class FlipView extends FrameLayout {
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+	protected void dispatchDraw(Canvas canvas) {
 
+    	LogUtils2.e("mPageCount=="+mPageCount);
+    	
         if (mPageCount < 1) {
             return;
         }
@@ -685,14 +688,21 @@ public class FlipView extends FrameLayout {
             setFlipDistance(mScroller.getCurrY());
         }
 
+        	LogUtils2.e("mIsFlipping = "+mIsFlipping);
+        	LogUtils2.e("!mScroller.isFinished() = "+!mScroller.isFinished());
+        	LogUtils2.e("mPeakAnim = "+mPeakAnim);
+        
         if (mIsFlipping || !mScroller.isFinished() || mPeakAnim != null) {
+        	LogUtils2.e("- - - - - - - - - - ");
             showAllPages();
             drawPreviousHalf(canvas);
             drawNextHalf(canvas);
             drawFlippingHalf(canvas);
         } else {
             endScroll();
+            LogUtils2.d("mCurrentPage.v==-"+mCurrentPage.v);
             setDrawWithLayer(mCurrentPage.v, false);
+            LogUtils2.d("hideOtherPages(mCurrentPage)-------");
             hideOtherPages(mCurrentPage);
             drawChild(canvas, mCurrentPage.v, 0 );
 
@@ -886,6 +896,7 @@ public class FlipView extends FrameLayout {
                 }
             }
         } catch (Exception e) {
+        	LogUtils2.e("find error");
             e.printStackTrace();
         }
     }

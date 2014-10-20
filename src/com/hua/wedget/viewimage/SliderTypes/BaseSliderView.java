@@ -184,6 +184,7 @@ public abstract class BaseSliderView {
 
         mLoadListener.onStart(me);
 
+        //强大的图片下载缓存类库
         Picasso p = Picasso.with(mContext);
         RequestCreator rq = null;
         if (mUrl != null) {

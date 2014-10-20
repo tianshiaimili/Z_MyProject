@@ -1,6 +1,5 @@
 
 package com.hua.activity;
-
 import java.util.List;
 
 import org.androidannotations.annotations.AfterInject;
@@ -15,6 +14,7 @@ import com.hua.adapter.ImageAdapter;
 import com.hua.app.BaseActivity2;
 import com.hua.bean.NewDetailModle;
 import com.hua.bean.NewModle;
+import com.hua.utils.LogUtils2;
 import com.hua.wedget.flipview.FlipView;
 import com.hua.wedget.flipview.FlipView.OnFlipListener;
 import com.hua.wedget.flipview.FlipView.OnOverFlipListener;
@@ -65,6 +65,7 @@ public class ImageDetailActivity extends BaseActivity2 implements OnFlipListener
             mFlipView.setOnOverFlipListener(this);
         } catch (Exception e) {
             e.printStackTrace();
+            LogUtils2.e("ee.getMessage()==="+e.getMessage());
         }
     }
 

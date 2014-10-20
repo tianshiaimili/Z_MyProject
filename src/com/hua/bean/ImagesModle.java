@@ -3,6 +3,11 @@ package com.hua.bean;
 
 import java.util.List;
 
+/**
+ * 包含图片的Url 集合 
+ * @author zero
+ *
+ */
 public class ImagesModle extends BaseModle {
     /**
      * 

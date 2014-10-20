@@ -29,6 +29,12 @@ public class NewListJson extends JsonPacket {
         return newListJson;
     }
 
+    /**
+     * 解析获取的新闻json数据
+     * @param res
+     * @param value
+     * @return
+     */
     public List<NewModle> readJsonNewModles(String res, String value) {
         newModles = new ArrayList<NewModle>();
         try {
@@ -79,7 +85,7 @@ public class NewListJson extends JsonPacket {
 
     /**
      * 解析图片集
-     * 
+     * 返回图片的url集合
      * @param jsonArray
      * @return
      * @throws Exception

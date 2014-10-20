@@ -26,7 +26,6 @@ import android.widget.ProgressBar;
 import com.hua.activity.DetailsActivity_;
 import com.hua.activity.ImageDetailActivity_;
 import com.hua.activity.R;
-import com.hua.adapter.CardsAnimationAdapter;
 import com.hua.adapter.NewAdapter;
 import com.hua.app.BaseActivity2;
 import com.hua.app.BaseFragment2;
@@ -44,6 +43,7 @@ import com.hua.wedget.viewimage.SliderTypes.BaseSliderView;
 import com.hua.wedget.viewimage.SliderTypes.BaseSliderView.OnSliderClickListener;
 import com.hua.wedget.viewimage.SliderTypes.TextSliderView;
 import com.nhaarman.listviewanimations.swinginadapters.AnimationAdapter;
+import com.nhaarman.listviewanimations.swinginadapters.prepared.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.swinginadapters.prepared.ScaleInAnimationAdapter;
 import com.umeng.analytics.MobclickAgent;
 
@@ -102,7 +102,7 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
          */
 //        AnimationAdapter animationAdapter = new CardsAnimationAdapter(newAdapter);
 //        animationAdapter.setAbsListView(mListView);
-        AnimationAdapter mAnimationAdapter = new ScaleInAnimationAdapter(newAdapter);
+        AnimationAdapter mAnimationAdapter = new AlphaInAnimationAdapter(newAdapter);
         mAnimationAdapter.setAbsListView(mListView);
         mListView.setAdapter(mAnimationAdapter);
        
@@ -119,7 +119,7 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
     }
 
     /**
-     * 
+     * 加载数据 
      * @param url
      */
     private void loadData(String url) {
@@ -136,6 +136,10 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
         }
     }
 
+    /**
+     * 一开始初始化 
+     * @param newModles
+     */
     private void initSliderLayout(List<NewModle> newModles) {
 
         if (!isNullString(newModles.get(0).getImgsrc()))
@@ -194,10 +198,15 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
         enterDetailActivity(newModle);
     }
 
+    /**
+     * 点解item后跳转到详细页面
+     * @param newModle
+     */
     public void enterDetailActivity(NewModle newModle) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("newModle", newModle);
         Class<?> class1;
+//        Class<?> class2;
        if (newModle.getImagesModle() != null && newModle.getImagesModle().getImgList().size() > 1) {
     	   LogUtils2.d("ImageDetailActivity_----------------");
             class1 = ImageDetailActivity_.class;
@@ -228,7 +237,7 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
     }
 
     /**
-     * 
+     * 在主线程中 实现数据显示
      * @param result
      */
     @UiThread
