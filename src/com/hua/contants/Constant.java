@@ -28,6 +28,11 @@ public class Constant {
 		"火影忍着","海贼王","刀剑神域","起风了"
 	};
 	
+	/**
+	 * banner上的标题
+	 */
+	public  static final String[] TITLES = { "体育", "发现", "物流", "热门" };
+	
 	
 	public static String[] recommend_msg = new String[] { "火影忍者", "海贼王", "黑子的篮球", "死神",
 		"火影忍者", "海贼王", "黑子的篮球", "死神","死神","德玛西亚","黑子的篮球", "死神"

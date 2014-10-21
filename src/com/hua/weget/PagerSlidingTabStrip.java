@@ -43,6 +43,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hua.activity.R;
+import com.hua.contants.Constant;
 import com.hua.utils.LogUtils2;
 
 /**
@@ -135,7 +136,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	/**
 	 * 标题组
 	 */
-	private final String[] titles = { "精选", "发现", "榜单", "团购" };
+	private final String[] titles = Constant.TITLES;//{ "精选", "发现", "榜单", "团购" };
 	
 	/**
 	 * 定义一个全局的上下文

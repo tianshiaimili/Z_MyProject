@@ -23,11 +23,13 @@ import android.widget.TextView;
 import com.hua.activity.MTNApplication;
 import com.hua.activity.R;
 import com.hua.app.BaseFragment;
+import com.hua.contants.Constant;
 import com.hua.homefragment.subfragment.Fragment01;
 import com.hua.homefragment.subfragment.ContactsFragment;
 import com.hua.homefragment.subfragment.FoundFragment;
 import com.hua.homefragment.subfragment.FourFragment;
 import com.hua.homefragment.subfragment.Fragment02;
+import com.hua.homefragment.subfragment.SportFragment;
 import com.hua.utils.LogUtils2;
 import com.hua.view.MyScrollView;
 import com.hua.weget.PagerSlidingTabStrip;
@@ -68,7 +70,8 @@ public class HomeFragment extends BaseFragment implements
 	 * 聊天界面的Fragment
 	 */
 //	private Fragment01 chatFragment;
-	private Fragment02 chatFragment;
+//	private Fragment02 chatFragment;
+	private SportFragment chatFragment;
 
 	/**
 	 * 发现界面的Fragment
@@ -88,7 +91,7 @@ public class HomeFragment extends BaseFragment implements
 	/**
 	 * 标题组
 	 */
-	private final String[] titles = { "精选", "发现", "榜单", "团购" };
+//	private final String[] titles = { "精选", "发现", "榜单", "团购" };
 
 	private MyPagerAdapter myPagerAdapter;
 	/**
@@ -357,7 +360,11 @@ public class HomeFragment extends BaseFragment implements
 				if (chatFragment == null) {
 					LogUtils2.i("******chatFragment******");
 //					chatFragment = new Fragment01();
-					chatFragment = new Fragment02();
+//					chatFragment = new Fragment02();
+					chatFragment = new SportFragment();
+					
+					
+					
 					// MTNApplication.startFragment(getCurFragment(),
 					// chatFragment);
 				}
@@ -408,7 +415,7 @@ public class HomeFragment extends BaseFragment implements
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return titles.length;
+			return Constant.TITLES.length;
 		}
 
 		
@@ -416,7 +423,7 @@ public class HomeFragment extends BaseFragment implements
 		@Override
 		public CharSequence getPageTitle(int position) {
 			// TODO Auto-generated method stub
-			return titles[position];
+			return Constant.TITLES[position];
 		}
 
 	}

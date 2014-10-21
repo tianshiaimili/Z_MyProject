@@ -6,10 +6,10 @@
     android:background="@color/homebg_color"
     android:orientation="vertical" >
 
-    <View
+  <!--   <View
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/tab_bg" />
+        android:background="@drawable/tab_bg" /> -->
 
     <com.hua.weget.LayersLayout
         android:id="@+id/pro_selection_layerslayout"

@@ -1,6 +1,7 @@
 package com.hua.homefragment.subfragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Timer;
@@ -17,28 +18,39 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.hua.activity.DetailsActivity_;
+import com.hua.activity.ImageDetailActivity_;
 import com.hua.activity.MTNApplication;
 import com.hua.activity.R;
 import com.hua.adapter.HomeSubFragment1_ListViewBaseAdater;
+import com.hua.adapter.ProductSlectionAdapter;
 import com.hua.adapter.ViewFlowAdapter;
 import com.hua.androidos.HandlerTimer;
+import com.hua.app.BaseActivity2;
 import com.hua.app.BaseFragment2;
+import com.hua.bean.NewModle;
 import com.hua.contants.Constant;
+import com.hua.contants.Url;
+import com.hua.network.http.json.NewListJson;
+import com.hua.network.utils.HttpUtil;
 import com.hua.utils.FragmentUtils;
 import com.hua.utils.FragmentUtils.FragmentTabSwitcherFeed;
 import com.hua.utils.FragmentUtils.FragmentTabSwitcherWithoutZorder;
 import com.hua.utils.LogUtils2;
 import com.hua.utils.MyImageLoader.MyLoadImageTask;
+import com.hua.utils.StringUtils;
 import com.hua.view.ElasticScrollView;
 import com.hua.view.MyGridView;
 import com.hua.view.MyViewPager;
@@ -53,11 +65,12 @@ import com.hua.weget.ViewFlow;
  * 这是homefragment中viewpager的首页
  * 
  */
-public class Fragment03 extends BaseFragment2 {
+public class SportFragment extends BaseFragment2 {
 
 	protected static final int START_BAR = 9;
 
 	private static final int BANNER_NUM = 3;
+	private static final int RESPONSE_OK = 200;
 	/**
 	 * 弹性scrollview
 	 */
@@ -105,12 +118,30 @@ public class Fragment03 extends BaseFragment2 {
 	private ViewFlow mViewFlow; // 进行图片轮播的viewFlow
 	private CircleFlowIndicator mCircleFlowIndicator;
 	private ViewFlowAdapter mViewFlowAdapter;
+	private ProductSlectionAdapter mProductSlectionAdapter;
+	// protected ProgressBar mProgressBar;
+	/**
+	 * 用来存储图片的url
+	 */
+	protected HashMap<String, String> url_maps;
+	/**
+	 * 已图片的url作为key 然后保存数据对象
+	 */
+	protected HashMap<String, NewModle> newHashMap;
+	/**
+	 * 读取网络数据后 设置到po对象中，形成一个list集合
+	 */
+	protected List<NewModle> listsModles;
 	/**
 	 * 自定义图层，用于对触屏事件进行重定向,整个Linearlayout
 	 */
 	private LayersLayout mLayersLayout;
 	private View mContentView;
 	private Context mContext;
+	/**
+	 * 用来做加载第几页的标记
+	 */
+	private int index = 0;
 	/**
 	 * bar横幅图片的list
 	 */
@@ -125,18 +156,19 @@ public class Fragment03 extends BaseFragment2 {
 	private MyLoadImageTask myLoadImageTask = new MyLoadImageTask();
 
 	private FixedSpeedScroller mScroller;
+	private boolean isRefresh = false;
+	private MyOnitemClickListener mOnitemClickListener;
 
 	/**
 	 * 用来判断是否关闭定时器
 	 */
 	private SharedPreferences mPreferences;
 
-	Handler handler = new Handler() {
+	Handler mHandler = new Handler() {
 		public void handleMessage(Message message) {
 			int what = message.what;
 			int numchange = what;
 			LogUtils2.i("what==" + what);
-
 			switch (what) {
 
 			case START_BAR:
@@ -148,29 +180,41 @@ public class Fragment03 extends BaseFragment2 {
 					adapter.notifyDataSetChanged();
 
 				}
-			case BANNER_NUM:
 
-				LogUtils2.d("wwwwww+==" + Constant.bannerImageViews.size());
-				LogUtils2.d("bbbbbb+==" + Constant.bannerBitmaps.size());
-				// adapter = new
-				// HomeSubFragment1_ListViewBaseAdater(getActivity(),
-				// Constant.bannerImageViews,barImageList);
-				adapter = new HomeSubFragment1_ListViewBaseAdater(
-						getActivity(), mImageViewList, barImageList,
-						Constant.bannerBitmaps);
-				contentListView.setAdapter(adapter);
-				if (!mPreferences.getBoolean("isCanel", false))
-					;
-				adapter.startViewPagerTimer2();
-
-				adapter.notifyDataSetChanged();
+			case RESPONSE_OK:
+				String result = (String) message.obj;
+				getResult(result);
 				break;
+
 			default:
 				break;
 			}
 
 		};
 	};
+
+	/**
+	 * 获取数据后刷新页面 重新布局页面数据
+	 * 
+	 * @param result
+	 */
+	public void getResult(String result) {
+		getMyActivity().setCacheStr("TiYuFragment" + currentPagte, result);
+		if (isRefresh) {
+			isRefresh = false;
+			mProductSlectionAdapter.clear();
+			listsModles.clear();
+		}
+		List<NewModle> list = NewListJson.instance(getActivity())
+				.readJsonNewModles(result, Url.TiYuId);
+		if (index == 0) {
+			initDatasCollections(list);
+		} else {
+			mProductSlectionAdapter.appendList(list,index);
+		}
+		listsModles.addAll(list);
+		// mListView.onBottomComplete();
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -184,66 +228,57 @@ public class Fragment03 extends BaseFragment2 {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		LogUtils2.e("******onCreateView********");
+		LogUtils2.e("******index******** == "+index);
+		
+		init();
 		mContentView = inflater.inflate(
 				R.layout.product_selection_layout_fragment, null);
 		initComponents(mContext, mContentView);
-		// contentListView = mPullRefreshListView.getRefreshableView();
-
-		// 造1个 假数据
-		for (int i = 0; i < 80; i++) {
-			ImageView imageView = new ImageView(getActivity());
-			imageView.setImageResource(R.drawable.icon_1_n);
-			barList.add(imageView);
-		}
-
-		mPullRefreshListView
-				.setOnRefreshListener(new OnRefreshListener<ListView>() {
-					@Override
-					public void onRefresh(
-							PullToRefreshBase<ListView> refreshView) {
-
-						String label = DateUtils.formatDateTime(getActivity(),
-								System.currentTimeMillis(),
-								DateUtils.FORMAT_SHOW_TIME
-										| DateUtils.FORMAT_SHOW_DATE
-										| DateUtils.FORMAT_ABBREV_ALL);
-
-						// Update the LastUpdatedLabel
-						refreshView.getLoadingLayoutProxy()
-								.setLastUpdatedLabel(label);
-
-						// Do work to refresh the list here.
-						new GetDataTask().execute();
-					}
-				});
-
-		mHeaderViewLayout = (LinearLayout) LayoutInflater.from(getActivity())
-				.inflate(R.layout.home_subfragment02_header_item, null);
-		// headerViewLayout = (LinearLayout) subView;
-
-		initSubView(getActivity(), mHeaderViewLayout);
-
-		/**
-		 * 设置广告横幅走动
-		 */
-
 		return mContentView;
 	}
 
 	private void initComponents(Context context, View mView) {
-
 		mLayersLayout = (LayersLayout) mView
 				.findViewById(R.id.pro_selection_layerslayout);
 		mPullRefreshListView = (PullToRefreshListView) mContentView
 				.findViewById(R.id.selection_pulltorefreshlistview);
+		mPullRefreshListView.setMode(Mode.BOTH);
 		mListView = mPullRefreshListView.getRefreshableView();
-		mPullRefreshListView
-				.setOnRefreshListener(new OnRefreshListener<ListView>() {
-					@Override
-					public void onRefresh(
-							PullToRefreshBase<ListView> refreshView) {
+		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener2() {
 
+			@Override
+			public void onPullDownToRefresh(final PullToRefreshBase refreshView) {
+
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+
+						String label = DateUtils.formatDateTime(getActivity(),
+								System.currentTimeMillis(),
+								DateUtils.FORMAT_SHOW_TIME
+										| DateUtils.FORMAT_SHOW_DATE
+										| DateUtils.FORMAT_ABBREV_ALL);
+						refreshView.getLoadingLayoutProxy()
+								.setLastUpdatedLabel(label);
+						LogUtils2.i("onPullDownToRefresh------");
+						currentPagte = 1;
+						index = 0;
+						loadData(getCommonUrl(index + "", Url.TiYuId));
+						url_maps.clear();
+						mProductSlectionAdapter.clear();
+						listsModles.clear();
+					}
+				}, 2000);
+
+			}
+
+			@Override
+			public void onPullUpToRefresh(final PullToRefreshBase refreshView) {
+
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
 						String label = DateUtils.formatDateTime(getActivity(),
 								System.currentTimeMillis(),
 								DateUtils.FORMAT_SHOW_TIME
@@ -254,10 +289,15 @@ public class Fragment03 extends BaseFragment2 {
 						refreshView.getLoadingLayoutProxy()
 								.setLastUpdatedLabel(label);
 
-						// Do work to refresh the list here.
-						new GetDataTask().execute();
+						currentPagte++;
+						index = index + 20;
+						loadData(getCommonUrl(index + "", Url.TiYuId));
 					}
-				});
+				}, 2000);
+
+			}
+		});
+
 		LayoutInflater mLayoutInflater = LayoutInflater.from(context);
 		View headerView = mLayoutInflater.inflate(R.layout.viewflow, null);
 		mViewFlow = (ViewFlow) headerView.findViewById(R.id.viewflow);// 获得viewFlow对象
@@ -268,34 +308,125 @@ public class Fragment03 extends BaseFragment2 {
 		mViewFlow.setSelection(3 * 1000); // 设置初始位置
 		// mViewFlow.startAutoFlowTimer(); // 启动自动播放
 		mViewFlow.scheduleRepeatExecution(3000, 3000);
-		mViewFlowAdapter = new ViewFlowAdapter(getActivity());
+		mViewFlowAdapter = ViewFlowAdapter.getInstance(mContext);
 		mViewFlow.setAdapter(mViewFlowAdapter);
 		mLayersLayout.setView(mViewFlow); // 将viewFlow对象传递给自定义图层，用于对事件进行重定向
+		mListView.addHeaderView(headerView);
+		mProductSlectionAdapter = ProductSlectionAdapter.instanceAdapter(mContext,index);
+		mListView.setAdapter(mProductSlectionAdapter);
+		mListView.setOnItemClickListener(mOnitemClickListener);
+		loadData(getCommonUrl(index + "", Url.TiYuId));
+	}
 
+	/**
+	 * 根据url加载数据
+	 * 
+	 * @param commonUrl
+	 */
+	private void loadData(String commonUrl) {
+
+		if (getMyActivity().hasNetWork()) {
+			LogUtils2.d("**********index+++== "+index);
+			loadNewList(commonUrl);
+		} else {
+			mPullRefreshListView.onRefreshComplete();
+			// mProgressBar.setVisibility(View.GONE);
+			getMyActivity().showShortToast(getString(R.string.not_network));
+			String result = getMyActivity().getCacheStr(
+					"TiYuFragment" + currentPagte);
+			if (!StringUtils.isEmpty(result)) {
+				Message msg = new Message();
+				msg.what = RESPONSE_OK;
+				msg.obj = result;
+				mHandler.sendMessage(msg);
+				// getResult(result);
+			}
+		}
+
+	}
+
+	/**
+	 * 
+	 * @param url
+	 */
+	// TODO
+	private void loadNewList(String url) {
+		String result;
+		try {
+			new GetDataTask().execute(url);
+		} catch (Exception e) {
+			e.printStackTrace();
+			LogUtils2.e("error -----");
+		}
+	}
+
+	/**
+	 * 初始化 变量
+	 */
+	protected void init() {
+		listsModles = new ArrayList<NewModle>();
+		url_maps = new HashMap<String, String>();
+		newHashMap = new HashMap<String, NewModle>();
+		mOnitemClickListener = new MyOnitemClickListener();
+	}
+
+	private void initDatasCollections(List<NewModle> newModles) {
+
+		if (!isNullString(newModles.get(0).getImgsrc()))
+			newHashMap.put(newModles.get(0).getImgsrc(), newModles.get(0));
+		if (!isNullString(newModles.get(1).getImgsrc()))
+			newHashMap.put(newModles.get(1).getImgsrc(), newModles.get(1));
+		if (!isNullString(newModles.get(2).getImgsrc()))
+			newHashMap.put(newModles.get(2).getImgsrc(), newModles.get(2));
+		if (!isNullString(newModles.get(3).getImgsrc()))
+			newHashMap.put(newModles.get(3).getImgsrc(), newModles.get(3));
+
+		if (!isNullString(newModles.get(0).getImgsrc()))
+			url_maps.put(/*newModles.get(0).getTitle()*/0+"", newModles.get(0)
+					.getImgsrc());
+		if (!isNullString(newModles.get(1).getImgsrc()))
+			url_maps.put(/*newModles.get(1).getTitle()*/1+"", newModles.get(1)
+					.getImgsrc());
+		if (!isNullString(newModles.get(2).getImgsrc()))
+			url_maps.put(/*newModles.get(2).getTitle()*/2+"", newModles.get(2)
+					.getImgsrc());
+		if (!isNullString(newModles.get(3).getImgsrc()))
+			url_maps.put(/*newModles.get(3).getTitle()*/3+"", newModles.get(3)
+					.getImgsrc());
+
+		for (String name : url_maps.keySet()) {
+			// TextSliderView textSliderView = new
+			// TextSliderView(getActivity());
+			// textSliderView.setOnSliderClickListener(this);
+			// textSliderView
+			// .description(name)
+			// .image(url_maps.get(name));
+			//
+			// textSliderView.getBundle()
+			// .putString("extra", name);
+			// mDemoSlider.addSlider(textSliderView);
+		}
+
+		// mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+		// mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
+		// mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+		LogUtils2.i("*****mViewFlowAdapter.setAdapterData********");
+//		mViewFlowAdapter.setAdapterData(newHashMap, url_maps);
+		mProductSlectionAdapter.appendList(newModles,index);
 	}
 
 	// ///
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		// 获得服务端广告图片，这里我们就简单的直接取本地数据
 		super.onActivityCreated(savedInstanceState);
-		// contentListView.setAdapter(adapter);
-		// if(!adapter.isCanel())
-		// adapter.startViewPagerTimer();
-		// mPullRefreshListView.set
-		// /
-		// getCategoryData();
-		// /
-		// getRecommendData();
 
 	}
 
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
-
+		LogUtils2.e("******onResume********");
 		LogUtils2.e("777777777777777777777777777777");
 
 		if (adapter != null) {
@@ -309,7 +440,6 @@ public class Fragment03 extends BaseFragment2 {
 
 	@Override
 	public void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 		if (adapter != null) {
 			LogUtils2.e("pause--------------");
@@ -318,8 +448,6 @@ public class Fragment03 extends BaseFragment2 {
 			}
 
 			LogUtils2.d("setviewpager--------------");
-			// HomeSubFragment1_ListViewBaseAdater.setViewPager();
-			// LogUtils2.e("pause=====mViewPager="+mViewPager.getCurrentItem());
 
 		}
 
@@ -331,7 +459,6 @@ public class Fragment03 extends BaseFragment2 {
 	 * @param context
 	 */
 	private void initSubView(Context context, View view) {
-		// TODO Auto-generated method stub
 		// viewPager = (ViewPager) view.findViewById(R.id.vp_ad2);
 		// tv_title = (TextView) view.findViewById(R.id.tv_title2);
 		getAdData();
@@ -363,7 +490,7 @@ public class Fragment03 extends BaseFragment2 {
 
 			barImageList = list;
 			mImageViewList = Constant.bannerImageViews;
-			handler.sendMessage(handler.obtainMessage(BANNER_NUM));
+			mHandler.sendMessage(mHandler.obtainMessage(BANNER_NUM));
 
 		}
 	}
@@ -375,12 +502,6 @@ public class Fragment03 extends BaseFragment2 {
 	 */
 	private void getCategoryData() {
 
-		// gv_category.setSelector(new ColorDrawable(Color.TRANSPARENT));
-		// LogUtils2.d(" getCategoryData()......");
-		// gv_category.setAdapter(new
-		// HomeSubFragment1_GridViewAdater(getActivity(), new
-		// ShopAppApplication().mDatas));
-
 	}
 
 	//
@@ -388,32 +509,8 @@ public class Fragment03 extends BaseFragment2 {
 	 * 获取gridView推荐漫画的数据
 	 */
 	private void getRecommendData() {
-		// final List<CategoryInfo> list2 = new ArrayList<CategoryInfo>();
-		// for (int i = 0; i < Constant.recommend_icon.length; i++) {
-		// CategoryInfo categoryInfo = new CategoryInfo();
-		// categoryInfo.setIcon(Constant.recommend_icon[i]);
-		// categoryInfo.setMsg(Constant.recommend_msg[i]);
-		// list2.add(categoryInfo);
-		// }
-		// gv_recommend.setSelector(new ColorDrawable(Color.TRANSPARENT));
-		// gv_recommend.setAdapter(new HF01_RecommendAdapter(getActivity(),
-		// list2));
-		// gv_recommend.setOnItemClickListener(new OnItemClickListener() {
-		//
-		// @Override
-		// public void onItemClick(AdapterView<?> parent, View view,
-		// int position, long id) {
-		// // TODO Auto-generated method stub
-		// Toast.makeText(getActivity(), "您选中："+list2.get(position).getMsg(),
-		// 300).show();
-		// changeFragment(ITEM_BAR);
-		// }
-		// });
 	}
 
-	//
-
-	//
 	// /**
 	// * 初始化 选想起
 	// */
@@ -467,17 +564,20 @@ public class Fragment03 extends BaseFragment2 {
 
 	//
 
-	private class GetDataTask extends AsyncTask<Void, Void, String> {
+	private class GetDataTask extends AsyncTask<String, Void, String> {
 		// 后台处理部分
 		@Override
-		protected String doInBackground(Void... params) {
-			// Simulates a background job.
+		protected String doInBackground(String... params) {
+			String result = null;
 			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
+				result = HttpUtil.getByHttpClient(mContext, params[0]);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				LogUtils2.e("GetDataTask get Data error ----");
 			}
-			String str = "Added after refresh..." + (count++) + " add";
-			return str;
+			LogUtils2.i("get data from network result == " + result);
+			return result;
 		}
 
 		// 这里是对刷新的响应，可以利用addFirst（）和addLast()函数将新加的内容加到LISTView中
@@ -485,16 +585,57 @@ public class Fragment03 extends BaseFragment2 {
 		@Override
 		protected void onPostExecute(String result) {
 			// 在头部增加新添内容
-			// mListItems.addFirst(result);
-
-			// 通知程序数据集已经改变，如果不做通知，那么将不会刷新mListItems的集合
-			// mAdapter.notifyDataSetChanged();
-			// Call onRefreshComplete when the list has been refreshed.
-			Toast.makeText(getActivity(), "lal", 300).show();
-			mPullRefreshListView.onRefreshComplete();
-
+			// Toast.makeText(getActivity(), "lal", 300).show();
 			super.onPostExecute(result);// 这句是必有的，AsyncTask规定的格式
+			if (mPullRefreshListView != null) {
+
+				mPullRefreshListView.onRefreshComplete();
+			}
+			Message msg = new Message();
+			msg.obj = result;
+			msg.what = RESPONSE_OK;
+			mHandler.sendMessage(msg);
 		}
 	}
 
+	/**
+	 * 
+	 * @author zero
+	 * 
+	 */
+	class MyOnitemClickListener implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			NewModle newModle = listsModles.get(position-2);
+			enterDetailActivity(newModle);
+		}
+
+	}
+
+	// protected void onItemClick(int position) {
+	// NewModle newModle = listsModles.get(position - 1);
+	// enterDetailActivity(newModle);
+	// }
+
+	public void enterDetailActivity(NewModle newModle) {
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("newModle", newModle);
+		Class<?> class1;
+		if (newModle.getImagesModle() != null
+				&& newModle.getImagesModle().getImgList().size() > 1) {
+			// class1 = ImageDetailActivity_.class;
+			class1 = ImageDetailActivity_.class;
+		} else {
+			class1 = DetailsActivity_.class;
+		}
+		((BaseActivity2) getActivity()).openActivity(class1, bundle, 0);
+	}
+
+	public int getIndex(){
+		LogUtils2.d("********index==***== "+index);
+		return index;
+	}
+	
 }

@@ -76,7 +76,7 @@ public class PlayHistoryFragment extends Fragment {
 			switch (whatCode) {
 			case REFRESH_ADAPTER_DATA:
 				mListView.requestLayout();
-				mViewFlowAdapter = new ViewFlowAdapter(getActivity());
+				mViewFlowAdapter = ViewFlowAdapter.getInstance(getActivity());
 				mViewFlow.setAdapter(mViewFlowAdapter); // 对viewFlow添加图片
 				
 				mPullToRefreshListAdapter = new PlayHistoryRefreshListAdapter(

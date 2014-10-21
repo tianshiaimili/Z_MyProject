@@ -6,137 +6,140 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.hua.activity.R;
-import com.hua.model.AppData.TrueAppData;
+import com.hua.bean.NewModle;
 import com.hua.network.utils.LogUtils2;
+import com.hua.view.NewItemView;
+import com.hua.view.NewItemView_;
 
 public class ProductSlectionAdapter extends BaseAdapter {
 	
-	private static final String SUFFIX_DOWN = "万人下载 |";
-	private static final String SUFFIX_SIZE = "M";
 	private Context context;
-	private List<TrueAppData> mDataList;
+	private List<NewModle> mDataList = new ArrayList<NewModle>();
 	private LayoutInflater mInflater;
-	private final List<String> urlLists = new ArrayList<String>();
-
-	public ProductSlectionAdapter(Context context,List<TrueAppData > list) {
+	private String currentItem;
+	private static ProductSlectionAdapter mProductSlectionAdapter;
+	private int mIndex = 0;
+	private int oldIndex = -1;
+	public ProductSlectionAdapter(Context context,List<NewModle > list) {
 		this.context = context;
 		this.mDataList = list;
 		this.mInflater = LayoutInflater.from(context);
 	}
 
-	@Override
-	public int getCount() {
-//		return contentStr.length;
-		return mDataList != null?mDataList.size():0;
-	}
-
-	@Override
-	public Object getItem(int position) {
-		return mDataList.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return 0;
-	}
-
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-
-//		TextView contentTv;
-		ViewHolder mViewHolder;
-		TrueAppData trueAppData = null;
-		String tempDownUrl= null;
-		if(position == 0){
+	public ProductSlectionAdapter(Context context,int index){
+		this.context = context;
+		this.mIndex = index;
+		if(mDataList == null){
+			mDataList = new ArrayList<NewModle>();
 			
-			LogUtils2.d("convertView----"+convertView);
-			LogUtils2.d("first---------------");
-			convertView = mInflater.inflate(R.layout.under_banner_layout, null);
-			mViewHolder = new ViewHolder();
-			mViewHolder.categoryView = convertView;
-			convertView.setTag(mViewHolder);
-			return convertView;
+		LogUtils2.i("");
+		}else {
+			mDataList = getAdapterDataLists();
 			
 		}
-		
-		if(mDataList.size() >0){
-			trueAppData = mDataList.get(position);
-		}
-		
-		if (convertView != null && ((ViewHolder)convertView.getTag()).tempAppName != null) {
-//			LogUtils2.e("text2222222--"+convertView);
-			mViewHolder = (ViewHolder) convertView.getTag();
-//			return convertView;
-		} else {
-//			mViewHolder = new TextView(context);
-			mViewHolder = new ViewHolder();
-//			convertView =  new TextView(context);
-			convertView = mInflater.inflate(R.layout.playhistory_item, null);
-			mViewHolder.tempImageView = (ImageView) convertView.findViewById(R.id.ph_imageview);
-			mViewHolder.tempAppName = (TextView) convertView.findViewById(R.id.playhistory_textview_title);
-			mViewHolder.tempAppScoreRatingBar = (RatingBar) convertView.findViewById(R.id.ph_ratingBar1);
-			mViewHolder.tempDownNum = (TextView) convertView.findViewById(R.id.ph_downnum);
-			mViewHolder.tempAppSize = (TextView) convertView.findViewById(R.id.ph_app_size);
-			mViewHolder.tempComment = (TextView) convertView.findViewById(R.id.ph_comment);
-			mViewHolder.tempAppDownButton = (Button) convertView.findViewById(R.id.ph_downbutton);
-		}
-		mViewHolder.tempImageView.setImageBitmap(trueAppData.getAppIco());
-		mViewHolder.tempAppName.setText(trueAppData.getAppName());
-		mViewHolder.tempAppScoreRatingBar.setRating(Float.parseFloat(trueAppData.getAppScore()));
-		mViewHolder.tempDownNum.setText(trueAppData.getAppDownLoadNum()+SUFFIX_DOWN);
-		mViewHolder.tempAppSize.setText(trueAppData.getAppSize()+SUFFIX_SIZE);
-		mViewHolder.tempComment.setText(trueAppData.getAppComment());
-		tempDownUrl = trueAppData.getAppDowmUrl();
-		mViewHolder.tempAppDownButton.setOnClickListener(new MyOnClickListener(tempDownUrl));
-		convertView.setTag(mViewHolder);
-//		LogUtils2.e("textviiii----"+convertView);
-		return convertView;
 	}
 	
 	
-	class ViewHolder{
+	public static ProductSlectionAdapter instanceAdapter(Context context,int index){
 		
-		ImageView tempImageView;
-		View categoryView;
-//		TextView tempTextView;
-		TextView tempAppName;
-		TextView tempAppScore;
-		TextView tempDownNum;
-		TextView tempAppSize;
-		TextView tempComment;
-		Button tempAppDownButton;
-		RatingBar tempAppScoreRatingBar;
-		
+		if(mProductSlectionAdapter == null){
+			mProductSlectionAdapter = new ProductSlectionAdapter(context,index);
+		}
+		return mProductSlectionAdapter;
 		
 	}
 	
+	 public void appendList(List<NewModle> list,int index) {
+		 LogUtils2.d("list---"+list.size());
+//	        if (!mDataList.contains(list.get(0)) && list != null && list.size() > 0) {
+//	        	mDataList.addAll(list);
+//	        	LogUtils2.d("mDataList---"+mDataList.size());
+//	        }
+		   if (index != oldIndex && list != null && list.size() > 0) {
+	        	mDataList.addAll(list);
+	        	LogUtils2.d("mDataList---"+mDataList.size());
+	        }
+	        oldIndex = index;
+	        notifyDataSetChanged();
+	    }
 	
-	class MyOnClickListener implements OnClickListener{
+	/**
+	 * 设置adapter的数据
+	 * @param dataList
+	 */
+	public void setAdapterData(List<NewModle> dataList){
+		if(dataList != null){
+			mDataList = dataList;
+			  notifyDataSetChanged();
+		}else {
+			LogUtils2.e("not data ------");
+		}
+	}
+	
+	/**
+	 * 设置adapter中的数据集合 以便保存着状态 ，不用每次都新建
+	 * @return
+	 */
+	public List<NewModle> getAdapterDataLists(){
+		return mDataList;
+	}
+	
+	public void setAdapterDataLists(List<NewModle> dataList){
+		mDataList = dataList;
+	}
+	
+	/**
+	 * 清除adapter中的数据
+	 */
+	 public void clear() {
+	        mDataList.clear();
+	        notifyDataSetChanged();
+	    }
+	
 
-		String temUrl = null;
-		
-		public MyOnClickListener(String url){
-			temUrl = url;
-		}
-		
-		@Override
-		public void onClick(View v) {
-			
-			Toast.makeText(context, "Url=="+temUrl, 300).show();
-			
-		}
-		
-	}
+	    public void currentItem(String item) {
+	        this.currentItem = item;
+	    }
+
+	    @Override
+	    public int getCount() {
+	        return mDataList.size();
+	    }
+
+	    @Override
+	    public Object getItem(int position) {
+	        return mDataList.get(position);
+	    }
+
+	    @Override
+	    public long getItemId(int position) {
+	        return position;
+	    }
+
+	    @Override
+	    public View getView(int position, View convertView, ViewGroup parent) {
+
+	        NewItemView newItemView;
+
+	        if (convertView == null) {
+	            newItemView = NewItemView_.build(context);
+	        } else {
+	            newItemView = (NewItemView) convertView;
+	        }
+
+	        NewModle newModle = mDataList.get(position);
+	        if (newModle.getImagesModle() == null) {
+	            newItemView.setTexts(newModle.getTitle(), newModle.getDigest(),
+	                    newModle.getImgsrc(), currentItem);
+	        } else {
+	            newItemView.setImages(newModle);
+	        }
+
+	        return newItemView;
+	    }
 	
 	
 }
