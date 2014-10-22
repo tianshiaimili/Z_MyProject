@@ -50,10 +50,16 @@ import com.hua.utils.FragmentUtils.FragmentTabSwitcherFeed;
 import com.hua.utils.FragmentUtils.FragmentTabSwitcherWithoutZorder;
 import com.hua.utils.LogUtils2;
 import com.hua.utils.MyImageLoader.MyLoadImageTask;
+import com.hua.utils.PreferenceHelper;
 import com.hua.utils.StringUtils;
 import com.hua.view.ElasticScrollView;
 import com.hua.view.MyGridView;
 import com.hua.view.MyViewPager;
+import com.hua.wedget.viewimage.Animations.DescriptionAnimation;
+import com.hua.wedget.viewimage.Animations.SliderLayout;
+import com.hua.wedget.viewimage.SliderTypes.BaseSliderView;
+import com.hua.wedget.viewimage.SliderTypes.BaseSliderView.OnSliderClickListener;
+import com.hua.wedget.viewimage.SliderTypes.TextSliderView;
 import com.hua.weget.CircleFlowIndicator;
 import com.hua.weget.FixedSpeedScroller;
 import com.hua.weget.LayersLayout;
@@ -65,7 +71,7 @@ import com.hua.weget.ViewFlow;
  * 这是homefragment中viewpager的首页
  * 
  */
-public class SportFragment extends BaseFragment2 {
+public class SportFragment extends BaseFragment2 implements OnSliderClickListener{
 
 	protected static final int START_BAR = 9;
 
@@ -116,6 +122,12 @@ public class SportFragment extends BaseFragment2 {
 	private LinearLayout mHeaderViewLayout;
 	private ListView mListView; // 下拉刷新的listview
 	private ViewFlow mViewFlow; // 进行图片轮播的viewFlow
+	
+	/**
+	 * 头部的横幅滑动布局文件的另一种实现方法
+	 */
+    protected SliderLayout mDemoSlider;
+    
 	private CircleFlowIndicator mCircleFlowIndicator;
 	private ViewFlowAdapter mViewFlowAdapter;
 	private ProductSlectionAdapter mProductSlectionAdapter;
@@ -138,6 +150,7 @@ public class SportFragment extends BaseFragment2 {
 	private LayersLayout mLayersLayout;
 	private View mContentView;
 	private Context mContext;
+	private PreferenceHelper mPreferenceHelper;
 	/**
 	 * 用来做加载第几页的标记
 	 */
@@ -210,7 +223,7 @@ public class SportFragment extends BaseFragment2 {
 		if (index == 0) {
 			initDatasCollections(list);
 		} else {
-			mProductSlectionAdapter.appendList(list,index);
+			mProductSlectionAdapter.appendList(list,index,false);
 		}
 		listsModles.addAll(list);
 		// mListView.onBottomComplete();
@@ -264,7 +277,9 @@ public class SportFragment extends BaseFragment2 {
 						LogUtils2.i("onPullDownToRefresh------");
 						currentPagte = 1;
 						index = 0;
+						mPreferenceHelper.setPreference("isUpdate", true);
 						loadData(getCommonUrl(index + "", Url.TiYuId));
+						mDemoSlider.removeAllSliders();
 						url_maps.clear();
 						mProductSlectionAdapter.clear();
 						listsModles.clear();
@@ -288,7 +303,7 @@ public class SportFragment extends BaseFragment2 {
 						// Update the LastUpdatedLabel
 						refreshView.getLoadingLayoutProxy()
 								.setLastUpdatedLabel(label);
-
+						mPreferenceHelper.setPreference("isUpdate", true);
 						currentPagte++;
 						index = index + 20;
 						loadData(getCommonUrl(index + "", Url.TiYuId));
@@ -299,19 +314,27 @@ public class SportFragment extends BaseFragment2 {
 		});
 
 		LayoutInflater mLayoutInflater = LayoutInflater.from(context);
-		View headerView = mLayoutInflater.inflate(R.layout.viewflow, null);
-		mViewFlow = (ViewFlow) headerView.findViewById(R.id.viewflow);// 获得viewFlow对象
-		mCircleFlowIndicator = (CircleFlowIndicator) headerView
-				.findViewById(R.id.viewflowindic);
-		mViewFlow.setFlowIndicator(mCircleFlowIndicator);
-		mViewFlow.setTimeSpan(5500);
-		mViewFlow.setSelection(3 * 1000); // 设置初始位置
-		// mViewFlow.startAutoFlowTimer(); // 启动自动播放
-		mViewFlow.scheduleRepeatExecution(3000, 3000);
-		mViewFlowAdapter = ViewFlowAdapter.getInstance(mContext);
-		mViewFlow.setAdapter(mViewFlowAdapter);
-		mLayersLayout.setView(mViewFlow); // 将viewFlow对象传递给自定义图层，用于对事件进行重定向
-		mListView.addHeaderView(headerView);
+		
+//		View headerView = mLayoutInflater.inflate(R.layout.viewflow, null);
+//		mViewFlow = (ViewFlow) headerView.findViewById(R.id.viewflow);// 获得viewFlow对象
+//		mCircleFlowIndicator = (CircleFlowIndicator) headerView
+//				.findViewById(R.id.viewflowindic);
+//		mViewFlow.setFlowIndicator(mCircleFlowIndicator);
+//		mViewFlow.setTimeSpan(5500);
+//		mViewFlow.setSelection(3 * 1000); // 设置初始位置
+//		// mViewFlow.startAutoFlowTimer(); // 启动自动播放
+//		mViewFlow.scheduleRepeatExecution(3000, 3000);
+//		mViewFlowAdapter = ViewFlowAdapter.getInstance(mContext);
+//		mViewFlow.setAdapter(mViewFlowAdapter);
+//		mLayersLayout.setView(mViewFlow); // 将viewFlow对象传递给自定义图层，用于对事件进行重定向
+//		mListView.addHeaderView(headerView);
+		/**
+		 * 用另一种banner横幅
+		 */
+		 View headView = LayoutInflater.from(getActivity()).inflate(R.layout.head_item, null);
+	     mDemoSlider = (SliderLayout) headView.findViewById(R.id.slider);
+	     mListView.addHeaderView(headView);
+		
 		mProductSlectionAdapter = ProductSlectionAdapter.instanceAdapter(mContext,index);
 		mListView.setAdapter(mProductSlectionAdapter);
 		mListView.setOnItemClickListener(mOnitemClickListener);
@@ -368,6 +391,7 @@ public class SportFragment extends BaseFragment2 {
 		url_maps = new HashMap<String, String>();
 		newHashMap = new HashMap<String, NewModle>();
 		mOnitemClickListener = new MyOnitemClickListener();
+		mPreferenceHelper = PreferenceHelper.getInstance(mContext);
 	}
 
 	private void initDatasCollections(List<NewModle> newModles) {
@@ -382,37 +406,38 @@ public class SportFragment extends BaseFragment2 {
 			newHashMap.put(newModles.get(3).getImgsrc(), newModles.get(3));
 
 		if (!isNullString(newModles.get(0).getImgsrc()))
-			url_maps.put(/*newModles.get(0).getTitle()*/0+"", newModles.get(0)
+			url_maps.put(newModles.get(0).getTitle(), newModles.get(0)
 					.getImgsrc());
 		if (!isNullString(newModles.get(1).getImgsrc()))
-			url_maps.put(/*newModles.get(1).getTitle()*/1+"", newModles.get(1)
+			url_maps.put(newModles.get(1).getTitle(), newModles.get(1)
 					.getImgsrc());
 		if (!isNullString(newModles.get(2).getImgsrc()))
-			url_maps.put(/*newModles.get(2).getTitle()*/2+"", newModles.get(2)
+			url_maps.put(newModles.get(2).getTitle(), newModles.get(2)
 					.getImgsrc());
 		if (!isNullString(newModles.get(3).getImgsrc()))
-			url_maps.put(/*newModles.get(3).getTitle()*/3+"", newModles.get(3)
+			url_maps.put(newModles.get(3).getTitle(), newModles.get(3)
 					.getImgsrc());
 
 		for (String name : url_maps.keySet()) {
-			// TextSliderView textSliderView = new
-			// TextSliderView(getActivity());
-			// textSliderView.setOnSliderClickListener(this);
-			// textSliderView
-			// .description(name)
-			// .image(url_maps.get(name));
-			//
-			// textSliderView.getBundle()
-			// .putString("extra", name);
-			// mDemoSlider.addSlider(textSliderView);
+			 TextSliderView textSliderView = new
+			 TextSliderView(getActivity());
+			 textSliderView.setOnSliderClickListener(this);
+			 textSliderView
+			 .description(name)
+			 .image(url_maps.get(name));
+			
+			 textSliderView.getBundle()
+			 .putString("extra", name);
+			 mDemoSlider.addSlider(textSliderView);
 		}
 
-		// mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-		// mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
-		// mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+		 mDemoSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOut);
+		 mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
+		 mDemoSlider.setCustomAnimation(new DescriptionAnimation());
 		LogUtils2.i("*****mViewFlowAdapter.setAdapterData********");
 //		mViewFlowAdapter.setAdapterData(newHashMap, url_maps);
-		mProductSlectionAdapter.appendList(newModles,index);
+		LogUtils2.e("");
+		mProductSlectionAdapter.appendList(newModles,index,true);
 	}
 
 	// ///
@@ -494,8 +519,6 @@ public class SportFragment extends BaseFragment2 {
 
 		}
 	}
-
-	//
 	//
 	/**
 	 * 获得分类 gridView分类数据
@@ -588,13 +611,13 @@ public class SportFragment extends BaseFragment2 {
 			// Toast.makeText(getActivity(), "lal", 300).show();
 			super.onPostExecute(result);// 这句是必有的，AsyncTask规定的格式
 			if (mPullRefreshListView != null) {
-
+				Message msg = new Message();
+				msg.obj = result;
+				msg.what = RESPONSE_OK;
+				mHandler.sendMessage(msg);
 				mPullRefreshListView.onRefreshComplete();
 			}
-			Message msg = new Message();
-			msg.obj = result;
-			msg.what = RESPONSE_OK;
-			mHandler.sendMessage(msg);
+			
 		}
 	}
 
@@ -636,6 +659,29 @@ public class SportFragment extends BaseFragment2 {
 	public int getIndex(){
 		LogUtils2.d("********index==***== "+index);
 		return index;
+	}
+
+	@Override
+	public void onSliderClick(BaseSliderView slider) {
+		  NewModle newModle = newHashMap.get(slider.getUrl());
+	      enterDetailActivity(newModle);		
+	}
+	
+	
+	@Override
+	public void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		mPreferenceHelper.setPreference("isUpdate", false);
+		LogUtils2.e("******onDestroy************");
+	}
+	
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		mPreferenceHelper.setPreference("isUpdate", false);
+		LogUtils2.e("******onDestroy************");
 	}
 	
 }

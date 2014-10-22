@@ -161,9 +161,10 @@ public class DetailsActivity extends BaseActivity2 implements ImageLoadingListen
         try {
             Bundle bundle = new Bundle();
             bundle.putSerializable("newDetailModle", newDetailModle);
+            LogUtils2.e("newDetailModle.getUrl_mp4()==  "+newDetailModle.getUrl_mp4());
             if (!"".equals(newDetailModle.getUrl_mp4())) {
-//                bundle.putString("playUrl", newDetailModle.getUrl_mp4());
-//                openActivity(VideoPlayActivity_.class, bundle, 0);
+                bundle.putString("playUrl", newDetailModle.getUrl_mp4());
+                openActivity(VideoPlayActivity_.class, bundle, 0);
             } else {
             	LogUtils2.e(" openActivity(ImageDetailActivity_.class, bundle, 0);");
                 openActivity(ImageDetailActivity_.class, bundle, 0);

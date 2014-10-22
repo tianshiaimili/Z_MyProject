@@ -102,7 +102,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 		@Override
 		public void handleMessage(Message msg) {
 			if(msg.what == VIEWFOLW_WHAT){
-				LogUtils2.e("startAutoFlowTimer-******************");
+//				LogUtils2.e("startAutoFlowTimer-******************");
 				
 				snapToScreen((mCurrentScreen + 1) % getChildCount());
 				Message message = handler.obtainMessage(VIEWFOLW_WHAT);
@@ -793,7 +793,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 				.getLayoutParams();
 		if (p == null) {
 			p = new AbsListView.LayoutParams(
-					ViewGroup.LayoutParams.FILL_PARENT,
+					ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.WRAP_CONTENT, 0);
 		}
 		if (recycle)

@@ -113,6 +113,7 @@ public class ViewFlowAdapter extends BaseAdapter {
 			public void run() {
 				if(newHashMap != null){
 					newHashMap = tempNewHashMap;
+					LogUtils2.e("tempNewHashMap.size== "+tempNewHashMap.size());
 				}else {
 					newHashMap = new HashMap<String, NewModle>();
 					LogUtils2.e("error ----- not data");
@@ -120,9 +121,10 @@ public class ViewFlowAdapter extends BaseAdapter {
 				
 				if(url_maps != null){
 					url_maps = tempUrl_maps;
-					url_maps = new HashMap<String, String>();
+					LogUtils2.e("tempUrl_maps.size== "+tempUrl_maps.size()+"   oo=="+tempUrl_maps.get("0"));
 				}
-				notifyDataSetChanged();
+//				notifyDataSetChanged();
+				notifyDataSetInvalidated();
 			}
 		}, 1000);
 		
@@ -152,8 +154,11 @@ public class ViewFlowAdapter extends BaseAdapter {
 		}
 		
 		if(url_maps.size() > 0 && newHashMap.size() > 0){
+			LogUtils2.e("urlPath=="+url_maps.get((position % url_maps.size())+""));
+//			((ImageView) convertView.findViewById(R.id.imgView))
+//			.setImageBitmap(mImageLoader.loadImageSync(url_maps.get((position % url_maps.size())+""), Options.getListOptions()));
 			((ImageView) convertView.findViewById(R.id.imgView))
-			.setImageBitmap(mImageLoader.loadImageSync(url_maps.get((position % url_maps.size())+""), Options.getListOptions()));
+			.setImageBitmap(mBitmaps.get(position % mBitmaps.size()));
 		}else if(mBitmaps != null){
 			((ImageView) convertView.findViewById(R.id.imgView))
 			.setImageBitmap(mBitmaps.get(position % mBitmaps.size()));

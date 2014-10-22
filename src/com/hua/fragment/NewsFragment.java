@@ -208,9 +208,10 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
         Class<?> class1;
 //        Class<?> class2;
        if (newModle.getImagesModle() != null && newModle.getImagesModle().getImgList().size() > 1) {
-    	   LogUtils2.d("ImageDetailActivity_----------------");
+    	   LogUtils2.d("******ImageDetailActivity_----------------");
             class1 = ImageDetailActivity_.class;
         } else {
+        	 LogUtils2.i("******** DetailsActivity_.class**********");
             class1 = DetailsActivity_.class;
         }
         ((BaseActivity2) getActivity()).openActivity(class1,

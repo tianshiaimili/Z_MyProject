@@ -52,13 +52,13 @@ public class ProductSlectionAdapter extends BaseAdapter {
 		
 	}
 	
-	 public void appendList(List<NewModle> list,int index) {
+	 public void appendList(List<NewModle> list,int index,boolean isUpdate) {
 		 LogUtils2.d("list---"+list.size());
 //	        if (!mDataList.contains(list.get(0)) && list != null && list.size() > 0) {
 //	        	mDataList.addAll(list);
 //	        	LogUtils2.d("mDataList---"+mDataList.size());
 //	        }
-		   if (index != oldIndex && list != null && list.size() > 0) {
+		   if (isUpdate || (index != oldIndex && list != null && list.size() > 0)) {
 	        	mDataList.addAll(list);
 	        	LogUtils2.d("mDataList---"+mDataList.size());
 	        }
