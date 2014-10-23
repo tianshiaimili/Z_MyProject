@@ -430,7 +430,9 @@ public class MainActivityPhone extends BaseActivity2 {
 		@Override
 		public void onBarCodeButtonClick() {
 			// TODO Auto-generated method stub
-			CommonTools.showShortToast(MainActivityPhone.this, "条码购");
+//			CommonTools.showShortToast(MainActivityPhone.this, "条码购");
+			openActivity(CaptureActivity.class);
+			
 		}
 
 		@Override
