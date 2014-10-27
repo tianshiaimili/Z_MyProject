@@ -5,7 +5,8 @@ public class Url {
     public static final String host = "http://c.m.163.com/";
     public static final String endUrl = "-20.html";
     public static final String endDetailUrl = "/full.html";
-    /**
+    /**这个似乎也行 参考 http://my.oschina.net/wangqy/blog/97153
+     * http://c.3g.163.com/nc/article/headline/T1348647909107/0-20.html
      *  头条
      *  http://c.m.163.com/nc/article/headline/T1348647909107/2-20.html
      */

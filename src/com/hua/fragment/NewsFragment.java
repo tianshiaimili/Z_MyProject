@@ -273,6 +273,7 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onResume(getActivity());
         MobclickAgent.onPageStart("MainScreen"); // 统计页面
     }
 
@@ -280,5 +281,6 @@ public class NewsFragment extends BaseFragment2 implements SwipeRefreshLayout.On
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("MainScreen");
+        
     }
 }

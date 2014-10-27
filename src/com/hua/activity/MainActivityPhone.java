@@ -2,7 +2,11 @@ package com.hua.activity;
 
 import java.util.LinkedHashSet;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
@@ -20,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hua.app.BaseActivity2;
-import com.hua.app.BaseFragmentActivity;
+import com.hua.app.BaseApplication;
 import com.hua.fragment.DownloadFragment;
 import com.hua.fragment.HomeFragment;
 import com.hua.fragment.NewsFragment_;
@@ -29,15 +33,14 @@ import com.hua.fragment.SearchAutoCompleteCrewDetailFragment;
 import com.hua.fragment.SearchAutoCompleteFragment;
 import com.hua.fragment.SearchFragment;
 import com.hua.fragment.SettingsFragment;
-import com.hua.fragment.VODFragment;
 import com.hua.utils.CommonTools;
 import com.hua.utils.FragmentUtils;
-import com.hua.utils.KeyboardUtils;
-import com.hua.utils.LayoutUtils;
-import com.hua.utils.LogUtils2;
 import com.hua.utils.FragmentUtils.FragmentTabBarController;
 import com.hua.utils.FragmentUtils.FragmentTabSwitcher;
 import com.hua.utils.FragmentUtils.FragmentTabSwitcherFeed;
+import com.hua.utils.KeyboardUtils;
+import com.hua.utils.LayoutUtils;
+import com.hua.utils.LogUtils2;
 import com.hua.weget.HomeSearchBarPopupWindow;
 import com.hua.weget.HomeSearchBarPopupWindow.OnSearchBarItemClickListener;
 
@@ -71,6 +74,11 @@ public class MainActivityPhone extends BaseActivity2 {
 	private HomeSearchBarPopupWindow mHomeSearchBarPopupWindow = null;
 	private EditText mEditText;
 	private SearchFragment mSearchFragment;
+	
+	/**
+	 * 当前版本号
+	 */
+	private int currentVersionCode;
 
 	//
 	
@@ -89,9 +97,57 @@ public class MainActivityPhone extends BaseActivity2 {
 //		MTNApplication.getDownloadService().setUiHandler(downloadHandler);
 //		KeyboardUtils.setSoftInputAdjustNothing(this, true);
 		///
-		
+		checkIsUpdate();
 	}
 
+	public void checkIsUpdate(){
+		
+		PackageManager mPackageManager = getPackageManager();
+		try {
+			
+			PackageInfo mPackageInfo = mPackageManager.getPackageInfo(getPackageName(), 0);
+			String version = mPackageInfo.versionName;
+			currentVersionCode = mPackageInfo.versionCode;
+			/**
+			 * 从网络获取最新的版本号 和 当前的比较
+			 * 小就更新
+			 */
+			if(false){
+				showUpdateDialog();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			LogUtils2.e("error=="+e.getMessage());
+		}
+		
+	}
+	/**
+	 * 显示要更新窗口
+	 */
+	private void showUpdateDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("检测到新版本");
+		builder.setMessage("是否下载更新?");
+		builder.setPositiveButton("下载", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				Intent it = new Intent(MainActivityPhone.this, NotificationUpdateActivity.class);
+				startActivity(it);
+				((BaseApplication)getApplication()).setDownload(true);
+			}
+		}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		builder.show();
+	}
+	
 	public FragmentTabSwitcher getmFragmentTabSwitcher() {
 		return mFragmentTabSwitcher;
 	}

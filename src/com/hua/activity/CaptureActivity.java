@@ -31,14 +31,17 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.google.zxing.Result;
+import com.hua.app.BaseApplication;
 import com.hua.zxing.camera.CameraManager;
 import com.hua.zxing.decode.DecodeThread;
 import com.hua.zxing.utils.BeepManager;
@@ -66,6 +69,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 	private RelativeLayout scanContainer;
 	private RelativeLayout scanCropView;
 	private ImageView scanLine;
+	private ImageView mBackImageView;
 
 	private Rect mCropRect = null;
 
@@ -91,16 +95,31 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 		scanContainer = (RelativeLayout) findViewById(R.id.capture_container);
 		scanCropView = (RelativeLayout) findViewById(R.id.capture_crop_view);
 		scanLine = (ImageView) findViewById(R.id.capture_scan_line);
-
+		mBackImageView = (ImageView) findViewById(R.id.capture_back_button);
+		mBackImageView.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 		inactivityTimer = new InactivityTimer(this);
 		beepManager = new BeepManager(this);
-
-		TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
-				0.9f);
-		animation.setDuration(4500);
+//
+//		TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT, 0.0f, Animation.RELATIVE_TO_PARENT,
+//				0.9f);
+//		animation.setDuration(4500);
+//		animation.setRepeatCount(-1);
+//		animation.setRepeatMode(Animation.RESTART);
+//		scanLine.startAnimation(animation);
+		
+		ScaleAnimation animation = new ScaleAnimation(1.0f, 1.0f, 0.0f, 1.0f);
 		animation.setRepeatCount(-1);
 		animation.setRepeatMode(Animation.RESTART);
+		animation.setInterpolator(new LinearInterpolator());
+		animation.setDuration(1200);
 		scanLine.startAnimation(animation);
+		
 	}
 
 	@Override
@@ -196,9 +215,39 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 		bundle.putInt("height", mCropRect.height());
 		bundle.putString("result", rawResult.getText());
 
-		startActivity(new Intent(CaptureActivity.this, ResultActivity.class).putExtras(bundle));
+//		startActivity(new Intent(CaptureActivity.this, ResultActivity.class).putExtras(bundle));
+		showScanResulteDialog(bundle);
+		
+		
 	}
 
+	/**
+	 * 显示要更新窗口
+	 */
+	private void showScanResulteDialog(final Bundle tempBundle) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("扫描到的宝贝");
+		builder.setMessage("是否下载安装?");
+		builder.setPositiveButton("下载", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				Intent it = new Intent(CaptureActivity.this, NotificationUpdateActivity.class);
+				it.putExtras(tempBundle);
+				startActivity(it);
+				((BaseApplication)getApplication()).setDownload(true);
+			}
+		}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+			}
+		});
+		builder.show();
+	}
+	
 	/**
 	 * 初始化----
 	 * @param surfaceHolder

@@ -254,4 +254,15 @@ public class Constant {
 	public static final String KAIXINYIZHAN = "https://raw.githubusercontent.com/tianshiaimili/MyResource/master/assets/kaixinyizhan1.xml";
 	
 	
+	/**
+	 * 用来测试后台下载的url
+	 * //https://raw.githubusercontent.com/tianshiaimili/MyResource/master/assets/Z_MyProject.apk
+	//https://github.com/tianshiaimili/MyResource/blob/master/assets/WeVK.apk
+	//https://raw.githubusercontent.com/tianshiaimili/MyResource/master/assets/WeVK.apk
+	 */
+	public static final String DownLocadUrl = "https://raw.githubusercontent.com/tianshiaimili/MyResource/master/assets/Z_MyProject.apk";
+	public static final String DownLocadUrl2 = "https://raw.githubusercontent.com/tianshiaimili/MyResource/master/assets/WeVK.apk";
+	
+	
+	
 }

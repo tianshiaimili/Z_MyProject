@@ -10,6 +10,8 @@ import java.io.*;
 public class BaseApplication extends Application
 {
 
+	private boolean isDownload;
+	
     public BaseApplication()
     {
     }
@@ -19,6 +21,7 @@ public class BaseApplication extends Application
         super.onCreate();
 //        Log.e(TAG, (new StringBuilder(String.valueOf(com/pccw/gzmobile/app/BaseApplication.getName()))).append(" onCreate().").toString());
         initFilesPath();
+        isDownload = false;
     }
 
     private void initFilesPath()
@@ -55,16 +58,14 @@ _L2:
 //    private static final String TAG = com/pccw/gzmobile/app/BaseApplication.getSimpleName();
     private static String filesDir;
 
+	public boolean isDownload() {
+		return isDownload;
+	}
+
+	public void setDownload(boolean isDownload) {
+		this.isDownload = isDownload;
+	}
+    
+    
 }
 
-
-/*
-	DECOMPILATION REPORT
-
-	Decompiled from: E:\WorkSoftwareTool\NowEclipse\workspace2\nmplayer\trunk\nmplayer\libs\supportlib.jar
-	Total time: 775 ms
-	Jad reported messages/errors:
-Couldn't fully decompile method initFilesPath
-	Exit status: 0
-	Caught exceptions:
-*/

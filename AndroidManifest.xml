@@ -104,10 +104,16 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
         
+        <activity android:name="com.hua.activity.NotificationUpdateActivity"></activity>
         
-         <!-- 友盟统计 -->
-        <meta-data android:value="53b4ad5a56240bc1ca01d13a" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="浏览新闻" android:name="UMENG_CHANNEL"/>
+        <!-- service部分 -->
+         <service android:name="com.hua.service.DownloadService" >
+        </service>
+        
+        
+         <!-- 友盟统计  我的友盟apk  544dfa9dfd98c5dcd2000359  原来的 53b4ad5a56240bc1ca01d13a -->
+        <meta-data android:value="544dfa9dfd98c5dcd2000359" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/>
         <service
             android:name="com.umeng.update.net.DownloadingService"
             android:process=":DownloadingService" >
