@@ -98,11 +98,13 @@ public class FragmentUtils
         }
 
         /**
-         * �ж��Ƿ�ͬһ��tab��ǩ
+         * 判断是不是点击了同一个tab
          * @return
          */
         protected boolean isSameTab()
         {
+        	LogUtils2.d("mPreviousRootFragmentTag== "+mPreviousRootFragmentTag);
+        	LogUtils2.d("mCurrentRootFragmentTag== "+mCurrentRootFragmentTag);
             return mPreviousRootFragmentTag != null && mPreviousRootFragmentTag.equals(mCurrentRootFragmentTag);
         }
 
@@ -290,23 +292,27 @@ public class FragmentUtils
         }
     	
         /**
-         * �൱������µ�tab
+         * 这个相当于 页面下面的tab 选项
          */
         public void switchTab(String rootFragmentTag, boolean skipSameTab)
         {
-        	LogUtils2.v("********switchTab*********");
+        	LogUtils2.v("********switchTab*********  = "+rootFragmentTag);
         	
         	if(getCurrentTabStack() != null){
         		
-        		LogUtils2.e("switchTab=="+getCurrentTabStack().size());
-        		LogUtils2.d("switchTab=="+getCurrentTabStack().getFirst());
-        		LogUtils2.e("switchTab=="+getCurrentTabStack().getLast());
+        		LogUtils2.e("switchTab=size= "+getCurrentTabStack().size());
+        		LogUtils2.d("switchTab=getFirst= "+getCurrentTabStack().getFirst());
+        		LogUtils2.e("switchTab=getLast= "+getCurrentTabStack().getLast());
         	}
         	
             if(rootFragmentTag == null)
                 throw new NullPointerException("Fragment tag can NOT be null.");
             mPreviousRootFragmentTag = mCurrentRootFragmentTag;
             mCurrentRootFragmentTag = rootFragmentTag;
+           /**
+            * 点击同一个tab的时候的处理
+            */
+            LogUtils2.i("skipSameTab==  "+skipSameTab +"   isSameTab()== "+isSameTab());
             if(skipSameTab && isSameTab())
             {
             	LogUtils2.w("same**************");
@@ -320,17 +326,16 @@ public class FragmentUtils
                 }
                 return;
             }
-            Log.d(FragmentUtils.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" switch tab : ").append(rootFragmentTag).toString());
            
+            
+            LogUtils2.e("getCurrentTabStack().size()== "+getCurrentTabStack().size());
             if(getCurrentTabStack().size() == 0){
             	LogUtils2.i("getCurrentTabStack().size() == 0");
                 pushFragment(true, new Fragment[] {
                     mSwitcherFeed.newRootFragment(rootFragmentTag)
                 });
-            } 
-            else {
+            } else {
             	
-            	LogUtils2.i("getCurrentTabStack().size() ��+++===0");
                 pushFragment(false, new Fragment[] {
                     peekTopmostFragment()
                 });
@@ -345,9 +350,9 @@ public class FragmentUtils
         }
 
         /**
-         * ���TabfragmentTag��LinkedList
-         * �����mTabStacks ��һ��LinkedHashMap ���Ÿ�ʽ�ǣ���Tag����LinkedList��
-         * tag���ǽ����������5��tab
+         * 返回当前tab （即下面的五个选项中之一）的对应的LinkedList
+         * LinkedList（这个里面封装的是在当前的tab中如settingfragment页面中打开了多少个子页 例如点击了settingfragment中的
+         * 一个item然后进入下一层 则 LinkedList就加一层 里面的值 类似 setting - 1）
          * @return
          */
         private LinkedList getCurrentTabStack()
@@ -367,9 +372,13 @@ public class FragmentUtils
             {
             	LogUtils2.i("tab.szie=="+tab.size());
                 return tab;
-            }
+        }
         }
 
+        /**
+         * 
+         * @return
+         */
         public boolean isCurrentTabStackEmpty()
         {
             LinkedList tab = getCurrentTabStack();
@@ -381,7 +390,10 @@ public class FragmentUtils
 
         /**
          * ��getCurrentTabStack������ȡ����һ��fragment
-         * 当按下返回键后 把当前的fragment去掉，把之前的换做为第一个
+         * -----当按下返回键后 把当前的fragment去掉，把之前的换做为第一个----
+         * 这里就例如 当点击了第一个tab 而且还点击了tab（move）里面的item进入到下一层了，
+         * 当点击另外一个tab（setting）后，再店家上一个tab时（move），返回进入item时的样子
+         * 因为LinkedList 是先进后出型的，所以最后点击的item 就在LinkedList的第一个 所以直接getFirst()即可获取
          * @return
          */
         public Fragment peekTopmostFragment()
@@ -390,18 +402,19 @@ public class FragmentUtils
                 return null;
             else
                 return mFragmentActivity.getSupportFragmentManager().findFragmentByTag((String)getCurrentTabStack().getFirst());
+            	//
         }
 
         /**
-         * ��getCurrentTabStack���������fragment����...
-         * @param add �ж�����ӻ��ǰ󸿵�fragment
-         * @param fragments ��Ҫ��ӵ�fragment
+         * 添加fragment
+         * @param add 是否新创建添加
+         * @param fragments 
          */
         private void pushFragment(boolean add, Fragment fragments[])
         {
             FragmentManager manager = mFragmentActivity.getSupportFragmentManager();
             FragmentTransaction ft = manager.beginTransaction();
-            ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
+//            ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
             Fragment afragment[];
             int j = (afragment = fragments).length;
             for(int i = 0; i < j; i++)
@@ -411,30 +424,28 @@ public class FragmentUtils
                 {
                     Log.d(FragmentUtils.TAG, (new StringBuilder("Detach fragment ")).append(mCurrentFragment.getTag()).toString());
                    /**
-                    * detach()�Ὣview��viewtree��ɾ��,��remove()��ͬ,
-                    * ��ʱfragment��״̬��Ȼ������,��ʹ��attach()ʱ���ٴε���onCreateView()
-                    * ���ػ���ͼ,ע��ʹ��detach()
-                    * ��fragment.isAdded()����������false,��ʹ��attach()
-                    * ��ԭfragment��isAdded()����Ȼ����false(��Ҫ�ٴ�ȷ��)
                     */
                     LogUtils2.i("pushFragment*******");
                     ft.detach(mCurrentFragment);
+//                    ft.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+//                    ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
                 }
                 if(add)
                 {
                 	LogUtils2.i("add********=="+add);
-                	//���� "TV - 3"
                     String fragmentTag = (new StringBuilder(String.valueOf(mCurrentRootFragmentTag))).append("-").append(getCurrentTabStack().size()).toString();
-                    Log.d(FragmentUtils.TAG, (new StringBuilder("Add new fragment ")).append(fragmentTag).toString());
+//                    Log.d(FragmentUtils.TAG, (new StringBuilder("Add new fragment ")).append(fragmentTag).toString());
                     ft.add(mContainerId, fragment, fragmentTag);
-                    
+//                    mFragmentActivity.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+//                    ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
                     getCurrentTabStack().addFirst(fragmentTag);
                 } else
                 {
-                	LogUtils2.e("pushFragment_____________");
-                	LogUtils2.i("add********=="+add);
-                    Log.d(FragmentUtils.TAG, (new StringBuilder("Attach fragment ")).append(fragment.getTag()).toString());
+//                	LogUtils2.e("pushFragment_____________");
+//                	LogUtils2.i("add********=="+add);
+//                    Log.d(FragmentUtils.TAG, (new StringBuilder("Attach fragment ")).append(fragment.getTag()).toString());
                     ft.attach(fragment);
+//                    ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
                 }
                 mCurrentFragment = fragment;
             }

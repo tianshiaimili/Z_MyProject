@@ -22,6 +22,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+import com.hua.utils.LogUtils2;
+
 /**
  * Created by chenjishi on 14-3-17.
  */
@@ -616,7 +618,14 @@ public class SlidingLayout extends ViewGroup {
             final int childRight = childLeft + childWidth;
             final int childTop = paddingTop;
             final int childBottom = childTop + child.getMeasuredHeight();
-            child.layout(childLeft, paddingTop, childRight, childBottom);
+            try {
+            	child.layout(childLeft, paddingTop, childRight, childBottom);
+				
+			} catch (Exception e) {
+
+			LogUtils2.e("*******error - - ************");
+				
+			}
 
             nextXStart += child.getWidth();
         }

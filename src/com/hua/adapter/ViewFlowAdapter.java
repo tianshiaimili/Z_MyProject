@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ import com.hua.utils.Options;
 import com.hua.wedget.viewimage.SliderTypes.BaseSliderView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
  * 这是作为首页 banner 的adapter
@@ -50,6 +53,7 @@ public class ViewFlowAdapter extends BaseAdapter {
 	 protected HashMap<String, String> url_maps;
 	private ImageLoader mImageLoader;
 	private static ViewFlowAdapter mViewFlowAdapter;
+	private List<String> urlLists = new ArrayList<String>();
 	
 	/**
 	 * 获取实例
@@ -78,6 +82,30 @@ public class ViewFlowAdapter extends BaseAdapter {
 		}
 		
 	}
+	
+	
+	public ViewFlowAdapter(Context context,List<String> tempUrlList) {
+		mInflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mContext = context;
+		mImageLoader = ImageLoader.getInstance();
+		urlLists = tempUrlList;
+		url_maps = new HashMap<String, String>();
+		if(Constant.homeBannerBitmaps != null){
+			mBitmaps = Constant.homeBannerBitmaps.subList(0, 5);
+			
+		}
+		
+	}
+	
+	public void setUrlList(List<String> urls){
+		if(urls!= null){
+			urlLists = urls;
+//			this.notifyDataSetChanged();
+		}
+		
+	}
+	
 
 	public ViewFlowAdapter(Context context,HashMap<String, NewModle> newHashMap,List<NewModle> listsModles){
 		mInflater = (LayoutInflater) context
@@ -149,21 +177,45 @@ public class ViewFlowAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
+		ImageView tempImageView = null;
+		
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.viewflow_image_item, null);
+		}else {
+			
+//			tempImageView = (ImageView) convertView.getTag();
+			
 		}
-		
+		  
 		if(url_maps.size() > 0 && newHashMap.size() > 0){
 			LogUtils2.e("urlPath=="+url_maps.get((position % url_maps.size())+""));
 //			((ImageView) convertView.findViewById(R.id.imgView))
 //			.setImageBitmap(mImageLoader.loadImageSync(url_maps.get((position % url_maps.size())+""), Options.getListOptions()));
-			((ImageView) convertView.findViewById(R.id.imgView))
+			((ImageView) convertView.findViewById(R.id.bannerimgView))
 			.setImageBitmap(mBitmaps.get(position % mBitmaps.size()));
-		}else if(mBitmaps != null){
-			((ImageView) convertView.findViewById(R.id.imgView))
-			.setImageBitmap(mBitmaps.get(position % mBitmaps.size()));
+		}else if(urlLists != null && urlLists.size() > 0){
+			LogUtils2.e("*********urlLists==="+urlLists.get(position % urlLists.size()));
+			tempImageView  = (ImageView)convertView.findViewById(R.id.bannerimgView); 
+//			tempImageView = mImageLoader.d
+//			mImageLoader.displayImage(urlLists.get(position % urlLists.size()), tempImageView);
+			Bitmap bitmap = mImageLoader.loadImageSync(urlLists.get(position % urlLists.size()), Options.getListOptions());
+			LogUtils2.i("***== mImageLoader== "+mImageLoader);
+//			LogUtils2.i("***== bitmap== "+bitmap);
+//			tempImageView.setImageBitmap(bitmap);
+//			convertView.setTag(tempImageView);
+			((ImageView) convertView.findViewById(R.id.bannerimgView))
+			.setImageBitmap(bitmap);
+			
+			mImageLoader.displayImage(urlLists.get(position % urlLists.size()), 
+					tempImageView, Options.getListOptions(), new MyImageLoadingListener(tempImageView));
+			
+			}else if(mBitmaps != null){
+			((ImageView) convertView.findViewById(R.id.bannerimgView))
+			.setImageResource(ids[position % ids.length]);
+//			((ImageView) convertView.findViewById(R.id.bannerimgView))
+//			.setImageBitmap(mBitmaps.get(position % mBitmaps.size()));
 		}else {
-			((ImageView) convertView.findViewById(R.id.imgView))
+			((ImageView) convertView.findViewById(R.id.bannerimgView))
 			.setImageResource(ids[position % ids.length]);
 		}
 		
@@ -177,12 +229,14 @@ public class ViewFlowAdapter extends BaseAdapter {
 //		}
 		
 //		convertView.setOnClickListener(new MyOnClickListener(urls[position % urls.length]));
-		if(url_maps.size() > 0 && newHashMap.size() > 0){
-			
-			convertView.setOnClickListener(new MyOnClickListener(newHashMap.get(url_maps.get((position % url_maps.size())+""))));
-		}else {
-//			convertView.setOnClickListener(new MyOnClickListener(urls[position % urls.length]));
-		}
+//		if(url_maps.size() > 0 && newHashMap.size() > 0){
+//			
+//			convertView.setOnClickListener(new MyOnClickListener(newHashMap.get(url_maps.get((position % url_maps.size())+""))));
+//		}else if(urlLists != null && urlLists.size() > 0){
+////			convertView.setOnClickListener(new MyOnClickListener(urls[position % urls.length]));
+////			tempImageView.setOnClickListener(new MyOnClickListener(newHashMap.get(url_maps.get((position % url_maps.size())+""))));
+////			LogUtils2.i("******************"+url_maps.get((position % url_maps.size())));
+//		}
 		return convertView;
 	}
 
@@ -233,5 +287,46 @@ public class ViewFlowAdapter extends BaseAdapter {
         // intent.putExtras(bundle);
         // IntentUtils.startPreviewActivity(getActivity(), intent);
     }
-	
+
+    
+    class MyImageLoadingListener implements ImageLoadingListener{
+
+    	ImageView mImageView;
+    	
+    	public MyImageLoadingListener(ImageView tempView){
+    		mImageView = tempView;
+    	}
+    	
+		@Override
+		public void onLoadingStarted(String imageUri, View view) {
+
+			LogUtils2.i("****onLoadingStartedl*********");
+			
+		}
+
+		@Override
+		public void onLoadingFailed(String imageUri, View view,
+				FailReason failReason) {
+
+			LogUtils2.e("****load fail*********");
+			mImageView.setImageResource(ids[0]);
+			
+			
+		}
+
+		@Override
+		public void onLoadingComplete(String imageUri, View view,
+				Bitmap loadedImage) {
+			LogUtils2.w("****onLoadingComplete********");
+		}
+
+		@Override
+		public void onLoadingCancelled(String imageUri, View view) {
+			// TODO Auto-generated method stub
+			
+		}
+    	
+    }
+    
+    
 }

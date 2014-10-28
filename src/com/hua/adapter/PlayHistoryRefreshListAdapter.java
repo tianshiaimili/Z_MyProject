@@ -33,6 +33,16 @@ public class PlayHistoryRefreshListAdapter extends BaseAdapter {
 		this.mDataList = list;
 		this.mInflater = LayoutInflater.from(context);
 	}
+	
+	
+	public void setAdapterData( List<TrueAppData> list){
+		
+		if(list != null){
+			mDataList = list;
+//			this.notifyDataSetChanged();
+		}
+		
+	}
 
 	@Override
 	public int getCount() {
