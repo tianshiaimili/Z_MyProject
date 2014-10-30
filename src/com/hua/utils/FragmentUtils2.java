@@ -28,7 +28,7 @@ import android.widget.ScrollView;
 // Referenced classes of package com.pccw.gzmobile.app:
 //            BaseFragment
 
-public class FragmentUtils
+public class FragmentUtils2
 {
 	 private static final String TAG = "com/pccw/gzmobile/app/FragmentUtils.getSimpleName()";
 	
@@ -141,13 +141,13 @@ public class FragmentUtils
                 mRootFragmentTags.put(tag, Integer.valueOf(index));
             }
 
-            Log.w(FragmentUtils.TAG, (new StringBuilder("FragmentTabSwitcher root fragment tags : ")).append(mRootFragmentTags).toString());
+            Log.w(FragmentUtils2.TAG, (new StringBuilder("FragmentTabSwitcher root fragment tags : ")).append(mRootFragmentTags).toString());
             mTabCount = mRootFragmentTags.size();
             String tag;
             for(tagSetIterator = tagSet.iterator(); tagSetIterator.hasNext(); mTabStacks.put(tag, new LinkedList()))
                 tag = (String)tagSetIterator.next();
 
-            Log.w(FragmentUtils.TAG, (new StringBuilder("FragmentTabSwitcher tab stacks : ")).append(mTabStacks).toString());
+            Log.w(FragmentUtils2.TAG, (new StringBuilder("FragmentTabSwitcher tab stacks : ")).append(mTabStacks).toString());
         }
     }
 
@@ -316,12 +316,12 @@ public class FragmentUtils
             if(skipSameTab && isSameTab())
             {
             	LogUtils2.w("same**************");
-                Log.w(FragmentUtils.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" no need to switch same tab : ").append(mCurrentRootFragmentTag).toString());
+                Log.w(FragmentUtils2.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" no need to switch same tab : ").append(mCurrentRootFragmentTag).toString());
                 if(mSwitcherListener != null)
                 {
                     int tabIndex = getCurrentTabIndex();
                     int preTabIndex = getPreviousTabIndex();
-                    Log.d(FragmentUtils.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
+                    Log.d(FragmentUtils2.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
                     mSwitcherListener.onTabSelected(mCurrentRootFragmentTag, tabIndex, mPreviousRootFragmentTag, preTabIndex);
                 }
                 return;
@@ -343,7 +343,7 @@ public class FragmentUtils
             {
                 int tabIndex = getCurrentTabIndex();
                 int preTabIndex = getPreviousTabIndex();
-                Log.d(FragmentUtils.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
+                Log.d(FragmentUtils2.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
                 mSwitcherListener.onTabSelected(mCurrentRootFragmentTag, tabIndex, mPreviousRootFragmentTag, preTabIndex);
             }
         }
@@ -359,18 +359,18 @@ public class FragmentUtils
         	LogUtils2.w("mCurrentRootFragmentTag==="+mCurrentRootFragmentTag);
             if(mCurrentRootFragmentTag == null)
             {
-                Log.w(FragmentUtils.TAG, "Please call switchTab() first before using other methods.");
+                Log.w(FragmentUtils2.TAG, "Please call switchTab() first before using other methods.");
                 return null;
             }
             LinkedList tab = (LinkedList)mTabStacks.get(mCurrentRootFragmentTag);
             if(tab == null)
             {
-                Log.w(FragmentUtils.TAG, (new StringBuilder("Can NOT find the the tab with key ")).append(mCurrentRootFragmentTag).toString());
+                Log.w(FragmentUtils2.TAG, (new StringBuilder("Can NOT find the the tab with key ")).append(mCurrentRootFragmentTag).toString());
                 return null;
             } else
             {
             	
-//            	LogUtils2.i("tab.szie=="+tab.size()+"   tab.get(0)== "+tab.get(0));
+            	LogUtils2.i("tab.szie=="+tab.size()+"   tab.get(0)== "+tab.get(0));
                 return tab;
         }
         }
@@ -384,7 +384,7 @@ public class FragmentUtils
             LinkedList tab = getCurrentTabStack();
             boolean ret = tab == null || tab.isEmpty();
             if(ret)
-                Log.w(FragmentUtils.TAG, "Current tab stack is empty.");
+                Log.w(FragmentUtils2.TAG, "Current tab stack is empty.");
             return ret;
         }
 
@@ -478,7 +478,7 @@ public class FragmentUtils
             } else
             {
                 String tag = (String)getCurrentTabStack().removeFirst();
-                Log.d(FragmentUtils.TAG, (new StringBuilder("Remove fragment ")).append(tag).toString());
+                Log.d(FragmentUtils2.TAG, (new StringBuilder("Remove fragment ")).append(tag).toString());
                 return mFragmentActivity.getSupportFragmentManager().findFragmentByTag(tag);
             }
         }
@@ -496,7 +496,7 @@ public class FragmentUtils
             ft.remove(popTopmostFragment());
             mCurrentFragment = peekTopmostFragment();
             ft.attach(mCurrentFragment);
-            Log.d(FragmentUtils.TAG, (new StringBuilder("Attach fragment ")).append(mCurrentFragment.getTag()).toString());
+            Log.d(FragmentUtils2.TAG, (new StringBuilder("Attach fragment ")).append(mCurrentFragment.getTag()).toString());
             ft.commit();
             return mCurrentFragment;
         }
@@ -513,7 +513,7 @@ public class FragmentUtils
 
                 mCurrentFragment = peekTopmostFragment();
                 ft.attach(mCurrentFragment);
-                Log.d(FragmentUtils.TAG, (new StringBuilder("Attach fragment ")).append(mCurrentFragment.getTag()).toString());
+                Log.d(FragmentUtils2.TAG, (new StringBuilder("Attach fragment ")).append(mCurrentFragment.getTag()).toString());
                 ft.commit();
             }
             return mCurrentFragment;
@@ -635,35 +635,35 @@ public class FragmentUtils
             mCurrentRootFragmentTag = rootFragmentTag;
             if(skipSameTab && isSameTab())
             {
-                Log.w(FragmentUtils.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" no need to switch same tab : ").append(mCurrentRootFragmentTag).toString());
+                Log.w(FragmentUtils2.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" no need to switch same tab : ").append(mCurrentRootFragmentTag).toString());
                 if(mSwitcherListener != null)
                 {
                     int tabIndex = getCurrentTabIndex();
                     int preTabIndex = getPreviousTabIndex();
-                    Log.d(FragmentUtils.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
+                    Log.d(FragmentUtils2.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
                     mSwitcherListener.onTabSelected(mCurrentRootFragmentTag, tabIndex, mPreviousRootFragmentTag, preTabIndex);
                 }
                 return;
             }
-            Log.d(FragmentUtils.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" switch tab : ").append(rootFragmentTag).toString());
+            Log.d(FragmentUtils2.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" switch tab : ").append(rootFragmentTag).toString());
             FragmentManager manager = mFragmentActivity.getSupportFragmentManager();
             FragmentTransaction ft = manager.beginTransaction();
             if(mCurrentFragment != null)
             {
-                Log.d(FragmentUtils.TAG, (new StringBuilder("detach fragment : ")).append(mCurrentFragment).toString());
+                Log.d(FragmentUtils2.TAG, (new StringBuilder("detach fragment : ")).append(mCurrentFragment).toString());
                 ft.detach(mCurrentFragment);
             } else
             if(manager.findFragmentByTag(rootFragmentTag) != null)
-                Log.w(FragmentUtils.TAG, "Strange case : current is null but the coming one is not null. Have you re-assigned the switcher instance?");
+                Log.w(FragmentUtils2.TAG, "Strange case : current is null but the coming one is not null. Have you re-assigned the switcher instance?");
             mCurrentFragment = manager.findFragmentByTag(rootFragmentTag);
             if(mCurrentFragment == null)
             {
                 mCurrentFragment = mSwitcherFeed.newRootFragment(rootFragmentTag);
-                Log.d(FragmentUtils.TAG, (new StringBuilder("add fragment : ")).append(mCurrentFragment).toString());
+                Log.d(FragmentUtils2.TAG, (new StringBuilder("add fragment : ")).append(mCurrentFragment).toString());
                 ft.add(mContainerId, mCurrentFragment, rootFragmentTag);
             } else
             {
-                Log.d(FragmentUtils.TAG, (new StringBuilder("re-attach fragment : ")).append(mCurrentFragment).toString());
+                Log.d(FragmentUtils2.TAG, (new StringBuilder("re-attach fragment : ")).append(mCurrentFragment).toString());
                 ft.attach(mCurrentFragment);
             }
             ft.commit();
@@ -671,7 +671,7 @@ public class FragmentUtils
             {
                 int tabIndex = getCurrentTabIndex();
                 int preTabIndex = getPreviousTabIndex();
-                Log.d(FragmentUtils.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
+                Log.d(FragmentUtils2.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
                 mSwitcherListener.onTabSelected(mCurrentRootFragmentTag, tabIndex, mPreviousRootFragmentTag, preTabIndex);
             }
         }
@@ -728,7 +728,7 @@ public class FragmentUtils
     }
 
 
-    private FragmentUtils()
+    private FragmentUtils2()
     {
     }
 

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.Gravity;
@@ -22,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.pedant.SweetAlert.widget.SweetAlertDialog;
+import cn.pedant.SweetAlert.widget.SweetAlertDialog.CloseDialogImpl;
 
 import com.hua.app.BaseActivity2;
 import com.hua.app.BaseApplication;
@@ -44,7 +47,7 @@ import com.hua.utils.LogUtils2;
 import com.hua.weget.HomeSearchBarPopupWindow;
 import com.hua.weget.HomeSearchBarPopupWindow.OnSearchBarItemClickListener;
 
-public class MainActivityPhone extends BaseActivity2 {
+public class MainActivityPhone extends BaseActivity2 implements CloseDialogImpl{
 
 	private FragmentTabSwitcher mFragmentTabSwitcher;
 	private static final String TAB_TV = "tv";
@@ -74,6 +77,10 @@ public class MainActivityPhone extends BaseActivity2 {
 	private HomeSearchBarPopupWindow mHomeSearchBarPopupWindow = null;
 	private EditText mEditText;
 	private SearchFragment mSearchFragment;
+	/**
+	 * 用来显示自定的dialog
+	 */
+	private SweetAlertDialog mSweetAlertDialog;
 	
 	/**
 	 * 当前版本号
@@ -511,15 +518,97 @@ public class MainActivityPhone extends BaseActivity2 {
 		int ID = view.getId();
 		switch (ID) {
 		case R.id.index_promotion_btn:
-			Toast.makeText(getApplicationContext(), "1", 300).show();
+			 new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE).setCloseDialogImpl(this)
+             .setTitleText("Are you sure?")
+             .setContentText("Won't be able to recover this file!"
+             		+ "Won't be able to recover this file!"
+             		+ "Won't be able to recover this file!"
+             		+ "Won't be able to recover this file!")
+             .setConfirmText("删除!")
+             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+             @Override
+             public void onClick(SweetAlertDialog sDialog) {
+                 // reuse previous dialog instance
+             	mSweetAlertDialog = sDialog;
+             	mSweetAlertDialog.setTitleText("Deleted!")
+                         .setContentText("Your imaginary file has been deleted!")
+                         .setConfirmText("")
+                         .setConfirButtonBackground()
+                         .setConfirmClickListener(null)
+                         .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                
+             }
+             })
+             .show();
 			break;
 			
 		case R.id.index_recharge_btn:
-			Toast.makeText(getApplicationContext(), "2", 300).show();
+			
+			 new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE).setCloseDialogImpl(this)
+             .setTitleText("Welcome!!!")
+             .setContentText("您选中了充值")
+             .setConfirmText("充值")
+             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+             @Override
+             public void onClick(SweetAlertDialog sDialog) {
+                 // reuse previous dialog instance
+             	mSweetAlertDialog = sDialog;
+             	mSweetAlertDialog.setTitleText("充值100元")
+                         .setContentText("充值成功....")
+                         .setConfirmText("")
+                         .setConfirButtonBackground()
+                         .setConfirmClickListener(null)
+                         .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                
+             }
+             })
+             .show();
+			
 			break;
 
 		case R.id.index_groupbuy_btn:
-			Toast.makeText(getApplicationContext(), "3", 300).show();
+			
+			  new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+              .setTitleText("Are you sure?")
+              .setContentText("Won't be able to recover this file!")
+              .setCancelText("No,cancel plx!")
+              .setConfirmText("Yes,delete it!")
+              .showCancelButton(true)
+              .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                  @Override
+                  public void onClick(SweetAlertDialog sDialog) {
+                      // reuse previous dialog instance, keep widget user state, reset them if you need
+                      sDialog.setTitleText("Cancelled!")
+                              .setContentText("Your imaginary file is safe :)")
+                              .setConfirmText("OK")
+                              .showCancelButton(false)
+                              .setCancelClickListener(null)
+                              .setConfirmClickListener(null)
+                              .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+
+                      // or you can new a SweetAlertDialog to show
+                     /* sDialog.dismiss();
+                      new SweetAlertDialog(SampleActivity.this, SweetAlertDialog.ERROR_TYPE)
+                              .setTitleText("Cancelled!")
+                              .setContentText("Your imaginary file is safe :)")
+                              .setConfirmText("OK")
+                              .show();*/
+                  }
+              })
+              .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                  @Override
+                  public void onClick(SweetAlertDialog sDialog) {
+                      sDialog.setTitleText("Deleted!")
+                              .setContentText("Your imaginary file has been deleted!")
+                              .setConfirmText("OK")
+                              .showCancelButton(false)
+                              .setCancelClickListener(null)
+                              .setConfirmClickListener(null)
+                              .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                  }
+              })
+              .show();
+			
 			break;
 			
 		case R.id.index_lottery_btn:
@@ -548,6 +637,25 @@ public class MainActivityPhone extends BaseActivity2 {
 		}
 		
 	}
+
+	/**
+	 * 这是取消dialog显示的接口方法
+	 */
+	@Override
+	public void onFinishAnimation() {
+
+	new Handler().postDelayed(new Runnable() {
+		
+		@Override
+		public void run() {
+			
+			mSweetAlertDialog.dismiss();
+			
+		}
+	}, 600);
+		
+	}
 	
 
+	
 }

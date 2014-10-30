@@ -75,7 +75,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 	private AdapterDataSetObserver mDataSetObserver;
 	private FlowIndicator mIndicator;
 	private int mLastOrientation = -1;
-	private long timeSpan = 3000;
+	private long timeSpan = 6000;
 //	private Handler handler;
 	public static boolean onTouch = false;// 是否点击到了viewFlow的区域，用于自定义图层中重定向事件的传递。
 	
@@ -88,7 +88,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 	/**
 	 * 间隔的时间 默认3秒
 	 */ 
-	private long mInterval = 3000;
+	private long mInterval = 6000;
 	/**
 	 * 是否在运行
 	 */
@@ -102,7 +102,8 @@ public class ViewFlow extends AdapterView<Adapter> {
 		@Override
 		public void handleMessage(Message msg) {
 			if(msg.what == VIEWFOLW_WHAT){
-//				LogUtils2.e("startAutoFlowTimer-******************");
+				
+				LogUtils2.e("startAutoFlowTimer-***********="+getChildCount()+"   timeSpan= "+timeSpan);
 				
 				snapToScreen((mCurrentScreen + 1) % getChildCount());
 				Message message = handler.obtainMessage(VIEWFOLW_WHAT);
@@ -188,27 +189,29 @@ public class ViewFlow extends AdapterView<Adapter> {
 
 	//TODO
 	public void startAutoFlowTimer() {
-		
-		
-		
-		handler = new Handler(Looper.getMainLooper()) {
-			@Override
-			public void handleMessage(Message msg) {
-				if(msg.what == VIEWFOLW_WHAT){
-					LogUtils2.e("startAutoFlowTimer-******************");
-					
-					snapToScreen((mCurrentScreen + 1) % getChildCount());
-					Message message = handler.obtainMessage(VIEWFOLW_WHAT);
-					sendMessageDelayed(message, timeSpan);
-				}
-			}
-		};
 
+		if(!mRunning){
+			
+			LogUtils2.e("startAutoFlowTimer-11111111111");
+			mRunning = true;
+			Message message = handler.obtainMessage(VIEWFOLW_WHAT);
+			handler.sendMessageDelayed(message, timeSpan);
+		}
+//		handler.postDelayed(mOnTick, timeSpan);
 		
-		LogUtils2.e("startAutoFlowTimer------");
-		Message message = handler.obtainMessage(VIEWFOLW_WHAT);
+		
+//		handler = new Handler() {
+//			@Override
+//			public void handleMessage(Message msg) {
+//
+//				snapToScreen((mCurrentScreen + 1) % getChildCount());
+//				Message message = handler.obtainMessage(0);
+//				sendMessageDelayed(message, timeSpan);
+//			}
+//		};
+//
+//		Message message = handler.obtainMessage(0);
 //		handler.sendMessageDelayed(message, timeSpan);
-		handler.postDelayed(mOnTick, timeSpan);
 	}
 
 	public synchronized void scheduleRepeatExecution( long delay,
@@ -231,6 +234,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 	
 	public void stopAutoFlowTimer() {
 		if (handler != null)
+			mRunning = false;
 			handler.removeMessages(VIEWFOLW_WHAT);
 //		handler = null;
 	}
@@ -540,6 +544,10 @@ public class ViewFlow extends AdapterView<Adapter> {
 		snapToScreen(whichScreen);
 	}
 
+	/**
+	 * 突然快速滑动图片 然后差不多到边的时候 速度慢下来
+	 * @param whichScreen
+	 */
 	private void snapToScreen(int whichScreen) {
 		mLastScrollDirection = whichScreen - mCurrentScreen;
 		if (!mScroller.isFinished())

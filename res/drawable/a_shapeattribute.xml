@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 这是一个关于xml中selecter的属性和shape属性 归总的文件 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+
+</shape>
+
+<!-- shape 的一些属性解释
+其中rectagle矩形，oval椭圆，line水平直线，ring环形 
+ 
+<shape>中子节点的常用属性： 
+ 
+***********************************<gradient>  渐变 
+ 
+android:startColor  起始颜色 
+ 
+android:endColor  结束颜色              
+ 
+android:angle  渐变角度，0从上到下，90表示从左到右，数值为45的整数倍默认为0； 
+ 
+android:type  渐变的样式 liner线性渐变 radial环形渐变 sweep 
+ 
+***********************************<solid >  填充 
+ 
+android:color  填充的颜色 
+ 
+************************************<stroke > 描边 
+ 
+android:width 描边的宽度 
+ 
+android:color 描边的颜色 
+ 
+android:dashWidth 表示'-'横线的宽度 
+ 
+android:dashGap 表示'-'横线之间的距离 
+ 
+***********************************<corners > 圆角 
+ 
+android:radius  圆角的半径 值越大角越圆 
+ 
+android:topRightRadius  右上圆角半径 
+   
+android:bottomLeftRadius 右下圆角角半径 
+  
+android:topLeftRadius 左上圆角半径 
+ 
+android:bottomRightRadius 左下圆角半径  -->
+
+<!-- ****************************************************************************************************** -->
+<!-- 这种是多个图形叠加一起 一般在xml中引用 是     android:src="@drawable/warning_sigh" -->
+<!-- <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:bottom="8dp" android:left="1dp" android:right="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/warning_stroke_color"/>
+            <corners android:radius="4dp"/>
+            <size android:height="22dp" android:width="3dp"/>
+        </shape>
+    </item>
+
+    <item android:top="30dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/warning_stroke_color"/>
+            <size android:height="5dp" android:width="4dp"/>
+        </shape>
+    </item>
+</layer-list> -->
+
+<!-- ****************************************************************************************************** -->
+<!-- 可以通过下面自定义一个背景颜色 在xml文件中引用时 是这样 ： android:background="@drawable/warning_circle"
+<shape android:shape="oval" xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/transparent" />
+    <stroke android:color="@color/warning_stroke_color" android:width="3dp" />
+</shape> -->
+
+<!-- ****************************************************************************************************** -->
+<!-- 参数详细说明： 下面这些 是动画的对应的参数
+表二
+XML节点	功能说明
+alpha	渐变透明度动画效果
+				<alpha
+				android:fromAlpha=”0.1″
+				android:toAlpha=”1.0″
+				android:duration=”3000″ />
+fromAlpha	
+属性为动画起始时透明度
+0.0表示完全透明
+1.0表示完全不透明
+以上值取0.0-1.0之间的float数据类型的数字
+toAlpha	属性为动画结束时透明度
+表三
+scale	渐变尺寸伸缩动画效果
+				<scale
+				android:interpolator= “@android:anim/accelerate_decelerate_interpolator”
+				android:fromXScale=”0.0″
+				android:toXScale=”1.4″
+				android:fromYScale=”0.0″
+				android:toYScale=”1.4″
+				android:pivotX=”50%”
+				android:pivotY=”50%”
+				android:fillAfter=”false”
+				android:startOffset=“700”
+				android:duration=”700″
+				android:repeatCount=”10″ />
+fromXScale[float] fromYScale[float]	为动画起始时，X、Y坐标上的伸缩尺寸	0.0表示收缩到没有
+1.0表示正常无伸缩
+值小于1.0表示收缩
+值大于1.0表示放大
+toXScale [float]
+toYScale[float]	为动画结束时，X、Y坐标上的伸缩尺寸
+pivotX[float]
+pivotY[float]	为动画相对于物件的X、Y坐标的开始位置	属性值说明：从0%-100%中取值，50%为物件的X或Y方向坐标上的中点位置
+ 	 	 	 
+表四
+translate	画面转换位置移动动画效果
+				<translate
+				android:fromXDelta=”30″
+				android:toXDelta=”-80″
+				android:fromYDelta=”30″
+				android:toYDelta=”300″
+				android:duration=”2000″ />
+fromXDelta
+toXDelta	为动画、结束起始时 X坐标上的位置	 
+fromYDelta
+toYDelta	为动画、结束起始时 Y坐标上的位置	 
+ 	 	 	 
+表五
+rotate	画面转移旋转动画效果
+				<rotate
+				android:interpolator=”@android:anim/accelerate_decelerate_interpolator”
+				android:fromDegrees=”0″
+				android:toDegrees=”+350″
+				android:pivotX=”50%”
+				android:pivotY=”50%”
+				android:duration=”3000″ />
+fromDegrees	为动画起始时物件的角度	说明
+当角度为负数——表示逆时针旋转
+当角度为正数——表示顺时针旋转
+(负数from——to正数:顺时针旋转)
+(负数from——to负数:逆时针旋转)
+(正数from——to正数:顺时针旋转)
+(正数from——to负数:逆时针旋转)
+toDegrees	属性为动画结束时物件旋转的角度 可以大于360度
+pivotX
+pivotY	为动画相对于物件的X、Y坐标的开始位	说明：以上两个属性值 从0%-100%中取值
+50%为物件的X或Y方向坐标上的中点位置 -->
+
+<!-- <?xml version="1.0" encoding="utf-8"?>
+
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:interpolator="@android:anim/linear_interpolator"
+     android:shareInterpolator="true">
+    <alpha
+        android:fromAlpha="0.2"
+        android:toAlpha="1"
+        android:duration="90"/>
+
+    <scale
+        android:fromXScale="0.7"
+        android:toXScale="1.05"
+        android:fromYScale="0.7"
+        android:toYScale="1.05"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="135"/>
+
+    <scale
+        android:fromXScale="1.05"
+        android:toXScale="0.95"
+        android:fromYScale="1.05"
+        android:toYScale="0.95"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="105"
+        android:startOffset="135"/>
+
+    <scale
+        android:fromXScale="0.95"
+        android:toXScale="1"
+        android:fromYScale="0.95"
+        android:toYScale="1"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="60"
+        android:startOffset="240"/>
+</set> -->
+
+<!-- ****************************************************************************************************** -->

@@ -77,7 +77,7 @@ public class PlayHistoryFragment extends Fragment {
 	private boolean isRefreshAll;
 	private HeaderViewListAdapter mHeaderViewListAdapter;
 	private ImageLoader mImageLoader;
-	private List<String> urlLists;
+	private List<String> bannerUrlLists = new ArrayList<String>();
 	
 	Handler mHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -97,12 +97,13 @@ public class PlayHistoryFragment extends Fragment {
 				mPullToRefreshListAdapter.setAdapterData(trueAppDatas);
 //				mHandler.obtainMessage(UP_REFRESH_BANNER).sendToTarget();
 				mPullToRefreshListAdapter.notifyDataSetChanged();
+				mHandler.obtainMessage(UP_REFRESH_BANNER).sendToTarget();
 				break;
 
 			case UP_REFRESH_ADAPTER_DATA:
 //				mViewFlowAdapter = new ViewFlowAdapter(getActivity());
 //				mViewFlow.setAdapter(mViewFlowAdapter); // 对viewFlow添加图片
-				mListView.requestLayout();
+//				mListView.requestLayout();
 //				mViewFlowAdapter.notifyDataSetInvalidated();
 //				mViewFlowAdapter.notifyDataSetChanged();
 //				mPullToRefreshListAdapter = new PlayHistoryRefreshListAdapter(
@@ -120,9 +121,23 @@ public class PlayHistoryFragment extends Fragment {
 				break;
 				
 			case UP_REFRESH_BANNER:
-				mListView.requestLayout();
-				urlLists = Arrays.asList(Constant.SANGUO_URLS);
-				mViewFlowAdapter.setUrlList(urlLists);
+				if(bannerUrlLists != null){
+					bannerUrlLists.clear();
+				}
+				for(String url:Constant.SANGUO_URLS){
+					
+					bannerUrlLists.add(url);
+				}
+//				mViewFlowAdapter = new ViewFlowAdapter(getActivity(), bannerUrlLists);
+//				mViewFlow.setmSideBuffer(bannerUrlLists.size());
+				mViewFlowAdapter.setUrlList(bannerUrlLists);
+				mViewFlowAdapter.notifyDataSetInvalidated();
+				mViewFlow.setTimeSpan(7000);
+				mViewFlow.startAutoFlowTimer();
+				mViewFlow.setAdapter(mViewFlowAdapter); // 对viewFlow添加图片
+				mPullToRefreshListView.onRefreshComplete();
+//				mViewFlowAdapter = null;
+//				mViewFlowAdapter.setUrlList(bannerUrlLists);
 //				mViewFlowAdapter.notifyDataSetChanged();
 				break;
 				
@@ -151,36 +166,37 @@ public class PlayHistoryFragment extends Fragment {
 				.findViewById(R.id.layerslayout);
 
 		LayoutInflater mLayoutInflater = LayoutInflater.from(getActivity());
-//		View headerView = mLayoutInflater.inflate(R.layout.viewflow, null);
+		View headerView = mLayoutInflater.inflate(R.layout.viewflow, null);
 //		/**
 //		 * 获取数据
 //		 */
 //		getData(true);
-//
-//		mListView.addHeaderView(headerView);
-//
-//		mViewFlow = (ViewFlow) headerView.findViewById(R.id.viewflow);// 获得viewFlow对象
-//
-//		// mViewFlow.setAdapter(mViewFlowAdapter); // 对viewFlow添加图片
+
+		mListView.addHeaderView(headerView);
+
+		mViewFlow = (ViewFlow) headerView.findViewById(R.id.viewflow);// 获得viewFlow对象
+
+		// mViewFlow.setAdapter(mViewFlowAdapter); // 对viewFlow添加图片
 //		if (Constant.homeBannerBitmaps != null) {
 //
 //			mViewFlow.setmSideBuffer(Constant.homeBannerBitmaps.subList(0, 5).size());
 //		} else {
 //			mViewFlow.setmSideBuffer(8);
 //		}
-//
-//		mCircleFlowIndicator = (CircleFlowIndicator) mContentView
-//				.findViewById(R.id.viewflowindic);
-//
-//		mViewFlow.setFlowIndicator(mCircleFlowIndicator);
-//		mViewFlow.setTimeSpan(5500);
-//		mViewFlow.setSelection(3 * 1000); // 设置初始位置
-//		 mViewFlow.startAutoFlowTimer(); // 启动自动播放
-//		 mViewFlow.scheduleRepeatExecution(3000,3000);
-////		mViewFlow.stopAutoFlowTimer();
-//		mViewFlowAdapter = new ViewFlowAdapter(getActivity(),Arrays.asList(Constant.SANGUO_URLS));
-//		mViewFlow.setAdapter(mViewFlowAdapter);
-//		mLayersLayout.setView(mViewFlow); // 将viewFlow对象传递给自定义图层，用于对事件进行重定向
+
+		mCircleFlowIndicator = (CircleFlowIndicator) mContentView
+				.findViewById(R.id.viewflowindic);
+
+		mViewFlow.setFlowIndicator(mCircleFlowIndicator);
+		mViewFlow.setmSideBuffer(6);
+		mViewFlow.setTimeSpan(8000);
+		mViewFlow.setSelection(3 * 1000); // 设置初始位置
+		 mViewFlow.startAutoFlowTimer(); // 启动自动播放
+//		 mViewFlow.scheduleRepeatExecution(8000,8000);
+//		mViewFlow.stopAutoFlowTimer();
+		mViewFlowAdapter = new ViewFlowAdapter(getActivity(),bannerUrlLists);
+		mViewFlow.setAdapter(mViewFlowAdapter);
+		mLayersLayout.setView(mViewFlow); // 将viewFlow对象传递给自定义图层，用于对事件进行重定向
 
 		mPullToRefreshListAdapter = new PlayHistoryRefreshListAdapter(
 				getActivity(), trueAppDatas);
@@ -198,15 +214,18 @@ public class PlayHistoryFragment extends Fragment {
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				if (mListView.getFirstVisiblePosition() != 1) {
-					// LogUtils2.d("111111111111111111  "
+				LogUtils2.i("mListView.getFirstVisiblePosition()=="+mListView.getFirstVisiblePosition());
+				if (mListView.getFirstVisiblePosition() -2 >= 0) {
+					 LogUtils2.d("111111111111111111  ");
 					// + mListView.getFirstVisiblePosition());
 					if (mViewFlow != null) {
-						// mViewFlow.stopAutoFlowTimer();
+						 mViewFlow.stopAutoFlowTimer();
 					}
-				} else {
+				} else if(mListView.getFirstVisiblePosition() <= 1){
+					 LogUtils2.d("11222222211  ");
 					if (mViewFlow != null) {
-						// mViewFlow.startAutoFlowTimer();
+						 LogUtils2.d("1？？？？？？  ");
+						 mViewFlow.startAutoFlowTimer();
 					}
 				}
 			}
@@ -363,7 +382,7 @@ public class PlayHistoryFragment extends Fragment {
 //						mPullToRefreshListAdapter.notifyDataSetInvalidated();
 					}
 					mHandler.obtainMessage(REFRESH_ADAPTER_DATA).sendToTarget();
-					mPullToRefreshListView.onRefreshComplete();
+//					mPullToRefreshListView.onRefreshComplete();
 				} else {
 					LogUtils2.e("UP_REFRESH_ADAPTER_DATA===========");
 					if (mViewFlowAdapter != null) {

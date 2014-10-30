@@ -28,7 +28,7 @@ import android.widget.ScrollView;
 // Referenced classes of package com.pccw.gzmobile.app:
 //            BaseFragment
 
-public class FragmentUtils
+public class FragmentUtils3
 {
 	 private static final String TAG = "com/pccw/gzmobile/app/FragmentUtils.getSimpleName()";
 	
@@ -40,8 +40,8 @@ public class FragmentUtils
         protected FragmentActivity mFragmentActivity;
         protected int mContainerId;
         protected FragmentTabSwitcherFeed mSwitcherFeed;
-        //��HashMap��һ�����࣬�����˼�¼�Ĳ���˳������Iterator����LinkedHashMapʱ���ȵõ��ļ�¼�϶����Ȳ����.
-        protected LinkedHashMap mRootFragmentTags;//���hashmap��һͷ��һͷ���� 
+        //锟斤拷HashMap锟斤拷一锟斤拷锟斤拷锟洁，锟斤拷锟斤拷锟剿硷拷录锟侥诧拷锟斤拷顺锟斤拷锟斤拷锟斤拷Iterator锟斤拷锟斤拷LinkedHashMap时锟斤拷锟饺得碉拷锟侥硷拷录锟较讹拷锟斤拷锟饺诧拷锟斤拷锟�
+        protected LinkedHashMap mRootFragmentTags;//锟斤拷锟絟ashmap锟斤拷一头锟斤拷一头锟斤拷锟斤拷 
         protected final LinkedHashMap mTabStacks = new LinkedHashMap();
         private final int mTabCount;
         protected Fragment mCurrentFragment;
@@ -75,7 +75,7 @@ public class FragmentUtils
         }
 
         /**
-         * ��ȡ��ǰѡ�е��±�
+         * 锟斤拷取锟斤拷前选锟叫碉拷锟铰憋拷
          * @return
          */
         public int getCurrentTabIndex()
@@ -89,7 +89,7 @@ public class FragmentUtils
         }
 
         /**
-         * ��ȡ��һ����index
+         * 锟斤拷取锟斤拷一锟斤拷锟斤拷index
          * @return
          */
         public int getPreviousTabIndex()
@@ -98,13 +98,11 @@ public class FragmentUtils
         }
 
         /**
-         * 判断是不是点击了同一个tab
+         * 锟叫讹拷锟角凤拷同一锟斤拷tab锟斤拷签
          * @return
          */
         protected boolean isSameTab()
         {
-        	LogUtils2.d("mPreviousRootFragmentTag== "+mPreviousRootFragmentTag);
-        	LogUtils2.d("mCurrentRootFragmentTag== "+mCurrentRootFragmentTag);
             return mPreviousRootFragmentTag != null && mPreviousRootFragmentTag.equals(mCurrentRootFragmentTag);
         }
 
@@ -141,18 +139,18 @@ public class FragmentUtils
                 mRootFragmentTags.put(tag, Integer.valueOf(index));
             }
 
-            Log.w(FragmentUtils.TAG, (new StringBuilder("FragmentTabSwitcher root fragment tags : ")).append(mRootFragmentTags).toString());
+            Log.w(FragmentUtils3.TAG, (new StringBuilder("FragmentTabSwitcher root fragment tags : ")).append(mRootFragmentTags).toString());
             mTabCount = mRootFragmentTags.size();
             String tag;
             for(tagSetIterator = tagSet.iterator(); tagSetIterator.hasNext(); mTabStacks.put(tag, new LinkedList()))
                 tag = (String)tagSetIterator.next();
 
-            Log.w(FragmentUtils.TAG, (new StringBuilder("FragmentTabSwitcher tab stacks : ")).append(mTabStacks).toString());
+            Log.w(FragmentUtils3.TAG, (new StringBuilder("FragmentTabSwitcher tab stacks : ")).append(mTabStacks).toString());
         }
     }
 
     /**
-     * һ�������±�tab����
+     * 一锟斤拷锟斤拷锟斤拷锟铰憋拷tab锟斤拷锟斤拷
      * @author Hua
      *
      */
@@ -200,7 +198,7 @@ public class FragmentUtils
         }
     	
         /**
-         * ���tab ��ˢ��
+         * 锟斤拷锟絫ab 锟斤拷刷锟斤拷
          * @param rebuild
          */
         private void refreshTabBar(boolean rebuild)
@@ -292,49 +290,47 @@ public class FragmentUtils
         }
     	
         /**
-         * 这个相当于 页面下面的tab 选项
+         * 锟洁当锟斤拷锟斤拷锟斤拷碌锟絫ab
          */
         public void switchTab(String rootFragmentTag, boolean skipSameTab)
         {
-        	LogUtils2.v("********switchTab*********  = "+rootFragmentTag);
+        	LogUtils2.v("********switchTab*********");
         	
         	if(getCurrentTabStack() != null){
         		
-        		LogUtils2.e("switchTab=size= "+getCurrentTabStack().size());
-        		LogUtils2.d("switchTab=getFirst= "+getCurrentTabStack().getFirst());
-        		LogUtils2.e("switchTab=getLast= "+getCurrentTabStack().getLast());
+        		LogUtils2.e("switchTab=="+getCurrentTabStack().size());
+        		LogUtils2.d("switchTab=="+getCurrentTabStack().getFirst());
+        		LogUtils2.e("switchTab=="+getCurrentTabStack().getLast());
         	}
         	
             if(rootFragmentTag == null)
                 throw new NullPointerException("Fragment tag can NOT be null.");
             mPreviousRootFragmentTag = mCurrentRootFragmentTag;
             mCurrentRootFragmentTag = rootFragmentTag;
-           /**
-            * 点击同一个tab的时候的处理
-            */
-            LogUtils2.i("skipSameTab==  "+skipSameTab +"   isSameTab()== "+isSameTab());
             if(skipSameTab && isSameTab())
             {
             	LogUtils2.w("same**************");
-                Log.w(FragmentUtils.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" no need to switch same tab : ").append(mCurrentRootFragmentTag).toString());
+                Log.w(FragmentUtils3.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" no need to switch same tab : ").append(mCurrentRootFragmentTag).toString());
                 if(mSwitcherListener != null)
                 {
                     int tabIndex = getCurrentTabIndex();
                     int preTabIndex = getPreviousTabIndex();
-                    Log.d(FragmentUtils.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
+                    Log.d(FragmentUtils3.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
                     mSwitcherListener.onTabSelected(mCurrentRootFragmentTag, tabIndex, mPreviousRootFragmentTag, preTabIndex);
                 }
                 return;
             }
+            Log.d(FragmentUtils3.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" switch tab : ").append(rootFragmentTag).toString());
            
-            
-            LogUtils2.e("getCurrentTabStack().size()== "+getCurrentTabStack().size());
             if(getCurrentTabStack().size() == 0){
             	LogUtils2.i("getCurrentTabStack().size() == 0");
                 pushFragment(true, new Fragment[] {
                     mSwitcherFeed.newRootFragment(rootFragmentTag)
                 });
-            } else {
+            } 
+            else {
+            	
+            	LogUtils2.i("getCurrentTabStack().size() 锟斤拷+++===0");
                 pushFragment(false, new Fragment[] {
                     peekTopmostFragment()
                 });
@@ -343,15 +339,15 @@ public class FragmentUtils
             {
                 int tabIndex = getCurrentTabIndex();
                 int preTabIndex = getPreviousTabIndex();
-                Log.d(FragmentUtils.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
+                Log.d(FragmentUtils3.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
                 mSwitcherListener.onTabSelected(mCurrentRootFragmentTag, tabIndex, mPreviousRootFragmentTag, preTabIndex);
             }
         }
 
         /**
-         * 返回的是上一个tab （即下面的五个选项中之一）的对应的LinkedList（例如上一次选中的是seting 然后现在选中的是move，则返回的是seting的LinkedList包含内容）
-         * LinkedList（这个里面封装的是在当前的tab中如settingfragment页面中打开了多少个子页 例如点击了settingfragment中的
-         * 一个item然后进入下一层 则 LinkedList就加一层 里面的值 类似 setting - 1）
+         * 锟斤拷锟絋abfragmentTag锟斤拷LinkedList
+         * 锟斤拷锟斤拷锟絤TabStacks 锟斤拷一锟斤拷LinkedHashMap 锟斤拷锟脚革拷式锟角ｏ拷锟斤拷Tag锟斤拷锟斤拷LinkedList锟斤拷
+         * tag锟斤拷锟角斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟�锟斤拷tab
          * @return
          */
         private LinkedList getCurrentTabStack()
@@ -359,42 +355,33 @@ public class FragmentUtils
         	LogUtils2.w("mCurrentRootFragmentTag==="+mCurrentRootFragmentTag);
             if(mCurrentRootFragmentTag == null)
             {
-                Log.w(FragmentUtils.TAG, "Please call switchTab() first before using other methods.");
+                Log.w(FragmentUtils3.TAG, "Please call switchTab() first before using other methods.");
                 return null;
             }
             LinkedList tab = (LinkedList)mTabStacks.get(mCurrentRootFragmentTag);
             if(tab == null)
             {
-                Log.w(FragmentUtils.TAG, (new StringBuilder("Can NOT find the the tab with key ")).append(mCurrentRootFragmentTag).toString());
+                Log.w(FragmentUtils3.TAG, (new StringBuilder("Can NOT find the the tab with key ")).append(mCurrentRootFragmentTag).toString());
                 return null;
             } else
             {
-            	
-//            	LogUtils2.i("tab.szie=="+tab.size()+"   tab.get(0)== "+tab.get(0));
+            	LogUtils2.i("tab.szie=="+tab.size());
                 return tab;
-        }
+            }
         }
 
-        /**
-         * 
-         * @return
-         */
         public boolean isCurrentTabStackEmpty()
         {
             LinkedList tab = getCurrentTabStack();
             boolean ret = tab == null || tab.isEmpty();
             if(ret)
-                Log.w(FragmentUtils.TAG, "Current tab stack is empty.");
+                Log.w(FragmentUtils3.TAG, "Current tab stack is empty.");
             return ret;
         }
 
         /**
-         * ��getCurrentTabStack������ȡ����һ��fragment
-         * -----当按下返回键后 把当前的fragment去掉，把之前的换做为第一个----
-         * 这里就例如 当点击了第一个tab 而且还点击了tab（move）里面的item进入到下一层了，
-         * 当点击另外一个tab（setting）后，再店家上一个tab时（move），返回进入item时的样子
-         * 因为LinkedList 是先进后出型的，所以最后点击的item 就在LinkedList的第一个 所以直接getFirst()即可获取
-         * @return
+         * 锟斤拷getCurrentTabStack锟斤拷锟斤拷锟斤拷取锟斤拷锟斤拷一锟斤拷fragment
+         * 褰撴寜涓嬭繑鍥為敭鍚�鎶婂綋鍓嶇殑fragment鍘绘帀锛屾妸涔嬪墠鐨勬崲鍋氫负绗竴涓�         * @return
          */
         public Fragment peekTopmostFragment()
         {
@@ -402,51 +389,51 @@ public class FragmentUtils
                 return null;
             else
                 return mFragmentActivity.getSupportFragmentManager().findFragmentByTag((String)getCurrentTabStack().getFirst());
-            	//
         }
 
         /**
-         * 添加fragment
-         * @param add 是否新创建添加
-         * @param fragments 
+         * 锟斤拷getCurrentTabStack锟斤拷锟斤拷锟斤拷锟斤拷锟絝ragment锟斤拷锟斤拷...
+         * @param add 锟叫讹拷锟斤拷锟斤拷踊锟斤拷前蟾康锟絝ragment
+         * @param fragments 锟斤拷要锟斤拷拥锟絝ragment
          */
         private void pushFragment(boolean add, Fragment fragments[])
         {
             FragmentManager manager = mFragmentActivity.getSupportFragmentManager();
             FragmentTransaction ft = manager.beginTransaction();
-//            ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
+            ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
             Fragment afragment[];
             int j = (afragment = fragments).length;
             for(int i = 0; i < j; i++)
             {
                 Fragment fragment = afragment[i];
-                LogUtils2.i("****mCurrentFragment== "+mCurrentFragment);
                 if(mCurrentFragment != null)
                 {
-//                    Log.d(FragmentUtils.TAG, (new StringBuilder("Detach fragment ")).append(mCurrentFragment.getTag()).toString());
+                    Log.d(FragmentUtils3.TAG, (new StringBuilder("Detach fragment ")).append(mCurrentFragment.getTag()).toString());
                    /**
+                    * detach()锟结将view锟斤拷viewtree锟斤拷删锟斤拷,锟斤拷remove()锟斤拷同,
+                    * 锟斤拷时fragment锟斤拷状态锟斤拷然锟斤拷锟斤拷锟斤拷,锟斤拷使锟斤拷attach()时锟斤拷锟劫次碉拷锟斤拷onCreateView()
+                    * 锟斤拷锟截伙拷锟斤拷图,注锟斤拷使锟斤拷detach()
+                    * 锟斤拷fragment.isAdded()锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷false,锟斤拷使锟斤拷attach()
+                    * 锟斤拷原fragment锟斤拷isAdded()锟斤拷锟斤拷然锟斤拷锟斤拷false(锟斤拷要锟劫达拷确锟斤拷)
                     */
                     LogUtils2.i("pushFragment*******");
                     ft.detach(mCurrentFragment);
-//                    ft.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-//                    ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
                 }
                 if(add)
                 {
                 	LogUtils2.i("add********=="+add);
+                	//锟斤拷锟斤拷 "TV - 3"
                     String fragmentTag = (new StringBuilder(String.valueOf(mCurrentRootFragmentTag))).append("-").append(getCurrentTabStack().size()).toString();
-//                    Log.d(FragmentUtils.TAG, (new StringBuilder("Add new fragment ")).append(fragmentTag).toString());
+                    Log.d(FragmentUtils3.TAG, (new StringBuilder("Add new fragment ")).append(fragmentTag).toString());
                     ft.add(mContainerId, fragment, fragmentTag);
-//                    mFragmentActivity.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-//                    ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
+                    
                     getCurrentTabStack().addFirst(fragmentTag);
                 } else
                 {
-                	LogUtils2.e("pushFragment_______attach______");
-                	LogUtils2.i("add******false**=="+add);
-//                    Log.d(FragmentUtils.TAG, (new StringBuilder("Attach fragment ")).append(fragment.getTag()).toString());
+                	LogUtils2.e("pushFragment_____________");
+                	LogUtils2.i("add********=="+add);
+                    Log.d(FragmentUtils3.TAG, (new StringBuilder("Attach fragment ")).append(fragment.getTag()).toString());
                     ft.attach(fragment);
-//                    ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
                 }
                 mCurrentFragment = fragment;
             }
@@ -467,7 +454,7 @@ public class FragmentUtils
         }
 
         /**
-         * ���Tag��ȡ����ǰ��LinkedList���׸�fragment
+         * 锟斤拷锟絋ag锟斤拷取锟斤拷锟斤拷前锟斤拷LinkedList锟斤拷锟阶革拷fragment
          * @return
          */
         private Fragment popTopmostFragment()
@@ -478,13 +465,13 @@ public class FragmentUtils
             } else
             {
                 String tag = (String)getCurrentTabStack().removeFirst();
-                Log.d(FragmentUtils.TAG, (new StringBuilder("Remove fragment ")).append(tag).toString());
+                Log.d(FragmentUtils3.TAG, (new StringBuilder("Remove fragment ")).append(tag).toString());
                 return mFragmentActivity.getSupportFragmentManager().findFragmentByTag(tag);
             }
         }
 
         /**
-         * �Ƴ�ǰ���׸�fragment
+         * 锟狡筹拷前锟斤拷锟阶革拷fragment
          * @return
          */
         public Fragment popFragment()
@@ -496,7 +483,7 @@ public class FragmentUtils
             ft.remove(popTopmostFragment());
             mCurrentFragment = peekTopmostFragment();
             ft.attach(mCurrentFragment);
-            Log.d(FragmentUtils.TAG, (new StringBuilder("Attach fragment ")).append(mCurrentFragment.getTag()).toString());
+            Log.d(FragmentUtils3.TAG, (new StringBuilder("Attach fragment ")).append(mCurrentFragment.getTag()).toString());
             ft.commit();
             return mCurrentFragment;
         }
@@ -513,7 +500,7 @@ public class FragmentUtils
 
                 mCurrentFragment = peekTopmostFragment();
                 ft.attach(mCurrentFragment);
-                Log.d(FragmentUtils.TAG, (new StringBuilder("Attach fragment ")).append(mCurrentFragment.getTag()).toString());
+                Log.d(FragmentUtils3.TAG, (new StringBuilder("Attach fragment ")).append(mCurrentFragment.getTag()).toString());
                 ft.commit();
             }
             return mCurrentFragment;
@@ -525,7 +512,7 @@ public class FragmentUtils
         }
 
         /**
-         * ������һ��fragmenttab
+         * 锟斤拷锟斤拷锟斤拷一锟斤拷fragmenttab
          */
         public void onFragmentActivityBackPressed()
         {
@@ -635,35 +622,35 @@ public class FragmentUtils
             mCurrentRootFragmentTag = rootFragmentTag;
             if(skipSameTab && isSameTab())
             {
-                Log.w(FragmentUtils.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" no need to switch same tab : ").append(mCurrentRootFragmentTag).toString());
+                Log.w(FragmentUtils3.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" no need to switch same tab : ").append(mCurrentRootFragmentTag).toString());
                 if(mSwitcherListener != null)
                 {
                     int tabIndex = getCurrentTabIndex();
                     int preTabIndex = getPreviousTabIndex();
-                    Log.d(FragmentUtils.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
+                    Log.d(FragmentUtils3.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
                     mSwitcherListener.onTabSelected(mCurrentRootFragmentTag, tabIndex, mPreviousRootFragmentTag, preTabIndex);
                 }
                 return;
             }
-            Log.d(FragmentUtils.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" switch tab : ").append(rootFragmentTag).toString());
+            Log.d(FragmentUtils3.TAG, (new StringBuilder(String.valueOf(getClass().getSimpleName()))).append(" switch tab : ").append(rootFragmentTag).toString());
             FragmentManager manager = mFragmentActivity.getSupportFragmentManager();
             FragmentTransaction ft = manager.beginTransaction();
             if(mCurrentFragment != null)
             {
-                Log.d(FragmentUtils.TAG, (new StringBuilder("detach fragment : ")).append(mCurrentFragment).toString());
+                Log.d(FragmentUtils3.TAG, (new StringBuilder("detach fragment : ")).append(mCurrentFragment).toString());
                 ft.detach(mCurrentFragment);
             } else
             if(manager.findFragmentByTag(rootFragmentTag) != null)
-                Log.w(FragmentUtils.TAG, "Strange case : current is null but the coming one is not null. Have you re-assigned the switcher instance?");
+                Log.w(FragmentUtils3.TAG, "Strange case : current is null but the coming one is not null. Have you re-assigned the switcher instance?");
             mCurrentFragment = manager.findFragmentByTag(rootFragmentTag);
             if(mCurrentFragment == null)
             {
                 mCurrentFragment = mSwitcherFeed.newRootFragment(rootFragmentTag);
-                Log.d(FragmentUtils.TAG, (new StringBuilder("add fragment : ")).append(mCurrentFragment).toString());
+                Log.d(FragmentUtils3.TAG, (new StringBuilder("add fragment : ")).append(mCurrentFragment).toString());
                 ft.add(mContainerId, mCurrentFragment, rootFragmentTag);
             } else
             {
-                Log.d(FragmentUtils.TAG, (new StringBuilder("re-attach fragment : ")).append(mCurrentFragment).toString());
+                Log.d(FragmentUtils3.TAG, (new StringBuilder("re-attach fragment : ")).append(mCurrentFragment).toString());
                 ft.attach(mCurrentFragment);
             }
             ft.commit();
@@ -671,7 +658,7 @@ public class FragmentUtils
             {
                 int tabIndex = getCurrentTabIndex();
                 int preTabIndex = getPreviousTabIndex();
-                Log.d(FragmentUtils.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
+                Log.d(FragmentUtils3.TAG, (new StringBuilder("onTabSelected : ")).append(mCurrentRootFragmentTag).append(", ").append(tabIndex).append(", ").append(mPreviousRootFragmentTag).append(", ").append(preTabIndex).toString());
                 mSwitcherListener.onTabSelected(mCurrentRootFragmentTag, tabIndex, mPreviousRootFragmentTag, preTabIndex);
             }
         }
@@ -728,7 +715,7 @@ public class FragmentUtils
     }
 
 
-    private FragmentUtils()
+    private FragmentUtils3()
     {
     }
 
