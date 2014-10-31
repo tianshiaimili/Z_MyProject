@@ -259,6 +259,13 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 				.findViewById(R.id.selection_pulltorefreshlistview);
 //		mPullRefreshListView.set
 		mPullRefreshListView.setMode(Mode.PULL_FROM_START);
+		/**
+		 * 设置刷新时 显示的文字
+		 */
+//		mPullRefreshListView.getLoadingLayoutProxy().setLastUpdatedLabel("lastUpdateLabel"); 
+//		mPullRefreshListView.getLoadingLayoutProxy().setPullLabel("PULLLABLE");
+//		mPullRefreshListView.getLoadingLayoutProxy().setRefreshingLabel("refreshingLabel");
+//		mPullRefreshListView.getLoadingLayoutProxy().setReleaseLabel("releaseLabel");
 		mListView = mPullRefreshListView.getRefreshableView();
 		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 
