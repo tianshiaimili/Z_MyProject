@@ -648,8 +648,10 @@ public class MainActivityPhone extends BaseActivity2 implements CloseDialogImpl{
 		
 		@Override
 		public void run() {
-			
-			mSweetAlertDialog.dismiss();
+			if(mSweetAlertDialog != null){
+				
+				mSweetAlertDialog.dismiss();
+			}
 			
 		}
 	}, 600);

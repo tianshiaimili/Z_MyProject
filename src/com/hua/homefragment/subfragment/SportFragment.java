@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.hua.activity.DetailsActivity_;
@@ -256,13 +257,14 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 				.findViewById(R.id.pro_selection_layerslayout);
 		mPullRefreshListView = (PullToRefreshListView) mContentView
 				.findViewById(R.id.selection_pulltorefreshlistview);
-		mPullRefreshListView.setMode(Mode.BOTH);
+//		mPullRefreshListView.set
+		mPullRefreshListView.setMode(Mode.PULL_FROM_START);
 		mListView = mPullRefreshListView.getRefreshableView();
-		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener2() {
+		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 
 			@Override
-			public void onPullDownToRefresh(final PullToRefreshBase refreshView) {
-
+			public void onRefresh(final PullToRefreshBase<ListView> refreshView) {
+				
 				new Handler().postDelayed(new Runnable() {
 					@Override
 					public void run() {
@@ -285,33 +287,63 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 						listsModles.clear();
 					}
 				}, 2000);
-
-			}
-
-			@Override
-			public void onPullUpToRefresh(final PullToRefreshBase refreshView) {
-
-				new Handler().postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						String label = DateUtils.formatDateTime(getActivity(),
-								System.currentTimeMillis(),
-								DateUtils.FORMAT_SHOW_TIME
-										| DateUtils.FORMAT_SHOW_DATE
-										| DateUtils.FORMAT_ABBREV_ALL);
-
-						// Update the LastUpdatedLabel
-						refreshView.getLoadingLayoutProxy()
-								.setLastUpdatedLabel(label);
-						mPreferenceHelper.setPreference("isUpdate", true);
-						currentPagte++;
-						index = index + 20;
-						loadData(getCommonUrl(index + "", Url.TiYuId));
-					}
-				}, 2000);
-
+				
 			}
 		});
+//		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener2() {
+//
+//			@Override
+//			public void onPullDownToRefresh(final PullToRefreshBase refreshView) {
+//
+//				new Handler().postDelayed(new Runnable() {
+//					@Override
+//					public void run() {
+//
+//						String label = DateUtils.formatDateTime(getActivity(),
+//								System.currentTimeMillis(),
+//								DateUtils.FORMAT_SHOW_TIME
+//										| DateUtils.FORMAT_SHOW_DATE
+//										| DateUtils.FORMAT_ABBREV_ALL);
+//						refreshView.getLoadingLayoutProxy()
+//								.setLastUpdatedLabel(label);
+//						LogUtils2.i("onPullDownToRefresh------");
+//						currentPagte = 1;
+//						index = 0;
+//						mPreferenceHelper.setPreference("isUpdate", true);
+//						loadData(getCommonUrl(index + "", Url.TiYuId));
+//						mDemoSlider.removeAllSliders();
+//						url_maps.clear();
+//						mProductSlectionAdapter.clear();
+//						listsModles.clear();
+//					}
+//				}, 2000);
+//
+//			}
+//
+//			@Override
+//			public void onPullUpToRefresh(final PullToRefreshBase refreshView) {
+//
+//				new Handler().postDelayed(new Runnable() {
+//					@Override
+//					public void run() {
+//						String label = DateUtils.formatDateTime(getActivity(),
+//								System.currentTimeMillis(),
+//								DateUtils.FORMAT_SHOW_TIME
+//										| DateUtils.FORMAT_SHOW_DATE
+//										| DateUtils.FORMAT_ABBREV_ALL);
+//
+//						// Update the LastUpdatedLabel
+//						refreshView.getLoadingLayoutProxy()
+//								.setLastUpdatedLabel(label);
+//						mPreferenceHelper.setPreference("isUpdate", true);
+//						currentPagte++;
+//						index = index + 20;
+//						loadData(getCommonUrl(index + "", Url.TiYuId));
+//					}
+//				}, 2000);
+//
+//			}
+//		});
 
 		LayoutInflater mLayoutInflater = LayoutInflater.from(context);
 		

@@ -1,7 +1,9 @@
 package com.hua.fragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,12 +14,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -34,25 +39,30 @@ import com.hua.model.AppData.TempAppData;
 import com.hua.model.AppData.TrueAppData;
 import com.hua.utils.LogUtils2;
 import com.hua.utils.MyImageLoader;
+import com.hua.view.PullDownListView;
 import com.hua.weget.CircleFlowIndicator;
 import com.hua.weget.LayersLayout;
 import com.hua.weget.ViewFlow;
+import com.listviewaddheader.model.Information;
+import com.listviewaddheader.view.PullDownRefreshListView;
+import com.listviewaddheader.view.PullDownRefreshListView.IXListViewListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class PlayHistoryFragment extends Fragment {
+public class PlayHistoryFragment extends Fragment implements OnItemClickListener,
+IXListViewListener{
 
-	private ListView mListView; // 下拉刷新的listview
+//	private ListView mListView; // 下拉刷新的listview
 	private ViewFlow mViewFlow; // 进行图片轮播的viewFlow
 	private LayersLayout mLayersLayout; // 自定义图层，用于对触屏事件进行重定向
 	private View mContentView;
-	private PullToRefreshListView mPullToRefreshListView;
+	/**
+	 * 这是另外一种下啦刷新
+	 */
+	private PullDownRefreshListView mPullDownListView;
 	private CircleFlowIndicator mCircleFlowIndicator;
 	private int count;
 	private List<String> adapterList = new ArrayList<String>();
 	private String[] contentStr = new String[] {};
-	// { /*"ListView1", "ListView2", "ListView3",*/
-	// /*"ListView4", "ListView5", "ListView6", "ListView7", "ListView8",
-	// "ListView9", "ListView10", "ListView11", "ListView12",*/ };
 	private PlayHistoryRefreshListAdapter mPullToRefreshListAdapter;
 	private ViewFlowAdapter mViewFlowAdapter;
 	private static final int REFRESH_ADAPTER_DATA = 0;
@@ -78,22 +88,15 @@ public class PlayHistoryFragment extends Fragment {
 	private HeaderViewListAdapter mHeaderViewListAdapter;
 	private ImageLoader mImageLoader;
 	private List<String> bannerUrlLists = new ArrayList<String>();
+	private int start = 0;
+	private static int refreshCnt = 0;
 	
 	Handler mHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			int whatCode = msg.what;
 			switch (whatCode) {
 			case REFRESH_ADAPTER_DATA:
-				mListView.requestLayout();
-//				mViewFlowAdapter = ViewFlowAdapter.getInstance(getActivity());
-//				mViewFlow.setAdapter(mViewFlowAdapter); // 对viewFlow添加图片
-				
-//				mPullToRefreshListAdapter = new PlayHistoryRefreshListAdapter(
-//						getActivity(), trueAppDatas);
-//				mViewFlowAdapter.notifyDataSetInvalidated();
-//				mViewFlowAdapter.notifyDataSetChanged();
-//				((PlayHistoryRefreshListAdapter)((HeaderViewListAdapter)mListView.getAdapter()).getWrappedAdapter()).notifyDataSetChanged();;
-//				mPullToRefreshListAdapter.notifyDataSetInvalidated();
+//				mListView.requestLayout();
 				mPullToRefreshListAdapter.setAdapterData(trueAppDatas);
 //				mHandler.obtainMessage(UP_REFRESH_BANNER).sendToTarget();
 				mPullToRefreshListAdapter.notifyDataSetChanged();
@@ -101,20 +104,8 @@ public class PlayHistoryFragment extends Fragment {
 				break;
 
 			case UP_REFRESH_ADAPTER_DATA:
-//				mViewFlowAdapter = new ViewFlowAdapter(getActivity());
-//				mViewFlow.setAdapter(mViewFlowAdapter); // 对viewFlow添加图片
-//				mListView.requestLayout();
-//				mViewFlowAdapter.notifyDataSetInvalidated();
-//				mViewFlowAdapter.notifyDataSetChanged();
-//				mPullToRefreshListAdapter = new PlayHistoryRefreshListAdapter(
-//						getActivity(), trueAppDatas);
-//				mListView.setAdapter(mPullToRefreshListAdapter); // 绑定数据
-//				mPullToRefreshListAdapter.notifyDataSetInvalidated();
 				mPullToRefreshListAdapter.setAdapterData(trueAppDatas);
 				mPullToRefreshListAdapter.notifyDataSetChanged();
-//				mHandler.obtainMessage(UP_REFRESH_BANNER).sendToTarget();
-				
-//				mPullToRefreshListAdapter.notifyDataSetChanged();
 				if (isNotData) {
 					Toast.makeText(getActivity(), "Not data", 300).show();
 				}
@@ -128,17 +119,12 @@ public class PlayHistoryFragment extends Fragment {
 					
 					bannerUrlLists.add(url);
 				}
-//				mViewFlowAdapter = new ViewFlowAdapter(getActivity(), bannerUrlLists);
-//				mViewFlow.setmSideBuffer(bannerUrlLists.size());
 				mViewFlowAdapter.setUrlList(bannerUrlLists);
 				mViewFlowAdapter.notifyDataSetInvalidated();
 				mViewFlow.setTimeSpan(7000);
 				mViewFlow.startAutoFlowTimer();
 				mViewFlow.setAdapter(mViewFlowAdapter); // 对viewFlow添加图片
-				mPullToRefreshListView.onRefreshComplete();
-//				mViewFlowAdapter = null;
-//				mViewFlowAdapter.setUrlList(bannerUrlLists);
-//				mViewFlowAdapter.notifyDataSetChanged();
+				onLoad();
 				break;
 				
 			default:
@@ -151,40 +137,61 @@ public class PlayHistoryFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		
 		mContentView = inflater.inflate(R.layout.payhistory_layout_fragment,
 				null);
-		mPullToRefreshListView = (PullToRefreshListView) mContentView
-				.findViewById(R.id.playhistory_pulltorefreshlistview);
-		mPullToRefreshListView.setMode(Mode.BOTH);
-		mListView = mPullToRefreshListView.getRefreshableView();
+		init(mContentView);
+		setListener();
+		return mContentView;// super.onCreateView(inflater, container,
+							// savedInstanceState);
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		
+		if (mViewFlow != null) {
+			 mViewFlow.stopAutoFlowTimer();
+		}
+		
+	}
 	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if (mViewFlow != null) {
+			 mViewFlow.startAutoFlowTimer();
+		}
+	
+	}
+	
+	
+	/**
+	 * 初始化
+	 * @param refresh
+	 * TODO
+	 */
+	public void init(View contenView){
+		
+		mPullDownListView = (PullDownRefreshListView) contenView.findViewById(R.id.playhistory_pulltorefreshlistview);
+		
 		tempTtaskCollection = new HashSet<GetDataTask>();
 		trueAppDatas = new ArrayList<TrueAppData>();
 		myImageLoader = new MyImageLoader(getActivity());
-		mLayersLayout = (LayersLayout) mContentView
+		mLayersLayout = (LayersLayout) contenView
 				.findViewById(R.id.layerslayout);
 
 		LayoutInflater mLayoutInflater = LayoutInflater.from(getActivity());
 		View headerView = mLayoutInflater.inflate(R.layout.viewflow, null);
-//		/**
-//		 * 获取数据
-//		 */
-//		getData(true);
 
-		mListView.addHeaderView(headerView);
-
+//		mListView.addHeaderView(headerView);
+		mPullDownListView.addHeaderView(headerView);
+		mPullDownListView.setPullLoadEnable(true);
 		mViewFlow = (ViewFlow) headerView.findViewById(R.id.viewflow);// 获得viewFlow对象
 
-		// mViewFlow.setAdapter(mViewFlowAdapter); // 对viewFlow添加图片
-//		if (Constant.homeBannerBitmaps != null) {
-//
-//			mViewFlow.setmSideBuffer(Constant.homeBannerBitmaps.subList(0, 5).size());
-//		} else {
-//			mViewFlow.setmSideBuffer(8);
-//		}
-
-		mCircleFlowIndicator = (CircleFlowIndicator) mContentView
+		mCircleFlowIndicator = (CircleFlowIndicator) contenView
 				.findViewById(R.id.viewflowindic);
 
 		mViewFlow.setFlowIndicator(mCircleFlowIndicator);
@@ -200,12 +207,16 @@ public class PlayHistoryFragment extends Fragment {
 
 		mPullToRefreshListAdapter = new PlayHistoryRefreshListAdapter(
 				getActivity(), trueAppDatas);
-		mListView.setAdapter(mPullToRefreshListAdapter);
+//		mListView.setAdapter(mPullToRefreshListAdapter);
+		mPullDownListView.setAdapter(mPullToRefreshListAdapter);
 		/**
 		 * 获取数据
 		 */
 		getData(true);
-		mListView.setOnScrollListener(new OnScrollListener() {
+		/**
+		 * 
+		 */
+		mPullDownListView.setOnScrollListener(new OnScrollListener() {
 
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -214,63 +225,33 @@ public class PlayHistoryFragment extends Fragment {
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				LogUtils2.i("mListView.getFirstVisiblePosition()=="+mListView.getFirstVisiblePosition());
-				if (mListView.getFirstVisiblePosition() -2 >= 0) {
+				LogUtils2.i("mListView.getFirstVisiblePosition()=="+mPullDownListView.getFirstVisiblePosition());
+				if (mPullDownListView.getFirstVisiblePosition() -2 >= 0) {
 					 LogUtils2.d("111111111111111111  ");
 					// + mListView.getFirstVisiblePosition());
 					if (mViewFlow != null) {
 						 mViewFlow.stopAutoFlowTimer();
 					}
-				} else if(mListView.getFirstVisiblePosition() <= 1){
+				} 
+				if(mPullDownListView.getFirstVisiblePosition() <= 1){
 					 LogUtils2.d("11222222211  ");
 					if (mViewFlow != null) {
-						 LogUtils2.d("1？？？？？？  ");
 						 mViewFlow.startAutoFlowTimer();
 					}
 				}
 			}
 		});
-
-		mPullToRefreshListView.setOnRefreshListener(new OnRefreshListener2() {
-
-			@Override
-			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
-
-				String label = DateUtils.formatDateTime(getActivity(),
-						System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME
-								| DateUtils.FORMAT_SHOW_DATE
-								| DateUtils.FORMAT_ABBREV_ALL);
-
-				// Update the LastUpdatedLabel
-				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
-
-				// Do work to refresh the list here.
-				trueAppDatas.clear();
-				getData(true);
-			}
-
-			@Override
-			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-
-				String label = DateUtils.formatDateTime(getActivity(),
-						System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME
-								| DateUtils.FORMAT_SHOW_DATE
-								| DateUtils.FORMAT_ABBREV_ALL);
-
-				// Update the LastUpdatedLabel
-				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
-
-				// Do work to refresh the list here.
-				// trueAppDatas.clear();
-				getData(false);
-
-			}
-		});
-
-		return mContentView;// super.onCreateView(inflater, container,
-							// savedInstanceState);
+		
+		
 	}
-
+	
+	private void setListener() {
+		// TODO Auto-generated method stub
+		mPullDownListView.setOnItemClickListener(this);
+		mPullDownListView.setXListViewListener(this);
+		
+	}
+	
 	public void getData(boolean refresh) {
 		isRefreshAll = refresh;
 		if (Constant.tempAppDataLists != null) {
@@ -363,15 +344,6 @@ public class PlayHistoryFragment extends Fragment {
 		// 根据AsyncTask的原理，onPostExecute里的result的值就是doInBackground()的返回值
 		@Override
 		protected void onPostExecute(Bitmap result) {
-			// 在头部增加新添内容
-			// mListItems.addFirst(result);
-
-			// 通知程序数据集已经改变，如果不做通知，那么将不会刷新mListItems的集合
-			// mAdapter.notifyDataSetChanged();
-			// Call onRefreshComplete when the list has been refreshed.
-			// Toast.makeText(getActivity(), "lal=="+result, 300).show();
-			// contentStr = Arrays.asList(array)
-			// adapterList.add(result);
 			tempTtaskCollection.remove(this);
 			// mPullToRefreshListAdapter.notifyDataSetInvalidated();
 			if (tempTtaskCollection.size() <= 0) {
@@ -391,7 +363,7 @@ public class PlayHistoryFragment extends Fragment {
 					}
 					mHandler.obtainMessage(UP_REFRESH_ADAPTER_DATA)
 							.sendToTarget();
-					mPullToRefreshListView.onRefreshComplete();
+//					mPullToRefreshListView.onRefreshComplete();
 					LogUtils2.e("over-----------");
 				}
 			}
@@ -400,4 +372,51 @@ public class PlayHistoryFragment extends Fragment {
 		}
 	}
 
+	////////////下面是IXListViewListener的接口///////////////
+	
+	@Override
+	public void onRefresh() {
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+//				start = ++refreshCnt;
+				getData(true);
+//				onLoad();
+			}
+		}, 2000);
+	}
+
+
+	@Override
+	public void onLoadMore() {
+
+		LogUtils2.d("*****onLoadMore*********");
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				getData(true);
+			}
+		}, 2000);
+		
+		
+	}
+	////////////////////////////////
+	
+	private void onLoad() {
+		mPullDownListView.stopRefresh();
+		mPullDownListView.stopLoadMore();
+		Date mDate = new Date(System.currentTimeMillis());
+		SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+		String date = format.format(mDate);
+		mPullDownListView.setRefreshTime(date);
+	}
+
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

@@ -413,7 +413,7 @@ public class FragmentUtils
         private void pushFragment(boolean add, Fragment fragments[])
         {
             FragmentManager manager = mFragmentActivity.getSupportFragmentManager();
-            FragmentTransaction ft = manager.beginTransaction();
+            FragmentTransaction transaction = manager.beginTransaction();
 //            ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
             Fragment afragment[];
             int j = (afragment = fragments).length;
@@ -427,16 +427,14 @@ public class FragmentUtils
                    /**
                     */
                     LogUtils2.i("pushFragment*******");
-                    ft.detach(mCurrentFragment);
-//                    ft.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-//                    ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
+//                    transaction.detach(mCurrentFragment);
+                    transaction.hide(mCurrentFragment);
                 }
                 if(add)
                 {
                 	LogUtils2.i("add********=="+add);
                     String fragmentTag = (new StringBuilder(String.valueOf(mCurrentRootFragmentTag))).append("-").append(getCurrentTabStack().size()).toString();
-//                    Log.d(FragmentUtils.TAG, (new StringBuilder("Add new fragment ")).append(fragmentTag).toString());
-                    ft.add(mContainerId, fragment, fragmentTag);
+                    transaction.add(mContainerId, fragment, fragmentTag);
 //                    mFragmentActivity.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 //                    ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
                     getCurrentTabStack().addFirst(fragmentTag);
@@ -445,13 +443,23 @@ public class FragmentUtils
                 	LogUtils2.e("pushFragment_______attach______");
                 	LogUtils2.i("add******false**=="+add);
 //                    Log.d(FragmentUtils.TAG, (new StringBuilder("Attach fragment ")).append(fragment.getTag()).toString());
-                    ft.attach(fragment);
+                	LogUtils2.e("test  if  the fragment is null  = "+ fragment);
+                    transaction.attach(fragment);
+                    
+                    if(!fragment.isAdded()){
+                    	 String fragmentTag = (new StringBuilder(String.valueOf(mCurrentRootFragmentTag))).append("-").append(getCurrentTabStack().size()).toString();
+                    	 transaction.add(mContainerId, fragment, fragmentTag);
+                    }else {
+						transaction.show(fragment);
+					}
+                   
+//                    ft.replace(R.id.main_activity_fragment_container, fragment);
 //                    ft.setCustomAnimations(R.anim.push_left_in,0,0,R.anim.push_left_out);
                 }
                 mCurrentFragment = fragment;
             }
 
-            ft.commit();
+            transaction.commit();
         }
 
         public void pushFragment(Fragment fragment)

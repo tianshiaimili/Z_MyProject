@@ -20,7 +20,7 @@
 
         <!-- 下拉刷新 -->
 
-        <com.handmark.pulltorefresh.library.PullToRefreshListView
+      <!--   <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:id="@+id/playhistory_pulltorefreshlistview"
             style="@style/ListViewStyle"
             android:layout_width="fill_parent"
@@ -32,7 +32,22 @@
             android:scrollbarThumbVertical="@drawable/scrollbar_vertical_thumb"
             android:paddingRight="0.4dp"
              >
-        </com.handmark.pulltorefresh.library.PullToRefreshListView>
+        </com.handmark.pulltorefresh.library.PullToRefreshListView> -->
+        
+         <com.listviewaddheader.view.PullDownRefreshListView
+        android:id="@+id/playhistory_pulltorefreshlistview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        style="@style/ListViewStyle"
+        android:cacheColorHint="#00000000"
+        android:drawSelectorOnTop="false"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dip"
+        android:paddingRight="0.4dp"
+        android:scrollbarSize="5dip"
+        android:scrollbarThumbVertical="@drawable/scrollbar_vertical_thumb" />
+        
+        
     </com.hua.weget.LayersLayout>
 
 </LinearLayout>
