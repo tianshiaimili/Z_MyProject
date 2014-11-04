@@ -40,7 +40,6 @@ public class FragmentUtils
         protected FragmentActivity mFragmentActivity;
         protected int mContainerId;
         protected FragmentTabSwitcherFeed mSwitcherFeed;
-        //��HashMap��һ�����࣬�����˼�¼�Ĳ���˳������Iterator����LinkedHashMapʱ���ȵõ��ļ�¼�϶����Ȳ����.
         protected LinkedHashMap mRootFragmentTags;//���hashmap��һͷ��һͷ���� 
         protected final LinkedHashMap mTabStacks = new LinkedHashMap();
         private final int mTabCount;
@@ -475,7 +474,7 @@ public class FragmentUtils
         }
 
         /**
-         * ���Tag��ȡ����ǰ��LinkedList���׸�fragment
+         * 在tab中的当前子fragment
          * @return
          */
         private Fragment popTopmostFragment()
@@ -503,7 +502,10 @@ public class FragmentUtils
 //            ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
             ft.remove(popTopmostFragment());
             mCurrentFragment = peekTopmostFragment();
-            ft.attach(mCurrentFragment);
+            if(mCurrentFragment.isAdded()){
+            	ft.show(mCurrentFragment);
+            }
+//            ft.attach(mCurrentFragment);
             Log.d(FragmentUtils.TAG, (new StringBuilder("Attach fragment ")).append(mCurrentFragment.getTag()).toString());
             ft.commit();
             return mCurrentFragment;
@@ -520,7 +522,10 @@ public class FragmentUtils
                     ft.remove(popTopmostFragment());
 
                 mCurrentFragment = peekTopmostFragment();
-                ft.attach(mCurrentFragment);
+                if(mCurrentFragment.isAdded()){
+                	ft.show(mCurrentFragment);
+                }
+//                ft.attach(mCurrentFragment);
                 Log.d(FragmentUtils.TAG, (new StringBuilder("Attach fragment ")).append(mCurrentFragment.getTag()).toString());
                 ft.commit();
             }
@@ -553,8 +558,7 @@ public class FragmentUtils
                     superOnBackPressed.run();
                 else
                     mFragmentActivity.finish();
-            } else
-            if((f instanceof BaseFragment) && ((BaseFragment)f).onHostActivityBackPressed())
+            } else if((f instanceof BaseFragment) && ((BaseFragment)f).onHostActivityBackPressed())
                 System.out.println("Fragment handled onBackPressed().");
             else
             if(isRootFragment())

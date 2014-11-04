@@ -13,23 +13,31 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.hua.activity.DetailsActivity_;
 import com.hua.activity.ImageDetailActivity_;
@@ -53,6 +61,7 @@ import com.hua.utils.LogUtils2;
 import com.hua.utils.MyImageLoader.MyLoadImageTask;
 import com.hua.utils.PreferenceHelper;
 import com.hua.utils.StringUtils;
+import com.hua.view.CustomeListViewFooter;
 import com.hua.view.ElasticScrollView;
 import com.hua.view.MyGridView;
 import com.hua.view.MyViewPager;
@@ -62,9 +71,10 @@ import com.hua.wedget.viewimage.SliderTypes.BaseSliderView;
 import com.hua.wedget.viewimage.SliderTypes.BaseSliderView.OnSliderClickListener;
 import com.hua.wedget.viewimage.SliderTypes.TextSliderView;
 import com.hua.weget.CircleFlowIndicator;
-import com.hua.weget.FixedSpeedScroller;
 import com.hua.weget.LayersLayout;
 import com.hua.weget.ViewFlow;
+import com.listviewaddheader.view.XListViewFooter;
+import com.listviewaddheader.view.XListViewHeader;
 
 /**
  * 
@@ -122,6 +132,7 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 	private PullToRefreshListView mPullRefreshListView;
 	private LinearLayout mHeaderViewLayout;
 	private ListView mListView; // 下拉刷新的listview
+//	private CustomeListView mCustomeListView;
 	private ViewFlow mViewFlow; // 进行图片轮播的viewFlow
 	
 	/**
@@ -169,10 +180,61 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 	//
 	private MyLoadImageTask myLoadImageTask = new MyLoadImageTask();
 
-	private FixedSpeedScroller mScroller;
+//	private FixedSpeedScroller mScroller;
 	private boolean isRefresh = false;
 	private MyOnitemClickListener mOnitemClickListener;
+	
+//	private CustomeListViewFooter mCustomeListViewFooter;
 
+	
+	//********************
+	private float mLastY = -1; // save event y
+	private Scroller mScroller2; // used for scroll back
+	private OnScrollListener mScrollListener; // user's scroll listener
+
+	// the interface to trigger refresh and load more.
+	private CustomeListViewListener2 mListViewListener;
+
+	// header view content, use it to calculate the Header's height. And hide it
+	// when disable pull refresh.
+	private RelativeLayout mHeaderViewContent;
+	private TextView mHeaderTimeView;
+	private boolean mEnablePullRefresh = true;
+	private boolean mPullRefreshing = false; // is refreashing.
+
+	// -- footer view
+	private CustomeListViewFooter mFooterView;
+	private boolean mEnablePullLoad;
+	private boolean mPullLoading;
+	private boolean mIsFooterReady = false;
+	
+	// total list items, used to detect is at the bottom of listview.
+	private int mTotalItemCount;
+
+	// for mScroller, scroll back from header or footer.
+	private int mScrollBack;
+	private final static int SCROLLBACK_HEADER = 0;
+	private final static int SCROLLBACK_FOOTER = 1;
+
+	private final static int SCROLL_DURATION = 600; // scroll back duration
+	private final static int PULL_LOAD_MORE_DELTA = 120; // when pull up >= 50px
+														// at bottom, trigger
+														// load more.
+	private final static float OFFSET_RADIO = 1.8f; // support iOS like pull
+	
+	private boolean isInbottom;
+	/**
+	 * 第一次进来的时候 不要执行加载更多
+	 */
+	private boolean isShowFirstIn;
+	
+	private boolean isFootViewVisible;
+	private static final int ShowFootView = 300;
+	/**
+	 * listview中的item的总个数
+	 */
+	private int TOTALITEMCOUNT;
+	
 	/**
 	 * 用来判断是否关闭定时器
 	 */
@@ -198,8 +260,20 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 			case RESPONSE_OK:
 				String result = (String) message.obj;
 				getResult(result);
+				mHandler.obtainMessage(ShowFootView).sendToTarget();
 				break;
 
+			case ShowFootView:
+				if(mFooterView.getVisibility() == View.GONE){
+					mFooterView.setVisibility(View.VISIBLE);
+				}
+				isShowFirstIn = true;
+				/**
+				 * 停止加载更多 恢复原样
+				 */
+				stopLoadMore();
+				
+			break;
 			default:
 				break;
 			}
@@ -225,6 +299,7 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 			initDatasCollections(list);
 		} else {
 			mProductSlectionAdapter.appendList(list,index,false);
+			
 		}
 		listsModles.addAll(list);
 		// mListView.onBottomComplete();
@@ -266,7 +341,10 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 //		mPullRefreshListView.getLoadingLayoutProxy().setPullLabel("PULLLABLE");
 //		mPullRefreshListView.getLoadingLayoutProxy().setRefreshingLabel("refreshingLabel");
 //		mPullRefreshListView.getLoadingLayoutProxy().setReleaseLabel("releaseLabel");
+//		mListView.addFooterView(new CustomeListViewFooter(getActivity()));
+//		mCustomeListView.add
 		mListView = mPullRefreshListView.getRefreshableView();
+//		mCustomeListView =  (CustomeListView) mPullRefreshListView.getRefreshableView();
 		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 
 			@Override
@@ -284,6 +362,7 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 						refreshView.getLoadingLayoutProxy()
 								.setLastUpdatedLabel(label);
 						LogUtils2.i("onPullDownToRefresh------");
+						isShowFirstIn = false;
 						currentPagte = 1;
 						index = 0;
 						mPreferenceHelper.setPreference("isUpdate", true);
@@ -292,16 +371,20 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 						url_maps.clear();
 						mProductSlectionAdapter.clear();
 						listsModles.clear();
+						if(mFooterView.getVisibility() == View.VISIBLE){
+							mFooterView.setVisibility(View.GONE);
+						}
 					}
 				}, 2000);
 				
 			}
 		});
+
+//		mPullRefreshListView.setMode(Mode.BOTH);
 //		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener2() {
 //
 //			@Override
 //			public void onPullDownToRefresh(final PullToRefreshBase refreshView) {
-//
 //				new Handler().postDelayed(new Runnable() {
 //					@Override
 //					public void run() {
@@ -324,60 +407,157 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 //						listsModles.clear();
 //					}
 //				}, 2000);
-//
 //			}
 //
 //			@Override
 //			public void onPullUpToRefresh(final PullToRefreshBase refreshView) {
-//
+//				
+////				mFooterView.setVisibility(View.GONE);if
+//				if(refreshView.getState().PULL_TO_REFRESH == State.PULL_TO_REFRESH){
+//					
+//					mListView.removeFooterView(mFooterView);
+//				}else if(refreshView.getState().RESET == State.RESET){
+//					mListView.addFooterView(mFooterView);
+//					
+//				}
+//				
+//				
 //				new Handler().postDelayed(new Runnable() {
 //					@Override
 //					public void run() {
+//
 //						String label = DateUtils.formatDateTime(getActivity(),
 //								System.currentTimeMillis(),
 //								DateUtils.FORMAT_SHOW_TIME
 //										| DateUtils.FORMAT_SHOW_DATE
 //										| DateUtils.FORMAT_ABBREV_ALL);
-//
-//						// Update the LastUpdatedLabel
 //						refreshView.getLoadingLayoutProxy()
 //								.setLastUpdatedLabel(label);
+//						mPullRefreshListView.getLoadingLayoutProxy().setPullLabel("上啦查看更多");
+//						mPullRefreshListView.getLoadingLayoutProxy().setRefreshingLabel("玩命加载中.....");
+//						mPullRefreshListView.getLoadingLayoutProxy().setReleaseLabel("放开刷新");
+//						LogUtils2.i("onPullDownToRefresh------");
+////						currentPagte = 1;
+//						index ++;
 //						mPreferenceHelper.setPreference("isUpdate", true);
-//						currentPagte++;
-//						index = index + 20;
 //						loadData(getCommonUrl(index + "", Url.TiYuId));
+////						mDemoSlider.removeAllSliders();
+////						url_maps.clear();
+////						mProductSlectionAdapter.clear();
+////						listsModles.clear();
 //					}
 //				}, 2000);
-//
 //			}
 //		});
-
-		LayoutInflater mLayoutInflater = LayoutInflater.from(context);
 		
-//		View headerView = mLayoutInflater.inflate(R.layout.viewflow, null);
-//		mViewFlow = (ViewFlow) headerView.findViewById(R.id.viewflow);// 获得viewFlow对象
-//		mCircleFlowIndicator = (CircleFlowIndicator) headerView
-//				.findViewById(R.id.viewflowindic);
-//		mViewFlow.setFlowIndicator(mCircleFlowIndicator);
-//		mViewFlow.setTimeSpan(5500);
-//		mViewFlow.setSelection(3 * 1000); // 设置初始位置
-//		// mViewFlow.startAutoFlowTimer(); // 启动自动播放
-//		mViewFlow.scheduleRepeatExecution(3000, 3000);
-//		mViewFlowAdapter = ViewFlowAdapter.getInstance(mContext);
-//		mViewFlow.setAdapter(mViewFlowAdapter);
-//		mLayersLayout.setView(mViewFlow); // 将viewFlow对象传递给自定义图层，用于对事件进行重定向
-//		mListView.addHeaderView(headerView);
+		
+		LayoutInflater mLayoutInflater = LayoutInflater.from(context);
 		/**
 		 * 用另一种banner横幅
 		 */
 		 View headView = LayoutInflater.from(getActivity()).inflate(R.layout.head_item, null);
 	     mDemoSlider = (SliderLayout) headView.findViewById(R.id.slider);
+	     
+	     /**
+	      * 添加头尾
+	      */
 	     mListView.addHeaderView(headView);
+	     mListView.addFooterView(mFooterView);
+	     mFooterView.setVisibility(View.GONE);
+	     mListView.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent ev) {
+				
+				if (mLastY == -1) {
+					mLastY = ev.getRawY();
+				}
+
+				switch (ev.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					
+					
+					mLastY = ev.getRawY();
+//					LogUtils2.d("YYYYYYYYYYYYYYYY==mLastY= "+mLastY);
+					break;
+				case MotionEvent.ACTION_MOVE:
+					final float deltaY = ev.getRawY() - mLastY;
+					mLastY = ev.getRawY();
+					 if (isInbottom
+							&& (mFooterView.getBottomMargin() > 0 || deltaY < 0)) {
+						// last item, already pulled up or want to pull up.
+						updateFooterHeight(-deltaY / OFFSET_RADIO);
+					}
+					break;
+				default:
+					mLastY = -1; // reset
+					LogUtils2.i("************isInbottom==***== "+isInbottom);
+					LogUtils2.i("************mListView.getLastVisiblePosition()==***== "+mListView.getLastVisiblePosition());
+					LogUtils2.e("************TOTALITEMCOUNT==***== "+TOTALITEMCOUNT);
+				if (isShowFirstIn) {
+					
+						// invoke load more.
+						if (mEnablePullLoad
+						    && mFooterView.getBottomMargin() > PULL_LOAD_MORE_DELTA
+						    && !mPullLoading) {
+							
+							LogUtils2.e(" mFooterView.getBottomMargin()== "+ mFooterView.getBottomMargin());
+							
+							startLoadMore();
+						}
+						LogUtils2.i("*********resetFooterHeight********");
+						resetFooterHeight();
+					}
+					break;
+				}
+				
+				return false;
+			}
+		});
+	     
 		
 		mProductSlectionAdapter = ProductSlectionAdapter.instanceAdapter(mContext,index);
+		
 		mListView.setAdapter(mProductSlectionAdapter);
+//		mCustomeListView.setAdapter(mProductSlectionAdapter);
 		mListView.setOnItemClickListener(mOnitemClickListener);
+//		mCustomeListView.setOnItemClickListener(mOnitemClickListener);
+		mListView.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				TOTALITEMCOUNT = totalItemCount;
+				if(mListView.getFirstVisiblePosition() == 0){
+//					this.onScrollStateChanged(view, 2);
+					/**
+					 * 停止滑动
+					 */
+					mListView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_CANCEL, 0, 0, 0));
+				}
+//				
+				if(view.getLastVisiblePosition() == totalItemCount - 1 && isShowFirstIn){
+					LogUtils2.e("view.getLastVisiblePosition()=="+view.getLastVisiblePosition());
+					LogUtils2.e("totalItemCount = "+totalItemCount);
+					isInbottom = true;
+				}else {
+//					isInbottom = false;
+				}
+				
+				
+			}
+		});
 		loadData(getCommonUrl(index + "", Url.TiYuId));
+		
+		
+		
+		
+		
 	}
 
 	/**
@@ -431,8 +611,118 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 		newHashMap = new HashMap<String, NewModle>();
 		mOnitemClickListener = new MyOnitemClickListener();
 		mPreferenceHelper = PreferenceHelper.getInstance(mContext);
+		mFooterView = new CustomeListViewFooter(mContext);
+		mScroller2 = new Scroller(mContext, new DecelerateInterpolator());
+		setPullLoadEnable(true);
 	}
 
+	/**
+	 * enable or disable pull up load more feature.
+	 * 
+	 * @param enable
+	 */
+	public void setPullLoadEnable(boolean enable) {
+		mEnablePullLoad = enable;
+		if (!mEnablePullLoad) {
+			mFooterView.hide();
+			mFooterView.setOnClickListener(null);
+		} else {
+			mPullLoading = false;
+			mFooterView.show();
+			mFooterView.setState(CustomeListViewFooter.STATE_NORMAL);
+			// both "pull up" and "click" will invoke load more.
+			mFooterView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					LogUtils2.i("******setPullLoadEnable***********");
+					startLoadMore();
+				}
+			});
+		}
+	}
+	
+	private void startLoadMore() {
+		mPullLoading = true;
+		mFooterView.setState(CustomeListViewFooter.STATE_LOADING);
+		
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				LogUtils2.i("onPullDownToRefresh------");
+				currentPagte ++;
+				index = index + 20;
+				mPreferenceHelper.setPreference("isUpdate", true);
+				loadData(getCommonUrl(index + "", Url.TiYuId));
+				isInbottom = false;
+//				stopLoadMore();
+				
+			}
+		}, 2000);
+		
+//		if (mListViewListener != null) {
+//			LogUtils2.i("******startLoadMore************");
+//			mListViewListener.onLoadMore();
+//		}
+	}
+	
+
+	/**
+	 * 更改状态
+	 * @param delta
+	 */
+	private void updateFooterHeight(float delta) {
+		LogUtils2.i("can updateFooterHeight************");
+		int height = mFooterView.getBottomMargin() + (int) (delta*0.85);
+		if (mEnablePullLoad && !mPullLoading) {
+			if (height > PULL_LOAD_MORE_DELTA) { // height enough to invoke load
+													// more.
+				mFooterView.setState(CustomeListViewFooter.STATE_READY);
+			} else {
+				mFooterView.setState(CustomeListViewFooter.STATE_NORMAL);
+			}
+		}
+		LogUtils2.i("can updateFooterHeight***********height=== "+height);
+			
+			mFooterView.setBottomMargin(height);
+
+//		setSelection(mTotalItemCount - 1); // scroll to bottom
+	}
+
+	private void resetFooterHeight() {
+		int bottomMargin = mFooterView.getBottomMargin();
+		LogUtils2.i("can resetFooterHeight************bottomMargin= "+bottomMargin);
+		if (bottomMargin > 0) {
+			LogUtils2.e("can resetFooterHeight************bottomMargin= "+bottomMargin);
+			mScrollBack = SCROLLBACK_FOOTER;
+			mScroller2.startScroll(0, bottomMargin, 0, -bottomMargin,
+					SCROLL_DURATION);
+			mFooterView.setBottomMargin(mScroller2.getCurrY());
+			mContentView.postInvalidate();
+			
+		}
+	}
+	
+//	/**
+//	 * stop refresh, reset header view.
+//	 */
+//	public void stopRefresh() {
+//		if (mPullRefreshing == true) {
+//			mPullRefreshing = false;
+//			resetHeaderHeight();
+//		}
+//	}
+	
+	/**
+	 * stop load more, reset footer view.
+	 */
+	public void stopLoadMore() {
+		if (mPullLoading == true) {
+			mPullLoading = false;
+			mFooterView.setState(XListViewFooter.STATE_NORMAL);
+		}
+	}
+	
+	
 	private void initDatasCollections(List<NewModle> newModles) {
 
 		if (!isNullString(newModles.get(0).getImgsrc()))
@@ -722,5 +1012,22 @@ public class SportFragment extends BaseFragment2 implements OnSliderClickListene
 		mPreferenceHelper.setPreference("isUpdate", false);
 		LogUtils2.e("******onDestroy************");
 	}
+	
+	
+	/**
+	 * implements this interface to get refresh/load more event.
+	 */
+	public interface CustomeListViewListener2 {
+		public void onRefresh();
+
+		public void onLoadMore();
+	}
+	
+	//第1次：scrollState = SCROLL_STATE_TOUCH_SCROLL(1) 正在滚动    
+    //第2次：scrollState = SCROLL_STATE_FLING(2) 手指做了抛的动作（手指离开屏幕前，用力滑了一下）    
+    //第3次：scrollState = SCROLL_STATE_IDLE(0) 停止滚动  
+	
+	
+	
 	
 }

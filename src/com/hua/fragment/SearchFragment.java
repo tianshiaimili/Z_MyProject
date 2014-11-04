@@ -49,5 +49,7 @@ public class SearchFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 
 }

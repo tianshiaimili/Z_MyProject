@@ -35,6 +35,7 @@ import com.hua.fragment.PlayHistoryFragment;
 import com.hua.fragment.SearchAutoCompleteCrewDetailFragment;
 import com.hua.fragment.SearchAutoCompleteFragment;
 import com.hua.fragment.SearchFragment;
+import com.hua.fragment.SearchFragment2;
 import com.hua.fragment.SettingsFragment;
 import com.hua.utils.CommonTools;
 import com.hua.utils.FragmentUtils;
@@ -77,6 +78,7 @@ public class MainActivityPhone extends BaseActivity2 implements CloseDialogImpl{
 	private HomeSearchBarPopupWindow mHomeSearchBarPopupWindow = null;
 	private EditText mEditText;
 	private SearchFragment mSearchFragment;
+	private SearchFragment2 mSearchFragment2;
 	/**
 	 * 用来显示自定的dialog
 	 */
@@ -210,9 +212,10 @@ public class MainActivityPhone extends BaseActivity2 implements CloseDialogImpl{
 			@Override
 			public void onClick(View v) {
 //				Toast.makeText(getApplicationContext(), "asdasda", 300).show();mSearchFragment = new SearchFragment();
-				mSearchFragment = new SearchFragment();
-				startFragment(mSearchFragment);
-				mSearchFragment.setHostActivity(MainActivityPhone.this);
+//				mSearchFragment = new SearchFragment();
+				mSearchFragment2 = new SearchFragment2();
+				startFragment(mSearchFragment2);
+//				mSearchFragment.setHostActivity(MainActivityPhone.this);
 				navigationBar.setVisibility(View.GONE);	
 			}
 		});

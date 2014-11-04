@@ -4,7 +4,7 @@
     <string name="app_name">MyProject</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-	<!-- Splash -->
+    <!-- Splash -->
     <string name="load_config_server_error">Server error</string>
     <string name="load_config_network_unavailable">Failed to connect, please check your network connection.</string>
     <string name="general_error_title">Sorry!</string>
@@ -34,7 +34,7 @@
     <string name="documentary">Documentary</string>
     <string name="horror">Horror</string>
     <string name="aws">Available without subscription</string>
-    
+
     <!-- setting lable -->
     <string name="setting_customer_login">Customer Login</string>
     <string name="setting_product_offer">Product/Offer</string>
@@ -48,30 +48,30 @@
     <string name="setting_login_input_box_password_label">  Password</string>
     <string name="setting_login_button_login">Login</string>
     <string name="setting_login_button_sign">Sign Up</string>
-   
+
     <!-- system -->
     <string name="progress_dialog_title">Loading</string>
     <string name="progress_dialog_message">Please wait</string>
     <string name="no_terms_conditions"> No relevant info</string>
-    
+
     <!-- vod deltail -->
     <string name="you_might_also_like_title_text">You might also like</string>
     <string name="content_provider_label_text">Content Provider Label</string>
-    
+
     <!-- vod downlaod -->
     <string name="downlaod_list_empty_message">Your downloads will be displayed here</string>
     <string name="downlaod_list_remove_message">Remove from download list and delete downloaded video?</string>
-    
+
     <!-- vod play history -->
     <string name="history_list_empty_message">Your history will be displayed here</string>
     <string name="history_list_remove_message">Remove from history list?</string>
-    
+
     <!-- the tuan gou string -->
     <string name="border_top">Border Top</string>
     <string name="border_bottom">Border Bottom</string>
     <string name="image_url">Image Url</string>
-    
-     <!-- 设置 -->
+
+    <!-- 设置 -->
     <string name="recommend_to_weixin_friend">推荐给微信好友</string>
     <string name="feedback">意见反馈</string>
     <string name="about_us">关于我们</string>
@@ -80,14 +80,13 @@
     <string name="mobile_number">手机号</string>
     <string name="mobile_number_hint">方便我们尽快反馈</string>
     <string name="content_edit_hint">欢迎在这儿发表宝贵的意见哦~</string>
-    
-    
-      <!-- 首页PopupWnidow -->
+
+    <!-- 首页PopupWnidow -->
     <string name="barcode_buy">条码购</string>
     <string name="camera_buy">拍照购</string>
     <string name="color_buy">颜色购</string>
-    
-     <!-- 首页 -->
+
+    <!-- 首页 -->
     <string name="index_limit">还剩</string>
     <string name="index_hour">时</string>
     <string name="index_min">分</string>
@@ -106,7 +105,6 @@
     <string name="index_notify_info">向左滑，更多优惠等你抢</string>
     <string name="index_shopping_jinqiufengbao">金秋风暴</string>
     <string name="index_shopping_remenyouhui">热门特惠</string>
-    
     <string name="httpError">连接失败,请稍候再试</string>
     <!-- 下拉刷新  end -->
     <string name="drop_down_list_header_default_text">Click to refresh&#8230;</string>
@@ -118,17 +116,21 @@
     <string name="drop_down_list_footer_no_more_text">无更多信息</string>
     <string name="image_content">Image</string>
     <string name="not_network">暂无网络</string>
-    
-     <string name="content_desc_pinned_downloaded">Pinned to device and downloaded</string>
-  <string name="content_desc_pinned_downloading">Pinned to device and downloading</string>
-  <string name="content_desc_pinned_not_downloaded">Pinned to device and waiting to download
-  </string>
-  
-   <string name="content_desc_unpinned_downloaded">Temporarily downloaded</string>
-  <string name="content_desc_unpinned_downloading">Temporarily downloading</string>
-  <string name="content_desc_unpinned_not_downloaded">Not downloaded</string>
-  
-    <!--  error messge
+    <string name="content_desc_pinned_downloaded">Pinned to device and downloaded</string>
+    <string name="content_desc_pinned_downloading">Pinned to device and downloading</string>
+    <string name="content_desc_pinned_not_downloaded">Pinned to device and waiting to download</string>
+    <string name="content_desc_unpinned_downloaded">Temporarily downloaded</string>
+    <string name="content_desc_unpinned_downloading">Temporarily downloading</string>
+    <string name="content_desc_unpinned_not_downloaded">Not downloaded</string>
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+
+    <!--
+    error messge
     <string name="ok">OK</string>
     <string name="tbc">TBC</string>
     <string name="update">Update</string>
@@ -166,14 +168,14 @@
     
     <string name="json_parsing_error">System Busy (10006)</string>
     <string name="player_error">System Busy (10007)</string>
-    <string name="verimatrix_error">System Busy (10012)</string> -->
-    
+    <string name="verimatrix_error">System Busy (10012)</string>
+    -->
+
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="only_download_10_videos">Sorry, you are only allowed to download 10 videos, please remove your archives before downloading new videos</string>
     <string name="only_3_concurrent_downloads">Sorry, only 3 concurrent downloads are allowed, please wait until the current downloading processes completed</string>
     <string name="end_of_movie">End of Movie</string>
-    
     <string name="download_error_unknown">System busy. Please try again later.</string>
     <string name="download_error_network_broken">System busy. Please try again later.</string>
     <string name="download_error_nomorespace">System busy. Please try again later.</string>
@@ -184,17 +186,15 @@
     <string name="download_error_offline_not_allowed">System busy. Please try again later.</string>
     <string name="download_error_checkout_failed">System busy. Please try again later.</string>
     <string name="download_error_start_failed">System busy. Please try again later.</string>
-    
     <string name="play_info_network_down">System busy. Please try again later.</string>
     <string name="play_info_network_no_file">System busy. Please try again later.</string>
-    
     <string name="play_error_unknown">System busy. Please try again later.</string>
     <string name="play_error_hd_decoding_not_supported">System busy. Please try again later.</string>
     <string name="play_error_no_aternate_supported">System busy. Please try again later.</string>
     <string name="play_error_http_streaming">System busy. Please try again later.</string>
     <string name="play_error_rooted_device">System busy. Please try again later.</string>
-    
     <string name="checkout_unknown">System busy. Please try again later.</string>
     <string name="checkout_parse_json_failed">System busy. Please try again later.</string>
     <string name="checkout_novas">System busy. Please try again later.</string>
+
 </resources>
