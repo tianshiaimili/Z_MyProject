@@ -49,6 +49,10 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 	public static final String HOW_TO_USE = "howToUse";
 	public static final String CUSTOMER_FEEDBACK = "customerFeedback";
 	public static final String TEST_FRAGMENT_PAGER_ADAPTER = "pagertest";
+	public static final String TEST_VOD_FRAGMENT = "TestVodFragment";
+	
+	
+	
 	private FragmentTabSwitcherWithoutZorder fragmentSwitcher;
 	private boolean isTablet;
 
@@ -168,6 +172,15 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 
 		case R.id.item4:
 			doAnimationCloseBySubButton();
+			if (isTablet) {
+				// customerLoginLayout.setSelected(true);
+				// termsConditionsLayout.setSelected(false);
+				// productLayoutLayout.setSelected(false);
+				// useLayout.setSelected(false);
+				// feedbackLayout.setSelected(false);
+			}
+			changeFragment(TEST_VOD_FRAGMENT);
+			
 			break;
 
 		case R.id.item5:
@@ -369,7 +382,11 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				} else if (CUSTOMER_FEEDBACK.equalsIgnoreCase(tag)) {
 					// return new SettingDetailFragment();
 					return new SettingCustomerLoginFragment();
-				} else {
+				}else if(TEST_VOD_FRAGMENT.equalsIgnoreCase(tag)){
+					//test vodFragment
+					return new VODFragment();
+					
+				}else {
 					return new ShowSettingPagerAdpterFragment();
 				}
 			}
@@ -378,7 +395,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 			public LinkedHashSet<String> getRootFragmentTags() {
 				return FragmentUtils.makeRootFragmentTags(CUSTOMER_LOGIN_TAG,
 						TERMS_CONDITIONS_TAG, PRODUCT_OFFER_TAG, HOW_TO_USE,
-						CUSTOMER_FEEDBACK, TEST_FRAGMENT_PAGER_ADAPTER);
+						CUSTOMER_FEEDBACK, TEST_FRAGMENT_PAGER_ADAPTER,TEST_VOD_FRAGMENT);
 			}
 
 		};
@@ -419,6 +436,9 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 			} else if (TERMS_CONDITIONS_TAG.equalsIgnoreCase(tag)) {
 				MTNApplication.startFragment(getCurFragment(),
 						new CopyOfSwipeMenuFragment());
+			}else if(TEST_VOD_FRAGMENT.equalsIgnoreCase(tag)){//test vodFragment
+				MTNApplication.startFragment(getCurFragment(),
+						new VODFragment());
 			} else {
 				MTNApplication.startFragment(getCurFragment(),
 						new SettingCustomerLoginFragment());

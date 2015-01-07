@@ -2,11 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    
     android:orientation="vertical"
-    android:splitMotionEvents="true" 
-    android:background="#CCCCCc"
+    android:splitMotionEvents="true"
+    android:background="#1e1e1e" 
     >
+<!--     android:background="#CCCCCc" -->
 <!-- android:background="@color/vod_landing_bg_color" -->
     <LinearLayout
         android:id="@+id/viewpagerLinearLayout"
@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="@dimen/page_padding_top"
-        android:background="#FF0000"
          >
 
         <!--

@@ -9,6 +9,7 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -81,6 +82,15 @@ public class ShowWebPageActivity extends Activity {
 			}
 		});
 
+		webView.setDownloadListener(new DownloadListener() {
+			
+			@Override
+			public void onDownloadStart(String url, String userAgent,
+					String contentDisposition, String mimetype, long contentLength) {
+				
+			}
+		});
+		
 	}
 
 	private Handler handler = new Handler() {

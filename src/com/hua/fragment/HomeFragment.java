@@ -24,6 +24,7 @@ import com.hua.activity.MTNApplication;
 import com.hua.activity.R;
 import com.hua.app.BaseFragment;
 import com.hua.contants.Constant;
+import com.hua.homefragment.subfragment.DianYingFragment;
 import com.hua.homefragment.subfragment.Fragment01;
 import com.hua.homefragment.subfragment.ContactsFragment;
 import com.hua.homefragment.subfragment.FoundFragment;
@@ -76,7 +77,8 @@ public class HomeFragment extends BaseFragment implements
 	/**
 	 * 发现界面的Fragment
 	 */
-	private FoundFragment foundFragment;
+//	private FoundFragment foundFragment;
+	private DianYingFragment mDianYingFragment;
 
 	/**
 	 * 通讯录界面的Fragment
@@ -372,14 +374,17 @@ public class HomeFragment extends BaseFragment implements
 				return chatFragment;
 			case 1:
 				LogUtils2.i("******foundFragment******");
-				if (foundFragment == null) {
-					LogUtils2.i("******foundFragment******");
-					foundFragment = new FoundFragment();
-					// MTNApplication.startFragment(getCurFragment(),
-					// foundFragment);
+//				if (foundFragment == null) {
+//					LogUtils2.i("******foundFragment******");
+//					foundFragment = new FoundFragment();
+//					// MTNApplication.startFragment(getCurFragment(),
+//					// foundFragment);
+//				}
+				if(mDianYingFragment ==  null){
+					mDianYingFragment = new DianYingFragment();
 				}
 				currentViewPItem = position;
-				return foundFragment;
+				return mDianYingFragment;
 			case 2:
 				LogUtils2.i("******contactsFragment******");
 				if (contactsFragment == null) {

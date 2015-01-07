@@ -282,7 +282,7 @@ public class VODFragment extends BaseFragment{
 		 * 
 		 */
 		listViewHeader = new PlaceholderView(getActivity());
-//		listViewHeader.setBackgroundColor(Color.parseColor("#00000000"));
+		listViewHeader.setBackgroundColor(Color.parseColor("#00000000"));
 		int indicatorBarHeight = pageIndexer.getHeight();
 		appTopBarHeight = (int) getResources().getDimension(R.dimen.page_padding_top);
 		LayoutUtils.setLayoutParams(listViewHeader, listView, 
@@ -292,7 +292,8 @@ public class VODFragment extends BaseFragment{
 		int appBottomBarHeight = (int) getResources().getDimension(R.dimen.page_padding_bottom);
 		listViewFooter = new PlaceholderView(getActivity());
 		///
-		listViewFooter.setBackgroundColor(Color.parseColor("#7f700000"));
+//		listViewFooter.setBackgroundColor(Color.parseColor("#7f700000"));
+		listViewFooter.setBackgroundColor(Color.parseColor("#00000000"));
 		LayoutUtils.setLayoutParams(listViewFooter, listView, ViewGroup.LayoutParams.MATCH_PARENT, appBottomBarHeight);
 		LayoutUtils.addListFooterView(listView, listViewFooter);
 		

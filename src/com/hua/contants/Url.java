@@ -82,6 +82,9 @@ public class Url {
     public static final String FangChan = host + "nc/article/house/";
     // 房产id
     public static final String FangChanId = "5YyX5Lqs";
+    
+    
+    
     // 图集
     public static final String TuJi = host + "photo/api/morelist/0096/4GJ60096/";// 42358.json
     // 图集end
@@ -97,6 +100,9 @@ public class Url {
     // 美图 39683.json
     public static final String TuPianMeiTu = host + "photo/api/morelist/0096/54GN0096/";
 
+    
+    
+    
     // 视频 http://c.3g.163.com/nc/video/list/V9LG4B3A0/n/10-10.html
     public static final String Video = host + "nc/video/list/";
     public static final String VideoCenter = "/n/";
@@ -110,6 +116,8 @@ public class Url {
     // 精品视频
     public static final String VideoJingPinId = "00850FRB";
 
+    
+    
     // 天气预报url
     public static final String WeatherHost = "http://v.juhe.cn/weather/index?cityname=";
 

@@ -3,7 +3,6 @@ package com.hua.activity;
 import java.util.Arrays;
 import java.util.List;
 
-import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -14,7 +13,6 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 import com.hua.app.BaseActivity;

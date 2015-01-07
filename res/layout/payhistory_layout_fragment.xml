@@ -45,7 +45,9 @@
         android:fadingEdgeLength="0dip"
         android:paddingRight="0.4dp"
         android:scrollbarSize="5dip"
-        android:scrollbarThumbVertical="@drawable/scrollbar_vertical_thumb" />
+        android:scrollbarThumbVertical="@drawable/scrollbar_vertical_thumb"
+        
+         />
         
         
     </com.hua.weget.LayersLayout>
